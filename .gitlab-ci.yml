@@ -1,3 +1,4 @@
+
 stages:
   - verify
   - deploy
@@ -32,3 +33,4 @@ deploy on dev:
     - echo $GITLAB_RUNNER_PASSWORD | sudo -S chown -R $REMOTE_SERVICE_OWNER:$REMOTE_SERVICE_OWNER .
     - echo $GITLAB_RUNNER_PASSWORD | sudo -S systemctl start $SYSTEMCTL_UNIT;
     - echo starting service
+
