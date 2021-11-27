@@ -1,8 +1,8 @@
-stages:
-  - verify
-  - deploy
+# stages:
+#   - verify
+#   - deploy
 
-verify:
-  stage: verify
-  script:
-    - mvn clean verify
+# verify:
+#   stage: verify
+#   script:
+#     - mvn clean verify
