@@ -4,4 +4,5 @@ stages:
 
 verify:
   stage: verify
+  script:
     - mvn clean verify
