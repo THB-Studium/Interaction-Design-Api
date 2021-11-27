@@ -51,7 +51,7 @@ public class Land {
 	//private Erwartungen erwartungen;
 	
 	//@OneToMany(mappedBy="...")
-	//private List<Highlights> highlights;
+	//private List<Highlight> highlights;
 	
 
 	@OneToMany(mappedBy = "land", fetch=FetchType.LAZY)
