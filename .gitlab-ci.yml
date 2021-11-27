@@ -1,0 +1,7 @@
+stages:
+  - verify
+  - deploy
+
+verify:
+  stage: verify
+    - mvn clean verify

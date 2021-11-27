@@ -1,3 +1,22 @@
 spring:
-    profiles:
-      - dev
+    application:
+         name:  interaction-design-api
+               
+    datasource: 
+         url: jdbc:postgresql://localhost/interaction-design
+         username: postgres
+         password: postgresQL
+    
+    jpa:
+       show-sql: false
+       generate-ddl: true
+       properties:
+           hibernate:
+                jdbc: 
+                   lob:
+                      non_contextual_creation : true
+                      
+           dialect: org.hibernate.dialect.PostgreSQLDialect     
+           # Hibernate ddl auto (create, create-drop, validate, update)
+           ddl-auto: update
+
