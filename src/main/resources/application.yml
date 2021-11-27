@@ -4,7 +4,7 @@ spring:
                
     datasource: 
          url: jdbc:postgresql://localhost/interaction-design
-         username: postgres
+         username: postgres_1
          password: postgresQL
     
     jpa:
