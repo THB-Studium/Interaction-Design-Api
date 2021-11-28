@@ -1,11 +1,6 @@
-package com.team.angular.interactiondesignapi.transfertobjects;
+package com.team.angular.interactiondesignapi.transfertobjects.unterkunft;
 
-import java.util.List;
 import java.util.UUID;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import com.team.angular.interactiondesignapi.models.Land;
 
 public class UnterkunftWriteTO {
 
@@ -19,9 +14,9 @@ public class UnterkunftWriteTO {
 
 	private String beschreibung;
 
-	private Land land;
+	private UUID landId;
 
-	private List<MultipartFile> bilder;
+	//private List<MultipartFile> bilder;
 
 	public UUID getId() {
 		return id;
@@ -63,20 +58,20 @@ public class UnterkunftWriteTO {
 		this.beschreibung = beschreibung;
 	}
 
-	public Land getLand() {
-		return land;
+	public UUID getLand() {
+		return landId;
 	}
 
-	public void setLand(Land land) {
-		this.land = land;
+	public void setLand(UUID land) {
+		this.landId = land;
 	}
 
-	public List<MultipartFile> getBilder() {
-		return bilder;
-	}
-
-	public void setBilder(List<MultipartFile> bilder) {
-		this.bilder = bilder;
-	}
+//	public List<MultipartFile> getBilder() {
+//		return bilder;
+//	}
+//
+//	public void setBilder(List<MultipartFile> bilder) {
+//		this.bilder = bilder;
+//	}
 
 }

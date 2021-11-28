@@ -1,11 +1,10 @@
-package com.team.angular.interactiondesignapi.transfertobjects;
+package com.team.angular.interactiondesignapi.transfertobjects.unterkunft;
 
-import java.util.List;
 import java.util.UUID;
 
-import com.team.angular.interactiondesignapi.models.Land;
+import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadTO;
 
-public class UnterkunftReadTO {
+public class UnterkunftReadListTO {
 
 	private UUID id;
 
@@ -17,9 +16,7 @@ public class UnterkunftReadTO {
 
 	private String beschreibung;
 
-	private Land land;
-
-	private List<byte[]> bilder;
+	private LandReadTO land;
 
 	public UUID getId() {
 		return id;
@@ -61,20 +58,12 @@ public class UnterkunftReadTO {
 		this.beschreibung = beschreibung;
 	}
 
-	public Land getLand() {
+	public LandReadTO getLand() {
 		return land;
 	}
 
-	public void setLand(Land land) {
+	public void setLand(LandReadTO land) {
 		this.land = land;
-	}
-
-	public List<byte[]> getBilder() {
-		return bilder;
-	}
-
-	public void setBilder(List<byte[]> bilder) {
-		this.bilder = bilder;
 	}
 
 }
