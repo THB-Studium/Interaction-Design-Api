@@ -3,7 +3,7 @@ package com.team.angular.interactiondesignapi.services;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.repositories.AdminRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.MessageResponse;
+import com.team.angular.interactiondesignapi.transfertobjects.reponse.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Service
 public class AdminService {
-    private static final Logger log = LoggerFactory.getLogger(FeedbackService.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminService.class);
     @Autowired
     private AdminRepository adminRepository;
 
@@ -35,12 +35,12 @@ public class AdminService {
 
     public Admin getAdmin(UUID id) {
         return adminRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + id));
     }
 
     public ResponseEntity<?> deleteAdmin(UUID id) {
         Admin actual = adminRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + id));
 
         adminRepository.deleteById(actual.getId());
         log.info("admin successfully deleted");
@@ -58,7 +58,7 @@ public class AdminService {
     }
 
     // check les elements qui sont envoyes un par un
-    public ResponseEntity<?> updateImageElement(UUID id, Map<String, Object> admin_new) {
+    public ResponseEntity<?> updateAdminElement(UUID id, Map<String, Object> admin_new) {
         Admin admin = getAdmin(id);
 
         admin_new.forEach((element, value) -> {
