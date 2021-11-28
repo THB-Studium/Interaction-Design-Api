@@ -55,7 +55,6 @@
 			<optional>true</optional>
 		</dependency>
 		<!-- lombok start -->
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>

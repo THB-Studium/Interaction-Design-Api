@@ -14,16 +14,21 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Feedback;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Leistungen;
+import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
+import com.team.angular.interactiondesignapi.models.ZahlungMethod;
+import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.LeistungenRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -51,6 +56,12 @@ public class ItBase {
 	
 	@Autowired
 	protected LeistungenRepository leistungenRepository;
+	
+	@Autowired
+	protected ReiserRepository reiserRepository;
+	
+	@Autowired
+	protected BuchungRepository buchungRepository;
 
 	@BeforeEach
 	public void setup() {
@@ -62,9 +73,11 @@ public class ItBase {
 
 	public void cleanup() {
 		feedbackRepository.deleteAll();
+		buchungRepository.deleteAll();
 		unterkunftRepository.deleteAll();
 		landRepository.deleteAll();
-		leistungenRepository.deleteAll();		
+		leistungenRepository.deleteAll();	
+		reiserRepository.deleteAll();
 	}
 
 	protected Feedback buildFeedback() {
@@ -118,12 +131,79 @@ public class ItBase {
 		return land;
 	}
 	
+	protected ReiserWriteTO buildReiserWriteTO() {
+		ReiserWriteTO reiser = new ReiserWriteTO();
+
+		reiser.setName(UUID.randomUUID().toString());
+		reiser.setVorname(UUID.randomUUID().toString());
+		reiser.setGeburtsdatum(new Date());
+		reiser.setTelefonnummer(1232354);
+		reiser.setEmail(UUID.randomUUID().toString());
+		reiser.setHochschule(UUID.randomUUID().toString());
+		reiser.setAdresse(UUID.randomUUID().toString());
+		reiser.setStudiengang(UUID.randomUUID().toString());
+		reiser.setArbeitBei(UUID.randomUUID().toString());
+		reiser.setSchonTeilgenommen(true);
+
+		return reiser;
+	}
+	
+	protected ReiserWriteTO buildReiserWriteTO(List<UUID> buchungsId) {
+		ReiserWriteTO reiser = new ReiserWriteTO();
+
+		reiser.setName(UUID.randomUUID().toString());
+		reiser.setVorname(UUID.randomUUID().toString());
+		reiser.setGeburtsdatum(new Date());
+		reiser.setTelefonnummer(1232354);
+		reiser.setEmail(UUID.randomUUID().toString());
+		reiser.setHochschule(UUID.randomUUID().toString());
+		reiser.setAdresse(UUID.randomUUID().toString());
+		reiser.setStudiengang(UUID.randomUUID().toString());
+		reiser.setArbeitBei(UUID.randomUUID().toString());
+		reiser.setSchonTeilgenommen(true);
+		reiser.setBuchungIds(buchungsId);
+
+		return reiser;
+	}
+	
+	protected Reiser buildReiser() {
+		Reiser reiser = new Reiser();
+
+		reiser.setName(UUID.randomUUID().toString());
+		reiser.setVorname(UUID.randomUUID().toString());
+		reiser.setGeburtsdatum(new Date());
+		reiser.setTelefonnummer(1232354);
+		reiser.setEmail(UUID.randomUUID().toString());
+		reiser.setHochschule(UUID.randomUUID().toString());
+		reiser.setAdresse(UUID.randomUUID().toString());
+		reiser.setStudiengang(UUID.randomUUID().toString());
+		reiser.setArbeitBei(UUID.randomUUID().toString());
+		reiser.setSchonTeilgenommen(true);
+
+		return reiser;
+	}
+	
 	protected Leistungen buildLeistungen(List<String> beschreibung) {
 		Leistungen leistung = new Leistungen();
 
 		leistung.setBeschreibung((beschreibung));
 
 		return leistung;
+	}
+	
+	protected Buchung buildBuchung(Reiser mitReiser, Reiser reiser, Land land) {
+		Buchung newBuchung = new Buchung();
+		
+		newBuchung.setDatum(new Date());
+		newBuchung.setMitReiser(UUID.randomUUID().toString());
+		newBuchung.setFlugAhfen(UUID.randomUUID().toString());
+		newBuchung.setHandGepaeck(UUID.randomUUID().toString());
+		newBuchung.setKoffer(UUID.randomUUID().toString());
+		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
+		newBuchung.setReiser(reiser);
+		newBuchung.setLand(land);
+		
+		return newBuchung;
 	}
 
 }
