@@ -5,6 +5,13 @@ import java.util.UUID;
 
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UnterkunftReadTO {
 
 	private UUID id;
@@ -20,61 +27,5 @@ public class UnterkunftReadTO {
 	private LandReadTO land;
 
 	private List<byte[]> bilder;
-
-	public UUID getId() {
-		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLink() {
-		return link;
-	}
-
-	public void setLink(String link) {
-		this.link = link;
-	}
-
-	public String getAdresse() {
-		return adresse;
-	}
-
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
-	}
-
-	public String getBeschreibung() {
-		return beschreibung;
-	}
-
-	public void setBeschreibung(String beschreibung) {
-		this.beschreibung = beschreibung;
-	}
-
-	public LandReadTO getLand() {
-		return land;
-	}
-
-	public void setLand(LandReadTO land) {
-		this.land = land;
-	}
-
-	public List<byte[]> getBilder() {
-		return bilder;
-	}
-
-	public void setBilder(List<byte[]> bilder) {
-		this.bilder = bilder;
-	}
 
 }

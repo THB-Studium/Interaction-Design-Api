@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.team.angular.interactiondesignapi.ItBase;
+import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Leistungen;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
@@ -35,6 +36,8 @@ public class UnterkunftIT extends ItBase {
 	
 	private List<String> beschreibung = new ArrayList<>();
 	
+	Erwartungen erwartungen;
+	
 	@BeforeEach
 	public void setup() {
 		super.setup();		
@@ -47,7 +50,10 @@ public class UnterkunftIT extends ItBase {
 		leistungen = buildLeistungen(beschreibung);
 		leistungen = leistungenRepository.save(leistungen);
 		
-		land = buildLand(leistungen);
+		erwartungen = buildErwartungen();
+		erwartungen = erwartungenRepository.save(erwartungen);
+		
+		land = buildLand(erwartungen);
 		land = landRepository.save(land);
 		
 		unterkunft = buildUnterkunft(bilder, land);
@@ -88,6 +94,7 @@ public class UnterkunftIT extends ItBase {
 		Unterkunft unterkunft = unterkunftRepository.findById(id).get();
 		
 		assertThat(unterkunftWrite1.getName(), is(unterkunft.getName()));
+//		assertThat(unterkunft.getLand().getUnterkunft(), containsInAnyOrder(unterkunft));
 		
 	}
 	
@@ -132,7 +139,7 @@ public class UnterkunftIT extends ItBase {
 		assertThat(unterkunftWrite1.getLink(), is(updated_unterkunft.getLink()));
 		assertThat(unterkunftWrite1.getAdresse(), is(updated_unterkunft.getAdresse()));
 		assertThat(unterkunftWrite1.getBeschreibung(), is(updated_unterkunft.getBeschreibung()));
-		assertThat(unterkunftWrite1.getLand(), is(updated_unterkunft.getLand().getId()));
+		assertThat(unterkunftWrite1.getLandId(), is(updated_unterkunft.getLand().getId()));
 	}
 	
 	@Test

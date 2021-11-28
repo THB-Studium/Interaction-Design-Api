@@ -1,14 +1,11 @@
 package com.team.angular.interactiondesignapi.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,8 +52,9 @@ public class Land {
 
     private Date anmeldungsFrist;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Leistungen leistungen;
+    //@OneToOne(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> leistungen;
 
     @JsonIdentityReference(alwaysAsId = true)
     @OneToOne(fetch = FetchType.LAZY)
@@ -71,19 +71,6 @@ public class Land {
     @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
     private List<Highlight> highlights;
-
-
-	@OneToOne(fetch = FetchType.LAZY)
-	private Leistungen leistungen;
-
-	// private InfoLand infoLand;
-
-	// private Buchungsklassen buchungsklassen;
-
-	// private Erwartungen erwartungen;
-
-	// @OneToMany(mappedBy="...")
-	// private List<Highlights> highlights;
 
 	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
 	private List<Buchung> buchungen;

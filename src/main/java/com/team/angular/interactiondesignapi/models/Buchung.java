@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -32,9 +33,9 @@ public class Buchung {
 	private Date datum;
 
 	private String mitReiser;
-
-	// @NotBlank
-	// private BuchungsKlasse tarif;
+	
+	@OneToOne(mappedBy = "buchung")
+	private Buchungsklassen tarif;
 
 	@NotBlank
 	private String flugAhfen;

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Buchung;
+import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Leistungen;
 import com.team.angular.interactiondesignapi.models.Reiser;
@@ -36,6 +37,8 @@ public class ReiserIT extends ItBase {
 	
 	private List<String> beschreibung = new ArrayList<>();
 	
+	Erwartungen erwartungen;
+	
 	@BeforeEach
 	public void setup() {
 		super.setup();		
@@ -52,13 +55,16 @@ public class ReiserIT extends ItBase {
 		leistungen = buildLeistungen(beschreibung);
 		leistungen = leistungenRepository.save(leistungen);
 		
-		land = buildLand(leistungen);
+		erwartungen = buildErwartungen();
+		erwartungen = erwartungenRepository.save(erwartungen);
+		
+		land = buildLand(erwartungen);
 		land = landRepository.save(land);
 		
-		buchung = buildBuchung(mitReiser, reiser1, land);
+		buchung = buildBuchung(reiser1, land);
 		buchung = buchungRepository.save(buchung);
 		
-		buchung1 = buildBuchung(mitReiser, reiser1, land);
+		buchung1 = buildBuchung(reiser1, land);
 		buchung1 = buchungRepository.save(buchung1);
 		
 		reiserWrite1 = buildReiserWriteTO();
@@ -92,21 +98,21 @@ public class ReiserIT extends ItBase {
 		
 	}
 	
-//	@Test
-//	public void listReisers() {	
-//		
-//		given()
-//		.contentType(ContentType.JSON)
-//		//.body(create)
-//		.log().body()
-//		.get("/reisers")
-//		.then()
-//		.log().body()
-//		.statusCode(200)
-//		.body("id", containsInAnyOrder(reiser.getId().toString(), reiser1.getId().toString()));
-//					
-//	}
-//	
+	@Test
+	public void listReisers() {	
+		
+		given()
+		.contentType(ContentType.JSON)
+		//.body(create)
+		.log().body()
+		.get("/reisers")
+		.then()
+		.log().body()
+		.statusCode(200)
+		.body("id", containsInAnyOrder(reiser.getId().toString(), reiser1.getId().toString()));
+					
+	}
+	
 //	@Test
 //	public void updateReiser() {
 //		
