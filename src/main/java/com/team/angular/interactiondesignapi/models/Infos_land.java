@@ -1,5 +1,8 @@
 package com.team.angular.interactiondesignapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +17,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Infos_land {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -32,5 +36,9 @@ public class Infos_land {
     private String reiseordnung;
     private String hinweis;
     private String Sonstiger_hinweis;
+
+    @JsonIdentityReference(alwaysAsId = true)
+    @OneToOne(mappedBy = "infos_Land", fetch = FetchType.LAZY)
+    private Land land;
 
 }
