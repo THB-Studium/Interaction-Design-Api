@@ -28,5 +28,8 @@ public class Buchungsklassen {
     @JsonIdentityReference(alwaysAsId = true)
     @OneToOne(mappedBy = "buchungsklassen", fetch = FetchType.LAZY)
     private Land land;
+   
+    @OneToOne(fetch = FetchType.LAZY)
+    private Buchung buchung;
 
 }

@@ -16,18 +16,26 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.team.angular.interactiondesignapi.models.Buchung;
+import com.team.angular.interactiondesignapi.models.Buchungsklassen;
+import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Feedback;
+import com.team.angular.interactiondesignapi.models.Infos_land;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Leistungen;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
 import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
+import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
+import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
 import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
+import com.team.angular.interactiondesignapi.repositories.Infos_landRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.LeistungenRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
 
@@ -62,6 +70,15 @@ public class ItBase {
 	
 	@Autowired
 	protected BuchungRepository buchungRepository;
+	
+	@Autowired
+	protected BuchungsklassenRepository buchungsklasseRepository;
+	
+	@Autowired
+	protected Infos_landRepository infos_LandRepository;
+	
+	@Autowired
+	protected ErwartungenRepository erwartungenRepository;
 
 	@BeforeEach
 	public void setup() {
@@ -76,6 +93,9 @@ public class ItBase {
 		buchungRepository.deleteAll();
 		unterkunftRepository.deleteAll();
 		landRepository.deleteAll();
+		buchungsklasseRepository.deleteAll();
+		infos_LandRepository.deleteAll();
+		erwartungenRepository.deleteAll();
 		leistungenRepository.deleteAll();	
 		reiserRepository.deleteAll();
 	}
@@ -110,12 +130,12 @@ public class ItBase {
 		unterkunft.setAdresse(UUID.randomUUID().toString());
 		unterkunft.setBeschreibung(UUID.randomUUID().toString());
 		//unterkunft.setBilder(bilder);
-		unterkunft.setLand(landId);
+		unterkunft.setLandId(landId);
 
 		return unterkunft;
 	}
 
-	protected Land buildLand(Leistungen leistungen) {
+	protected Land buildLand(Erwartungen erwartungen ) {
 		Land land = new Land();
 
 		land.setName(UUID.randomUUID().toString());
@@ -127,6 +147,24 @@ public class ItBase {
 		land.setPlaetze(12);
 		land.setFreiPlaetze(6);
 		land.setAnmeldungsFrist(new Date());
+		land.setErwartungen(erwartungen);
+
+		return land;
+	}
+	
+	protected LandWriteTO buildLandWriteTO(UUID erwartungenId, UUID infos_LandId, UUID buchungsklassenId) {
+		LandWriteTO land = new LandWriteTO();
+
+		land.setName(UUID.randomUUID().toString());
+		land.setStartDatum(new Date());
+		land.setEndDatum(new Date());
+		land.setTitel(UUID.randomUUID().toString());
+		land.setPlaetze(12);
+		land.setFreiPlaetze(6);
+		land.setAnmeldungsFrist(new Date());
+		land.setErwartungenId(erwartungenId);
+		land.setInfos_LandId(infos_LandId);
+		land.setBuchungsklassenId(buchungsklassenId);
 
 		return land;
 	}
@@ -191,7 +229,7 @@ public class ItBase {
 		return leistung;
 	}
 	
-	protected Buchung buildBuchung(Reiser mitReiser, Reiser reiser, Land land) {
+	protected Buchung buildBuchung( Reiser reiser, Land land) {
 		Buchung newBuchung = new Buchung();
 		
 		newBuchung.setDatum(new Date());
@@ -205,5 +243,60 @@ public class ItBase {
 		
 		return newBuchung;
 	}
-
+	
+	protected BuchungWriteTO buildBuchungWriteTO(UUID reiserId, UUID landId, UUID buchungsklasseId) {
+		BuchungWriteTO newBuchung = new BuchungWriteTO();
+		
+		newBuchung.setDatum(new Date());
+		newBuchung.setBuchungsklasseId(buchungsklasseId);
+		newBuchung.setMitReiser(UUID.randomUUID().toString());
+		newBuchung.setFlugAhfen(UUID.randomUUID().toString());
+		newBuchung.setHandGepaeck(UUID.randomUUID().toString());
+		newBuchung.setKoffer(UUID.randomUUID().toString());
+		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
+		newBuchung.setReiserId(reiserId);
+		newBuchung.setLandId(landId);
+		
+		return newBuchung;
+	}
+	
+	
+	protected Buchungsklassen buildBuchungsKlasse( Land land) {
+		Buchungsklassen newBuchung = new Buchungsklassen();
+		
+		newBuchung.setType(UUID.randomUUID().toString());
+		newBuchung.setPreis(12.0);
+		newBuchung.setLand(land);
+		
+		return newBuchung;
+	}
+	
+	protected Erwartungen buildErwartungen() {
+		Erwartungen newErwartungen = new Erwartungen();
+		
+		newErwartungen.setAbenteuer(12);
+		newErwartungen.setEntschleunigung(12);
+		newErwartungen.setKonfort(12);
+		newErwartungen.setNachhaltigkeit(12);
+		newErwartungen.setSonne_strand(12);
+		newErwartungen.setSicherheit(12);
+		newErwartungen.setRoad(12);
+		
+		return newErwartungen;
+	}
+	
+	protected Infos_land buildInfosLand(List<String> abflug, List<String> mitreiseberechtigt) {
+		Infos_land newBuchung = new Infos_land();
+		
+		newBuchung.setAbflug(abflug);
+		newBuchung.setMitreiseberechtigt(mitreiseberechtigt);
+		newBuchung.setUnterkuft_text(UUID.randomUUID().toString());
+		newBuchung.setCorona_info(UUID.randomUUID().toString());
+		newBuchung.setKlima(UUID.randomUUID().toString());
+		newBuchung.setGesundheit(UUID.randomUUID().toString());
+		newBuchung.setReiseordnung(UUID.randomUUID().toString());
+		newBuchung.setSonstiger_hinweis(UUID.randomUUID().toString());
+		
+		return newBuchung;
+	}
 }

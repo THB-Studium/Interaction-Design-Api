@@ -49,7 +49,7 @@ public class ReiserService {
 		newReiser.setAdresse(reiser.getAdresse());
 		newReiser.setStudiengang(reiser.getStudiengang());
 		newReiser.setArbeitBei(reiser.getArbeitBei());
-		newReiser.setSchonTeilgenommen(reiser.getSchonTeilgenommen());
+		newReiser.setSchonTeilgenommen(reiser.isSchonTeilgenommen());
 		newReiser.setBuchungen(new HashSet<>());
 
 		return Reiser2ReiserReadTO.apply(reiserRepository.save(newReiser));
@@ -78,7 +78,7 @@ public class ReiserService {
 		actual.setAdresse(reiser.getAdresse());
 		actual.setStudiengang(reiser.getStudiengang());
 		actual.setArbeitBei(reiser.getArbeitBei());
-		actual.setSchonTeilgenommen(reiser.getSchonTeilgenommen());
+		actual.setSchonTeilgenommen(reiser.isSchonTeilgenommen());
 
 		if (reiser.getBuchungIds().size() > 0) {
 			reiser.getBuchungIds().forEach(id -> {

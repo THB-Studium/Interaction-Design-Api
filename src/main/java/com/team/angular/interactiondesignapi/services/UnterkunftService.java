@@ -50,7 +50,7 @@ public class UnterkunftService {
 			bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
 		}
 		
-		Land land = landRepository.findById(unterkunft.getLand()).orElseThrow(() 
+		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
 				-> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
 		Unterkunft newUnterkunft = new Unterkunft();
@@ -77,7 +77,7 @@ public class UnterkunftService {
 			bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
 		}
 		
-		Land land = landRepository.findById(unterkunft.getLand()).orElseThrow(() 
+		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
 				-> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
 		actual_unterkunft.setName(unterkunft.getName());

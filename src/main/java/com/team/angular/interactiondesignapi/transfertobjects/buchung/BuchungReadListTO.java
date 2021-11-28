@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
-import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuchungReadTO {
+public class BuchungReadListTO {
 
 	private UUID id;
 
@@ -21,7 +20,8 @@ public class BuchungReadTO {
 
 	private String mitReiser;
 
-	private BuchungsklassenReadTO tarif;
+	// @NotBlank
+	// private BuchungsKlasse tarif;
 
 	private String flugAhfen;
 
@@ -34,5 +34,5 @@ public class BuchungReadTO {
 	private UUID reiserId;
 
 	private UUID landId;
-	
+
 }
