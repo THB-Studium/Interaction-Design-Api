@@ -10,6 +10,13 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Leistungen {
 
@@ -20,29 +27,5 @@ public class Leistungen {
 
 	@ElementCollection
 	private List<String> beschreibung;
-
-	public Leistungen() {
-	}
-
-	public Leistungen(UUID id, List<String> beschreibung) {
-		this.id = id;
-		this.beschreibung = beschreibung;
-	}
-
-	public UUID getId() {
-		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
-	public List<String> getBeschreibung() {
-		return beschreibung;
-	}
-
-	public void setBeschreibung(List<String> beschreibung) {
-		this.beschreibung = beschreibung;
-	}
 
 }

@@ -9,6 +9,13 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Feedback {
 
@@ -22,39 +29,5 @@ public class Feedback {
 
 	@NotBlank
 	private String description;
-
-	public Feedback() {
-
-	}
-
-	public Feedback(UUID id, @NotBlank String autor, @NotBlank String description) {
-		this.id = id;
-		this.autor = autor;
-		this.description = description;
-	}
-
-	public UUID getId() {
-		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
-	public String getAutor() {
-		return autor;
-	}
-
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 }

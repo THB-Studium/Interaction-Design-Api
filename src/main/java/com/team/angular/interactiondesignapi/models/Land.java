@@ -9,6 +9,23 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Land {
 
@@ -56,6 +73,7 @@ public class Land {
     private List<Highlight> highlights;
 
 
+<<<<<<< HEAD
     @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
     private List<Buchung> buchungen;
 
@@ -188,5 +206,24 @@ public class Land {
     public void setUnterkunft(List<Unterkunft> unterkunft) {
         this.unterkunft = unterkunft;
     }
+=======
+	@OneToOne(fetch = FetchType.LAZY)
+	private Leistungen leistungen;
+
+	// private InfoLand infoLand;
+
+	// private Buchungsklassen buchungsklassen;
+
+	// private Erwartungen erwartungen;
+
+	// @OneToMany(mappedBy="...")
+	// private List<Highlights> highlights;
+
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	private List<Buchung> buchungen;
+
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	private List<Unterkunft> unterkunft;
+>>>>>>> 2ceeca6 (add lombock, implements Reiser)
 
 }
