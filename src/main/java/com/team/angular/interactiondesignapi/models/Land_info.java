@@ -12,16 +12,17 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Buchungsklassen {
+public class Land_info {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    private String type;
-    private double preis;
+    private String titel;
+    @Lob
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ReiseAngebot reiseAngebot;
+    private Land land;
 
 }

@@ -19,9 +19,8 @@ import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Feedback;
-import com.team.angular.interactiondesignapi.models.Infos_land;
+import com.team.angular.interactiondesignapi.models.Land_info;
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.Leistungen;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
@@ -29,9 +28,8 @@ import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
 import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
-import com.team.angular.interactiondesignapi.repositories.Infos_landRepository;
+import com.team.angular.interactiondesignapi.repositories.Land_infoRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
-import com.team.angular.interactiondesignapi.repositories.LeistungenRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
@@ -61,22 +59,19 @@ public class ItBase {
 
 	@Autowired
 	protected LandRepository landRepository;
-	
-	@Autowired
-	protected LeistungenRepository leistungenRepository;
-	
+
 	@Autowired
 	protected ReiserRepository reiserRepository;
-	
+
 	@Autowired
 	protected BuchungRepository buchungRepository;
-	
+
 	@Autowired
 	protected BuchungsklassenRepository buchungsklasseRepository;
-	
+
 	@Autowired
-	protected Infos_landRepository infos_LandRepository;
-	
+	protected Land_infoRepository infos_LandRepository;
+
 	@Autowired
 	protected ErwartungenRepository erwartungenRepository;
 
@@ -96,7 +91,6 @@ public class ItBase {
 		buchungsklasseRepository.deleteAll();
 		infos_LandRepository.deleteAll();
 		erwartungenRepository.deleteAll();
-		leistungenRepository.deleteAll();	
 		reiserRepository.deleteAll();
 	}
 
@@ -121,7 +115,7 @@ public class ItBase {
 
 		return unterkunft;
 	}
-	
+
 	protected UnterkunftWriteTO buildUnterkunftWriteTO(UUID landId) {
 		UnterkunftWriteTO unterkunft = new UnterkunftWriteTO();
 
@@ -129,13 +123,13 @@ public class ItBase {
 		unterkunft.setLink(UUID.randomUUID().toString());
 		unterkunft.setAdresse(UUID.randomUUID().toString());
 		unterkunft.setBeschreibung(UUID.randomUUID().toString());
-		//unterkunft.setBilder(bilder);
+		// unterkunft.setBilder(bilder);
 		unterkunft.setLandId(landId);
 
 		return unterkunft;
 	}
 
-	protected Land buildLand(Erwartungen erwartungen ) {
+	protected Land buildLand(Erwartungen erwartungen) {
 		Land land = new Land();
 
 		land.setName(UUID.randomUUID().toString());
@@ -151,7 +145,7 @@ public class ItBase {
 
 		return land;
 	}
-	
+
 	protected LandWriteTO buildLandWriteTO(UUID erwartungenId, UUID infos_LandId, UUID buchungsklassenId) {
 		LandWriteTO land = new LandWriteTO();
 
@@ -168,7 +162,7 @@ public class ItBase {
 
 		return land;
 	}
-	
+
 	protected ReiserWriteTO buildReiserWriteTO() {
 		ReiserWriteTO reiser = new ReiserWriteTO();
 
@@ -185,7 +179,7 @@ public class ItBase {
 
 		return reiser;
 	}
-	
+
 	protected ReiserWriteTO buildReiserWriteTO(List<UUID> buchungsId) {
 		ReiserWriteTO reiser = new ReiserWriteTO();
 
@@ -203,7 +197,7 @@ public class ItBase {
 
 		return reiser;
 	}
-	
+
 	protected Reiser buildReiser() {
 		Reiser reiser = new Reiser();
 
@@ -220,18 +214,10 @@ public class ItBase {
 
 		return reiser;
 	}
-	
-	protected Leistungen buildLeistungen(List<String> beschreibung) {
-		Leistungen leistung = new Leistungen();
 
-		leistung.setBeschreibung((beschreibung));
-
-		return leistung;
-	}
-	
-	protected Buchung buildBuchung( Reiser reiser, Land land) {
+	protected Buchung buildBuchung(Reiser reiser, Land land) {
 		Buchung newBuchung = new Buchung();
-		
+
 		newBuchung.setDatum(new Date());
 		newBuchung.setMitReiser(UUID.randomUUID().toString());
 		newBuchung.setFlugAhfen(UUID.randomUUID().toString());
@@ -240,13 +226,13 @@ public class ItBase {
 		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
 		newBuchung.setReiser(reiser);
 		newBuchung.setLand(land);
-		
+
 		return newBuchung;
 	}
-	
+
 	protected BuchungWriteTO buildBuchungWriteTO(UUID reiserId, UUID landId, UUID buchungsklasseId) {
 		BuchungWriteTO newBuchung = new BuchungWriteTO();
-		
+
 		newBuchung.setDatum(new Date());
 		newBuchung.setBuchungsklasseId(buchungsklasseId);
 		newBuchung.setMitReiser(UUID.randomUUID().toString());
@@ -256,24 +242,23 @@ public class ItBase {
 		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
 		newBuchung.setReiserId(reiserId);
 		newBuchung.setLandId(landId);
-		
+
 		return newBuchung;
 	}
-	
-	
-	protected Buchungsklassen buildBuchungsKlasse( Land land) {
+
+	protected Buchungsklassen buildBuchungsKlasse(Land land) {
 		Buchungsklassen newBuchung = new Buchungsklassen();
-		
+
 		newBuchung.setType(UUID.randomUUID().toString());
 		newBuchung.setPreis(12.0);
 		newBuchung.setLand(land);
-		
+
 		return newBuchung;
 	}
-	
+
 	protected Erwartungen buildErwartungen() {
 		Erwartungen newErwartungen = new Erwartungen();
-		
+
 		newErwartungen.setAbenteuer(12);
 		newErwartungen.setEntschleunigung(12);
 		newErwartungen.setKonfort(12);
@@ -281,13 +266,13 @@ public class ItBase {
 		newErwartungen.setSonne_strand(12);
 		newErwartungen.setSicherheit(12);
 		newErwartungen.setRoad(12);
-		
+
 		return newErwartungen;
 	}
-	
+
 	protected Infos_land buildInfosLand(List<String> abflug, List<String> mitreiseberechtigt) {
 		Infos_land newBuchung = new Infos_land();
-		
+
 		newBuchung.setAbflug(abflug);
 		newBuchung.setMitreiseberechtigt(mitreiseberechtigt);
 		newBuchung.setUnterkuft_text(UUID.randomUUID().toString());
@@ -296,7 +281,7 @@ public class ItBase {
 		newBuchung.setGesundheit(UUID.randomUUID().toString());
 		newBuchung.setReiseordnung(UUID.randomUUID().toString());
 		newBuchung.setSonstiger_hinweis(UUID.randomUUID().toString());
-		
+
 		return newBuchung;
 	}
 }
