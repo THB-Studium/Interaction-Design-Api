@@ -48,7 +48,7 @@ public class AdminService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    //UPDATE
+    // UPDATE
 
     // ecraser
     public Admin updateAdmin(Admin admin, UUID id) {
@@ -58,32 +58,53 @@ public class AdminService {
     }
 
     // check les elements qui sont envoyes un par un
-    public ResponseEntity<?> updateAdminElement(UUID id, Map<String, Object> admin_new) {
-        Admin admin = getAdmin(id);
-
-        admin_new.forEach((element, value) -> {
-            switch (element) {
-                case "name":
-                    admin.setName((String) value);
-                    break;
-                case "kennwort":
-                    admin.setKennwort((String) value);
-                    break;
-                case "email":
-                    admin.setEmail((String) value);
-                    break;
-            }
-        });
-
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<Admin>> violations = validator.validate(admin);// , OnUpdate.class);
-
-        if (!violations.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MessageResponse(violations.toString()));
-        }
-
-        addAdmin(admin);
-        return new ResponseEntity<>("Successfully updated", HttpStatus.OK);
-    }
+    /*
+     * public ResponseEntity<?> updateAdminElement(UUID id, Admin admin_new) {
+     * Admin admin = getAdmin(id);
+     * 
+     * 
+     * 
+     * Map<String, Object> map = oMapper.convertValue(admin, Map.class);
+     * 
+     * Map<String, Object> admin_new = admin;
+     * admin_new.forEach((element, value) -> {
+     * switch (element) {
+     * case "name":
+     * if (value != null)
+     * admin.setName((String) value);
+     * break;
+     * case "kennwort":
+     * if (value != null)
+     * admin.setKennwort((String) value);
+     * break;
+     * case "email":
+     * if (value != null)
+     * admin.setEmail((String) value);
+     * break;
+     * }
+     * });
+     * 
+     * Validator validator =
+     * Validation.buildDefaultValidatorFactory().getValidator();
+     * Set<ConstraintViolation<Admin>> violations = validator.validate(admin);// ,
+     * OnUpdate.class);
+     * 
+     * if (!violations.isEmpty()) {
+     * return ResponseEntity.badRequest().body(new
+     * MessageResponse(violations.toString()));
+     * }
+     * 
+     * addAdmin(admin);
+     * return new ResponseEntity<>("Successfully updated", HttpStatus.OK);
+     * }
+     *//*
+        * <dependency>
+        * <groupId>com.fasterxml.jackson.core</groupId>
+        * <artifactId>jackson-databind</artifactId>
+        * <version>2.6.3</version>
+        * </dependency>
+        * 
+        * with jakson
+        */
 
 }

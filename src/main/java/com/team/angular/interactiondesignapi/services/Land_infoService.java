@@ -15,26 +15,26 @@ import java.util.UUID;
 public class Land_infoService {
     private static final Logger log = LoggerFactory.getLogger(Land_infoService.class);
     @Autowired
-    private Land_infoRepository infos_landRepository;
+    private Land_infoRepository land_infoRepository;
 
     public List<Land_info> getAll() {
-        return infos_landRepository.findAll();
+        return land_infoRepository.findAll();
     }
 
-    public Land_info addInfos_land(Land_info infos_land) {
-        return infos_landRepository.save(infos_land);
+    public Land_info addLand_info(Land_info land_info) {
+        return land_infoRepository.save(land_info);
     }
 
-    public Land_info getInfos_land(UUID id) {
-        return infos_landRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Infos_land with id: " + id));
+    public Land_info getLand_info(UUID id) {
+        return land_infoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land_info with id: " + id));
     }
 
-    public ResponseEntity<?> deleteInfos_land(UUID id) {
-        Land_info actual = infos_landRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Infos_land with id: " + id));
+    public ResponseEntity<?> deleteLand_info(UUID id) {
+        Land_info actual = land_infoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land_info with id: " + id));
 
-        infos_landRepository.deleteById(actual.getId());
+        land_infoRepository.deleteById(actual.getId());
         log.info("Infos_land successfully deleted");
 
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
