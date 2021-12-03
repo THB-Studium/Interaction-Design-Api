@@ -53,7 +53,7 @@ public class FeedbacksController {
 	@ApiOperation("Update Feedback")
 	@PutMapping("")
 	public Feedback updateFeedback(
-			@ApiParam(name = "Feedback", value = "Feedback to update") @RequestBody Feedback feedback,
+			@ApiParam(name = "Feedback", value = "Feedback to update") @RequestPart Feedback feedback,
 			@RequestPart(value = "bild") MultipartFile bild) {
 		return feedbackService.updateFeedback(feedback, bild);
 	}

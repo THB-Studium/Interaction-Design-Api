@@ -34,7 +34,7 @@ public class FeedbackService {
 		Feedback newFeedback = new Feedback();
 		newFeedback.setAutor(feedback.getAutor());
 		newFeedback.setDescription(feedback.getDescription());
-		newFeedback.setVeroefentlich(feedback.isVeroefentlich());
+		newFeedback.setVeroefentlich(false);
 		newFeedback.setBild(Helper.convertMultiPartFileToByte(bild));
 
 		Feedback saved = feedbackRepository.save(newFeedback);

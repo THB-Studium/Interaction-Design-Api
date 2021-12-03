@@ -96,7 +96,7 @@ public class FeedbackIT extends ItBase {
 				.multiPart("bild", "something123".getBytes())
 				//.body(create)
 				.log().body()
-				.post("/feedbacks")
+				.put("/feedbacks")
 				.then()
 				.log().body()
 				.statusCode(200)
@@ -107,6 +107,35 @@ public class FeedbackIT extends ItBase {
 		assertThat(feedback.getId(), is(feedback.getId()));
 		assertThat(newAuhtor, is(feedback.getAutor()));
 		assertThat(feedback.getDescription(), is(feedback.getDescription()));		
+	}
+	
+	@Test
+	public void updateFeedback_Bild_Description_Null() {
+		
+		feedback1 = buildFeedback();
+		feedback1.setId(feedback.getId());
+		feedback1.setBild(null);
+		feedback1.setDescription(null);
+		
+		UUID id = UUID.fromString(
+				given()
+				//.contentType(ContentType.JSON)
+				.multiPart("feedback", feedback1,"application/json")
+				.multiPart("bild", "something123".getBytes())
+				//.body(create)
+				.log().body()
+				.put("/feedbacks")
+				.then()
+				.log().body()
+				.statusCode(200)
+				.extract().body().path("id"));
+		
+		Feedback feedback_ = feedbackRepository.findById(id).get();
+		
+		assertThat(feedback.getId(), is(feedback_.getId()));
+		assertThat(feedback.getAutor(), is(feedback_.getAutor()));
+		assertThat(feedback.getDescription(), is(feedback_.getDescription()));
+		assertThat(feedback.isVeroefentlich(), is(feedback_.isVeroefentlich()));
 	}
 	
 	@Test
