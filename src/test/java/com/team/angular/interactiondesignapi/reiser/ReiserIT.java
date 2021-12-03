@@ -4,6 +4,7 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,13 +59,13 @@ public class ReiserIT extends ItBase {
 		erwartungen = buildErwartungen();
 		erwartungen = erwartungenRepository.save(erwartungen);
 		
-		land = buildLand(erwartungen);
+		land = buildLand();
 		land = landRepository.save(land);
 		
-		buchung = buildBuchung(reiser1, land);
+		buchung = buildBuchung(reiser1);
 		buchung = buchungRepository.save(buchung);
 		
-		buchung1 = buildBuchung(reiser1, land);
+		buchung1 = buildBuchung(reiser1);
 		buchung1 = buchungRepository.save(buchung1);
 		
 		reiserWrite1 = buildReiserWriteTO();
@@ -103,7 +104,7 @@ public class ReiserIT extends ItBase {
 		
 		given()
 		.contentType(ContentType.JSON)
-		//.body(create)
+		.body("")
 		.log().body()
 		.get("/reisers")
 		.then()
@@ -113,36 +114,28 @@ public class ReiserIT extends ItBase {
 					
 	}
 	
-//	@Test
-//	public void updateReiser() {
-//		
-//		List<UUID> ids = new ArrayList<>();
-//		ids.add(buchung.getId());
-//		ids.add(buchung1.getId());
-//		
-//		reiserWrite1.setId(reiser.getId());
-//		reiserWrite1.setBuchungIds(ids);
-//		
-//		UUID id = UUID.fromString(
-//				given()
-//				.contentType(ContentType.JSON)
-//				.body(reiserWrite1)
-//				.log().body()
-//				.put("/reisers")
-//				.then()
-//				.log().body()
-//				.statusCode(200)
-//				.extract().body().path("id"));
-//		
-//		Reiser reiser_ = reiserRepository.findById(id).get();
-//		
-//		assertThat(reiserWrite1.getId(), is(reiser_.getId()));
-//		assertThat(reiserWrite1.getName(), is(reiser_.getName()));
-//		assertThat(reiserWrite1.getVorname(), is(reiser_.getVorname()));
-//		
-//		assertFalse((reiser_.getBuchungen().isEmpty()));
-//		assertThat(reiser_.getBuchungen(), containsInAnyOrder(buchung, buchung1));
-//	}
+	@Test
+	public void updateReiser() {
+		
+		reiserWrite1.setId(reiser.getId());
+		
+		UUID id = UUID.fromString(
+				given()
+				.contentType(ContentType.JSON)
+				.body(reiserWrite1)
+				.log().body()
+				.put("/reisers")
+				.then()
+				.log().body()
+				.statusCode(200)
+				.extract().body().path("id"));
+		
+		Reiser reiser_ = reiserRepository.findById(id).get();
+		
+		assertThat(reiserWrite1.getId(), is(reiser_.getId()));
+		assertThat(reiserWrite1.getName(), is(reiser_.getName()));
+		assertThat(reiserWrite1.getVorname(), is(reiser_.getVorname()));
+	}
 	
 	@Test
 	public void getReiser() {

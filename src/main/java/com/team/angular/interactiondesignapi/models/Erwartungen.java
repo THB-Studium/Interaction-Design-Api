@@ -30,7 +30,7 @@ public class Erwartungen {
     private int sicherheit;
     private int road;
 
-    @JsonIdentityReference(alwaysAsId = true)
-    @OneToOne(mappedBy = "erwartungen", fetch = FetchType.LAZY)
-    private Land land;
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @OneToOne(mappedBy = "erwartungen", fetch = FetchType.LAZY)
+//    private Land land;
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.team.angular.interactiondesignapi.services.BuchungService;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
 
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +38,8 @@ public class BuchungController {
 
 	@ApiOperation("Get One Buchung")
 	@GetMapping("/{id}")
-	public BuchungReadTO getBuchungById(@ApiParam(name = "BuchungId", value = "get One Buchung") @PathVariable UUID id) {
+	public BuchungReadTO getBuchungById(
+			@ApiParam(name = "BuchungId", value = "get One Buchung") @PathVariable UUID id) {
 		return buchungService.getBuchung(id);
 	}
 
@@ -51,7 +53,7 @@ public class BuchungController {
 	@ApiOperation("Update Buchung")
 	@PutMapping("")
 	public BuchungReadTO updateBuchung(
-			@ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungWriteTO buchung) {
+			@ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) {
 		return buchungService.updateBuchung(buchung);
 	}
 

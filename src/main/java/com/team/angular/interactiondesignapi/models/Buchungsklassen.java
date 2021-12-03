@@ -23,13 +23,10 @@ public class Buchungsklassen {
     private UUID id;
 
     private  String type;
+    
     private double preis;
-
-    @JsonIdentityReference(alwaysAsId = true)
-    @OneToOne(mappedBy = "buchungsklassen", fetch = FetchType.LAZY)
-    private Land land;
-   
-    @OneToOne(fetch = FetchType.LAZY)
-    private Buchung buchung;
+    
+//  @OneToOne(fetch = FetchType.LAZY)
+//  private ReiseAngebot reiseAngebot;
 
 }

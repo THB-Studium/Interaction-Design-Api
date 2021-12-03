@@ -52,7 +52,7 @@ public class Reiser {
 
 	private boolean schonTeilgenommen;
 
-	@OneToMany(mappedBy = "reiser", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "reiser", fetch = FetchType.EAGER)
 	private Set<Buchung> buchungen;
 
 }

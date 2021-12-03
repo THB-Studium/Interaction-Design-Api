@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,13 +70,13 @@ public class LandIT extends ItBase {
 		infos_land = buildInfosLand(abflug, mitreiseberechtigt);
 		infos_land = infos_LandRepository.save(infos_land);
 		
-		land = buildLand(erwartungen);
+		land = buildLand();
 		land = landRepository.save(land);
 		
 		buchungsklasse = buildBuchungsKlasse(land);
 		buchungsklasseRepository.save(buchungsklasse);
 		
-		land1 = buildLand(erwartungen);
+		land1 = buildLand();
 		land1 = landRepository.save(land1);
 		
 	}
@@ -94,8 +95,7 @@ public class LandIT extends ItBase {
 				given()
 				//.contentType(ContentType.JSON)
 				.multiPart("land", create,"application/json")
-				.multiPart("bild", "something123".getBytes())
-				.multiPart("karteBild", "something12354565".getBytes())
+				.multiPart("bild", "something12354565".getBytes())
 				//.body(create)
 				.log().body()
 				.post("/lands")
@@ -107,16 +107,16 @@ public class LandIT extends ItBase {
 		Land land = landRepository.findById(id).get();
 		
 		assertThat(create.getName(), is(land.getName()));
-//		assertThat("something123".getBytes(), is(land.getBild()));
-//		assertThat("something12354565".getBytes(), is(land.getKarteBild()));
-		assertThat(create.getTitel(), is(land.getTitel()));
-		assertThat(create.getPlaetze(), is(land.getPlaetze()));
-		assertThat(create.getFreiPlaetze(), is(land.getFreiPlaetze()));
-		assertThat(create.getErwartungenId(), is(land.getErwartungen().getId()));
-		assertThat(create.getInfos_LandId(), is(land.getInfos_Land().getId()));
-		assertThat(create.getBuchungsklassenId(), is(land.getBuchungsklassen().getId()));
-		
-		
+		//assertThat("something12354565".getBytes(), is(land.getKarte_bild()));
+		assertThat(create.getFlughafen(), is(land.getFlughafen()));
+		assertThat(create.getUnterkunft_text(), is(land.getUnterkunft_text()));
+		assertThat(create.getCorona_infos(), is(land.getCorona_infos()));
+		assertThat(create.getKlima(), is(land.getKlima()));
+		assertThat(create.getGesundheit(), is(land.getGesundheit()));
+		assertThat(create.getReiseOrdnung(), is(land.getReiseOrdnung()));
+		assertThat(create.getHinweise(), is(land.getHinweise()));
+		assertThat(create.getMitReiserBerechtigt(), is(land.getMitReiserBerechtigt()));
+		assertThat(create.getSonstigeHinweise(), is(land.getSonstigeHinweise()));
 	}
 	
 	@Test
@@ -146,7 +146,6 @@ public class LandIT extends ItBase {
 				//.contentType(ContentType.JSON)
 				.multiPart("land", update,"application/json")
 				.multiPart("bild", "something123".getBytes())
-				.multiPart("karteBild", "something12354565".getBytes())
 				//.body(create)
 				.log().body()
 				.put("/lands")
@@ -157,9 +156,18 @@ public class LandIT extends ItBase {
 		
 		Land land_ = landRepository.findById(id).get();
 		
-		assertThat(land.getId(), is(land_.getId()));
+		assertThat(update.getId(), is(land_.getId()));
 		assertThat(update.getName(), is(land_.getName()));
-		assertThat(update.getTitel(), is(land_.getTitel()));		
+		//assertThat("something12354565".getBytes(), is(land_.getKarte_bild()));
+		assertThat(update.getFlughafen(), is(land_.getFlughafen()));
+		assertThat(update.getUnterkunft_text(), is(land_.getUnterkunft_text()));
+		assertThat(update.getCorona_infos(), is(land_.getCorona_infos()));
+		assertThat(update.getKlima(), is(land_.getKlima()));
+		assertThat(update.getGesundheit(), is(land_.getGesundheit()));
+		assertThat(update.getReiseOrdnung(), is(land_.getReiseOrdnung()));
+		assertThat(update.getHinweise(), is(land_.getHinweise()));
+		assertThat(update.getMitReiserBerechtigt(), is(land_.getMitReiserBerechtigt()));
+		assertThat(update.getSonstigeHinweise(), is(land_.getSonstigeHinweise()));
 	}
 	
 	@Test
@@ -179,8 +187,19 @@ public class LandIT extends ItBase {
 		Land land_ = landRepository.findById(id).get();
 		
 		assertThat(land.getId(), is(land_.getId()));
+		assertThat(land.getId(), is(land_.getId()));
 		assertThat(land.getName(), is(land_.getName()));
-		assertThat(land.getTitel(), is(land_.getTitel()));		
+		assertThat(land.getName(), is(land_.getName()));
+		//assertThat("something12354565".getBytes(), is(land_.getKarte_bild()));
+		assertThat(land.getFlughafen().size(), is(land_.getFlughafen().size()));
+		assertThat(land.getUnterkunft_text(), is(land_.getUnterkunft_text()));
+		assertThat(land.getCorona_infos(), is(land_.getCorona_infos()));
+		assertThat(land.getKlima(), is(land_.getKlima()));
+		assertThat(land.getGesundheit(), is(land_.getGesundheit()));
+		assertThat(land.getReiseOrdnung(), is(land_.getReiseOrdnung()));
+		assertThat(land.getHinweise(), is(land.getHinweise()));
+		assertThat(land.getMitReiserBerechtigt().size(), is(land_.getMitReiserBerechtigt().size()));
+		assertThat(land.getSonstigeHinweise(), is(land_.getSonstigeHinweise()));
 	}
 	
 	@Test

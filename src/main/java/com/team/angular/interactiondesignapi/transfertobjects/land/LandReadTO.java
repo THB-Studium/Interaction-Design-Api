@@ -1,12 +1,10 @@
 package com.team.angular.interactiondesignapi.transfertobjects.land;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.hightlights.HighlightReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.infoLand.InfoLandReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadListTO;
 
 import lombok.AllArgsConstructor;
@@ -22,33 +20,31 @@ public class LandReadTO {
 
 	private String name;
 
-	private byte[] bild;
+	private List<String> flughafen;
 
-	private Date startDatum;
+	private String unterkunft_text;
 
-	private Date endDatum;
+	private String corona_infos;
 
-	private String titel;
+	private byte[] karte_bild;
 
-	private byte[] karteBild;
+	private String klima;
 
-	private int plaetze;
+	private String gesundheit;
 
-	private int freiPlaetze;
+	private String reiseOrdnung;
 
-	private Date anmeldungsFrist;
+	private String hinweise;
 
-	private Set<String> leistungen;
+	private List<String> mitReiserBerechtigt;
 
-	private UUID erwartungenId;
+	private String sonstigeHinweise;
 
-	private UUID InfosLandId;
+	// private ReiseAngebotReadTO reiseAngebot;
 
-	private UUID buchungsklassenId;
+	private List<InfoLandReadListTO> infosLands;
 
 	private List<HighlightReadTO> highlights;
-
-	private Set<BuchungReadListTO> buchungen;
 
 	private List<UnterkunftReadListTO> unterkunft;
 

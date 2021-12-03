@@ -47,8 +47,10 @@ public class FeedbackIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				.contentType(ContentType.JSON)
-				.body(create)
+				//.contentType(ContentType.JSON)
+				.multiPart("feedback", create,"application/json")
+				.multiPart("bild", "something123".getBytes())
+				//.body(create)
 				.log().body()
 				.post("/feedbacks")
 				.then()
@@ -89,10 +91,12 @@ public class FeedbackIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				.contentType(ContentType.JSON)
-				.body(feedback)
+				//.contentType(ContentType.JSON)
+				.multiPart("feedback", feedback,"application/json")
+				.multiPart("bild", "something123".getBytes())
+				//.body(create)
 				.log().body()
-				.put("/feedbacks")
+				.post("/feedbacks")
 				.then()
 				.log().body()
 				.statusCode(200)

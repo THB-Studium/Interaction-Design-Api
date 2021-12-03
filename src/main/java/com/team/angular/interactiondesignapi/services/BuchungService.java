@@ -13,17 +13,17 @@ import org.springframework.stereotype.Service;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
-import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
-import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserRead2ReiserTO;
 
 @Service
 public class BuchungService {
@@ -38,7 +38,7 @@ public class BuchungService {
 	private ReiserRepository reiserRepository;
 	
 	@Autowired
-	private LandRepository landRepository;
+	private ReiserService reiserService;
 
 	private static final Logger log = LoggerFactory.getLogger(BuchungService.class);
 
@@ -50,23 +50,20 @@ public class BuchungService {
 		
 		Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId()).orElseThrow
 				(() -> new ResourceNotFoundException("Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
-
-		Reiser reiser = reiserRepository.findById(buchung.getReiserId()).orElseThrow
-				(() -> new ResourceNotFoundException("Cannot find Reiser with id: " + buchung.getReiserId()));
 		
-		Land land = landRepository.findById(buchung.getLandId()).orElseThrow
-				(() -> new ResourceNotFoundException("Cannot find Land with id: " + buchung.getLandId()));
+		Reiser reiser = ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getReiser()));
 		
+		Reiser mitReiser = ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getMitReiser()));
+			
 		Buchung newBuchung = new Buchung();
 		newBuchung.setDatum(buchung.getDatum());
-		newBuchung.setMitReiser(buchung.getMitReiser());
-		newBuchung.setTarif(tarif);
+		newBuchung.setMitReiserId(mitReiser.getId());
+		newBuchung.setBuchungsklasseId(tarif.getId());
 		newBuchung.setFlugAhfen(buchung.getFlugAhfen());
 		newBuchung.setHandGepaeck(buchung.getHandGepaeck());
 		newBuchung.setKoffer(buchung.getKoffer());
 		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
 		newBuchung.setReiser(reiser);
-		newBuchung.setLand(land);
 
 		return Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
 
@@ -80,29 +77,45 @@ public class BuchungService {
 		return Buchung2BuchungReadTO.apply(buchung);
 	}
 
-	public BuchungReadTO updateBuchung(BuchungWriteTO buchung) {
+	public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) {
+		
+		Buchungsklassen tarif = null;
+		Reiser reiser = null;
+		Reiser mitReiser = null;
 
 		Buchung actual = buchungRepository.findById(buchung.getId())
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + buchung.getId()));
 
-		Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId()).orElseThrow
+		if(buchung.getBuchungsklasseId() != null) {
+			tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId()).orElseThrow
 				(() -> new ResourceNotFoundException("Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
-
-		Reiser reiser = reiserRepository.findById(buchung.getReiserId()).orElseThrow
-				(() -> new ResourceNotFoundException("Cannot find Reiser with id: " + buchung.getReiserId()));
+			actual.setBuchungsklasseId(tarif.getId());
+		}
 		
-		Land land = landRepository.findById(buchung.getLandId()).orElseThrow
-				(() -> new ResourceNotFoundException("Cannot find Land with id: " + buchung.getLandId()));
+		if(buchung.getReiserId() != null) {
+			reiser = reiserRepository.findById(buchung.getReiserId()).orElseThrow(
+				() -> new ResourceNotFoundException("Cannot find Reiser with id: " + buchung.getReiserId()));
+			actual.setReiser(reiser);
+		}
 		
-		actual.setDatum(buchung.getDatum());
-		actual.setMitReiser(buchung.getMitReiser());
-		actual.setTarif(tarif);
-		actual.setFlugAhfen(buchung.getFlugAhfen());
-		actual.setHandGepaeck(buchung.getHandGepaeck());
-		actual.setKoffer(buchung.getKoffer());
-		actual.setZahlungMethod(buchung.getZahlungMethod());
-		actual.setReiser(reiser);
-		actual.setLand(land);
+		if(buchung.getMitReiserId() != null) {
+			mitReiser = reiserRepository.findById(buchung.getMitReiserId()).orElseThrow(
+				() -> new ResourceNotFoundException("Cannot find MitReiser with id: " + buchung.getMitReiserId()));
+			actual.setMitReiserId(mitReiser.getId());
+		}
+		
+		if(buchung.getDatum() != null)
+			actual.setDatum(buchung.getDatum());
+		if(buchung.getFlugAhfen() != null)
+			actual.setFlugAhfen(buchung.getFlugAhfen());
+		if(buchung.getHandGepaeck() != null)
+			actual.setHandGepaeck(buchung.getHandGepaeck());
+		if(buchung.getKoffer() != null)
+			actual.setKoffer(buchung.getKoffer());
+		if(buchung.getZahlungMethod() != null)
+			actual.setZahlungMethod(buchung.getZahlungMethod());
+		//if(buchung.getReiseAngebot() != null)
+			//actual.setReiseAngebot(reiseAngebot);
 
 		return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
 	}

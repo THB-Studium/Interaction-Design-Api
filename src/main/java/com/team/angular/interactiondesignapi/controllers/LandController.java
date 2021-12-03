@@ -46,24 +46,21 @@ public class LandController {
 	@PostMapping("")
 	public LandReadTO addLand(
 			@ApiParam(name = "Land", value = "Land to add") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild") MultipartFile bild, 
-			@RequestPart(value = "karteBild") MultipartFile karteBild) {
-		return landService.addLand(land, bild, karteBild);
+			@RequestPart(value = "bild") MultipartFile bild) {
+		return landService.addLand(land, bild);
 	}
 
 	@ApiOperation("Update Land")
 	@PutMapping("")
 	public LandReadTO updateLand(
 			@ApiParam(name = "Land", value = "Land to add") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild") MultipartFile bild, 
-			@RequestPart(value = "karteBild") MultipartFile karteBild) {
-		return landService.updateLand(land, bild, karteBild);
+			@RequestPart(value = "bild") MultipartFile bild) {
+		return landService.updateLand(land, bild);
 	}
 
 	@ApiOperation("Delete Land")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> daleteLand(
-			@ApiParam(name = "LandId", value = "Id of the Land") @PathVariable UUID id) {
+	public ResponseEntity<?> daleteLand(@ApiParam(name = "LandId", value = "Id of the Land") @PathVariable UUID id) {
 		return landService.deleteLand(id);
 
 	}

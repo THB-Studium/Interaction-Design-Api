@@ -31,12 +31,12 @@ public class UnterkunftService {
 
 	@Autowired
 	private UnterkunftRepository unterkunftRepository;
-	
+
 	@Autowired
 	private LandRepository landRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(UnterkunftService.class);
-	
+
 	public List<UnterkunftReadListTO> getAll() {
 		return Unterkunft2UnterkunftReadListTO.apply(unterkunftRepository.findAll());
 	}
@@ -49,9 +49,9 @@ public class UnterkunftService {
 
 			bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
 		}
-		
-		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
-				-> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
+
+		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
+				() -> new ResourceNotFoundException("Cannot find Land with id: " + unterkunft.getLandId()));
 
 		Unterkunft newUnterkunft = new Unterkunft();
 
@@ -64,28 +64,35 @@ public class UnterkunftService {
 
 		return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(newUnterkunft));
 	}
-	
+
 	public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft, List<MultipartFile> files) {
-		
-		Unterkunft actual_unterkunft = unterkunftRepository.findById(unterkunft.getId())
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
+
+		Unterkunft actual_unterkunft = unterkunftRepository.findById(unterkunft.getId()).orElseThrow(
+				() -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
 		List<byte[]> bilder = new ArrayList<>();
 
-		for (MultipartFile file : files) {
+		if (files.size() > 0) {
+			for (MultipartFile file : files) {
 
-			bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
+				bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
+			}
+			actual_unterkunft.setBilder(bilder);
 		}
-		
-		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
-				-> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
-		actual_unterkunft.setName(unterkunft.getName());
-		actual_unterkunft.setLink(unterkunft.getLink());
-		actual_unterkunft.setAdresse(unterkunft.getAdresse());
-		actual_unterkunft.setBeschreibung(unterkunft.getBeschreibung());
-		actual_unterkunft.setBilder(bilder);
+		Land land = null;
+		if (unterkunft.getLandId() != null)
+			land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
+					() -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 		actual_unterkunft.setLand(land);
+		if (unterkunft.getName() != null)
+			actual_unterkunft.setName(unterkunft.getName());
+		if (unterkunft.getLink() != null)
+			actual_unterkunft.setLink(unterkunft.getLink());
+		if (unterkunft.getAdresse() != null)
+			actual_unterkunft.setAdresse(unterkunft.getAdresse());
+		if (unterkunft.getBeschreibung() != null)
+			actual_unterkunft.setBeschreibung(unterkunft.getBeschreibung());
 
 		return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(actual_unterkunft));
 	}
@@ -96,11 +103,11 @@ public class UnterkunftService {
 
 		return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(unterkunft));
 	}
-	
+
 	public ResponseEntity<?> deleteUnterkunft(UUID id) {
 		Unterkunft unterkunft = unterkunftRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
-		
+
 		unterkunftRepository.delete(unterkunft);
 
 		return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);

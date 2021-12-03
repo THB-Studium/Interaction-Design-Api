@@ -64,14 +64,17 @@ public class AdminService {
         admin_new.forEach((element, value) -> {
             switch (element) {
                 case "name":
-                    admin.setName((String) value);
-                    break;
+                	if(element != null)
+                		admin.setName((String) value);
+                    	break;
                 case "kennwort":
-                    admin.setKennwort((String) value);
-                    break;
+                	if(element != null)
+                		admin.setKennwort((String) value);
+                		break;
                 case "email":
-                    admin.setEmail((String) value);
-                    break;
+                	if(element != null)
+                		admin.setEmail((String) value);
+                    	break;
             }
         });
 

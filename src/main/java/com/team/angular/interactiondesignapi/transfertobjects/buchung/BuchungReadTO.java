@@ -19,9 +19,9 @@ public class BuchungReadTO {
 
 	private Date datum;
 
-	private String mitReiser;
+	private UUID mitReiserId;
 
-	private BuchungsklassenReadTO tarif;
+	private UUID tarifId;
 
 	private String flugAhfen;
 

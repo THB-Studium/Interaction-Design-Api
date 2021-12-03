@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -61,22 +62,22 @@ public class ItBase {
 
 	@Autowired
 	protected LandRepository landRepository;
-	
+
 	@Autowired
 	protected LeistungenRepository leistungenRepository;
-	
+
 	@Autowired
 	protected ReiserRepository reiserRepository;
-	
+
 	@Autowired
 	protected BuchungRepository buchungRepository;
-	
+
 	@Autowired
 	protected BuchungsklassenRepository buchungsklasseRepository;
-	
+
 	@Autowired
 	protected Infos_landRepository infos_LandRepository;
-	
+
 	@Autowired
 	protected ErwartungenRepository erwartungenRepository;
 
@@ -96,7 +97,7 @@ public class ItBase {
 		buchungsklasseRepository.deleteAll();
 		infos_LandRepository.deleteAll();
 		erwartungenRepository.deleteAll();
-		leistungenRepository.deleteAll();	
+		leistungenRepository.deleteAll();
 		reiserRepository.deleteAll();
 	}
 
@@ -105,6 +106,8 @@ public class ItBase {
 
 		feedback.setAutor(UUID.randomUUID().toString());
 		feedback.setDescription(UUID.randomUUID().toString());
+		feedback.setVeroefentlich(true);
+		feedback.setBild(UUID.randomUUID().toString().getBytes());
 
 		return feedback;
 	}
@@ -121,54 +124,73 @@ public class ItBase {
 
 		return unterkunft;
 	}
-	
+
 	protected UnterkunftWriteTO buildUnterkunftWriteTO(UUID landId) {
+
 		UnterkunftWriteTO unterkunft = new UnterkunftWriteTO();
 
 		unterkunft.setName(UUID.randomUUID().toString());
 		unterkunft.setLink(UUID.randomUUID().toString());
 		unterkunft.setAdresse(UUID.randomUUID().toString());
 		unterkunft.setBeschreibung(UUID.randomUUID().toString());
-		//unterkunft.setBilder(bilder);
+
 		unterkunft.setLandId(landId);
 
 		return unterkunft;
 	}
 
-	protected Land buildLand(Erwartungen erwartungen ) {
+	protected Land buildLand() {
+
+		List<String> flug = new ArrayList<String>();
+		flug.add(UUID.randomUUID().toString());
+		flug.add(UUID.randomUUID().toString());
+
+		List<String> reiseBerechtig = new ArrayList<String>();
+		flug.add(UUID.randomUUID().toString());
+		flug.add(UUID.randomUUID().toString());
+
 		Land land = new Land();
 
 		land.setName(UUID.randomUUID().toString());
-		land.setBild(UUID.randomUUID().toString().getBytes());
-		land.setStartDatum(new Date());
-		land.setEndDatum(new Date());
-		land.setTitel(UUID.randomUUID().toString());
-		land.setKarteBild(UUID.randomUUID().toString().getBytes());
-		land.setPlaetze(12);
-		land.setFreiPlaetze(6);
-		land.setAnmeldungsFrist(new Date());
-		land.setErwartungen(erwartungen);
+		land.setFlughafen(flug);
+		land.setCorona_infos(UUID.randomUUID().toString());
+		land.setKarte_bild(UUID.randomUUID().toString().getBytes());
+		land.setKlima(UUID.randomUUID().toString());
+		land.setGesundheit(UUID.randomUUID().toString());
+		land.setReiseOrdnung(UUID.randomUUID().toString());
+		land.setHinweise(UUID.randomUUID().toString());
+		land.setMitReiserBerechtigt(reiseBerechtig);
+		land.setSonstigeHinweise(UUID.randomUUID().toString());
+		// land.setReiseAngebot(land.getReiseAngebotId());
 
 		return land;
 	}
-	
+
 	protected LandWriteTO buildLandWriteTO(UUID erwartungenId, UUID infos_LandId, UUID buchungsklassenId) {
 		LandWriteTO land = new LandWriteTO();
 
+		List<String> flug = new ArrayList<String>();
+		flug.add(UUID.randomUUID().toString());
+		flug.add(UUID.randomUUID().toString());
+
+		List<String> reiseBerechtig = new ArrayList<String>();
+		flug.add(UUID.randomUUID().toString());
+		flug.add(UUID.randomUUID().toString());
+
 		land.setName(UUID.randomUUID().toString());
-		land.setStartDatum(new Date());
-		land.setEndDatum(new Date());
-		land.setTitel(UUID.randomUUID().toString());
-		land.setPlaetze(12);
-		land.setFreiPlaetze(6);
-		land.setAnmeldungsFrist(new Date());
-		land.setErwartungenId(erwartungenId);
-		land.setInfos_LandId(infos_LandId);
-		land.setBuchungsklassenId(buchungsklassenId);
+		land.setFlughafen(flug);
+		land.setCorona_infos(UUID.randomUUID().toString());
+		land.setKlima(UUID.randomUUID().toString());
+		land.setGesundheit(UUID.randomUUID().toString());
+		land.setReiseOrdnung(UUID.randomUUID().toString());
+		land.setHinweise(UUID.randomUUID().toString());
+		land.setMitReiserBerechtigt(reiseBerechtig);
+		land.setSonstigeHinweise(UUID.randomUUID().toString());
+		// land.setReiseAngebot(land.getReiseAngebotId());
 
 		return land;
 	}
-	
+
 	protected ReiserWriteTO buildReiserWriteTO() {
 		ReiserWriteTO reiser = new ReiserWriteTO();
 
@@ -185,25 +207,7 @@ public class ItBase {
 
 		return reiser;
 	}
-	
-	protected ReiserWriteTO buildReiserWriteTO(List<UUID> buchungsId) {
-		ReiserWriteTO reiser = new ReiserWriteTO();
 
-		reiser.setName(UUID.randomUUID().toString());
-		reiser.setVorname(UUID.randomUUID().toString());
-		reiser.setGeburtsdatum(new Date());
-		reiser.setTelefonnummer(1232354);
-		reiser.setEmail(UUID.randomUUID().toString());
-		reiser.setHochschule(UUID.randomUUID().toString());
-		reiser.setAdresse(UUID.randomUUID().toString());
-		reiser.setStudiengang(UUID.randomUUID().toString());
-		reiser.setArbeitBei(UUID.randomUUID().toString());
-		reiser.setSchonTeilgenommen(true);
-		reiser.setBuchungIds(buchungsId);
-
-		return reiser;
-	}
-	
 	protected Reiser buildReiser() {
 		Reiser reiser = new Reiser();
 
@@ -220,7 +224,7 @@ public class ItBase {
 
 		return reiser;
 	}
-	
+
 	protected Leistungen buildLeistungen(List<String> beschreibung) {
 		Leistungen leistung = new Leistungen();
 
@@ -228,52 +232,48 @@ public class ItBase {
 
 		return leistung;
 	}
-	
-	protected Buchung buildBuchung( Reiser reiser, Land land) {
+
+	protected Buchung buildBuchung(Reiser reiser) {
 		Buchung newBuchung = new Buchung();
-		
+
 		newBuchung.setDatum(new Date());
-		newBuchung.setMitReiser(UUID.randomUUID().toString());
+		newBuchung.setMitReiserId(UUID.randomUUID());
 		newBuchung.setFlugAhfen(UUID.randomUUID().toString());
 		newBuchung.setHandGepaeck(UUID.randomUUID().toString());
 		newBuchung.setKoffer(UUID.randomUUID().toString());
 		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
 		newBuchung.setReiser(reiser);
-		newBuchung.setLand(land);
-		
+
 		return newBuchung;
 	}
-	
-	protected BuchungWriteTO buildBuchungWriteTO(UUID reiserId, UUID landId, UUID buchungsklasseId) {
+
+	protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID landId) {
 		BuchungWriteTO newBuchung = new BuchungWriteTO();
-		
+
 		newBuchung.setDatum(new Date());
 		newBuchung.setBuchungsklasseId(buchungsklasseId);
-		newBuchung.setMitReiser(UUID.randomUUID().toString());
+		newBuchung.setMitReiser(buildReiserWriteTO());
 		newBuchung.setFlugAhfen(UUID.randomUUID().toString());
 		newBuchung.setHandGepaeck(UUID.randomUUID().toString());
 		newBuchung.setKoffer(UUID.randomUUID().toString());
 		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
-		newBuchung.setReiserId(reiserId);
-		newBuchung.setLandId(landId);
-		
+		newBuchung.setReiser(buildReiserWriteTO());
+
 		return newBuchung;
 	}
-	
-	
-	protected Buchungsklassen buildBuchungsKlasse( Land land) {
+
+	protected Buchungsklassen buildBuchungsKlasse(Land land) {
 		Buchungsklassen newBuchung = new Buchungsklassen();
-		
+
 		newBuchung.setType(UUID.randomUUID().toString());
 		newBuchung.setPreis(12.0);
-		newBuchung.setLand(land);
-		
+
 		return newBuchung;
 	}
-	
+
 	protected Erwartungen buildErwartungen() {
 		Erwartungen newErwartungen = new Erwartungen();
-		
+
 		newErwartungen.setAbenteuer(12);
 		newErwartungen.setEntschleunigung(12);
 		newErwartungen.setKonfort(12);
@@ -281,22 +281,16 @@ public class ItBase {
 		newErwartungen.setSonne_strand(12);
 		newErwartungen.setSicherheit(12);
 		newErwartungen.setRoad(12);
-		
+
 		return newErwartungen;
 	}
-	
+
 	protected Infos_land buildInfosLand(List<String> abflug, List<String> mitreiseberechtigt) {
 		Infos_land newBuchung = new Infos_land();
-		
-		newBuchung.setAbflug(abflug);
-		newBuchung.setMitreiseberechtigt(mitreiseberechtigt);
-		newBuchung.setUnterkuft_text(UUID.randomUUID().toString());
-		newBuchung.setCorona_info(UUID.randomUUID().toString());
-		newBuchung.setKlima(UUID.randomUUID().toString());
-		newBuchung.setGesundheit(UUID.randomUUID().toString());
-		newBuchung.setReiseordnung(UUID.randomUUID().toString());
-		newBuchung.setSonstiger_hinweis(UUID.randomUUID().toString());
-		
+
+		newBuchung.setTitel(UUID.randomUUID().toString());
+		newBuchung.setBeschreibung(UUID.randomUUID().toString());
+
 		return newBuchung;
 	}
 }

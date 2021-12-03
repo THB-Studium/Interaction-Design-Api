@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.team.angular.interactiondesignapi.models.Reiser;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadTO;
 
-public class Reiser2ReiserReadTO {
+public class ReiserRead2ReiserTO {
 
-	public static ReiserReadTO apply(Reiser in) {
-		ReiserReadTO out = new ReiserReadTO();
+	public static Reiser apply(ReiserReadTO in) {
+		Reiser out = new Reiser();
 
 		out.setId(in.getId());
 		out.setName(in.getName());
@@ -22,13 +21,11 @@ public class Reiser2ReiserReadTO {
 		out.setStudiengang(in.getStudiengang());
 		out.setArbeitBei(in.getArbeitBei());
 		out.setSchonTeilgenommen(in.isSchonTeilgenommen());
-		if(in.getBuchungen() != null )
-			out.setBuchungen(Buchung2BuchungReadTO.apply(in.getBuchungen()));
-
+		
 		return out;
 	}
 
-	public static List<ReiserReadTO> apply(List<Reiser> lands) {
+	public static List<Reiser> apply(List<ReiserReadTO> lands) {
 		return lands.stream().map(u -> apply(u)).collect(Collectors.toList());
 	}
 
