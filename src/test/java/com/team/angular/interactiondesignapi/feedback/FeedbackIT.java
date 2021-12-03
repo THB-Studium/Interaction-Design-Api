@@ -105,21 +105,42 @@ public class FeedbackIT extends ItBase {
 		assertThat(feedback.getDescription(), is(feedback.getDescription()));		
 	}
 	
-//	@Test
-//	public void deleteFeedback() {
-//		
-//		feedback = buildFeedback();
-//		feedback = feedbackRepository.save(feedback);
-//
-//		given()
-//		.contentType(ContentType.JSON)
-//		//.body(feedback)
-//		.log().body()
-//		.delete("/feedbacks/", feedback.getId())
-//		.then()
-//		.log().body()
-//		.statusCode(200);
-//			
-//	}
+	@Test
+	public void getFeedback() {
+		
+		UUID id = UUID.fromString(
+				given()
+				.contentType(ContentType.JSON)
+				//.body(feedback)
+				.log().body()
+				.get("/feedbacks/"+feedback.getId() )
+				.then()
+				.log().body()
+				.statusCode(200)
+				.extract().body().path("id"));
+		
+		Feedback feedback_ = feedbackRepository.findById(id).get();
+		
+		assertThat(feedback.getId(), is(feedback_.getId()));
+		assertThat(feedback.getAutor(), is(feedback_.getAutor()));
+		assertThat(feedback.getDescription(), is(feedback_.getDescription()));		
+	}
+	
+	@Test
+	public void deleteFeedback() {
+		
+		feedback = buildFeedback();
+		feedback = feedbackRepository.save(feedback);
+
+		given()
+		.contentType(ContentType.JSON)
+		//.body(feedback)
+		.log().body()
+		.delete("/feedbacks/"+feedback.getId())
+		.then()
+		.log().body()
+		.statusCode(200);
+			
+	}
 
 }

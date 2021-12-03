@@ -1,9 +1,10 @@
-package com.team.angular.interactiondesignapi.transfertobjects;
+package com.team.angular.interactiondesignapi.transfertobjects.unterkunft;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.team.angular.interactiondesignapi.models.Unterkunft;
+import com.team.angular.interactiondesignapi.transfertobjects.land.Land2LandReadTO;
 
 public class Unterkunft2UnterkunftReadTO {
 
@@ -15,7 +16,7 @@ public class Unterkunft2UnterkunftReadTO {
 		out.setLink(in.getLink());
 		out.setAdresse(in.getAdresse());
 		out.setBeschreibung(in.getBeschreibung());
-		out.setLand(in.getLand());
+		out.setLand(Land2LandReadTO.apply(in.getLand()));
 		out.setBilder(in.getBilder());
 
 		return out;

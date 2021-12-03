@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team.angular.interactiondesignapi.services.UnterkunftService;
-import com.team.angular.interactiondesignapi.transfertobjects.UnterkunftReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.UnterkunftReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.UnterkunftWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -44,16 +45,18 @@ public class UnterkunftController {
 
 	@ApiOperation("Add One Unterkunft")
 	@PostMapping("")
-	public UnterkunftReadTO addFeedback(
-			@ApiParam(name = "Unterkunft", value = "Unterkunft to add") @RequestBody UnterkunftWriteTO unterkunft) {
-		return unterkunftService.addUnterkunft(unterkunft);
+	public UnterkunftReadTO addUnterkunft(
+			@ApiParam(name = "Unterkunft", value = "Unterkunft to add") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
+			@RequestPart(value = "files") List<MultipartFile> files) {
+		return unterkunftService.addUnterkunft(unterkunft, files);
 	}
 
 	@ApiOperation("Update Unterkunft")
 	@PutMapping("")
 	public UnterkunftReadTO updateUnterkunft(
-			@ApiParam(name = "Unterkunft", value = "Unterkunft to update") @RequestBody UnterkunftWriteTO unterkunft) {
-		return unterkunftService.updateUnterkunft(unterkunft);
+			@ApiParam(name = "Unterkunft", value = "Unterkunft to update") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
+			@RequestPart(value = "files") List<MultipartFile> files) {
+		return unterkunftService.updateUnterkunft(unterkunft, files);
 	}
 
 	@ApiOperation("Delete Unterkunft")

@@ -35,12 +35,16 @@ public class AdminController {
     }
 
     /*
-    @ApiOperation("Update Admin")
-    @PutMapping("")
-    public Admin updateAdmin(
-            @ApiParam(name = "Admin", value = "Admin to update") @RequestBody Admin admin) {
-        return adminService.updateAdmin(admin);
-    }*/
+     * @ApiOperation("Update Admin")
+     * 
+     * @PutMapping("")
+     * public Admin updateAdmin(
+     * 
+     * @ApiParam(name = "Admin", value = "Admin to update") @RequestBody Admin
+     * admin) {
+     * return adminService.updateAdmin(admin);
+     * }
+     */
 
     @ApiOperation("Delete Admin")
     @DeleteMapping("/{id}")

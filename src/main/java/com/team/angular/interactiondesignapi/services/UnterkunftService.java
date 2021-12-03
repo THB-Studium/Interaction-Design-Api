@@ -16,19 +16,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
+import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.Unterkunft2UnterkunftReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.Unterkunft2UnterkunftReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.UnterkunftReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.UnterkunftReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.UnterkunftWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
 
 @Service
 public class UnterkunftService {
 
 	@Autowired
 	private UnterkunftRepository unterkunftRepository;
+	
+	@Autowired
+	private LandRepository landRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(UnterkunftService.class);
 	
@@ -36,14 +41,17 @@ public class UnterkunftService {
 		return Unterkunft2UnterkunftReadListTO.apply(unterkunftRepository.findAll());
 	}
 
-	public UnterkunftReadTO addUnterkunft(UnterkunftWriteTO unterkunft) {
+	public UnterkunftReadTO addUnterkunft(UnterkunftWriteTO unterkunft, List<MultipartFile> files) {
 
 		List<byte[]> bilder = new ArrayList<>();
 
-		for (MultipartFile file : unterkunft.getBilder()) {
+		for (MultipartFile file : files) {
 
 			bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
 		}
+		
+		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
+				-> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
 		Unterkunft newUnterkunft = new Unterkunft();
 
@@ -52,27 +60,32 @@ public class UnterkunftService {
 		newUnterkunft.setAdresse(unterkunft.getAdresse());
 		newUnterkunft.setBeschreibung(unterkunft.getBeschreibung());
 		newUnterkunft.setBilder(bilder);
+		newUnterkunft.setLand(land);
 
 		return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(newUnterkunft));
 	}
 	
-	public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft) {
+	public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft, List<MultipartFile> files) {
 		
 		Unterkunft actual_unterkunft = unterkunftRepository.findById(unterkunft.getId())
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + unterkunft.getId()));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
 		List<byte[]> bilder = new ArrayList<>();
 
-		for (MultipartFile file : unterkunft.getBilder()) {
+		for (MultipartFile file : files) {
 
 			bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
 		}
+		
+		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
+				-> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
 		actual_unterkunft.setName(unterkunft.getName());
 		actual_unterkunft.setLink(unterkunft.getLink());
 		actual_unterkunft.setAdresse(unterkunft.getAdresse());
 		actual_unterkunft.setBeschreibung(unterkunft.getBeschreibung());
 		actual_unterkunft.setBilder(bilder);
+		actual_unterkunft.setLand(land);
 
 		return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(actual_unterkunft));
 	}

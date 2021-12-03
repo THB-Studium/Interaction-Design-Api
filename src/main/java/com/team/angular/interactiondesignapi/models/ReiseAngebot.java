@@ -1,10 +1,5 @@
 package com.team.angular.interactiondesignapi.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,25 +23,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Land {
+public class ReiseAngebot {
 
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @NotBlank
-    private String name;
+    private String titel;
 
-    private byte[] bild;
+    private byte[] startbild;
 
     private Date startDatum;
 
     private Date endDatum;
-
-    private String titel;
-
-    private byte[] karteBild;
 
     private int plaetze;
 
@@ -55,26 +44,19 @@ public class Land {
 
     private Date anmeldungsFrist;
 
-    // @OneToOne(fetch = FetchType.LAZY)
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
+
+    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)
+    private Buchungsklassen buchungsklassen;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Erwartungen erwartungen;
 
-    @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
-    private Land_info land_info;
-
     @OneToOne(fetch = FetchType.LAZY)
-    private Buchungsklassen buchungsklassen;
+    private Land Land;
 
-    @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
-    private List<Highlight> highlights;
-
-    @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)
     private List<Buchung> buchungen;
-
-    @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
-    private List<Unterkunft> unterkunft;
 
 }
