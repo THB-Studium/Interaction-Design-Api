@@ -19,8 +19,12 @@ public class Helper {
 		} catch (IOException e) {
 			log.error("Failed to convert the MultipartFile to a File");
 		}
+		
+		byte[] toReturn = new byte[(int) convertedFile.length()];
+		
+		convertedFile.delete();
 
-		return new byte[(int) convertedFile.length()];
+		return toReturn;
 	}
 
 }
