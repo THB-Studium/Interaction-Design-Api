@@ -20,7 +20,6 @@ import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Feedback;
-import com.team.angular.interactiondesignapi.models.Infos_land;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Leistungen;
 import com.team.angular.interactiondesignapi.models.Reiser;

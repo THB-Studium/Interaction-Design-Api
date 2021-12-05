@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
-import com.team.angular.interactiondesignapi.models.Infos_land;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Leistungen;
 import com.team.angular.interactiondesignapi.models.Reiser;

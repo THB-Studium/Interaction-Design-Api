@@ -2,6 +2,7 @@ package com.team.angular.interactiondesignapi.controllers;
 
 import com.team.angular.interactiondesignapi.models.Land_info;
 import com.team.angular.interactiondesignapi.services.Land_infoService;
+import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_infoReadTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class Land_infoController {
 
     @ApiOperation("Get One Land_info")
     @GetMapping("/{id}")
-    public Land_info getLand_infoById(
+    public Land_infoReadTO getLand_infoById(
             @ApiParam(name = "Land_infoId", value = "get One Land_info") @PathVariable UUID id) {
         return land_infoService.getLand_info(id);
     }

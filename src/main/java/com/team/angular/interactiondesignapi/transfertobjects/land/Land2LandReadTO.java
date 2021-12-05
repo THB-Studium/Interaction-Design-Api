@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.transfertobjects.hightlights.Highlight2HighlightReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.infoLand.InfoLand2InfoLandReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_info2Land_infoReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadListTO;
 
 public class Land2LandReadTO {
@@ -28,7 +28,7 @@ public class Land2LandReadTO {
 		//out.setReiseAngebot(ReiseAngebot2ReiseAngebotReadTO.apply(in.getReiseAngebot()));
 
 		if(in.getInfos_Land() != null)
-			out.setInfosLands(InfoLand2InfoLandReadListTO.apply(in.getInfos_Land()));
+			out.setInfosLands(Land_info2Land_infoReadListTO.apply(in.getInfos_Land()));
 		if(in.getHighlights() != null)
 			out.setHighlights(Highlight2HighlightReadListTO.apply(in.getHighlights()));
 		if(in.getUnterkunft() != null)

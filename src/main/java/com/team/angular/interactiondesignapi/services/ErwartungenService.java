@@ -45,7 +45,7 @@ public class ErwartungenService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public Erwartungen updateErwartungen(Erwartungen erwartungen) {
+    public ErwartungenReadTO updateErwartungen(ErwartungenReadListTO erwartungen) {
 
         Erwartungen _erwartungen = erwartungenRepository.findById(erwartungen.getId()).orElseThrow(() ->
                 new ResourceNotFoundException("Update Error: Cannot find Erwartungen with id: " + erwartungen.getId()));
@@ -65,7 +65,9 @@ public class ErwartungenService {
         if (erwartungen.getRoad() != 0)
             _erwartungen.setRoad(erwartungen.getRoad());
 
+        erwartungenRepository.save(_erwartungen);
+
         /* ReiseAngebot soll nicht von hier aktualisiert werden */
-        return _erwartungen;
+        return Erwartungen2ErwartungenReadTO.apply(_erwartungen);
     }
 }

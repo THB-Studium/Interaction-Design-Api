@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.team.angular.interactiondesignapi.transfertobjects.hightlights.HighlightReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.infoLand.InfoLandReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_infoReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadListTO;
 
 import lombok.AllArgsConstructor;
@@ -42,7 +42,7 @@ public class LandReadTO {
 
 	// private ReiseAngebotReadTO reiseAngebot;
 
-	private List<InfoLandReadListTO> infosLands;
+	private List<Land_infoReadListTO> infosLands;
 
 	private List<HighlightReadTO> highlights;
 
