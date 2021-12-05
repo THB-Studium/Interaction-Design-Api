@@ -2,6 +2,8 @@ package com.team.angular.interactiondesignapi.controllers;
 
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.services.ErwartungenService;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +19,13 @@ public class ErwartungenController {
 
     @ApiOperation("Get All Erwartungen")
     @GetMapping("")
-    public List<Erwartungen> getAllErwartungen() {
+    public List<ErwartungenReadListTO> getAllErwartungen() {
         return erwartungenService.getAll();
     }
 
     @ApiOperation("Get One Erwartungen")
     @GetMapping("/{id}")
-    public Erwartungen getErwartungenById(
+    public ErwartungenReadTO getErwartungenById(
             @ApiParam(name = "ErwartungenId", value = "get One Erwartungen") @PathVariable UUID id) {
         return erwartungenService.getErwartungen(id);
     }
@@ -45,7 +47,7 @@ public class ErwartungenController {
 
     @ApiOperation("Delete Erwartungen")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> daleteErwartungen(
+    public ResponseEntity<?> deleteErwartungen(
             @ApiParam(name = "ErwartungenId", value = "Id of the Erwartungen") @PathVariable UUID id) {
         return erwartungenService.deleteErwartungen(id);
 

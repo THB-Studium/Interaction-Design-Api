@@ -4,7 +4,9 @@ import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.Erwartungen2ErwartungenReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.Erwartungen2ErwartungenReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,10 @@ public class ErwartungenService {
         return erwartungenRepository.save(erwartungen);
     }
 
-    public Erwartungen getErwartungen(UUID id) {
-        return erwartungenRepository.findById(id)
+    public ErwartungenReadTO getErwartungen(UUID id) {
+        Erwartungen erwartungen = erwartungenRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Erwartungen with id: " + id));
+        return Erwartungen2ErwartungenReadTO.apply(erwartungen);
     }
 
     public ResponseEntity<?> deleteErwartungen(UUID id) {
@@ -43,7 +46,9 @@ public class ErwartungenService {
     }
 
     public Erwartungen updateErwartungen(Erwartungen erwartungen) {
-        Erwartungen _erwartungen = getErwartungen(erwartungen.getId());
+
+        Erwartungen _erwartungen = erwartungenRepository.findById(erwartungen.getId()).orElseThrow(() ->
+                new ResourceNotFoundException("Update Error: Cannot find Erwartungen with id: " + erwartungen.getId()));
 
         if (erwartungen.getAbenteuer() != 0)
             _erwartungen.setAbenteuer(erwartungen.getAbenteuer());
@@ -60,7 +65,7 @@ public class ErwartungenService {
         if (erwartungen.getRoad() != 0)
             _erwartungen.setRoad(erwartungen.getRoad());
 
-        /* ReiseAngebot darf nicht von hier aktualisiert werden */
+        /* ReiseAngebot soll nicht von hier aktualisiert werden */
         return _erwartungen;
     }
 }
