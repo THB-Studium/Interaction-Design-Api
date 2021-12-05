@@ -3,6 +3,8 @@ package com.team.angular.interactiondesignapi.services;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.Erwartungen2ErwartungenReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,8 @@ public class ErwartungenService {
     @Autowired
     private ErwartungenRepository erwartungenRepository;
 
-    public List<Erwartungen> getAll() {
-        return erwartungenRepository.findAll();
+    public List<ErwartungenReadListTO> getAll() {
+        return Erwartungen2ErwartungenReadListTO.apply(erwartungenRepository.findAll());
     }
 
     public Erwartungen addErwartungen(Erwartungen erwartungen) {
@@ -38,5 +40,27 @@ public class ErwartungenService {
         log.info("Erwartungen successfully deleted");
 
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+    }
+
+    public Erwartungen updateErwartungen(Erwartungen erwartungen) {
+        Erwartungen _erwartungen = getErwartungen(erwartungen.getId());
+
+        if (erwartungen.getAbenteuer() != 0)
+            _erwartungen.setAbenteuer(erwartungen.getAbenteuer());
+        if (erwartungen.getEntschleunigung() != 0)
+            _erwartungen.setEntschleunigung(erwartungen.getEntschleunigung());
+        if (erwartungen.getKonfort() != 0)
+            _erwartungen.setKonfort(erwartungen.getKonfort());
+        if (erwartungen.getNachhaltigkeit() != 0)
+            _erwartungen.setKonfort(erwartungen.getNachhaltigkeit());
+        if (erwartungen.getSonne_strand() != 0)
+            _erwartungen.setSonne_strand(erwartungen.getSonne_strand());
+        if (erwartungen.getSicherheit() != 0)
+            _erwartungen.setSicherheit(erwartungen.getSicherheit());
+        if (erwartungen.getRoad() != 0)
+            _erwartungen.setRoad(erwartungen.getRoad());
+
+        /* ReiseAngebot darf nicht von hier aktualisiert werden */
+        return _erwartungen;
     }
 }

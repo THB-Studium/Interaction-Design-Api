@@ -18,6 +18,9 @@ import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.feedback.Feedback2FeedbackListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackReadListTO;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class FeedbackService {
 

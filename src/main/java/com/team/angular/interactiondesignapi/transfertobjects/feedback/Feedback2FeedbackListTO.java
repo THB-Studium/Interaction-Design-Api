@@ -17,8 +17,8 @@ public class Feedback2FeedbackListTO {
 		return out;
 	}
 
-	public static List<FeedbackReadListTO> apply(List<Feedback> lands) {
-		return lands.stream().map(u -> apply(u)).collect(Collectors.toList());
+	public static List<FeedbackReadListTO> apply(List<Feedback> feedbacks) {
+		return feedbacks.stream().map(u -> apply(u)).collect(Collectors.toList());
 	}
 
 }

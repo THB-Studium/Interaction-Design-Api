@@ -35,8 +35,6 @@ public class UnterkunftService {
 	@Autowired
 	private LandRepository landRepository;
 
-	@Autowired
-	private LandRepository landRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(UnterkunftService.class);
 
@@ -54,10 +52,7 @@ public class UnterkunftService {
 		}
 		
 		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
-				-> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
-
-		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find Land with id: " + unterkunft.getLandId()));
+				-> new ResourceNotFoundException("Cannot find Unterkunft with id: " + unterkunft.getId()));
 
 		Unterkunft newUnterkunft = new Unterkunft();
 
@@ -89,7 +84,7 @@ public class UnterkunftService {
 		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
 				-> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
-		Land land = null;
+		//Land land = null;
 		if (unterkunft.getLandId() != null)
 			land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
 					() -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));

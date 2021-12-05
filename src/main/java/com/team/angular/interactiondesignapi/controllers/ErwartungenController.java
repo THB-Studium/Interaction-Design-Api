@@ -35,18 +35,13 @@ public class ErwartungenController {
         return erwartungenService.addErwartungen(erwartungen);
     }
 
-    /*
-     * @ApiOperation("Update Erwartungen")
-     * 
-     * @PutMapping("")
-     * public Erwartungen updateErwartungen(
-     * 
-     * @ApiParam(name = "Erwartungen", value =
-     * "Erwartungen to update") @RequestBody Erwartungen
-     * erwartungen) {
-     * return erwartungenService.updateErwartungen(erwartungen);
-     * }
-     */
+    // Aktualisierung von Erwartungen mit ReiseAngebot (ohne Bild)
+    @ApiOperation("Update Erwartungen")
+    @PutMapping("")
+    public Erwartungen updateErwartungen(@ApiParam(name = "Erwartungen", value = "Erwartungen to update")
+                                         @RequestBody Erwartungen erwartungen) {
+        return erwartungenService.updateErwartungen(erwartungen);
+    }
 
     @ApiOperation("Delete Erwartungen")
     @DeleteMapping("/{id}")

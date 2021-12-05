@@ -6,7 +6,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,24 +39,16 @@ public class AdminController {
         return adminService.addAdmin(admin);
     }
 
-    /*
-     * @ApiOperation("Update Admin")
-     * 
-     * @PutMapping("")
-     * public Admin updateAdmin(
-     * 
-     * @ApiParam(name = "Admin", value = "Admin to update") @RequestBody Admin
-     * admin) {
-     * return adminService.updateAdmin(admin);
-     * }
-     */
+    @ApiOperation("Update Admin")
+    @PutMapping("")
+    public Admin updateAdmin(@ApiParam(name = "Admin", value = "Admin to update") @RequestBody Admin admin) {
+        return adminService.updateAdmin(admin);
+    }
 
     @ApiOperation("Delete Admin")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> daleteAdmin(
-            @ApiParam(name = "AdminId", value = "Id of the Admin") @PathVariable UUID id) {
+    public ResponseEntity<?> daleteAdmin(@ApiParam(name = "AdminId", value = "Id of the Admin") @PathVariable UUID id) {
         return adminService.deleteAdmin(id);
-
     }
 
 }
