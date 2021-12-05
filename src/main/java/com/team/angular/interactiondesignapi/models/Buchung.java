@@ -1,24 +1,16 @@
 package com.team.angular.interactiondesignapi.models;
 
-import java.util.Date;
-import java.util.UUID;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -26,36 +18,37 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Buchung {
 
-	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-	private UUID id;
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID id;
 
-	private Date datum;
+    private Date datum;
 
-	//private Reiser mitReiser;
+    //private Reiser mitReiser;
 
-	private UUID mitReiserId;
-	
-	//private Buchungsklassen buchungsklasse;
-	
-	private UUID buchungsklasseId;
+    private UUID mitReiserId;
 
-	@NotBlank
-	private String flugAhfen;
+    //private Buchungsklassen buchungsklasse;
 
-	private String handGepaeck;
+    private UUID buchungsklasseId;
 
-	private String koffer;
+    @NotBlank
+    private String flugAhfen;
 
-	@Enumerated(EnumType.STRING)
-	private ZahlungMethod zahlungMethod;
+    private String handGepaeck;
 
-	@ManyToOne
-	@JoinColumn(name = "Reiser_id")
-	@EqualsAndHashCode.Exclude private Reiser reiser;
-	
-//  @OneToMany(fetch = FetchType.LAZY)
-//  private ReiseAngebot reiseAngebot
+    private String koffer;
+
+    @Enumerated(EnumType.STRING)
+    private ZahlungMethod zahlungMethod;
+
+    @ManyToOne
+    @JoinColumn(name = "Reiser_id")
+    @EqualsAndHashCode.Exclude
+    private Reiser reiser;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+    private ReiseAngebot reiseAngebot;
 
 }

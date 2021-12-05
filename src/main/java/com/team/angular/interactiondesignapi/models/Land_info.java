@@ -24,5 +24,4 @@ public class Land_info {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Land land;
-
 }

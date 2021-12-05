@@ -48,7 +48,7 @@ public class ReiseAngebot {
     private Set<String> leistungen;
 
     @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)
-    private Buchungsklassen buchungsklassen;
+    private List<Buchungsklassen> buchungsklassen;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Erwartungen erwartungen;
