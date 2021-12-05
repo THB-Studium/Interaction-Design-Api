@@ -1,7 +1,6 @@
 package com.team.angular.interactiondesignapi.transfertobjects.reiser;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +33,5 @@ public class ReiserWriteTO {
 	private String arbeitBei;
 
 	private boolean schonTeilgenommen;
-
-	private List<UUID> buchungIds;
 
 }

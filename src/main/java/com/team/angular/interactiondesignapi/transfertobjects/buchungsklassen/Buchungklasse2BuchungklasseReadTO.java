@@ -14,7 +14,7 @@ public class Buchungklasse2BuchungklasseReadTO {
 		out.setId(in.getId());
 		out.setType(in.getType());
 		out.setPreis(in.getPreis());
-		out.setLand(Land2LandReadTO.apply(in.getLand()));
+		//out.setLand(Land2LandReadTO.apply(in.getLand()));
 
 		return out;
 	}

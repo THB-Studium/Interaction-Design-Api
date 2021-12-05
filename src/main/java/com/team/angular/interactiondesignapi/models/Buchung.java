@@ -17,6 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -32,10 +33,13 @@ public class Buchung {
 
 	private Date datum;
 
-	private String mitReiser;
+	//private Reiser mitReiser;
+
+	private UUID mitReiserId;
 	
-	@OneToOne(mappedBy = "buchung")
-	private Buchungsklassen tarif;
+	//private Buchungsklassen buchungsklasse;
+	
+	private UUID buchungsklasseId;
 
 	@NotBlank
 	private String flugAhfen;
@@ -49,10 +53,9 @@ public class Buchung {
 
 	@ManyToOne
 	@JoinColumn(name = "Reiser_id")
-	private Reiser reiser;
-
-	@ManyToOne
-	@JoinColumn(name = "Land_id")
-	private Land land;
+	@EqualsAndHashCode.Exclude private Reiser reiser;
+	
+//  @OneToMany(fetch = FetchType.LAZY)
+//  private ReiseAngebot reiseAngebot
 
 }

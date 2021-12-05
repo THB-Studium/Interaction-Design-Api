@@ -9,26 +9,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.UUID;
+import com.team.angular.interactiondesignapi.config.Helper;
+import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.models.Feedback;
+import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.Feedback2FeedbackListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackReadListTO;
 
 @Service
 public class FeedbackService {
 
-    private static final Logger log = LoggerFactory.getLogger(FeedbackService.class);
-    @Autowired
-    private FeedbackRepository feedbackRepository;
+	private static final Logger log = LoggerFactory.getLogger(FeedbackService.class);
+	@Autowired
+	private FeedbackRepository feedbackRepository;
 
-    public List<Feedback> getAll() {
-        return feedbackRepository.findAll();
-    }
+	public List<FeedbackReadListTO> getAll() {
+		return Feedback2FeedbackListTO.apply(feedbackRepository.findAll());
+	}
 
-    public Feedback addFeedback(Feedback feedback) {
+	public Feedback addFeedback(FeedbackReadListTO feedback, MultipartFile bild) {
 
-        Feedback newFeedback = new Feedback();
-        newFeedback.setAutor(feedback.getAutor());
-        newFeedback.setDescription(feedback.getDescription());
+		Feedback newFeedback = new Feedback();
+		newFeedback.setAutor(feedback.getAutor());
+		newFeedback.setDescription(feedback.getDescription());
+		newFeedback.setVeroefentlich(false);
+		newFeedback.setBild(Helper.convertMultiPartFileToByte(bild));
 
         Feedback saved = feedbackRepository.save(newFeedback);
 
@@ -47,20 +54,19 @@ public class FeedbackService {
 
     }
 
-	//?? son role?
-    public Feedback updateFeedback(Feedback feedback) {
+	public Feedback updateFeedback(Feedback feedback_, MultipartFile bild) {
 
-        Feedback actual = feedbackRepository.findById(feedback.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + feedback.getId()));
+		Feedback feedback = getFeedback(feedback_.getId());
 
-        actual.setAutor(feedback.getAutor());
+		if (feedback_.getAutor() != null)
+			feedback.setAutor(feedback_.getAutor());
+		if (feedback_.getBild() != null)
+			feedback.setBild(Helper.convertMultiPartFileToByte(bild));
+		if (feedback_.getDescription() != null)
+			feedback.setDescription(feedback_.getDescription());
 
-        actual.setDescription(feedback.getDescription());
-
-        Feedback saved = feedbackRepository.save(actual);
-
-        return saved;
-    }
+		return feedback;
+	}
 
     public ResponseEntity<?> deleteFeedback(UUID id) {
         Feedback actual = feedbackRepository.findById(id)

@@ -5,7 +5,6 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -24,10 +23,12 @@ public class Feedback {
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	private UUID id;
 
-	@NotBlank
 	private String autor;
+	
+	private boolean veroefentlich;
+	
+	private byte[] bild;
 
-	@NotBlank
 	private String description;
 
 }

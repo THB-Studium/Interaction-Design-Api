@@ -1,6 +1,5 @@
 package com.team.angular.interactiondesignapi.services;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
-import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Reiser;
-import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.reiser.Reiser2ReiserReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiser.Reiser2ReiserReadTO;
@@ -27,9 +24,6 @@ public class ReiserService {
 
 	@Autowired
 	private ReiserRepository reiserRepository;
-
-	@Autowired
-	private BuchungRepository buchungRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(ReiserService.class);
 
@@ -50,7 +44,7 @@ public class ReiserService {
 		newReiser.setStudiengang(reiser.getStudiengang());
 		newReiser.setArbeitBei(reiser.getArbeitBei());
 		newReiser.setSchonTeilgenommen(reiser.isSchonTeilgenommen());
-		newReiser.setBuchungen(new HashSet<>());
+		//newReiser.setBuchungen(new HashSet<>());
 
 		return Reiser2ReiserReadTO.apply(reiserRepository.save(newReiser));
 
@@ -69,26 +63,26 @@ public class ReiserService {
 		Reiser actual = reiserRepository.findById(reiser.getId())
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Reiser with id: " + reiser.getId()));
 
-		actual.setName(reiser.getName());
-		actual.setVorname(reiser.getVorname());
-		actual.setGeburtsdatum(reiser.getGeburtsdatum());
-		actual.setTelefonnummer(reiser.getTelefonnummer());
-		actual.setEmail(reiser.getEmail());
-		actual.setHochschule(reiser.getHochschule());
-		actual.setAdresse(reiser.getAdresse());
-		actual.setStudiengang(reiser.getStudiengang());
-		actual.setArbeitBei(reiser.getArbeitBei());
-		actual.setSchonTeilgenommen(reiser.isSchonTeilgenommen());
-
-		if (reiser.getBuchungIds().size() > 0) {
-			reiser.getBuchungIds().forEach(id -> {
-				Buchung buchung = buchungRepository.findById(id)
-						.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
-
-				actual.getBuchungen().add(buchung);
-
-			});
-		}
+		if (reiser.getName() != null)
+			actual.setName(reiser.getName());
+		if (reiser.getVorname() != null)
+			actual.setVorname(reiser.getVorname());
+		if (reiser.getGeburtsdatum() != null)
+			actual.setGeburtsdatum(reiser.getGeburtsdatum());
+		if (reiser.getTelefonnummer() != actual.getTelefonnummer())
+			actual.setTelefonnummer(reiser.getTelefonnummer());
+		if (reiser.getEmail() != null)
+			actual.setEmail(reiser.getEmail());
+		if (reiser.getHochschule() != null)
+			actual.setHochschule(reiser.getHochschule());
+		if (reiser.getAdresse() != null)
+			actual.setAdresse(reiser.getAdresse());
+		if (reiser.getStudiengang() != null)
+			actual.setStudiengang(reiser.getStudiengang());
+		if (reiser.getArbeitBei() != null)
+			actual.setArbeitBei(reiser.getArbeitBei());
+		if (reiser.isSchonTeilgenommen() != actual.isSchonTeilgenommen())
+			actual.setSchonTeilgenommen(reiser.isSchonTeilgenommen());
 
 		return Reiser2ReiserReadTO.apply(reiserRepository.save(actual));
 	}

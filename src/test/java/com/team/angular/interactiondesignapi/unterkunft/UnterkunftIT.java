@@ -44,6 +44,8 @@ public class UnterkunftIT extends ItBase {
 		
 		
 		bilder.add(UUID.randomUUID().toString().getBytes());
+		bilder.add(UUID.randomUUID().toString().getBytes());
+		bilder.add(UUID.randomUUID().toString().getBytes());
 	
 		beschreibung.add(UUID.randomUUID().toString());
 		
@@ -53,7 +55,7 @@ public class UnterkunftIT extends ItBase {
 		erwartungen = buildErwartungen();
 		erwartungen = erwartungenRepository.save(erwartungen);
 		
-		land = buildLand(erwartungen);
+		land = buildLand();
 		land = landRepository.save(land);
 		
 		unterkunft = buildUnterkunft(bilder, land);

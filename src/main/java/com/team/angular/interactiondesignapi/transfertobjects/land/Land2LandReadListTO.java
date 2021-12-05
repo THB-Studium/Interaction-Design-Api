@@ -12,12 +12,18 @@ public class Land2LandReadListTO {
 
 		out.setId(in.getId());
 		out.setName(in.getName());
-		out.setStartDatum(in.getStartDatum());
-		out.setEndDatum(in.getEndDatum());
-		out.setTitel(in.getTitel());
-		out.setPlaetze(in.getPlaetze());
-		out.setFreiPlaetze(in.getFreiPlaetze());
-		out.setAnmeldungsFrist(in.getAnmeldungsFrist());
+		out.setId(in.getId());
+		out.setName(in.getName());
+		out.setFlughafen(in.getFlughafen());
+		out.setUnterkunft_text(in.getUnterkunft_text());
+		out.setCorona_infos(in.getCorona_infos());
+		out.setKarte_bild(in.getKarte_bild());
+		out.setKlima(in.getKlima());
+		out.setGesundheit(in.getGesundheit());
+		out.setReiseOrdnung(in.getReiseOrdnung());
+		out.setHinweise(in.getHinweise());
+		out.setMitReiserBerechtigt(in.getMitReiserBerechtigt());
+		out.setSonstigeHinweise(in.getSonstigeHinweise());
 
 		return out;
 	}

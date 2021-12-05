@@ -1,8 +1,5 @@
 package com.team.angular.interactiondesignapi.services;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,14 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team.angular.interactiondesignapi.config.Helper;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
-import com.team.angular.interactiondesignapi.models.Buchungsklassen;
-import com.team.angular.interactiondesignapi.models.Erwartungen;
-import com.team.angular.interactiondesignapi.models.Land_info;
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
-import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
-import com.team.angular.interactiondesignapi.repositories.Land_infoRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.land.Land2LandReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.Land2LandReadTO;
@@ -35,14 +27,8 @@ public class LandService {
 	@Autowired
 	private LandRepository landRepository;
 
-	@Autowired
-	private BuchungsklassenRepository buchungsklassenRepository;
-
-	@Autowired
-	private Land_infoRepository infos_landRepository;
-
-	@Autowired
-	private ErwartungenRepository erwartungenRepository;
+//	@Autowired
+//	private ReiseAngebotRepository reiseAngebotRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(LandService.class);
 
@@ -50,31 +36,23 @@ public class LandService {
 		return Land2LandReadListTO.apply(landRepository.findAll());
 	}
 
-	public LandReadTO addLand(LandWriteTO land, MultipartFile bild, MultipartFile karteBild) {
+	public LandReadTO addLand(LandWriteTO land, MultipartFile bild) {
 
-		Erwartungen erwartungen = erwartungenRepository.findById(land.getErwartungenId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find landsklasse with id: " + land.getErwartungenId()));
-
-		Land_info infos_Land = infos_landRepository.findById(land.getInfos_LandId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find Reiser with id: " + land.getInfos_LandId()));
-
-		Buchungsklassen buchungsklassen = buchungsklassenRepository.findById(land.getBuchungsklassenId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find Land with id: " + land.getBuchungsklassenId()));
+//		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
+//				.orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + land.getReiseAngebotId()));
 
 		Land newLand = new Land();
 		newLand.setName(land.getName());
-		newLand.setBild(new byte[(int) convertMultiPartFileToFile(bild).length()]);
-		newLand.setStartDatum(land.getStartDatum());
-		newLand.setEndDatum(land.getEndDatum());
-		newLand.setTitel(land.getTitel());
-		newLand.setKarteBild(new byte[(int) convertMultiPartFileToFile(karteBild).length()]);
-		newLand.setPlaetze(land.getPlaetze());
-		newLand.setFreiPlaetze(land.getFreiPlaetze());
-		newLand.setAnmeldungsFrist(land.getAnmeldungsFrist());
-		newLand.setLeistungen(land.getLeistungen());
-		newLand.setErwartungen(erwartungen);
-		newLand.setInfos_Land(infos_Land);
-		newLand.setBuchungsklassen(buchungsklassen);
+		newLand.setFlughafen(land.getFlughafen());
+		newLand.setCorona_infos(land.getCorona_infos());
+		newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
+		newLand.setKlima(land.getKlima());
+		newLand.setGesundheit(land.getGesundheit());
+		newLand.setReiseOrdnung(land.getReiseOrdnung());
+		newLand.setHinweise(land.getHinweise());
+		newLand.setMitReiserBerechtigt(land.getMitReiserBerechtigt());
+		newLand.setSonstigeHinweise(land.getSonstigeHinweise());
+		// newLand.setReiseAngebot(land.getReiseAngebotId());
 
 		return Land2LandReadTO.apply(landRepository.save(newLand));
 
@@ -88,33 +66,36 @@ public class LandService {
 		return Land2LandReadTO.apply(land);
 	}
 
-	public LandReadTO updateLand(LandWriteTO land, MultipartFile bild, MultipartFile karteBild) {
+	public LandReadTO updateLand(LandWriteTO land, MultipartFile bild) {
 
-		Land newLand = landRepository.findById(land.getId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find Land with id: " + land.getId()));
+//		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
+//		.orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + land.getReiseAngebotId()));
 
-		Erwartungen erwartungen = erwartungenRepository.findById(land.getErwartungenId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find landsklasse with id: " + land.getErwartungenId()));
+		Land newLand = landRepository.findById(land.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + land.getId()));
 
-		Land_info infos_Land = infos_landRepository.findById(land.getInfos_LandId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find Reiser with id: " + land.getInfos_LandId()));
-
-		Buchungsklassen buchungsklassen = buchungsklassenRepository.findById(land.getBuchungsklassenId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find Land with id: " + land.getBuchungsklassenId()));
-
-		newLand.setName(land.getName());
-		newLand.setBild(new byte[(int) convertMultiPartFileToFile(bild).length()]);
-		newLand.setStartDatum(land.getStartDatum());
-		newLand.setEndDatum(land.getEndDatum());
-		newLand.setTitel(land.getTitel());
-		newLand.setKarteBild(new byte[(int) convertMultiPartFileToFile(karteBild).length()]);
-		newLand.setPlaetze(land.getPlaetze());
-		newLand.setFreiPlaetze(land.getFreiPlaetze());
-		newLand.setAnmeldungsFrist(land.getAnmeldungsFrist());
-		newLand.setLeistungen(land.getLeistungen());
-		newLand.setErwartungen(erwartungen);
-		newLand.setInfos_Land(infos_Land);
-		newLand.setBuchungsklassen(buchungsklassen);
+		if (land.getName() != null)
+			newLand.setName(land.getName());
+		if (land.getFlughafen() != null)
+			newLand.setFlughafen(land.getFlughafen());
+		if (land.getCorona_infos() != null)
+			newLand.setCorona_infos(land.getCorona_infos());
+		if (bild != null)
+			newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
+		if (land.getKlima() != null)
+			newLand.setKlima(land.getKlima());
+		if (land.getGesundheit() != null)
+			newLand.setGesundheit(land.getGesundheit());
+		if (land.getReiseOrdnung() != null)
+			newLand.setReiseOrdnung(land.getReiseOrdnung());
+		if (land.getHinweise() != null)
+			newLand.setHinweise(land.getHinweise());
+		if (land.getMitReiserBerechtigt() != null)
+			newLand.setMitReiserBerechtigt(land.getMitReiserBerechtigt());
+		if (land.getSonstigeHinweise() != null)
+			newLand.setSonstigeHinweise(land.getSonstigeHinweise());
+		// if(land.getReiseAngebotId() != null)
+		// newLand.setReiseAngebot(land.getReiseAngebotId());
 
 		return Land2LandReadTO.apply(landRepository.save(newLand));
 	}
@@ -127,17 +108,6 @@ public class LandService {
 		log.info("successfully delted");
 
 		return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-	}
-
-	private File convertMultiPartFileToFile(MultipartFile file) {
-		File convertedFile = new File(file.getOriginalFilename());
-		try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
-			fos.write(file.getBytes());
-		} catch (IOException e) {
-			log.error("Failed to convert the MultipartFile to a File");
-		}
-
-		return convertedFile;
 	}
 
 }

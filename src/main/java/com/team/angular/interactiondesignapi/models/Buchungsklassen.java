@@ -18,10 +18,11 @@ public class Buchungsklassen {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    private String type;
+    private  String type;
+    
     private double preis;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ReiseAngebot reiseAngebot;
+    
+//  @OneToOne(fetch = FetchType.LAZY)
+//  private ReiseAngebot reiseAngebot;
 
 }

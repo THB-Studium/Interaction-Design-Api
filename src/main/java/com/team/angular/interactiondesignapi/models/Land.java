@@ -1,11 +1,5 @@
 package com.team.angular.interactiondesignapi.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -16,10 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,50 +26,48 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Land {
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID id;
+	@Id
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	private UUID id;
 
-    @NotBlank
-    private String name;
+	@NotBlank
+	private String name;
 
-    private byte[] bild;
+	@ElementCollection
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<String> flughafen;
 
-    private Date startDatum;
+	private String unterkunft_text;
 
-    private Date endDatum;
+	private String corona_infos;
 
-    private String titel;
+	private byte[] karte_bild;
 
-    private byte[] karteBild;
+	private String klima;
 
-    private int plaetze;
+	private String gesundheit;
 
-    private int freiPlaetze;
+	private String reiseOrdnung;
 
-    private Date anmeldungsFrist;
+	private String hinweise;
 
-    // @OneToOne(fetch = FetchType.LAZY)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> leistungen;
+	@ElementCollection
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<String> mitReiserBerechtigt;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Erwartungen erwartungen;
+	private String sonstigeHinweise;
 
-    @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
-    private Land_info land_info;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    private ReiseAngebot reiseAngebot;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Buchungsklassen buchungsklassen;
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	private List<Infos_land> infos_Land;
 
-    @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
-    private List<Highlight> highlights;
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	private List<Highlight> highlights;
 
-    @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
-    private List<Buchung> buchungen;
-
-    @OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
-    private List<Unterkunft> unterkunft;
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	private List<Unterkunft> unterkunft;
 
 }

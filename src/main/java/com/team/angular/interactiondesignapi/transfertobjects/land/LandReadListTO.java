@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.transfertobjects.land;
 
-import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -16,16 +16,24 @@ public class LandReadListTO {
 
 	private String name;
 
-	private Date startDatum;
+	private List<String> flughafen;
 
-	private Date endDatum;
+	private String unterkunft_text;
 
-	private String titel;
+	private String corona_infos;
 
-	private int plaetze;
+	private byte[] karte_bild;
 
-	private int freiPlaetze;
+	private String klima;
 
-	private Date anmeldungsFrist;
+	private String gesundheit;
+
+	private String reiseOrdnung;
+
+	private String hinweise;
+
+	private List<String> mitReiserBerechtigt;
+
+	private String sonstigeHinweise;
 
 }

@@ -16,7 +16,6 @@ public class Unterkunft2UnterkunftReadListTO {
 		out.setLink(in.getLink());
 		out.setAdresse(in.getAdresse());
 		out.setBeschreibung(in.getBeschreibung());
-		out.setLand(Land2LandReadTO.apply(in.getLand()));
 
 		return out;
 	}
