@@ -21,18 +21,18 @@ public class ErwartungenService {
     @Autowired
     private ErwartungenRepository erwartungenRepository;
 
+    public ErwartungenReadTO getErwartungen(UUID id) {
+        Erwartungen erwartungen = erwartungenRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Erwartungen with id: " + id));
+        return Erwartungen2ErwartungenReadTO.apply(erwartungen);
+    }
+
     public List<ErwartungenReadListTO> getAll() {
         return Erwartungen2ErwartungenReadListTO.apply(erwartungenRepository.findAll());
     }
 
     public Erwartungen addErwartungen(Erwartungen erwartungen) {
         return erwartungenRepository.save(erwartungen);
-    }
-
-    public ErwartungenReadTO getErwartungen(UUID id) {
-        Erwartungen erwartungen = erwartungenRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Erwartungen with id: " + id));
-        return Erwartungen2ErwartungenReadTO.apply(erwartungen);
     }
 
     public ResponseEntity<?> deleteErwartungen(UUID id) {

@@ -1,27 +1,27 @@
 package com.team.angular.interactiondesignapi.transfertobjects.hightlights;
 
+import com.team.angular.interactiondesignapi.models.Highlight;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.team.angular.interactiondesignapi.models.Highlight;
-import com.team.angular.interactiondesignapi.transfertobjects.land.Land2LandReadTO;
-
 public class Highlight2HighlightReadTO {
 
-	public static HighlightReadTO apply(Highlight in) {
-		HighlightReadTO out = new HighlightReadTO();
+    public static HighlightReadTO apply(Highlight in) {
+        HighlightReadTO out = new HighlightReadTO();
+        out.setId(in.getId());
+        out.setName(in.getName());
+        out.setDescription(in.getDescription());
+        out.setBild(in.getBild());
 
+        if (in.getLand() != null)
+            out.setLand_id(in.getLand().getId());
 
-		out.setName(in.getName());
-		out.setDescription(in.getDescription());
-		out.setBild(in.getBild());
-		out.setLand(Land2LandReadTO.apply(in.getLand()));
+        return out;
+    }
 
-		return out;
-	}
-
-	public static List<HighlightReadTO> apply(List<Highlight> lands) {
-		return lands.stream().map(u -> apply(u)).collect(Collectors.toList());
-	}
+    public static List<HighlightReadTO> apply(List<Highlight> highlights) {
+        return highlights.stream().map(highlight -> apply(highlight)).collect(Collectors.toList());
+    }
 
 }

@@ -19,17 +19,17 @@ public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
 
+    public Admin getAdmin(UUID id) {
+        return adminRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + id));
+    }
+
     public List<Admin> getAll() {
         return adminRepository.findAll();
     }
 
     public Admin addAdmin(Admin admin) {
         return adminRepository.save(admin);
-    }
-
-    public Admin getAdmin(UUID id) {
-        return adminRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + id));
     }
 
     public ResponseEntity<?> deleteAdmin(UUID id) {
@@ -54,38 +54,4 @@ public class AdminService {
         return admin_;
     }
 
-    /*public ResponseEntity<?> updateAdminElement(UUID id, Admin admin_new) {
-        Admin admin = getAdmin(id);
-        //Map<String, Object> map = oMapper.convertValue(admin, Map.class);
-
-        //Map<String, Object> admin_new = admin;
-        admin_new.forEach((element, value) -> {
-            switch (element) {
-                case "name":
-                    if (value != null)
-                        admin.setName((String) value);
-                    break;
-                case "kennwort":
-                    if (value != null)
-                        admin.setKennwort((String) value);
-                    break;
-                case "email":
-                    if (value != null)
-                        admin.setEmail((String) value);
-                    break;
-            }
-        });
-
-        Validator validator =
-                Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<Admin>> violations = validator.validate(admin);
-
-        if (!violations.isEmpty()) {
-            return ResponseEntity.badRequest().body(new
-                    MessageResponse(violations.toString()));
-        }
-
-        addAdmin(admin);
-        return new ResponseEntity<>("Successfully updated", HttpStatus.OK);
-    }*/
 }

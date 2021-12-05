@@ -7,18 +7,17 @@ import com.team.angular.interactiondesignapi.models.Highlight;
 
 public class Highlight2HighlightReadListTO {
 
-	public static HighlightReadTO apply(Highlight in) {
-		HighlightReadTO out = new HighlightReadTO();
-
-
+	public static HighlightReadListTO apply(Highlight in) {
+		HighlightReadListTO out = new HighlightReadListTO();
+		out.setId(in.getId());
 		out.setName(in.getName());
 		out.setDescription(in.getDescription());
-
+		out.setBild(in.getBild());
 		return out;
 	}
 
-	public static List<HighlightReadTO> apply(List<Highlight> lands) {
-		return lands.stream().map(u -> apply(u)).collect(Collectors.toList());
+	public static List<HighlightReadListTO> apply(List<Highlight> highlights) {
+		return highlights.stream().map(highlight -> apply(highlight)).collect(Collectors.toList());
 	}
 
 }

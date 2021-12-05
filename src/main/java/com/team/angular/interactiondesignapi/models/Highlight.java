@@ -24,5 +24,5 @@ public class Highlight {
     private byte[] bild;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ReiseAngebot reiseAngebot;
+    private Land land;
 }
