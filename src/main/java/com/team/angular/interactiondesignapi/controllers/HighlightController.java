@@ -1,6 +1,5 @@
 package com.team.angular.interactiondesignapi.controllers;
 
-import com.team.angular.interactiondesignapi.models.Highlight;
 import com.team.angular.interactiondesignapi.services.HighlightService;
 import com.team.angular.interactiondesignapi.transfertobjects.hightlights.HighlightReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.hightlights.HighlightReadTO;
@@ -33,7 +32,7 @@ public class HighlightController {
 
     @ApiOperation("Add One Highlight")
     @PostMapping("")
-    public Highlight addHighlight(
+    public HighlightReadTO addHighlight(
             @ApiParam(name = "Highlight", value = "Highlight to add") @RequestPart(value = "highlight")
                     HighlightReadTO highlight, @RequestPart(value = "bild") MultipartFile bild) {
         return highlightService.addHighlight(highlight, bild);
@@ -41,8 +40,9 @@ public class HighlightController {
 
     @ApiOperation("Update Highlight")
     @PutMapping("")
-    public Highlight updateHighlight(@ApiParam(name = "Highlight", value = "Highlight to add") @RequestPart(value = "highlight")
-                                             HighlightReadTO highlight, @RequestPart(value = "bild") MultipartFile bild) {
+    public HighlightReadTO updateHighlight(
+            @ApiParam(name = "Highlight", value = "Highlight to add") @RequestPart(value = "highlight")
+                    HighlightReadListTO highlight, @RequestPart(value = "bild") MultipartFile bild) {
         return highlightService.updateHighlight(highlight, bild);
     }
 

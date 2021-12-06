@@ -1,6 +1,5 @@
 package com.team.angular.interactiondesignapi.controllers;
 
-import com.team.angular.interactiondesignapi.models.Land_info;
 import com.team.angular.interactiondesignapi.services.Land_infoService;
 import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_infoReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_infoReadTO;
@@ -32,15 +31,15 @@ public class Land_infoController {
 
     @ApiOperation("Add One Land_info")
     @PostMapping("")
-    public Land_info addLand_info(
-            @ApiParam(name = "Land_info", value = "Land_info to add") @RequestBody Land_info land_info) {
+    public Land_infoReadTO addLand_info(
+            @ApiParam(name = "Land_info", value = "Land_info to add") @RequestBody Land_infoReadTO land_info) {
         return land_infoService.addLand_info(land_info);
     }
 
     @ApiOperation("Update Land_info")
     @PutMapping("")
-    public Land_infoReadListTO updateLand_info(@ApiParam(name = "Land_info", value = "Land_info to update")
-                                     @RequestBody Land_infoReadListTO land_info) {
+    public Land_infoReadTO updateLand_info(@ApiParam(name = "Land_info", value = "Land_info to update")
+                                           @RequestBody Land_infoReadListTO land_info) {
         return land_infoService.updateLand_info(land_info);
     }
 

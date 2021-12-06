@@ -2,6 +2,7 @@ package com.team.angular.interactiondesignapi.services;
 
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Land_info;
+import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.Land_infoRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_info2Land_infoReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_info2Land_infoReadTO;
@@ -21,6 +22,9 @@ public class Land_infoService {
     @Autowired
     private Land_infoRepository land_infoRepository;
 
+    @Autowired
+    private LandRepository landRepository;
+
     public Land_infoReadTO getLand_info(UUID id) {
         Land_info land_info = land_infoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land_info with id: " + id));
@@ -31,8 +35,16 @@ public class Land_infoService {
         return Land_info2Land_infoReadListTO.apply(land_infoRepository.findAll());
     }
 
-    public Land_info addLand_info(Land_info land_info) {
-        return land_infoRepository.save(land_info);
+    public Land_infoReadTO addLand_info(Land_infoReadTO land_info) {
+        Land_info _land_info = new Land_info();
+        if (land_info.getTitel() != null)
+            _land_info.setTitel(land_info.getTitel());
+        if (land_info.getDescription() != null)
+            _land_info.setDescription(land_info.getDescription());
+        if (land_info.getLand_id() != null)
+            _land_info.setLand(landRepository.getById(land_info.getLand_id()));
+
+        return Land_info2Land_infoReadTO.apply(land_infoRepository.save(_land_info));
     }
 
     public ResponseEntity<?> deleteLand_info(UUID id) {
@@ -45,7 +57,7 @@ public class Land_infoService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public Land_infoReadListTO updateLand_info(Land_infoReadListTO land_infoReadListTO) {
+    public Land_infoReadTO updateLand_info(Land_infoReadListTO land_infoReadListTO) {
         Land_info _land_info = land_infoRepository.findById(land_infoReadListTO.getId()).orElseThrow(() ->
                 new ResourceNotFoundException("Update Error: Cannot find Erwartungen with id: " + land_infoReadListTO.getId()));
 
@@ -56,6 +68,6 @@ public class Land_infoService {
 
         land_infoRepository.save(_land_info);
 
-        return Land_info2Land_infoReadListTO.apply(_land_info);
+        return Land_info2Land_infoReadTO.apply(_land_info);
     }
 }

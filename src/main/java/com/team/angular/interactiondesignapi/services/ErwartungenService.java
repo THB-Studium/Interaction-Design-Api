@@ -3,6 +3,7 @@ package com.team.angular.interactiondesignapi.services;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.Erwartungen2ErwartungenReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.Erwartungen2ErwartungenReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
@@ -20,6 +21,10 @@ public class ErwartungenService {
     private static final Logger log = LoggerFactory.getLogger(ErwartungenService.class);
     @Autowired
     private ErwartungenRepository erwartungenRepository;
+    @Autowired
+    private ReiseAngebotRepository reiseAngebotRepository;
+
+    private ReiseAngebotService reiseAngebotService;
 
     public ErwartungenReadTO getErwartungen(UUID id) {
         Erwartungen erwartungen = erwartungenRepository.findById(id)
@@ -31,8 +36,26 @@ public class ErwartungenService {
         return Erwartungen2ErwartungenReadListTO.apply(erwartungenRepository.findAll());
     }
 
-    public Erwartungen addErwartungen(Erwartungen erwartungen) {
-        return erwartungenRepository.save(erwartungen);
+    public ErwartungenReadTO addErwartungen(ErwartungenReadTO erwartungen) {
+        Erwartungen _erwartungen = new Erwartungen();
+        if (erwartungen.getAbenteuer() != 0)
+            _erwartungen.setAbenteuer(erwartungen.getAbenteuer());
+        if (erwartungen.getEntschleunigung() != 0)
+            _erwartungen.setEntschleunigung(erwartungen.getEntschleunigung());
+        if (erwartungen.getKonfort() != 0)
+            _erwartungen.setKonfort(erwartungen.getKonfort());
+        if (erwartungen.getNachhaltigkeit() != 0)
+            _erwartungen.setKonfort(erwartungen.getNachhaltigkeit());
+        if (erwartungen.getSonne_strand() != 0)
+            _erwartungen.setSonne_strand(erwartungen.getSonne_strand());
+        if (erwartungen.getSicherheit() != 0)
+            _erwartungen.setSicherheit(erwartungen.getSicherheit());
+        if (erwartungen.getRoad() != 0)
+            _erwartungen.setRoad(erwartungen.getRoad());
+        if (erwartungen.getReiseAngebot_id() != null)
+            _erwartungen.setReiseAngebot(reiseAngebotRepository.getById(erwartungen.getReiseAngebot_id()));
+
+        return Erwartungen2ErwartungenReadTO.apply(erwartungenRepository.save(_erwartungen));
     }
 
     public ResponseEntity<?> deleteErwartungen(UUID id) {

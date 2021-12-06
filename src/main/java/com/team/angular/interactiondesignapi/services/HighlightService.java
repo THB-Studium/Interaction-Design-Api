@@ -33,10 +33,15 @@ public class HighlightService {
         return Highlight2HighlightReadListTO.apply(highlightRepository.findAll());
     }
 
-    public Highlight addHighlight(HighlightReadTO highlight, MultipartFile bild) {
+    public HighlightReadTO addHighlight(HighlightReadTO highlight, MultipartFile bild) {
         Highlight _highlight = new Highlight();
+        if (highlight.getName() != null)
+            _highlight.setName(highlight.getName());
+        if (highlight.getDescription() != null)
+            _highlight.setDescription(highlight.getDescription());
+        if (bild != null)
         _highlight.setBild(Helper.convertMultiPartFileToByte(bild));
-        return highlightRepository.save(_highlight);
+        return  Highlight2HighlightReadTO.apply(highlightRepository.save(_highlight));
     }
 
     public ResponseEntity<?> deleteHighlight(UUID id) {
@@ -49,7 +54,7 @@ public class HighlightService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public Highlight updateHighlight(HighlightReadTO highlight, MultipartFile bild) {
+    public HighlightReadTO updateHighlight(HighlightReadListTO highlight, MultipartFile bild) {
         Highlight _highlight = highlightRepository.findById(highlight.getId()).orElseThrow(() ->
                 new ResourceNotFoundException("Update Error: Cannot find Highlight with id: " + highlight.getId()));
 
@@ -60,6 +65,6 @@ public class HighlightService {
         if (bild != null)
             _highlight.setBild(Helper.convertMultiPartFileToByte(bild));
 
-        return highlightRepository.save(_highlight);
+        return Highlight2HighlightReadTO.apply(highlightRepository.save(_highlight));
     }
 }

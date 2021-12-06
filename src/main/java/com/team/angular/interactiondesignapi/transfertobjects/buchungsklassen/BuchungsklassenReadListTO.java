@@ -9,11 +9,8 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuchungsklassenReadTO {
-
+public class BuchungsklassenReadListTO {
     private UUID id;
     private String type;
     private double preis;
-    private UUID reiseAngebot_id;
-
 }

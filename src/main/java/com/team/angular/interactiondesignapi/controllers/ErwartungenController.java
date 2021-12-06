@@ -32,8 +32,8 @@ public class ErwartungenController {
 
     @ApiOperation("Add One Erwartungen")
     @PostMapping("")
-    public Erwartungen addErwartungen(
-            @ApiParam(name = "Erwartungen", value = "Erwartungen to add") @RequestBody Erwartungen erwartungen) {
+    public ErwartungenReadTO addErwartungen(
+            @ApiParam(name = "Erwartungen", value = "Erwartungen to add") @RequestBody ErwartungenReadTO erwartungen) {
         return erwartungenService.addErwartungen(erwartungen);
     }
 
