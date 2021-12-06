@@ -1,7 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
-import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land_info;
 import com.team.angular.interactiondesignapi.repositories.Land_infoRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_info2Land_infoReadListTO;
@@ -46,12 +45,17 @@ public class Land_infoService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public Land_infoReadListTO updateLand_info (Land_infoReadListTO land_infoReadListTO){
-        Erwartungen _Land_info = land_infoRepository.findById(erwartungen.getId()).orElseThrow(() ->
-                new ResourceNotFoundException("Update Error: Cannot find Erwartungen with id: " + erwartungen.getId()));
+    public Land_infoReadListTO updateLand_info(Land_infoReadListTO land_infoReadListTO) {
+        Land_info _land_info = land_infoRepository.findById(land_infoReadListTO.getId()).orElseThrow(() ->
+                new ResourceNotFoundException("Update Error: Cannot find Erwartungen with id: " + land_infoReadListTO.getId()));
 
-        if (erwartungen.getAbenteuer() != 0)
-            _erwartungen.setAbenteuer(erwartungen.getAbenteuer());
-        return
+        if (land_infoReadListTO.getTitel() != null)
+            _land_info.setTitel(land_infoReadListTO.getTitel());
+        if (land_infoReadListTO.getDescription() != null)
+            _land_info.setDescription(land_infoReadListTO.getDescription());
+
+        land_infoRepository.save(_land_info);
+
+        return Land_info2Land_infoReadListTO.apply(_land_info);
     }
 }

@@ -2,6 +2,7 @@ package com.team.angular.interactiondesignapi.controllers;
 
 import com.team.angular.interactiondesignapi.models.Land_info;
 import com.team.angular.interactiondesignapi.services.Land_infoService;
+import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_infoReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_infoReadTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,7 +19,7 @@ public class Land_infoController {
 
     @ApiOperation("Get All Land_info")
     @GetMapping("")
-    public List<Land_info> getAllLand_info() {
+    public List<Land_infoReadListTO> getAllLand_info() {
         return land_infoService.getAll();
     }
 
@@ -36,25 +37,18 @@ public class Land_infoController {
         return land_infoService.addLand_info(land_info);
     }
 
-    /*
-     * @ApiOperation("Update Land_info")
-     * 
-     * @PutMapping("")
-     * public Land_info updateLand_info(
-     * 
-     * @ApiParam(name = "Land_info", value =
-     * "Land_info to update") @RequestBody Land_info
-     * land_info) {
-     * return land_infoService.updateLand_info(land_info);
-     * }
-     */
+    @ApiOperation("Update Land_info")
+    @PutMapping("")
+    public Land_infoReadListTO updateLand_info(@ApiParam(name = "Land_info", value = "Land_info to update")
+                                     @RequestBody Land_infoReadListTO land_info) {
+        return land_infoService.updateLand_info(land_info);
+    }
 
     @ApiOperation("Delete Land_info")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> daleteLand_info(
             @ApiParam(name = "Land_infoId", value = "Id of the Land_info") @PathVariable UUID id) {
         return land_infoService.deleteLand_info(id);
-
     }
 
 }
