@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -26,4 +29,7 @@ public class ReiseAngebotReadListTO {
     private int freiPlaetze;
 
     private Date anmeldungsFrist;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> leistungen;
 }

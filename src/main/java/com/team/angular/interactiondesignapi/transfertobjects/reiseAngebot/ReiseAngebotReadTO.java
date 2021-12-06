@@ -1,8 +1,7 @@
 package com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot;
 
-import com.team.angular.interactiondesignapi.models.Buchungsklassen;
-import com.team.angular.interactiondesignapi.models.Erwartungen;
-import com.team.angular.interactiondesignapi.models.Land;
+import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,10 +36,10 @@ public class ReiseAngebotReadTO {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
 
-    private List<Buchungsklassen> buchungsklassen;
+    private List<BuchungsklassenReadListTO> buchungsklassenReadListTO;
 
-    private Erwartungen erwartungen;
+    private ErwartungenReadListTO erwartungenReadListTO;
 
-    private Land Land;
+    private UUID land_id;
 
 }

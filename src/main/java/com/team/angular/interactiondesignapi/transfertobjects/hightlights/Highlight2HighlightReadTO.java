@@ -13,9 +13,7 @@ public class Highlight2HighlightReadTO {
         out.setName(in.getName());
         out.setDescription(in.getDescription());
         out.setBild(in.getBild());
-
-        if (in.getLand() != null)
-            out.setLand_id(in.getLand().getId());
+        out.setLand_id(in.getLand().getId());
 
         return out;
     }

@@ -13,8 +13,7 @@ public class Buchungklasse2BuchungklasseReadTO {
         out.setId(in.getId());
         out.setType(in.getType());
         out.setPreis(in.getPreis());
-        if (in.getReiseAngebot() != null)
-            out.setReiseAngebot_id(in.getReiseAngebot().getId());
+        out.setReiseAngebot_id(in.getReiseAngebot().getId());
 
         return out;
     }

@@ -17,9 +17,7 @@ public class Erwartungen2ErwartungenReadTO {
         out.setSonne_strand(in.getSonne_strand());
         out.setSicherheit(in.getSicherheit());
         out.setRoad(in.getRoad());
-
-        if (in.getReiseAngebot() != null)
-            out.setReiseAngebot_id(in.getReiseAngebot().getId());
+        out.setReiseAngebot_id(in.getReiseAngebot().getId());
 
         return out;
     }

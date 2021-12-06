@@ -13,9 +13,7 @@ public class Land_info2Land_infoReadTO {
         out.setId(in.getId());
         out.setTitel(in.getTitel());
         out.setDescription(in.getDescription());
-
-        if (in.getLand() != null)
-            out.setLand_id(in.getLand().getId());
+        out.setLand_id(in.getLand().getId());
 
         return out;
     }

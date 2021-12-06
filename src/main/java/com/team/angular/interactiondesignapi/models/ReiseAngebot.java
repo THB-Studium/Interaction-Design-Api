@@ -54,7 +54,7 @@ public class ReiseAngebot {
     private Erwartungen erwartungen;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Land Land;
+    private Land land;
 
     @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)
     private List<Buchung> buchungen;
