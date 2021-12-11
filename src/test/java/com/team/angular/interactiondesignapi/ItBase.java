@@ -2,7 +2,9 @@ package com.team.angular.interactiondesignapi;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +23,8 @@ import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Feedback;
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.Leistungen;
+import com.team.angular.interactiondesignapi.models.Land_info;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
@@ -31,7 +34,7 @@ import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
 import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
 import com.team.angular.interactiondesignapi.repositories.Infos_landRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
-import com.team.angular.interactiondesignapi.repositories.LeistungenRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
@@ -63,9 +66,6 @@ public class ItBase {
 	protected LandRepository landRepository;
 
 	@Autowired
-	protected LeistungenRepository leistungenRepository;
-
-	@Autowired
 	protected ReiserRepository reiserRepository;
 
 	@Autowired
@@ -79,6 +79,9 @@ public class ItBase {
 
 	@Autowired
 	protected ErwartungenRepository erwartungenRepository;
+	
+	@Autowired
+	protected ReiseAngebotRepository reiseAngebotRepository;	
 
 	@BeforeEach
 	public void setup() {
@@ -96,8 +99,8 @@ public class ItBase {
 		buchungsklasseRepository.deleteAll();
 		infos_LandRepository.deleteAll();
 		erwartungenRepository.deleteAll();
-		leistungenRepository.deleteAll();
 		reiserRepository.deleteAll();
+		reiseAngebotRepository.deleteAll();
 	}
 
 	protected Feedback buildFeedback() {
@@ -136,7 +139,7 @@ public class ItBase {
 		return unterkunft;
 	}
 
-	protected Land buildLand() {
+	protected Land buildLand(ReiseAngebot reiseAngebot) {
 
 		List<String> flug = new ArrayList<String>();
 		flug.add(UUID.randomUUID().toString());
@@ -158,12 +161,12 @@ public class ItBase {
 		land.setHinweise(UUID.randomUUID().toString());
 		land.setMitReiserBerechtigt(reiseBerechtig);
 		land.setSonstigeHinweise(UUID.randomUUID().toString());
-		// land.setReiseAngebot(land.getReiseAngebotId());
+		land.setReiseAngebot(reiseAngebot);
 
 		return land;
 	}
 
-	protected LandWriteTO buildLandWriteTO(UUID erwartungenId, UUID infos_LandId, UUID buchungsklassenId) {
+	protected LandWriteTO buildLandWriteTO(UUID reiseAngebotId) {
 		LandWriteTO land = new LandWriteTO();
 
 		List<String> flug = new ArrayList<String>();
@@ -183,7 +186,7 @@ public class ItBase {
 		land.setHinweise(UUID.randomUUID().toString());
 		land.setMitReiserBerechtigt(reiseBerechtig);
 		land.setSonstigeHinweise(UUID.randomUUID().toString());
-		// land.setReiseAngebot(land.getReiseAngebotId());
+		land.setReiseAngebotId(reiseAngebotId);
 
 		return land;
 	}
@@ -220,14 +223,6 @@ public class ItBase {
 		reiser.setSchonTeilgenommen(true);
 
 		return reiser;
-	}
-
-	protected Leistungen buildLeistungen(List<String> beschreibung) {
-		Leistungen leistung = new Leistungen();
-
-		leistung.setBeschreibung((beschreibung));
-
-		return leistung;
 	}
 
 	protected Buchung buildBuchung(Reiser reiser) {
@@ -282,12 +277,33 @@ public class ItBase {
 		return newErwartungen;
 	}
 
-	protected Infos_land buildInfosLand(List<String> abflug, List<String> mitreiseberechtigt) {
-		Infos_land newBuchung = new Infos_land();
+	protected Land_info buildInfosLand() {
+		Land_info newBuchung = new Land_info();
 
 		newBuchung.setTitel(UUID.randomUUID().toString());
-		newBuchung.setBeschreibung(UUID.randomUUID().toString());
+		newBuchung.setDescription(UUID.randomUUID().toString());
 
 		return newBuchung;
+	}
+	
+	protected ReiseAngebot buildReiseAngebot() {
+		
+		Set<String> leistungen = new HashSet<String>();
+		leistungen.add(UUID.randomUUID().toString());
+		leistungen.add(UUID.randomUUID().toString());
+		
+		ReiseAngebot reiseAngebot = new ReiseAngebot();
+
+		reiseAngebot.setTitel(UUID.randomUUID().toString());
+		reiseAngebot.setStartbild("1234567890".getBytes());
+		reiseAngebot.setStartDatum(new Date());
+		reiseAngebot.setEndDatum(new Date());
+		reiseAngebot.setPlaetze(12);
+		reiseAngebot.setFreiPlaetze(12);
+		reiseAngebot.setAnmeldungsFrist(new Date());
+		reiseAngebot.setLeistungen(leistungen);
+		
+
+		return reiseAngebot;
 	}
 }

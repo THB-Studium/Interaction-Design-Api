@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.team.angular.interactiondesignapi.models.Reiser;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadTO;
 
 public class Reiser2ReiserReadTO {
 

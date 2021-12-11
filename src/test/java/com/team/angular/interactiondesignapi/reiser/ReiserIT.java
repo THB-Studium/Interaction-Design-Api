@@ -4,7 +4,6 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.Leistungen;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
 
@@ -34,7 +33,7 @@ public class ReiserIT extends ItBase {
 	
 	Land land;
 	
-	Leistungen leistungen;
+	ReiseAngebot reiseAngebot;
 	
 	private List<String> beschreibung = new ArrayList<>();
 	
@@ -53,13 +52,13 @@ public class ReiserIT extends ItBase {
 		
 		beschreibung.add(UUID.randomUUID().toString());
 		
-		leistungen = buildLeistungen(beschreibung);
-		leistungen = leistungenRepository.save(leistungen);
+		reiseAngebot = buildReiseAngebot();
+		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
 		erwartungen = buildErwartungen();
 		erwartungen = erwartungenRepository.save(erwartungen);
 		
-		land = buildLand();
+		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
 		buchung = buildBuchung(reiser1);

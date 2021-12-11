@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.team.angular.interactiondesignapi.models.Unterkunft;
-import com.team.angular.interactiondesignapi.transfertobjects.land.Land2LandReadTO;
 
 public class Unterkunft2UnterkunftReadListTO {
 

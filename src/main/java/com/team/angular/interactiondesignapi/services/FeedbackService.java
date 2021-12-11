@@ -1,8 +1,8 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
-import com.team.angular.interactiondesignapi.models.Feedback;
-import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
+import java.util.List;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,6 @@ import com.team.angular.interactiondesignapi.models.Feedback;
 import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.feedback.Feedback2FeedbackListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackReadListTO;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class FeedbackService {

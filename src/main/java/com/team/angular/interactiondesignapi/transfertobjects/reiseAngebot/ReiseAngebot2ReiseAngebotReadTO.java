@@ -20,9 +20,12 @@ public class ReiseAngebot2ReiseAngebotReadTO {
         out.setAnmeldungsFrist(in.getAnmeldungsFrist());
         out.setLeistungen(in.getLeistungen());
 
-        out.setBuchungsklassenReadListTO(Buchungsklassen2BuchungsklassenReadListTO.apply(in.getBuchungsklassen()));
-        out.setErwartungenReadListTO(Erwartungen2ErwartungenReadListTO.apply(in.getErwartungen()));
-        out.setLand_id(in.getLand().getId());
+        if(in.getBuchungsklassen() != null)
+        	out.setBuchungsklassenReadListTO(Buchungsklassen2BuchungsklassenReadListTO.apply(in.getBuchungsklassen()));
+        if(in.getErwartungen() != null)
+        	out.setErwartungenReadListTO(Erwartungen2ErwartungenReadListTO.apply(in.getErwartungen()));
+        if(in.getLand() != null)
+        	out.setLand_id(in.getLand().getId());
 
         return out;
     }

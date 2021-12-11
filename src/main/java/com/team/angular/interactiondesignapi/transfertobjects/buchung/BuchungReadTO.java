@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
-import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.Leistungen;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
 
@@ -30,7 +30,7 @@ public class UnterkunftIT extends ItBase {
 	
 	Land land;
 	
-	Leistungen leistungen;
+	ReiseAngebot reiseAngebot;
 	
 	private List<byte[]> bilder = new ArrayList<>();
 	
@@ -49,13 +49,13 @@ public class UnterkunftIT extends ItBase {
 	
 		beschreibung.add(UUID.randomUUID().toString());
 		
-		leistungen = buildLeistungen(beschreibung);
-		leistungen = leistungenRepository.save(leistungen);
+		reiseAngebot = buildReiseAngebot();
+		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
 		erwartungen = buildErwartungen();
 		erwartungen = erwartungenRepository.save(erwartungen);
 		
-		land = buildLand();
+		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
 		unterkunft = buildUnterkunft(bilder, land);

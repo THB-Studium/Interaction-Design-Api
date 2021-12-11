@@ -1,7 +1,6 @@
 package com.team.angular.interactiondesignapi.models;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.ElementCollection;
@@ -10,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -58,8 +58,8 @@ public class Land {
 
 	private String sonstigeHinweise;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private ReiseAngebot reiseAngebot;
+    @OneToOne(fetch = FetchType.LAZY)
+    private ReiseAngebot reiseAngebot;
 
 	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
 	private List<Land_info> land_info;

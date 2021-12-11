@@ -17,7 +17,8 @@ import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.Leistungen;
+import com.team.angular.interactiondesignapi.models.Land_info;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
 
@@ -31,9 +32,11 @@ public class LandIT extends ItBase {
 	
 	Erwartungen erwartungen;
 	
-	Infos_land infos_land;
+	Land_info infos_land;
 	
-	Leistungen leistungen;
+	Land_info leistungen;
+	
+	ReiseAngebot reiseAngebot, reiseAngebot1;
 	
 	private List<String> beschreibung = new ArrayList<>();
 	
@@ -59,22 +62,25 @@ public class LandIT extends ItBase {
 		reiser1 = buildReiser();
 		reiser1 = reiserRepository.save(reiser1);
 		
-		leistungen = buildLeistungen(beschreibung);
-		leistungen = leistungenRepository.save(leistungen);
-		
 		erwartungen = buildErwartungen();
 		erwartungen = erwartungenRepository.save(erwartungen);
 		
-		infos_land = buildInfosLand(abflug, mitreiseberechtigt);
+		infos_land = buildInfosLand();
 		infos_land = infos_LandRepository.save(infos_land);
 		
-		land = buildLand();
+		reiseAngebot = buildReiseAngebot();
+		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
+		
+		reiseAngebot1 = buildReiseAngebot();
+		reiseAngebot1 = reiseAngebotRepository.save(reiseAngebot1);
+		
+		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
 		buchungsklasse = buildBuchungsKlasse(land);
 		buchungsklasseRepository.save(buchungsklasse);
 		
-		land1 = buildLand();
+		land1 = buildLand(reiseAngebot);
 		land1 = landRepository.save(land1);
 		
 	}
@@ -87,7 +93,7 @@ public class LandIT extends ItBase {
 	
 	@Test
 	public void createLand() {
-		LandWriteTO create = buildLandWriteTO(erwartungen.getId(), infos_land.getId(), buchungsklasse.getId());
+		LandWriteTO create = buildLandWriteTO(reiseAngebot.getId());
 		
 		UUID id = UUID.fromString(
 				given()
@@ -115,6 +121,8 @@ public class LandIT extends ItBase {
 		assertThat(create.getHinweise(), is(land.getHinweise()));
 		assertThat(create.getMitReiserBerechtigt(), is(land.getMitReiserBerechtigt()));
 		assertThat(create.getSonstigeHinweise(), is(land.getSonstigeHinweise()));
+		
+		assertThat(create.getReiseAngebotId(), is(reiseAngebot.getId()));
 	}
 	
 	@Test
@@ -136,7 +144,7 @@ public class LandIT extends ItBase {
 	@Test
 	public void updateLand() {
 		
-		LandWriteTO update = buildLandWriteTO(erwartungen.getId(), infos_land.getId(), buchungsklasse.getId());
+		LandWriteTO update = buildLandWriteTO(reiseAngebot1.getId());
 		update.setId(land.getId());
 		
 		UUID id = UUID.fromString(
@@ -166,6 +174,8 @@ public class LandIT extends ItBase {
 		assertThat(update.getHinweise(), is(land_.getHinweise()));
 		assertThat(update.getMitReiserBerechtigt(), is(land_.getMitReiserBerechtigt()));
 		assertThat(update.getSonstigeHinweise(), is(land_.getSonstigeHinweise()));
+		
+		assertThat(update.getReiseAngebotId(), is(reiseAngebot1.getId()));
 	}
 	
 	@Test

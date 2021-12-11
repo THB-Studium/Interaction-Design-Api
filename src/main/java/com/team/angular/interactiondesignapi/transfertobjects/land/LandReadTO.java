@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.team.angular.interactiondesignapi.transfertobjects.hightlights.HighlightReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land_info.Land_infoReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadListTO;
 
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class LandReadTO {
 
 	private String sonstigeHinweise;
 
-	// private ReiseAngebotReadTO reiseAngebot;
+	private ReiseAngebotReadTO reiseAngebot;
 
 	private List<Land_infoReadListTO> infosLands;
 

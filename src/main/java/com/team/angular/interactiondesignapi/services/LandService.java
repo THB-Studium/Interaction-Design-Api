@@ -14,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.team.angular.interactiondesignapi.config.Helper;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Land;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.land.Land2LandReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.Land2LandReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadListTO;
@@ -27,8 +29,8 @@ public class LandService {
 	@Autowired
 	private LandRepository landRepository;
 
-//	@Autowired
-//	private ReiseAngebotRepository reiseAngebotRepository;
+	@Autowired
+	private ReiseAngebotRepository reiseAngebotRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(LandService.class);
 
@@ -38,8 +40,8 @@ public class LandService {
 
 	public LandReadTO addLand(LandWriteTO land, MultipartFile bild) {
 
-//		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
-//				.orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + land.getReiseAngebotId()));
+		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(land.getReiseAngebotId())
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + land.getReiseAngebotId()));
 
 		Land newLand = new Land();
 		newLand.setName(land.getName());
@@ -52,7 +54,7 @@ public class LandService {
 		newLand.setHinweise(land.getHinweise());
 		newLand.setMitReiserBerechtigt(land.getMitReiserBerechtigt());
 		newLand.setSonstigeHinweise(land.getSonstigeHinweise());
-		// newLand.setReiseAngebot(land.getReiseAngebotId());
+		newLand.setReiseAngebot(reiseAngebot);
 
 		return Land2LandReadTO.apply(landRepository.save(newLand));
 
@@ -68,8 +70,8 @@ public class LandService {
 
 	public LandReadTO updateLand(LandWriteTO land, MultipartFile bild) {
 
-//		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
-//		.orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + land.getReiseAngebotId()));
+		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(land.getReiseAngebotId())
+		.orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + land.getReiseAngebotId()));
 
 		Land newLand = landRepository.findById(land.getId())
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + land.getId()));
@@ -94,8 +96,8 @@ public class LandService {
 			newLand.setMitReiserBerechtigt(land.getMitReiserBerechtigt());
 		if (land.getSonstigeHinweise() != null)
 			newLand.setSonstigeHinweise(land.getSonstigeHinweise());
-		// if(land.getReiseAngebotId() != null)
-		// newLand.setReiseAngebot(land.getReiseAngebotId());
+		if(land.getReiseAngebotId() != null)
+		    newLand.setReiseAngebot(reiseAngebot);
 
 		return Land2LandReadTO.apply(landRepository.save(newLand));
 	}

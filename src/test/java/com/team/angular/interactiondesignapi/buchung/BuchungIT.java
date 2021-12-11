@@ -18,7 +18,7 @@ import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.Leistungen;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
@@ -35,15 +35,13 @@ public class BuchungIT extends ItBase {
 	
 	Land land;
 	
-	Leistungen leistungen;
-	
 	private List<String> beschreibung = new ArrayList<>();
 	
 	Reiser reiser, reiser1, mitReiser;
 	
 	Erwartungen erwartungen;
 	
-	//ReiseAngebot reiseAngebot;
+	ReiseAngebot reiseAngebot;
 	
 	@BeforeEach
 	public void setup() {
@@ -57,13 +55,13 @@ public class BuchungIT extends ItBase {
 		
 		beschreibung.add(UUID.randomUUID().toString());
 		
-		leistungen = buildLeistungen(beschreibung);
-		leistungen = leistungenRepository.save(leistungen);
-		
 		erwartungen = buildErwartungen();
 		erwartungen = erwartungenRepository.save(erwartungen);
 		
-		land = buildLand();
+		reiseAngebot = buildReiseAngebot();
+		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
+		
+		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
 		buchungsklasse = buildBuchungsKlasse(land);
