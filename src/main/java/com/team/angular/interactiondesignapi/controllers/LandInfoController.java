@@ -47,8 +47,8 @@ public class LandInfoController {
 
     @ApiOperation("Delete LandInfo")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> daleteLandInfo(
-            @ApiParam(name = "Land_infoId", value = "Id of the LandInfo") @PathVariable UUID id) {
+    public ResponseEntity<?> deleteLandInfo(
+            @ApiParam(name = "LandInfoId", value = "Id of the LandInfo") @PathVariable UUID id) {
         return landInfoService.deleteLandInfo(id);
     }
 
