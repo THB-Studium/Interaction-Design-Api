@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@RestController
+@RequestMapping("/landInfos")
 public class Land_infoController {
     @Autowired
     protected Land_infoService land_infoService;

@@ -20,9 +20,6 @@ public class Land2LandReadTO {
         out.setUnterkunft_text(in.getUnterkunft_text());
         out.setCorona_infos(in.getCorona_infos());
         out.setKarte_bild(in.getKarte_bild());
-        out.setKlima(in.getKlima());
-        out.setGesundheit(in.getGesundheit());
-        out.setReiseOrdnung(in.getReiseOrdnung());
         out.setHinweise(in.getHinweise());
         out.setMitReiserBerechtigt(in.getMitReiserBerechtigt());
         out.setSonstigeHinweise(in.getSonstigeHinweise());

@@ -44,12 +44,6 @@ public class Land {
 
 	private byte[] karte_bild;
 
-	private String klima;
-
-	private String gesundheit;
-
-	private String reiseOrdnung;
-
 	private String hinweise;
 
 	@ElementCollection

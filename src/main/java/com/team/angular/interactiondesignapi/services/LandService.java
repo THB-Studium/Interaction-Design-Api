@@ -48,9 +48,6 @@ public class LandService {
 		newLand.setFlughafen(land.getFlughafen());
 		newLand.setCorona_infos(land.getCorona_infos());
 		newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
-		newLand.setKlima(land.getKlima());
-		newLand.setGesundheit(land.getGesundheit());
-		newLand.setReiseOrdnung(land.getReiseOrdnung());
 		newLand.setHinweise(land.getHinweise());
 		newLand.setMitReiserBerechtigt(land.getMitReiserBerechtigt());
 		newLand.setSonstigeHinweise(land.getSonstigeHinweise());
@@ -84,12 +81,6 @@ public class LandService {
 			newLand.setCorona_infos(land.getCorona_infos());
 		if (bild != null)
 			newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
-		if (land.getKlima() != null)
-			newLand.setKlima(land.getKlima());
-		if (land.getGesundheit() != null)
-			newLand.setGesundheit(land.getGesundheit());
-		if (land.getReiseOrdnung() != null)
-			newLand.setReiseOrdnung(land.getReiseOrdnung());
 		if (land.getHinweise() != null)
 			newLand.setHinweise(land.getHinweise());
 		if (land.getMitReiserBerechtigt() != null)

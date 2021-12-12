@@ -115,9 +115,6 @@ public class LandIT extends ItBase {
 		assertThat(create.getFlughafen(), is(land.getFlughafen()));
 		assertThat(create.getUnterkunft_text(), is(land.getUnterkunft_text()));
 		assertThat(create.getCorona_infos(), is(land.getCorona_infos()));
-		assertThat(create.getKlima(), is(land.getKlima()));
-		assertThat(create.getGesundheit(), is(land.getGesundheit()));
-		assertThat(create.getReiseOrdnung(), is(land.getReiseOrdnung()));
 		assertThat(create.getHinweise(), is(land.getHinweise()));
 		assertThat(create.getMitReiserBerechtigt(), is(land.getMitReiserBerechtigt()));
 		assertThat(create.getSonstigeHinweise(), is(land.getSonstigeHinweise()));
@@ -168,9 +165,6 @@ public class LandIT extends ItBase {
 		assertThat(update.getFlughafen(), is(land_.getFlughafen()));
 		assertThat(update.getUnterkunft_text(), is(land_.getUnterkunft_text()));
 		assertThat(update.getCorona_infos(), is(land_.getCorona_infos()));
-		assertThat(update.getKlima(), is(land_.getKlima()));
-		assertThat(update.getGesundheit(), is(land_.getGesundheit()));
-		assertThat(update.getReiseOrdnung(), is(land_.getReiseOrdnung()));
 		assertThat(update.getHinweise(), is(land_.getHinweise()));
 		assertThat(update.getMitReiserBerechtigt(), is(land_.getMitReiserBerechtigt()));
 		assertThat(update.getSonstigeHinweise(), is(land_.getSonstigeHinweise()));
@@ -202,9 +196,6 @@ public class LandIT extends ItBase {
 		assertThat(land.getFlughafen().size(), is(land_.getFlughafen().size()));
 		assertThat(land.getUnterkunft_text(), is(land_.getUnterkunft_text()));
 		assertThat(land.getCorona_infos(), is(land_.getCorona_infos()));
-		assertThat(land.getKlima(), is(land_.getKlima()));
-		assertThat(land.getGesundheit(), is(land_.getGesundheit()));
-		assertThat(land.getReiseOrdnung(), is(land_.getReiseOrdnung()));
 		assertThat(land.getHinweise(), is(land.getHinweise()));
 		assertThat(land.getMitReiserBerechtigt().size(), is(land_.getMitReiserBerechtigt().size()));
 		assertThat(land.getSonstigeHinweise(), is(land_.getSonstigeHinweise()));

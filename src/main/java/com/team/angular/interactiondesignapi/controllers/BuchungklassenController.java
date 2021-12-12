@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@RestController
+@RequestMapping("/buchungsklassen")
 public class BuchungklassenController {
     @Autowired
     protected BuchungsklassenService buchungsklassenService;

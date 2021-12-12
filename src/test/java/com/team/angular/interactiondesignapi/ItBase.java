@@ -155,9 +155,6 @@ public class ItBase {
 		land.setFlughafen(flug);
 		land.setCorona_infos(UUID.randomUUID().toString());
 		land.setKarte_bild(UUID.randomUUID().toString().getBytes());
-		land.setKlima(UUID.randomUUID().toString());
-		land.setGesundheit(UUID.randomUUID().toString());
-		land.setReiseOrdnung(UUID.randomUUID().toString());
 		land.setHinweise(UUID.randomUUID().toString());
 		land.setMitReiserBerechtigt(reiseBerechtig);
 		land.setSonstigeHinweise(UUID.randomUUID().toString());

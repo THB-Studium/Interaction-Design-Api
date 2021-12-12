@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.UUID;
 
+@RestController
+@RequestMapping("/highlights")
 public class HighlightController {
     @Autowired
     protected HighlightService highlightService;

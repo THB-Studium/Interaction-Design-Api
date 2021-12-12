@@ -42,6 +42,9 @@ public class ReiseAngebot {
 
     private int freiPlaetze;
 
+    // TODO update the service
+    private int interessiert;
+    
     private Date anmeldungsFrist;
 
     @ElementCollection(fetch = FetchType.EAGER)
