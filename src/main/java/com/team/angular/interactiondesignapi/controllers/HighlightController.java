@@ -1,8 +1,8 @@
 package com.team.angular.interactiondesignapi.controllers;
 
 import com.team.angular.interactiondesignapi.services.HighlightService;
-import com.team.angular.interactiondesignapi.transfertobjects.hightlights.HighlightReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.hightlights.HighlightReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.hightlight.HighlightReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.hightlight.HighlightReadWriteTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +27,22 @@ public class HighlightController {
 
     @ApiOperation("Get One Highlight")
     @GetMapping("/{id}")
-    public HighlightReadTO getHighlightById(
+    public HighlightReadWriteTO getHighlightById(
             @ApiParam(name = "HighlightId", value = "get One Highlight") @PathVariable UUID id) {
         return highlightService.getHighlight(id);
     }
 
     @ApiOperation("Add One Highlight")
     @PostMapping("")
-    public HighlightReadTO addHighlight(
+    public HighlightReadWriteTO addHighlight(
             @ApiParam(name = "Highlight", value = "Highlight to add") @RequestPart(value = "highlight")
-                    HighlightReadTO highlight, @RequestPart(value = "bild") MultipartFile bild) {
+                    HighlightReadWriteTO highlight, @RequestPart(value = "bild") MultipartFile bild) {
         return highlightService.addHighlight(highlight, bild);
     }
 
     @ApiOperation("Update Highlight")
     @PutMapping("")
-    public HighlightReadTO updateHighlight(
+    public HighlightReadWriteTO updateHighlight(
             @ApiParam(name = "Highlight", value = "Highlight to add") @RequestPart(value = "highlight")
                     HighlightReadListTO highlight, @RequestPart(value = "bild") MultipartFile bild) {
         return highlightService.updateHighlight(highlight, bild);

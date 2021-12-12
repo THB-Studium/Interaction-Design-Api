@@ -1,23 +1,17 @@
-package com.team.angular.interactiondesignapi.transfertobjects.hightlights;
-
-import java.util.UUID;
+package com.team.angular.interactiondesignapi.transfertobjects.hightlight;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HighlightReadTO {
-	
+public class HighlightReadListTO {
     private UUID id;
-    
     private String name;
-    
     private String description;
-    
     private byte[] bild;
-    
-    private UUID Land_id;
 }

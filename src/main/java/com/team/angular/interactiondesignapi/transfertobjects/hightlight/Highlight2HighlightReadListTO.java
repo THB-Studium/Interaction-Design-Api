@@ -1,4 +1,4 @@
-package com.team.angular.interactiondesignapi.transfertobjects.hightlights;
+package com.team.angular.interactiondesignapi.transfertobjects.hightlight;
 
 import java.util.List;
 import java.util.stream.Collectors;
