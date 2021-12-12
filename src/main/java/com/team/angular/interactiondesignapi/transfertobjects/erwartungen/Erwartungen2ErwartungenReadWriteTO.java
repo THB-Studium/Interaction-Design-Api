@@ -5,9 +5,9 @@ import com.team.angular.interactiondesignapi.models.Erwartungen;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Erwartungen2ErwartungenReadTO {
-    public static ErwartungenReadTO apply(Erwartungen in) {
-        ErwartungenReadTO out = new ErwartungenReadTO();
+public class Erwartungen2ErwartungenReadWriteTO {
+    public static ErwartungenReadWriteTO apply(Erwartungen in) {
+        ErwartungenReadWriteTO out = new ErwartungenReadWriteTO();
 
         out.setId(in.getId());
         out.setAbenteuer(in.getAbenteuer());
@@ -17,12 +17,13 @@ public class Erwartungen2ErwartungenReadTO {
         out.setSonne_strand(in.getSonne_strand());
         out.setSicherheit(in.getSicherheit());
         out.setRoad(in.getRoad());
-        out.setReiseAngebot_id(in.getReiseAngebot().getId());
+        if(in.getReiseAngebot() != null)
+            out.setReiseAngebotId(in.getReiseAngebot().getId());
 
         return out;
     }
 
-    public static List<ErwartungenReadTO> apply(List<Erwartungen> erwartungenList) {
+    public static List<ErwartungenReadWriteTO> apply(List<Erwartungen> erwartungenList) {
         return erwartungenList.stream().map(erwartungen -> apply(erwartungen)).collect(Collectors.toList());
     }
 }

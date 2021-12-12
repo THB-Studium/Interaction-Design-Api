@@ -1,11 +1,11 @@
 package com.team.angular.interactiondesignapi.repositories;
 
-import java.util.UUID;
-
+import com.team.angular.interactiondesignapi.models.LandInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.team.angular.interactiondesignapi.models.Land_info;
+import java.util.UUID;
+
 @Repository
-public interface Infos_landRepository extends JpaRepository<Land_info, UUID> {
+public interface LandInfoRepository extends JpaRepository<LandInfo, UUID> {
 }

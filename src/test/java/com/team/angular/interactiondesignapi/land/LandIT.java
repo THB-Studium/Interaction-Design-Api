@@ -17,7 +17,7 @@ import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.Land_info;
+import com.team.angular.interactiondesignapi.models.LandInfo;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
@@ -32,9 +32,9 @@ public class LandIT extends ItBase {
 	
 	Erwartungen erwartungen;
 	
-	Land_info infos_land;
+	LandInfo infos_land;
 	
-	Land_info leistungen;
+	LandInfo leistungen;
 	
 	ReiseAngebot reiseAngebot, reiseAngebot1;
 	
@@ -66,7 +66,7 @@ public class LandIT extends ItBase {
 		erwartungen = erwartungenRepository.save(erwartungen);
 		
 		infos_land = buildInfosLand();
-		infos_land = infos_LandRepository.save(infos_land);
+		infos_land = landInfoRepository.save(infos_land);
 		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);

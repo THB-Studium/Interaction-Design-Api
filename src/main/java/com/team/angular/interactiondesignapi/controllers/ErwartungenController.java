@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team.angular.interactiondesignapi.services.ErwartungenService;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadWriteTO;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -35,22 +35,22 @@ public class ErwartungenController {
 
     @ApiOperation("Get One Erwartungen")
     @GetMapping("/{id}")
-    public ErwartungenReadTO getErwartungenById(
+    public ErwartungenReadWriteTO getErwartungenById(
             @ApiParam(name = "ErwartungenId", value = "get One Erwartungen") @PathVariable UUID id) {
         return erwartungenService.getErwartungen(id);
     }
 
     @ApiOperation("Add One Erwartungen")
     @PostMapping("")
-    public ErwartungenReadTO addErwartungen(
-            @ApiParam(name = "Erwartungen", value = "Erwartungen to add") @RequestBody ErwartungenReadTO erwartungen) {
+    public ErwartungenReadWriteTO addErwartungen(
+            @ApiParam(name = "Erwartungen", value = "Erwartungen to add") @RequestBody ErwartungenReadWriteTO erwartungen) {
         return erwartungenService.addErwartungen(erwartungen);
     }
 
     // Aktualisierung von Erwartungen mit ReiseAngebot (ohne Bild)
     @ApiOperation("Update Erwartungen")
     @PutMapping("")
-    public ErwartungenReadTO updateErwartungen(@ApiParam(name = "Erwartungen", value = "Erwartungen to update")
+    public ErwartungenReadListTO updateErwartungen(@ApiParam(name = "Erwartungen", value = "Erwartungen to update")
                                          @RequestBody ErwartungenReadListTO erwartungen) {
         return erwartungenService.updateErwartungen(erwartungen);
     }
@@ -60,7 +60,6 @@ public class ErwartungenController {
     public ResponseEntity<?> deleteErwartungen(
             @ApiParam(name = "ErwartungenId", value = "Id of the Erwartungen") @PathVariable UUID id) {
         return erwartungenService.deleteErwartungen(id);
-
     }
 
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErwartungenReadTO {
+public class ErwartungenReadWriteTO {
     private UUID id;
     private int abenteuer;
     private int entschleunigung;
@@ -18,5 +18,5 @@ public class ErwartungenReadTO {
     private int sonne_strand;
     private int sicherheit;
     private int road;
-    private UUID ReiseAngebot_id;
+    private UUID reiseAngebotId;
 }

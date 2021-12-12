@@ -56,7 +56,7 @@ public class Land {
     private ReiseAngebot reiseAngebot;
 
 	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
-	private List<Land_info> land_info;
+	private List<LandInfo> land_info;
 
 	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
 	private List<Highlight> highlights;

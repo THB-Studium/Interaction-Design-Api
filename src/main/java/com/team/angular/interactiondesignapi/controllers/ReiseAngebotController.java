@@ -45,6 +45,15 @@ public class ReiseAngebotController {
     @PostMapping("")
     public ReiseAngebotReadTO addReiseAngebot(
             @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestPart(value = "reiseAngebot")
+                    ReiseAngebotReadTO reiseAngebot) {
+        return reiseAngebotService.addReiseAngebot(reiseAngebot);
+    }
+
+    //all test
+    @ApiOperation("Add One ReiseAngebot")
+    @PostMapping("/a")
+    public ReiseAngebotReadTO addReiseAngebot(
+            @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestPart(value = "reiseAngebot")
                     ReiseAngebotReadTO reiseAngebot, @RequestPart(value = "bild") MultipartFile bild) {
         return reiseAngebotService.addReiseAngebot(reiseAngebot, bild);
     }
