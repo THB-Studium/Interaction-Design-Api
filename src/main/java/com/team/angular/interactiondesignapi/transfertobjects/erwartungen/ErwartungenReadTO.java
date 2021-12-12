@@ -18,6 +18,5 @@ public class ErwartungenReadTO {
     private int sonne_strand;
     private int sicherheit;
     private int road;
-    //private ReiseAngebot reiseAngebot; // Nur ID reicht
     private UUID ReiseAngebot_id;
 }
