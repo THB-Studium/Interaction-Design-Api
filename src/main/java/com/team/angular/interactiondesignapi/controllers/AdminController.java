@@ -51,7 +51,7 @@ public class AdminController {
 
     @ApiOperation("Delete Admin")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> daleteAdmin(@ApiParam(name = "AdminId", value = "Id of the Admin") @PathVariable UUID id) {
+    public ResponseEntity<?> deleteAdmin(@ApiParam(name = "AdminId", value = "Id of the Admin") @PathVariable UUID id) {
         return adminService.deleteAdmin(id);
     }
 
