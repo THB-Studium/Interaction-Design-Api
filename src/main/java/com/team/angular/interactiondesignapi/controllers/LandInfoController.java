@@ -40,7 +40,7 @@ public class LandInfoController {
 
     @ApiOperation("Update LandInfo")
     @PutMapping("")
-    public LandInfoReadWriteTO updateLandInfo(@ApiParam(name = "LandInfo", value = "LandInfo to update")
+    public LandInfoReadListTO updateLandInfo(@ApiParam(name = "LandInfo", value = "LandInfo to update")
                                           @RequestBody LandInfoReadListTO landInfo) {
         return landInfoService.updateLandInfo(landInfo);
     }

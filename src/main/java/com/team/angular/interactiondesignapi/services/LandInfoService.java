@@ -65,10 +65,10 @@ public class LandInfoService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public LandInfoReadWriteTO updateLandInfo(LandInfoReadListTO landInfo) {
+    public LandInfoReadListTO updateLandInfo(LandInfoReadListTO landInfo) {
         LandInfo _landInfo = landInfoRepository.findById(landInfo.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Update Error: Cannot find Erwartungen with id: " + landInfo.getId()));
+                        "Update Error: Cannot find LandInfo with id: " + landInfo.getId()));
 
         if (landInfo.getTitel() != null)
             _landInfo.setTitel(landInfo.getTitel());
@@ -77,6 +77,6 @@ public class LandInfoService {
 
         landInfoRepository.save(_landInfo);
 
-        return LandInfo2LandInfoReadWriteTO.apply(_landInfo);
+        return LandInfo2LandInfoReadListTO.apply(_landInfo);
     }
 }
