@@ -3,6 +3,8 @@ package com.team.angular.interactiondesignapi.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotUpdateTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,37 +43,28 @@ public class ReiseAngebotController {
         return reiseAngebotService.getReiseAngebot(id);
     }
 
+    //all test
     @ApiOperation("Add One ReiseAngebot")
     @PostMapping("")
     public ReiseAngebotReadTO addReiseAngebot(
             @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestPart(value = "reiseAngebot")
-                    ReiseAngebotReadTO reiseAngebot) {
-        return reiseAngebotService.addReiseAngebot(reiseAngebot);
-    }
-
-    //all test
-    @ApiOperation("Add One ReiseAngebot")
-    @PostMapping("/a")
-    public ReiseAngebotReadTO addReiseAngebot(
-            @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestPart(value = "reiseAngebot")
-                    ReiseAngebotReadTO reiseAngebot, @RequestPart(value = "bild") MultipartFile bild) {
+                    ReiseAngebotWriteTO reiseAngebot, @RequestPart(value = "bild") MultipartFile bild) {
         return reiseAngebotService.addReiseAngebot(reiseAngebot, bild);
     }
 
     @ApiOperation("Update ReiseAngebot")
     @PutMapping("")
     public ReiseAngebotReadTO updateReiseAngebot(@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update")
-                                           @RequestPart(value = "reiseAngebot") ReiseAngebotReadListTO reiseAngebot,
+                                           @RequestPart(value = "reiseAngebot") ReiseAngebotUpdateTO reiseAngebot,
                                            @RequestPart(value = "bild") MultipartFile bild) {
         return reiseAngebotService.updateReiseAngebot(reiseAngebot, bild);
     }
 
     @ApiOperation("Delete ReiseAngebot")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> daleteReiseAngebot(
+    public ResponseEntity<?> deleteReiseAngebot(
             @ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
         return reiseAngebotService.deleteReiseAngebot(id);
-
     }
 
 }

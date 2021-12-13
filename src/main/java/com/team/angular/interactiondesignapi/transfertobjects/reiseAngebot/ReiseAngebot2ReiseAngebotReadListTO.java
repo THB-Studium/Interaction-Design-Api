@@ -15,6 +15,7 @@ public class ReiseAngebot2ReiseAngebotReadListTO {
         out.setEndDatum(in.getEndDatum());
         out.setPlaetze(in.getPlaetze());
         out.setFreiPlaetze(in.getFreiPlaetze());
+        out.setInteressiert(in.getInteressiert());
         out.setAnmeldungsFrist(in.getAnmeldungsFrist());
 
         return out;

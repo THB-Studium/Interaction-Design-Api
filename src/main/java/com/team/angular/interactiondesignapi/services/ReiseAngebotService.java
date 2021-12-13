@@ -3,13 +3,13 @@ package com.team.angular.interactiondesignapi.services;
 import com.team.angular.interactiondesignapi.config.Helper;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
+import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
+import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
+import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
+import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebot2ReiseAngebotReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebot2ReiseAngebotReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,12 @@ public class ReiseAngebotService {
     private static final Logger log = LoggerFactory.getLogger(ReiseAngebotService.class);
     @Autowired
     private ReiseAngebotRepository reiseAngebotRepository;
+    @Autowired
+    private LandRepository landRepository;
+    @Autowired
+    private ErwartungenRepository erwartungenRepository;
+    @Autowired
+    private BuchungsklassenRepository buchungsklassenRepository;
 
     public ReiseAngebotReadTO getReiseAngebot(UUID id) {
         ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
@@ -37,12 +43,13 @@ public class ReiseAngebotService {
         return ReiseAngebot2ReiseAngebotReadListTO.apply(reiseAngebotRepository.findAll());
     }
 
-    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotReadTO reiseAngebot, MultipartFile bild) {
+    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot, MultipartFile bild) {
         ReiseAngebot _reiseAngebot = new ReiseAngebot();
+
         if (reiseAngebot.getTitel() != null)
             _reiseAngebot.setTitel(reiseAngebot.getTitel());
-        //if (bild != null)
-        //	_reiseAngebot.setStartbild(Helper.convertMultiPartFileToByte(bild));
+        if (bild != null)
+            _reiseAngebot.setStartbild(Helper.convertMultiPartFileToByte(bild));
         if (reiseAngebot.getStartDatum() != null)
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)
@@ -51,67 +58,47 @@ public class ReiseAngebotService {
             _reiseAngebot.setPlaetze(reiseAngebot.getPlaetze());
         if (reiseAngebot.getFreiPlaetze() != 0)
             _reiseAngebot.setFreiPlaetze(reiseAngebot.getFreiPlaetze());
+        if (reiseAngebot.getInteressiert() != 0)
+            _reiseAngebot.setInteressiert(reiseAngebot.getInteressiert());
         if (reiseAngebot.getAnmeldungsFrist() != null)
             _reiseAngebot.setAnmeldungsFrist(reiseAngebot.getAnmeldungsFrist());
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setLeistungen(reiseAngebot.getLeistungen());
 
-        // save buchungsklassenReadListTO as Buchungsklassen
-        if (reiseAngebot.getBuchungsklassenReadListTO() != null) {
-            List<Buchungsklassen> Buchungsklassenlist = null;
-
-            for (BuchungsklassenReadListTO element : reiseAngebot.getBuchungsklassenReadListTO()) {
-                Buchungsklassen temp = new Buchungsklassen();
-                temp.setType(element.getType());
-                temp.setPreis(element.getPreis());
-                Buchungsklassenlist.add(temp);
-            }
+        // Save Buchungsklassen
+        if (reiseAngebot.getBuchungsklassen() != null) {
+            List<Buchungsklassen> Buchungsklassenlist = reiseAngebot.getBuchungsklassen();
+            buchungsklassenRepository.saveAll(Buchungsklassenlist);
             _reiseAngebot.setBuchungsklassen(Buchungsklassenlist);
         }
 
-        // erwartungenReadListTO
-        // Land
-
-        return ReiseAngebot2ReiseAngebotReadTO.apply(reiseAngebotRepository.save(_reiseAngebot));
-    }
-
-    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotReadTO reiseAngebot) {
-        ReiseAngebot _reiseAngebot = new ReiseAngebot();
-        if (reiseAngebot.getTitel() != null)
-            _reiseAngebot.setTitel(reiseAngebot.getTitel());
-        //if (bild != null)
-        //	_reiseAngebot.setStartbild(Helper.convertMultiPartFileToByte(bild));
-        if (reiseAngebot.getStartDatum() != null)
-            _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
-        if (reiseAngebot.getEndDatum() != null)
-            _reiseAngebot.setEndDatum(reiseAngebot.getEndDatum());
-        if (reiseAngebot.getPlaetze() != 0)
-            _reiseAngebot.setPlaetze(reiseAngebot.getPlaetze());
-        if (reiseAngebot.getFreiPlaetze() != 0)
-            _reiseAngebot.setFreiPlaetze(reiseAngebot.getFreiPlaetze());
-        if (reiseAngebot.getAnmeldungsFrist() != null)
-            _reiseAngebot.setAnmeldungsFrist(reiseAngebot.getAnmeldungsFrist());
-        if (reiseAngebot.getLeistungen() != null)
-            _reiseAngebot.setLeistungen(reiseAngebot.getLeistungen());
-
-        // save buchungsklassenReadListTO as Buchungsklassen
-        if (reiseAngebot.getBuchungsklassenReadListTO() != null) {
-            List<Buchungsklassen> Buchungsklassenlist = null;
-
-            for (BuchungsklassenReadListTO element : reiseAngebot.getBuchungsklassenReadListTO()) {
-                Buchungsklassen temp = new Buchungsklassen();
-                temp.setType(element.getType());
-                temp.setPreis(element.getPreis());
-                Buchungsklassenlist.add(temp);
-            }
-            _reiseAngebot.setBuchungsklassen(Buchungsklassenlist);
+        // erwartungen
+        if (reiseAngebot.getErwartungen() != null) {
+            erwartungenRepository.save(reiseAngebot.getErwartungen());
+            _reiseAngebot.setErwartungen(reiseAngebot.getErwartungen());
         }
 
-        // erwartungenReadListTO
         // Land
+        if (reiseAngebot.getLandId() != null) {
+            Land land = landRepository.findById(reiseAngebot.getLandId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + reiseAngebot.getLandId()));
+            _reiseAngebot.setLand(land);
+        }
+        // get saved ReiseAngebot
+        ReiseAngebot savedReiseAngebot = reiseAngebotRepository.save(_reiseAngebot);
 
-        return ReiseAngebot2ReiseAngebotReadTO.apply(reiseAngebotRepository.save(_reiseAngebot));
+        // Buchungsklassen Update with ID of ReiseAngebot
+        if (reiseAngebot.getBuchungsklassen() != null) {
+            List<Buchungsklassen> Buchungsklassenlist = reiseAngebot.getBuchungsklassen();
+            for (Buchungsklassen element :Buchungsklassenlist ){
+                element.setReiseAngebot(savedReiseAngebot);
+                buchungsklassenRepository.save(element);
+            }
+        }
+
+        return ReiseAngebot2ReiseAngebotReadTO.apply(savedReiseAngebot);
     }
+
 
     public ResponseEntity<?> deleteReiseAngebot(UUID id) {
         ReiseAngebot actual = reiseAngebotRepository.findById(id)
@@ -123,7 +110,7 @@ public class ReiseAngebotService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotReadListTO reiseAngebot, MultipartFile bild) {
+    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotUpdateTO reiseAngebot, MultipartFile bild) {
         ReiseAngebot _reiseAngebot = reiseAngebotRepository.findById(reiseAngebot.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + reiseAngebot.getId()));
 
@@ -139,6 +126,8 @@ public class ReiseAngebotService {
             _reiseAngebot.setPlaetze(reiseAngebot.getPlaetze());
         if (reiseAngebot.getFreiPlaetze() != 0)
             _reiseAngebot.setFreiPlaetze(reiseAngebot.getFreiPlaetze());
+        if (reiseAngebot.getInteressiert() != 0)
+            _reiseAngebot.setInteressiert(reiseAngebot.getInteressiert());
         if (reiseAngebot.getAnmeldungsFrist() != null)
             _reiseAngebot.setAnmeldungsFrist(reiseAngebot.getAnmeldungsFrist());
         if (reiseAngebot.getLeistungen() != null)

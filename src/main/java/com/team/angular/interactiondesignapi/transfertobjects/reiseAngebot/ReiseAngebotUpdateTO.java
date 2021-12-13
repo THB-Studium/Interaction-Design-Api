@@ -13,12 +13,10 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReiseAngebotReadListTO {
+public class ReiseAngebotUpdateTO {
     private UUID id;
 
     private String titel;
-
-    private byte[] startbild;
 
     private Date startDatum;
 
@@ -32,7 +30,6 @@ public class ReiseAngebotReadListTO {
 
     private Date anmeldungsFrist;
 
-    // not necessary for the workflow
-    /*@ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> leistungen;*/
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> leistungen;
 }

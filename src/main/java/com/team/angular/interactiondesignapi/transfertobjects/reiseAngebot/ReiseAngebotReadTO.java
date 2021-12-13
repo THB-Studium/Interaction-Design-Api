@@ -31,6 +31,8 @@ public class ReiseAngebotReadTO {
 
     private int freiPlaetze;
 
+    private int interessiert;
+
     private Date anmeldungsFrist;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -40,6 +42,6 @@ public class ReiseAngebotReadTO {
 
     private ErwartungenReadListTO erwartungenReadListTO;
 
-    private UUID land_id;
+    private UUID landId;
 
 }
