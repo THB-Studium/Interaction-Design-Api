@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/landInfos")
+@CrossOrigin(origins = "*")
 public class LandInfoController {
     @Autowired
     protected LandInfoService landInfoService;

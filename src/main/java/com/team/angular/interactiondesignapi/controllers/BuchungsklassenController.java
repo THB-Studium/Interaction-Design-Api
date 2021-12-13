@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/buchungsklassen")
+@CrossOrigin(origins = "*")
 public class BuchungsklassenController {
     @Autowired
     protected BuchungsklassenService buchungsklassenService;

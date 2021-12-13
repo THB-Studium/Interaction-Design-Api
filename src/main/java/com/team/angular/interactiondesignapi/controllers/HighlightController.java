@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/highlights")
+@CrossOrigin(origins = "*")
 public class HighlightController {
     @Autowired
     protected HighlightService highlightService;

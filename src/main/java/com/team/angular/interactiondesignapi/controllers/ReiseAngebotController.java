@@ -7,6 +7,7 @@ import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.Reise
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/reiseAngebot")
+@CrossOrigin(origins = "*")
 public class ReiseAngebotController {
     @Autowired
     protected ReiseAngebotService reiseAngebotService;
