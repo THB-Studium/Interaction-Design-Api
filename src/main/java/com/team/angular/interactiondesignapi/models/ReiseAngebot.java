@@ -5,13 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -49,10 +43,10 @@ public class ReiseAngebot {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
 
-    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Buchungsklassen> buchungsklassen;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Erwartungen erwartungen;
 
     @OneToOne(fetch = FetchType.LAZY)
