@@ -24,7 +24,7 @@ public class UnterkunftReadTO {
 
 	private String beschreibung;
 
-	private LandReadTO land;
+	private UUID landId;
 
 	private List<byte[]> bilder;
 

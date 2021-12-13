@@ -26,8 +26,8 @@ public class Land2LandReadTO {
         
         if(in.getReiseAngebot() != null)
         	out.setReiseAngebot(ReiseAngebot2ReiseAngebotReadTO.apply(in.getReiseAngebot()));
-        if (in.getLand_info() != null)
-            out.setInfosLands(LandInfo2LandInfoReadListTO.apply(in.getLand_info()));
+        if (in.getLandInfo() != null)
+            out.setInfosLands(LandInfo2LandInfoReadListTO.apply(in.getLandInfo()));
         if (in.getHighlights() != null)
             out.setHighlights(Highlight2HighlightReadWriteTO.apply(in.getHighlights()));
         if (in.getUnterkunft() != null)
