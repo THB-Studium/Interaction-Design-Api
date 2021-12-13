@@ -8,28 +8,27 @@ verify:
     - mvn clean verify
 
 deploy on dev:
-    stage: deploy
-    when: manual
-    tags:
-      - deploy
+  stage: deploy
+  when: manual
+  tags:
+    - deploy
 
-    script:
-        - ENVIRONMENT="dev"
-        - APPLICATION="interaction-design-api"
-        - REMOTE_SERVICE_OWNER="gitlab-runner"
-        - REMOTE_FOLDER=$(echo "/opt/services/$ENVIRONMENT")$(echo "_")$(echo "$APPLICATION")
-        - COMMIT_ID=$CI_COMMIT_SHORT_SHA
-        - SYSTEMCTL_UNIT=$(echo "$ENVIRONMENT")$(echo "_")$(echo "$APPLICATION")
-        - mvn clean package
-        - cd target/
-        - rename s/\.jar$/-$COMMIT_ID.jar/ *jar
-        - echo $GITLAB_RUNNER_PASSWORD | sudo -S cp *-$COMMIT_ID.jar $REMOTE_FOLDER
-        - cd $REMOTE_FOLDER
-        
-        - echo $GITLAB_RUNNER_PASSWORD | sudo -S systemctl stop $SYSTEMCTL_UNIT;
-        - echo $GITLAB_RUNNER_PASSWORD | sudo -S find . -name '*.jar' ! -name "*-$COMMIT_ID.jar" -exec rm {} \;
-        - echo $GITLAB_RUNNER_PASSWORD | sudo -S ln -s *-$COMMIT_ID.jar service.jar
-        - echo $GITLAB_RUNNER_PASSWORD | sudo -S chown -R $REMOTE_SERVICE_OWNER:$REMOTE_SERVICE_OWNER .
-        - echo $GITLAB_RUNNER_PASSWORD | sudo -S systemctl start $SYSTEMCTL_UNIT;
-        - echo starting service
+  script:
+    - ENVIRONMENT="dev"
+    - APPLICATION="interaction-design-api"
+    - REMOTE_SERVICE_OWNER="gitlab-runner"
+    - REMOTE_FOLDER=$(echo "/opt/services/$ENVIRONMENT")$(echo "_")$(echo "$APPLICATION")
+    - COMMIT_ID=$CI_COMMIT_SHORT_SHA
+    - SYSTEMCTL_UNIT=$(echo "$ENVIRONMENT")$(echo "_")$(echo "$APPLICATION")
+    - mvn clean package
+    - cd target/
+    - rename s/\.jar$/-$COMMIT_ID.jar/ *jar
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S cp *-$COMMIT_ID.jar $REMOTE_FOLDER
+    - cd $REMOTE_FOLDER
 
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S systemctl stop $SYSTEMCTL_UNIT;
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S find . -name '*.jar' ! -name "*-$COMMIT_ID.jar" -exec rm {} \;
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S ln -s *-$COMMIT_ID.jar service.jar
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S chown -R $REMOTE_SERVICE_OWNER:$REMOTE_SERVICE_OWNER .
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S systemctl start $SYSTEMCTL_UNIT;
+    - echo starting service
