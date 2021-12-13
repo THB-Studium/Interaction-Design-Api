@@ -25,3 +25,5 @@ spring:
       ddl-auto: update
 
 #postgres
+#postgres_1
+#postgresQL
