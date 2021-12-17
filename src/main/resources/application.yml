@@ -4,10 +4,11 @@ spring:
   application:
     name: interaction-design-api
 
+
   datasource:
     url: jdbc:postgresql://localhost/interaction-design
-    username: postgres_1
-    password: postgresQL
+    username: postgres
+    password: postgres
 
   jpa:
     show-sql: false
@@ -24,6 +25,6 @@ spring:
       # Hibernate ddl auto (create, create-drop, validate, update)
       ddl-auto: create
 
-#postgres
-#postgres_1
-#postgresQL
+  #postgres
+  #postgres_1
+  #postgresQL
