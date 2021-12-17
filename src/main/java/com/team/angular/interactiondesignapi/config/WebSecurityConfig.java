@@ -59,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //rollen müssen erweitert werden wegen add und soweiter
 
+        // note: swagger; manage another mapping
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admins/*").hasRole("ADMIN")
