@@ -46,7 +46,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> saveUser(@RequestBody Admin admin) throws Exception {
+    public ResponseEntity<?> addAdmin(@RequestBody Admin admin) throws Exception {
         adminService.addAdmin(admin);
         return ResponseEntity.ok("REGISTRATION SUCCESSFUL");
     }
