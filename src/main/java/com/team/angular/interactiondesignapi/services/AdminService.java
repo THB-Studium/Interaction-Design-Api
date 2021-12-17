@@ -8,16 +8,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class AdminService {
+public class AdminService implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
+
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
 
     public Admin getAdmin(UUID id) {
         return adminRepository.findById(id)
@@ -55,6 +64,18 @@ public class AdminService {
         adminRepository.save(_admin);
 
         return _admin;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+
+        Admin admin = adminRepository.findAdminByName(name);
+        if (admin != null) {
+            //roles = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
+            return new User(admin.getName(), admin.getKennwort(), null);
+            //return new Admin(user.getUsername(), user.getPassword(), roles);
+        }
+        throw new UsernameNotFoundException("User not found with the name " + name);
     }
 
 }
