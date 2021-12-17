@@ -53,17 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-		/*http.cors().and().csrf().disable().exceptionHandling().and().authorizeRequests().antMatchers("/**").permitAll()
-				.anyRequest().authenticated();
-                .antMatchers("/**").hasAnyRole("ADMIN", "USER")*/
 
-        //rollen müssen erweitert werden wegen add und soweiter
-
-        // note: swagger; manage another mapping
+        // todo: manage another mapping
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admins/*").hasRole("ADMIN")
-                .antMatchers("/**").permitAll().anyRequest().authenticated()
+                .antMatchers("/admins/**").hasRole("ADMIN")
+                .antMatchers("/swagger-ui.html/**","/authenticate").permitAll()
+                .antMatchers("/swagger-ui.html/**","/authenticate").permitAll()
+                .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()

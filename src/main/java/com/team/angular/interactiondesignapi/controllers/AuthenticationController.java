@@ -45,10 +45,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthenticationResponse(authenticationRequest.getName(),token));
     }
 
+    // todo: we need it? i think nope
+    /*
     @PostMapping(value = "/register")
     public ResponseEntity<?> addAdmin(@RequestBody Admin admin) throws Exception {
         adminService.addAdmin(admin);
         return ResponseEntity.ok("REGISTRATION SUCCESSFUL");
-    }
+    }*/
 
 }
