@@ -37,6 +37,7 @@ public class AdminService implements UserDetailsService {
         return adminRepository.findAll();
     }
 
+    // update
     public Admin addAdmin(Admin admin) {
         return adminRepository.save(admin);
     }
@@ -51,6 +52,7 @@ public class AdminService implements UserDetailsService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
+    // update
     public Admin updateAdmin(Admin admin) {
         Admin _admin = getAdmin(admin.getId());
 
