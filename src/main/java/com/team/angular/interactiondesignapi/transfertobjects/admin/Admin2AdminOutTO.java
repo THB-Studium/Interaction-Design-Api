@@ -11,8 +11,8 @@ public class Admin2AdminOutTO {
         AdminOutTO out = new AdminOutTO();
 
         out.setId(in.getId());
-        out.setNachname(in.getNachname());
-        out.setVorname(in.getVorname());
+        out.setName(in.getName());
+        out.setSurname(in.getSurname());
         out.setEmail(in.getEmail());
 
         return out;

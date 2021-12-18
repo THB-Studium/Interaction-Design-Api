@@ -31,21 +31,21 @@ public class AuthenticationController {
     @ApiOperation("Authentication")
     @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@ApiParam(name = "AuthenticationRequest",
-            value = "authenticattion for admin") @RequestBody AuthenticationRequest authenticationRequest)
+            value = "authentication for admin") @RequestBody AuthenticationRequest authenticationRequest)
             throws Exception {
         try {
             // authenticate the user
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getName(), authenticationRequest.getKennwort()));
+                    authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
 
-        UserDetails userdetails = adminService.loadUserByUsername(authenticationRequest.getName());
+        UserDetails userdetails = adminService.loadUserByUsername(authenticationRequest.getEmail());
         String token = jwtUtil.generateToken(userdetails);
-        return ResponseEntity.ok(new AuthenticationResponse(authenticationRequest.getName(), token));
+        return ResponseEntity.ok(new AuthenticationResponse(authenticationRequest.getEmail(), token));
     }
 
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,13 +23,18 @@ public class Admin {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    private String nachname;
-    private String vorname;
-    private String kennwort;
+    private String name;
+    private String surname;
+    private String password;
     private String email;
     private String role;
+
     @PastOrPresent
     private LocalDateTime creationDate;
     @PastOrPresent
     private LocalDateTime updateDate;
+
+    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean enabled;
+
 }

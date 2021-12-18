@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,7 +13,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AdminOutTO {
     private UUID id;
-    private String nachname;
-    private String vorname;
+
+    private String name;
+    private String surname;
     private String email;
 }
