@@ -6,6 +6,7 @@ import com.team.angular.interactiondesignapi.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -54,11 +55,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // todo: manage another mapping
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admins/**").hasRole("ADMIN")
-                .antMatchers("/swagger-ui.html/**","/authenticate").permitAll()
+                .antMatchers(HttpMethod.DELETE,"/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST,"/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/**").permitAll()
+                // but later the swaaager will only be accessible to admins
                 .antMatchers("/swagger-ui.html/**","/authenticate").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
@@ -67,7 +71,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
-
 }
