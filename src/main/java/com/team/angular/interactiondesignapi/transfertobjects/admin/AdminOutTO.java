@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.PastOrPresent;
-import java.time.LocalDateTime;
+import javax.validation.constraints.Email;
 import java.util.UUID;
 
 @Data
@@ -16,5 +15,6 @@ public class AdminOutTO {
 
     private String name;
     private String surname;
+    @Email
     private String email;
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,14 +42,14 @@ public class AdminController {
 
     @ApiOperation("Add One Admin")
     @PostMapping("")
-    public ResponseEntity<?> addAdmin(
-            @ApiParam(name = "Admin", value = "Admin to add") @RequestBody Admin admin) {
+    public AdminOutTO addAdmin(
+            @ApiParam(name = "Admin", value = "Admin to add") @RequestBody Admin admin) throws Exception {
         return adminService.addAdmin(admin);
     }
 
     @ApiOperation("Update Admin")
     @PutMapping("")
-    public Admin updateAdmin(@ApiParam(name = "Admin", value = "Admin to update") @RequestBody Admin admin) {
+    public AdminOutTO updateAdmin(@ApiParam(name = "Admin", value = "Admin to update") @RequestBody Admin admin) throws Exception {
         return adminService.updateAdmin(admin);
     }
 

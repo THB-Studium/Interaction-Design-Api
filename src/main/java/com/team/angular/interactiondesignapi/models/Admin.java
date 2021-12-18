@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -26,6 +27,7 @@ public class Admin {
     private String name;
     private String surname;
     private String password;
+    @Email
     private String email;
     private String role;
 

@@ -12,14 +12,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AdminService implements UserDetailsService {//
@@ -39,19 +41,18 @@ public class AdminService implements UserDetailsService {//
         return Admin2AdminOutTO.apply(adminRepository.findAll());
     }
 
-    public ResponseEntity<?> addAdmin(Admin admin) {
-        Admin _admin = new Admin();
-        if (!adminRepository.existsAdminByEmail(admin.getEmail())) {
-            _admin.setName(admin.getName());
-            _admin.setSurname(admin.getSurname());
-            _admin.setPassword(bcryptEncoder.encode(admin.getPassword()));
-            _admin.setEmail(admin.getEmail());
-            _admin.setRole("ROLE_ADMIN");
-            adminRepository.save(_admin);
-            return new ResponseEntity<>("Successfully added", HttpStatus.OK);
-        }
-        return new ResponseEntity<>("Admin with email " +admin.getEmail(), HttpStatus.BAD_REQUEST);
-
+    public AdminOutTO addAdmin(Admin admin) throws Exception {
+            Admin _admin = new Admin();
+            if (!adminRepository.existsAdminByEmail(admin.getEmail())) {
+                _admin.setName(admin.getName());
+                _admin.setSurname(admin.getSurname());
+                _admin.setPassword(bcryptEncoder.encode(admin.getPassword()));
+                _admin.setEmail(admin.getEmail());
+                _admin.setRole("ROLE_ADMIN");
+                return Admin2AdminOutTO.apply(adminRepository.save(_admin));
+            } else {
+                throw new Exception("Email is invalid");
+            }
     }
 
     public ResponseEntity<?> deleteAdmin(UUID id) {
@@ -65,7 +66,9 @@ public class AdminService implements UserDetailsService {//
     }
 
     // todo: check email and return admin or bad request
-    public Admin updateAdmin(Admin admin) {
+    public AdminOutTO updateAdmin(Admin admin) throws Exception{
+
+        System.out.println(admin);
         Admin _admin = adminRepository.findById(admin.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + admin.getId()));
 
@@ -73,14 +76,22 @@ public class AdminService implements UserDetailsService {//
             _admin.setName(admin.getName());
         if (admin.getSurname() != null)
             _admin.setSurname(admin.getSurname());
-        if (admin.getEmail() != null)
+
+        // control if email does not exist
+        if (admin.getEmail() != null && admin.getEmail() != _admin.getEmail()
+                && !adminRepository.existsByEmail(admin.getEmail())) {
             _admin.setEmail(admin.getEmail());
+        } else {
+            throw new Exception("Email is invalid");
+        }
+
         if (admin.getPassword() != null)
             _admin.setPassword(bcryptEncoder.encode(admin.getPassword()));
 
+        System.out.println(_admin);
         adminRepository.save(_admin);
 
-        return _admin;
+        return Admin2AdminOutTO.apply(_admin);
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -89,14 +100,14 @@ public class AdminService implements UserDetailsService {//
     }
 
 
-    private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
+    //private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
     //private final AppUserRepository appUserRepository;
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
         Admin admin = adminRepository.findAdminByEmail(email);
 
-
+        // todo: check the value of another variables
         return new org.springframework.security.core.userdetails.User(admin.getEmail(), admin.getPassword(), true,
                 true, true, true, getAuthorities());
 
