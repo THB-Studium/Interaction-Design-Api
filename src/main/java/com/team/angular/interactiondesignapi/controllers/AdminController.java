@@ -2,6 +2,7 @@ package com.team.angular.interactiondesignapi.controllers;
 
 import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.services.AdminService;
+import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminOutTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +29,19 @@ public class AdminController {
 
     @ApiOperation("Get All Admins")
     @GetMapping("")
-    public List<Admin> getAllAdmins() {
+    public List<AdminOutTO> getAllAdmins() {
         return adminService.getAll();
     }
 
     @ApiOperation("Get One Admin")
     @GetMapping("/{id}")
-    public Admin getAdminById(@ApiParam(name = "AdminId", value = "get One Admin") @PathVariable UUID id) {
+    public AdminOutTO getAdminById(@ApiParam(name = "AdminId", value = "get One Admin") @PathVariable UUID id) {
         return adminService.getAdmin(id);
     }
 
     @ApiOperation("Add One Admin")
     @PostMapping("")
-    public Admin addAdmin(
+    public ResponseEntity<?> addAdmin(
             @ApiParam(name = "Admin", value = "Admin to add") @RequestBody Admin admin) {
         return adminService.addAdmin(admin);
     }

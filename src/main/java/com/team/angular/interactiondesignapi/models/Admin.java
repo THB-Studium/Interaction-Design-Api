@@ -8,6 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.PastOrPresent;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -20,9 +22,13 @@ public class Admin {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    private String name;
+    private String nachname;
+    private String vorname;
     private String kennwort;
     private String email;
     private String role;
-
+    @PastOrPresent
+    private LocalDateTime creationDate;
+    @PastOrPresent
+    private LocalDateTime updateDate;
 }

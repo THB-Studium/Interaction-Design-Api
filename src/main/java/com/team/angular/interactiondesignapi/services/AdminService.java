@@ -3,6 +3,8 @@ package com.team.angular.interactiondesignapi.services;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.repositories.AdminRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.admin.Admin2AdminOutTO;
+import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminOutTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +28,30 @@ public class AdminService implements UserDetailsService {
 
     @Autowired
     private AdminRepository adminRepository;
-
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
-    public Admin getAdmin(UUID id) {
-        return adminRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + id));
+    public AdminOutTO getAdmin(UUID id) {
+        return Admin2AdminOutTO.apply(adminRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + id)));
     }
 
-    public List<Admin> getAll() {
-        return adminRepository.findAll();
+    public List<AdminOutTO> getAll() {
+        return Admin2AdminOutTO.apply(adminRepository.findAll());
     }
 
-    public Admin addAdmin(Admin admin) {
+    public ResponseEntity<?> addAdmin(Admin admin) {
         Admin _admin = new Admin();
-        _admin.setName(admin.getName());
-        _admin.setKennwort(bcryptEncoder.encode(admin.getKennwort()));
-        _admin.setEmail(admin.getEmail());
-        _admin.setRole(admin.getRole());
+        if (!adminRepository.existsAdminByEmail(admin.getEmail())) {
+            _admin.setNachname(admin.getNachname());
+            _admin.setVorname(admin.getVorname());
+            _admin.setKennwort(bcryptEncoder.encode(admin.getKennwort()));
+            _admin.setEmail(admin.getEmail());
+            _admin.setRole("ROLE_ADMIN");
+            return new ResponseEntity<>("Successfully added", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Admin with email admin.getEmail()", HttpStatus.BAD_REQUEST);
 
-        return adminRepository.save(_admin);
     }
 
     public ResponseEntity<?> deleteAdmin(UUID id) {
@@ -60,16 +65,17 @@ public class AdminService implements UserDetailsService {
     }
 
     public Admin updateAdmin(Admin admin) {
-        Admin _admin = getAdmin(admin.getId());
+        Admin _admin = adminRepository.findById(admin.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + admin.getId()));
 
-        if (admin.getName() != null)
-            _admin.setName(admin.getName());
+        if (admin.getNachname() != null)
+            _admin.setNachname(admin.getNachname());
+        if (admin.getVorname() != null)
+            _admin.setVorname(admin.getVorname());
         if (admin.getEmail() != null)
             _admin.setEmail(admin.getEmail());
         if (admin.getKennwort() != null)
             _admin.setKennwort(bcryptEncoder.encode(admin.getKennwort()));
-        if (admin.getRole() != null)
-            _admin.setRole(admin.getRole());
 
         adminRepository.save(_admin);
 
@@ -83,7 +89,7 @@ public class AdminService implements UserDetailsService {
         Admin admin = adminRepository.findAdminByName(name);
         if (admin != null) {
             roles = Arrays.asList(new SimpleGrantedAuthority(admin.getRole()));
-            return new User(admin.getName(), admin.getKennwort(), roles);
+            return new User(admin.getEmail(), admin.getKennwort(), roles);
             //return new Admin(user.getUsername(), user.getPassword(), roles);
         }
         throw new UsernameNotFoundException("User not found with the name " + name);

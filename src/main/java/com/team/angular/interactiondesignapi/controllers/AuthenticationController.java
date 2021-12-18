@@ -1,10 +1,11 @@
 package com.team.angular.interactiondesignapi.controllers;
 
-import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.services.AdminService;
 import com.team.angular.interactiondesignapi.services.authentication.JwtUtil;
 import com.team.angular.interactiondesignapi.transfertobjects.authentication.AuthenticationRequest;
 import com.team.angular.interactiondesignapi.transfertobjects.authentication.AuthenticationResponse;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,11 +13,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/adminSide")
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -27,8 +28,10 @@ public class AuthenticationController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @ApiOperation("Authentication")
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
+    public ResponseEntity<?> createAuthenticationToken(@ApiParam(name = "AuthenticationRequest",
+            value = "authenticattion for admin") @RequestBody AuthenticationRequest authenticationRequest)
             throws Exception {
         try {
             // authenticate the user
@@ -42,15 +45,7 @@ public class AuthenticationController {
 
         UserDetails userdetails = adminService.loadUserByUsername(authenticationRequest.getName());
         String token = jwtUtil.generateToken(userdetails);
-        return ResponseEntity.ok(new AuthenticationResponse(authenticationRequest.getName(),token));
+        return ResponseEntity.ok(new AuthenticationResponse(authenticationRequest.getName(), token));
     }
-
-    // todo: we need it? i think nope
-    /*
-    @PostMapping(value = "/register")
-    public ResponseEntity<?> addAdmin(@RequestBody Admin admin) throws Exception {
-        adminService.addAdmin(admin);
-        return ResponseEntity.ok("REGISTRATION SUCCESSFUL");
-    }*/
 
 }
