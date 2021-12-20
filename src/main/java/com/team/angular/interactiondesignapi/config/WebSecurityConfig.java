@@ -55,17 +55,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        // todo : test access role
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                /*.antMatchers("/buchungs/**").permitAll()
+                //permitAll
+                .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers("/reisers/**").permitAll()
+                .antMatchers("/buchungs/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/feedbacks/**").permitAll()
+                //Admin
                 .antMatchers("/admins/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST,"/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET,"/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/**").hasAnyRole()
                 // but later the swaaager will only be accessible to admins
-                .antMatchers("/swagger-ui.html/**","/authenticate").permitAll()*/
+                .antMatchers("/swagger-ui.html/**","/authenticate").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
