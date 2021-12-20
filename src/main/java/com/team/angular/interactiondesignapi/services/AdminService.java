@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -42,17 +43,18 @@ public class AdminService implements UserDetailsService {//
     }
 
     public AdminOutTO addAdmin(Admin admin) throws Exception {
-            Admin _admin = new Admin();
-            if (!adminRepository.existsAdminByEmail(admin.getEmail())) {
-                _admin.setName(admin.getName());
-                _admin.setSurname(admin.getSurname());
-                _admin.setPassword(bcryptEncoder.encode(admin.getPassword()));
-                _admin.setEmail(admin.getEmail());
-                _admin.setRole("ROLE_ADMIN");
-                return Admin2AdminOutTO.apply(adminRepository.save(_admin));
-            } else {
-                throw new Exception("Email is invalid");
-            }
+        Admin _admin = new Admin();
+        if (!adminRepository.existsAdminByEmail(admin.getEmail())) {
+            _admin.setName(admin.getName());
+            _admin.setSurname(admin.getSurname());
+            _admin.setPassword(bcryptEncoder.encode(admin.getPassword()));
+            _admin.setEmail(admin.getEmail());
+            _admin.setRole("ROLE_ADMIN");
+            _admin.setCreationDate(LocalDateTime.now());
+            return Admin2AdminOutTO.apply(adminRepository.save(_admin));
+        } else {
+            throw new Exception("Email is invalid");
+        }
     }
 
     public ResponseEntity<?> deleteAdmin(UUID id) {
@@ -64,9 +66,8 @@ public class AdminService implements UserDetailsService {//
 
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
-
-    // todo: check email and return admin or bad request
-    public AdminOutTO updateAdmin(Admin admin) throws Exception{
+    
+    public AdminOutTO updateAdmin(Admin admin) throws Exception {
 
         System.out.println(admin);
         Admin _admin = adminRepository.findById(admin.getId())
@@ -88,7 +89,8 @@ public class AdminService implements UserDetailsService {//
         if (admin.getPassword() != null)
             _admin.setPassword(bcryptEncoder.encode(admin.getPassword()));
 
-        System.out.println(_admin);
+        _admin.setUpdateDate(LocalDateTime.now());
+
         adminRepository.save(_admin);
 
         return Admin2AdminOutTO.apply(_admin);
