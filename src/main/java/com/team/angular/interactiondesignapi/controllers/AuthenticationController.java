@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/adminSide")
+@RequestMapping("/adminPanel")
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
     @Autowired
@@ -34,7 +34,7 @@ public class AuthenticationController {
             value = "authentication for admin") @RequestBody AuthenticationRequest authenticationRequest)
             throws Exception {
         try {
-            // authenticate the user
+            // authenticate the user with email and Password
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         } catch (DisabledException e) {
@@ -43,6 +43,7 @@ public class AuthenticationController {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
 
+        // use loadUserByUsername with email to find user by email
         UserDetails userdetails = adminService.loadUserByUsername(authenticationRequest.getEmail());
         String token = jwtUtil.generateToken(userdetails);
         return ResponseEntity.ok(new AuthenticationResponse(authenticationRequest.getEmail(), token));

@@ -36,7 +36,7 @@ public class Admin {
     @PastOrPresent
     private LocalDateTime updateDate;
 
-    @Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean enabled;
+    /*@Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean enabled;*/
 
 }

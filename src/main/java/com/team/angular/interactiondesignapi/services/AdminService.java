@@ -19,10 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AdminService implements UserDetailsService {//
@@ -66,7 +63,7 @@ public class AdminService implements UserDetailsService {//
 
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
-    
+
     public AdminOutTO updateAdmin(Admin admin) throws Exception {
 
         System.out.println(admin);
@@ -79,8 +76,10 @@ public class AdminService implements UserDetailsService {//
             _admin.setSurname(admin.getSurname());
 
         // control if email does not exist
-        if (admin.getEmail() != null && admin.getEmail() != _admin.getEmail()
+        if (admin.getEmail() != null &&
+                !Objects.equals(admin.getEmail(), _admin.getEmail())
                 && !adminRepository.existsByEmail(admin.getEmail())) {
+
             _admin.setEmail(admin.getEmail());
         } else {
             throw new Exception("Email is invalid");
@@ -101,17 +100,14 @@ public class AdminService implements UserDetailsService {//
         return Collections.singletonList(simpleGrantedAuthority);
     }
 
-
-    //private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
-    //private final AppUserRepository appUserRepository;
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
+        // load admin with email and not with name
         Admin admin = adminRepository.findAdminByEmail(email);
 
-        // todo: check the value of another variables
+        // Initialise User with email on place of name
         return new org.springframework.security.core.userdetails.User(admin.getEmail(), admin.getPassword(), true,
                 true, true, true, getAuthorities());
-
     }
 }

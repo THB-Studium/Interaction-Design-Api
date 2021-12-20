@@ -35,7 +35,7 @@ public class JwtUtil {
 
         // Generate Token
         return Jwts.builder().setClaims(claims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(userDetails.getUsername())//is with email
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
