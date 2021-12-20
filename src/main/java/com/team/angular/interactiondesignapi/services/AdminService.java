@@ -75,11 +75,9 @@ public class AdminService implements UserDetailsService {//
         if (admin.getSurname() != null)
             _admin.setSurname(admin.getSurname());
 
-        // control if email does not exist
-        if (admin.getEmail() != null &&
-                !Objects.equals(admin.getEmail(), _admin.getEmail())
-                && !adminRepository.existsByEmail(admin.getEmail())) {
-
+        // control if new email does not exist
+        if (admin.getEmail() != null && !Objects.equals(admin.getEmail(), _admin.getEmail())
+                && !adminRepository.existsAdminByEmail(admin.getEmail())) {
             _admin.setEmail(admin.getEmail());
         } else {
             throw new Exception("Email is invalid");
