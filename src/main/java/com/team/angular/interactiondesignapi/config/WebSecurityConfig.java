@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/**").permitAll()
                 //permitAll
                 .antMatchers(HttpMethod.GET).permitAll()
-                //.antMatchers(HttpMethod.POST,"/reisers/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/reisers/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/buchungs/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/feedbacks/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/adminPanel/**").permitAll()
@@ -72,7 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE,"/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST,"/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST,"/**").hasAnyRole()
                 // but later the swaaager will only be accessible to admins
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
