@@ -58,8 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // todo : test access role
         http.csrf().disable()
                 .authorizeRequests()
-                //.antMatchers("/**").permitAll()
-                //permitAll
+                .antMatchers("/**").permitAll()
+                /*//permitAll
                 .antMatchers(HttpMethod.GET).permitAll()
                 .antMatchers(HttpMethod.POST,"/reisers/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/buchungs/**").permitAll()
@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admins/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST,"/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT,"/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/**").hasRole("ADMIN")*/
                 // but later the swaaager will only be accessible to admins
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
