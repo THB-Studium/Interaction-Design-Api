@@ -4,6 +4,7 @@ import com.team.angular.interactiondesignapi.services.AdminService;
 import com.team.angular.interactiondesignapi.services.authentication.JwtUtil;
 import com.team.angular.interactiondesignapi.transfertobjects.authentication.AuthenticationRequest;
 import com.team.angular.interactiondesignapi.transfertobjects.authentication.AuthenticationResponse;
+import io.jsonwebtoken.impl.DefaultClaims;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/adminPanel")
@@ -47,6 +50,14 @@ public class AuthenticationController {
         UserDetails userdetails = adminService.loadUserByUsername(authenticationRequest.getEmail());
         String token = jwtUtil.generateToken(userdetails);
         return ResponseEntity.ok(new AuthenticationResponse(authenticationRequest.getEmail(), token));
+    }
+
+    @RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
+    public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
+        // From the HttpRequest get the claims
+        DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
+        String token = jwtUtil.doGenerateRefreshToken(claims);
+        return ResponseEntity.ok(new AuthenticationResponse(token));
     }
 
 }

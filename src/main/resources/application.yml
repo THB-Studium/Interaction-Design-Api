@@ -1,5 +1,6 @@
 jwt.secret: secretfortravel
-jwt.jwtExpirationInMs: 100000
+jwt.jwtExpirationInMs: 0
+jwt.refreshExpirationDateInMs: 9000000
 
 server.port: 5050
 
@@ -10,8 +11,8 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost/interaction-design
-    username: postgres_1
-    password: postgresQL
+    username: postgres
+    password: postgres
 
   jpa:
     show-sql: false
@@ -26,7 +27,7 @@ spring:
 
     hibernate:
       # Hibernate ddl auto (create, create-drop, validate, update)
-      ddl-auto: create
+      ddl-auto: update
 
   #postgres
   #postgres_1

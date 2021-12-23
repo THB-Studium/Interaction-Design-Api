@@ -9,5 +9,10 @@
       "name": "jwt.jwtExpirationInMs",
       "type": "java.lang.String",
       "description": "Description for jwt.jwtExpirationInMs."
+    },
+    {
+      "name": "jwt.refreshExpirationDateInMs",
+      "type": "java.lang.String",
+      "description": "Description for jwt.refreshExpirationDateInMs."
     }
   ] }
