@@ -3,6 +3,7 @@ package com.team.angular.interactiondesignapi.models;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Unterkunft {
 	@ElementCollection
 	private List<byte[]> bilder;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "Land_id")
 	private Land land;
 

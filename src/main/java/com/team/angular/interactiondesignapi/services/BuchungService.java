@@ -59,10 +59,10 @@ public class BuchungService {
 		newBuchung.setDatum(buchung.getDatum());
 		newBuchung.setMitReiserId(mitReiser.getId());
 		newBuchung.setBuchungsklasseId(tarif.getId());
-		newBuchung.setFlugAhfen(buchung.getFlugAhfen());
+		newBuchung.setFlugHafen(buchung.getFlugAhfen());
 		newBuchung.setHandGepaeck(buchung.getHandGepaeck());
 		newBuchung.setKoffer(buchung.getKoffer());
-		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
+		newBuchung.setZahlungsMethode(buchung.getZahlungMethod());
 		newBuchung.setReiser(reiser);
 
 		return Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
@@ -107,13 +107,13 @@ public class BuchungService {
 		if(buchung.getDatum() != null)
 			actual.setDatum(buchung.getDatum());
 		if(buchung.getFlugAhfen() != null)
-			actual.setFlugAhfen(buchung.getFlugAhfen());
+			actual.setFlugHafen(buchung.getFlugAhfen());
 		if(buchung.getHandGepaeck() != null)
 			actual.setHandGepaeck(buchung.getHandGepaeck());
 		if(buchung.getKoffer() != null)
 			actual.setKoffer(buchung.getKoffer());
-		if(buchung.getZahlungMethod() != null)
-			actual.setZahlungMethod(buchung.getZahlungMethod());
+		if(buchung.getZahlungsMethode() != null)
+			actual.setZahlungsMethode(buchung.getZahlungsMethode());
 		//if(buchung.getReiseAngebot() != null)
 			//actual.setReiseAngebot(reiseAngebot);
 

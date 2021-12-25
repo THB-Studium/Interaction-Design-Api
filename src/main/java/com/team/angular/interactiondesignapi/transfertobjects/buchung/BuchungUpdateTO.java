@@ -28,7 +28,7 @@ public class BuchungUpdateTO {
 
 	private String koffer;
 	
-	private ZahlungMethod zahlungMethod;
+	private ZahlungMethod zahlungsMethode;
 	
 	private UUID reiserId;
 	

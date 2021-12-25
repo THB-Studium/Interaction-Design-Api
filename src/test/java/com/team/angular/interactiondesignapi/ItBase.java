@@ -46,6 +46,8 @@ public class ItBase {
     @Autowired
     protected ReiseAngebotRepository reiseAngebotRepository;
     @Autowired
+    protected HighlightRepository highlightRepository;
+    @Autowired
     private WebApplicationContext wac;
 
     @BeforeEach
@@ -192,10 +194,10 @@ public class ItBase {
 
         newBuchung.setDatum(new Date());
         newBuchung.setMitReiserId(UUID.randomUUID());
-        newBuchung.setFlugAhfen(UUID.randomUUID().toString());
+        newBuchung.setFlugHafen(UUID.randomUUID().toString());
         newBuchung.setHandGepaeck(UUID.randomUUID().toString());
         newBuchung.setKoffer(UUID.randomUUID().toString());
-        newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
+        newBuchung.setZahlungsMethode(ZahlungMethod.Einmal);
         newBuchung.setReiser(reiser);
 
         return newBuchung;
@@ -246,6 +248,17 @@ public class ItBase {
         newBuchung.setDescription(UUID.randomUUID().toString());
 
         return newBuchung;
+    }
+    
+    protected Highlight buildHighlight(Land land) {
+    	Highlight highlight = new Highlight();
+
+    	highlight.setName(UUID.randomUUID().toString());
+    	highlight.setDescription(UUID.randomUUID().toString());
+    	highlight.setBild("123456".getBytes());
+    	highlight.setLand(land);
+
+        return highlight;
     }
 
     protected ReiseAngebot buildReiseAngebot() {

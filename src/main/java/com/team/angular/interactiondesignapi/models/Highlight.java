@@ -23,6 +23,6 @@ public class Highlight {
     private String description;
     private byte[] bild;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Land land;
 }

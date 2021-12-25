@@ -42,14 +42,14 @@ public class Buchung {
     private UUID buchungsklasseId;
 
     @NotBlank
-    private String flugAhfen;
+    private String flugHafen;
 
     private String handGepaeck;
 
     private String koffer;
 
     @Enumerated(EnumType.STRING)
-    private ZahlungMethod zahlungMethod;
+    private ZahlungMethod zahlungsMethode;
 
     @ManyToOne
     @JoinColumn(name = "Reiser_id")

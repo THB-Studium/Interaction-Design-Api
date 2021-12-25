@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@RequestMapping("/reisers")
+@RequestMapping("/reisende")
 @CrossOrigin(origins = "*")
 public class ReiserController {
 

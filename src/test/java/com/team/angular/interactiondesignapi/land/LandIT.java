@@ -16,10 +16,12 @@ import org.junit.jupiter.api.Test;
 import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
+import com.team.angular.interactiondesignapi.models.Highlight;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.LandInfo;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
+import com.team.angular.interactiondesignapi.models.Unterkunft;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
 
 import io.restassured.http.ContentType;
@@ -46,9 +48,19 @@ public class LandIT extends ItBase {
 	
 	Reiser reiser, reiser1, mitReiser;
 	
+	Unterkunft unterkunft, unterkunft1;
+	
+	private List<byte[]> bilder = new ArrayList<>();
+	
+	Highlight highlight, highlight1;
+	
 	@BeforeEach
 	public void setup() {
 		super.setup();
+
+		bilder.add(UUID.randomUUID().toString().getBytes());
+		bilder.add(UUID.randomUUID().toString().getBytes());
+		bilder.add(UUID.randomUUID().toString().getBytes());
 		
 		beschreibung.add(UUID.randomUUID().toString());
 		
@@ -68,6 +80,12 @@ public class LandIT extends ItBase {
 		infos_land = buildInfosLand();
 		infos_land = landInfoRepository.save(infos_land);
 		
+		unterkunft = buildUnterkunft(bilder, land);
+		unterkunft = unterkunftRepository.save(unterkunft);
+		
+		unterkunft1 = buildUnterkunft(bilder, land);
+		unterkunft1 = unterkunftRepository.save(unterkunft1);
+		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
@@ -83,6 +101,12 @@ public class LandIT extends ItBase {
 		land1 = buildLand(reiseAngebot);
 		land1 = landRepository.save(land1);
 		
+		highlight = buildHighlight(land);
+		highlight = highlightRepository.save(highlight);
+		
+		highlight1 = buildHighlight(land1);
+		highlight1 = highlightRepository.save(highlight1);
+		
 	}
 	
     @AfterEach
@@ -97,16 +121,16 @@ public class LandIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("land", create,"application/json")
-				.multiPart("bild", "something12354565".getBytes())
-				//.body(create)
-				.log().body()
-				.post("/lands")
-				.then()
-				.log().body()
-				.statusCode(200)
-				.extract().body().path("id"));
+					//.contentType(ContentType.JSON)
+					.multiPart("land", create,"application/json")
+					.multiPart("bild", "something12354565".getBytes())
+					//.body(create)
+					.log().body()
+					.post("/lands")
+					.then()
+					.log().body()
+					.statusCode(200)
+					.extract().body().path("id"));
 		
 		Land land = landRepository.findById(id).get();
 		
@@ -126,15 +150,15 @@ public class LandIT extends ItBase {
 	public void listLands() {	
 		
 			given()
-			.contentType(ContentType.JSON)
-			//.body(create)
-			.log().body()
-			.get("/lands")
-			.then()
-			.log().body()
-			.statusCode(200)
-			.body("id", containsInAnyOrder(land.getId().toString(), land1.getId().toString()))
-			.body("name", containsInAnyOrder(land.getName(), land1.getName()));
+				.contentType(ContentType.JSON)
+				//.body(create)
+				.log().body()
+				.get("/lands")
+				.then()
+				.log().body()
+				.statusCode(200)
+				.body("id", containsInAnyOrder(land.getId().toString(), land1.getId().toString()))
+				.body("name", containsInAnyOrder(land.getName(), land1.getName()));
 				
 	}
 	
@@ -146,16 +170,16 @@ public class LandIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("land", update,"application/json")
-				.multiPart("bild", "something123".getBytes())
-				//.body(create)
-				.log().body()
-				.put("/lands")
-				.then()
-				.log().body()
-				.statusCode(200)
-				.extract().body().path("id"));
+					//.contentType(ContentType.JSON)
+					.multiPart("land", update,"application/json")
+					.multiPart("bild", "something123".getBytes())
+					//.body(create)
+					.log().body()
+					.put("/lands")
+					.then()
+					.log().body()
+					.statusCode(200)
+					.extract().body().path("id"));
 		
 		Land land_ = landRepository.findById(id).get();
 		
@@ -177,14 +201,14 @@ public class LandIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				.contentType(ContentType.JSON)
-				//.body(land)
-				.log().body()
-				.get("/lands/"+land.getId() )
-				.then()
-				.log().body()
-				.statusCode(200)
-				.extract().body().path("id"));
+					.contentType(ContentType.JSON)
+					//.body(land)
+					.log().body()
+					.get("/lands/"+land.getId() )
+					.then()
+					.log().body()
+					.statusCode(200)
+					.extract().body().path("id"));
 		
 		Land land_ = landRepository.findById(id).get();
 		
@@ -203,16 +227,30 @@ public class LandIT extends ItBase {
 	
 	@Test
 	public void deleteLand() {
+		
+//		land.setLandInfo(Arrays.asList(infos_land));
+//		
+//		land.setHighlights(Arrays.asList(highlight, highlight1));
+//		
+//		land.setUnterkunft(Arrays.asList(unterkunft, unterkunft1));
+//		
+//		landRepository.save(land);		
 
 		given()
-		.contentType(ContentType.JSON)
-		//.body(land)
-		.log().body()
-		.delete("/lands/"+land.getId())
-		.then()
-		.log().body()
-		.statusCode(200);
-			
+			.contentType(ContentType.JSON)
+			//.body(land)
+			.log().body()
+			.delete("/lands/"+land.getId())
+			.then()
+			.log().body()
+			.statusCode(200);
+		
+		assertThat(landRepository.findById(land.getId()).isPresent(), is(false));
+		
+//		assertThat(landInfoRepository.findById(infos_land.getId()).isPresent(), is(false));
+//		assertThat(highlightRepository.findById(highlight.getId()).isPresent(), is(false));
+//		assertThat(highlightRepository.findById(highlight1.getId()).isPresent(), is(false));
+//		assertThat(unterkunftRepository.findById(unterkunft.getId()).isPresent(), is(false));
 	}
 
 }

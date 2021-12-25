@@ -29,7 +29,7 @@ public class BuchungIT extends ItBase {
 	
 	Buchung buchung, buchung1, buchung2;
 	
-	Buchungsklassen buchungsklasse;
+	Buchungsklassen buchungenklasse;
 	
 	ReiserWriteTO reiserWrite1;
 	
@@ -64,8 +64,8 @@ public class BuchungIT extends ItBase {
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
-		buchungsklasse = buildBuchungsKlasse(land);
-		buchungsklasseRepository.save(buchungsklasse);
+		buchungenklasse = buildBuchungsKlasse(land);
+		buchungsklasseRepository.save(buchungenklasse);
 		
 		buchung = buildBuchung(reiser);
 		buchung = buchungRepository.save(buchung);
@@ -83,14 +83,14 @@ public class BuchungIT extends ItBase {
 	
 	@Test
 	public void createBuchung() {
-		BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), land.getId());
+		BuchungWriteTO create = buildBuchungWriteTO(buchungenklasse.getId(), land.getId());
 		
 		UUID id = UUID.fromString(
 				given()
 				.contentType(ContentType.JSON)
 				.body(create)
 				.log().body()
-				.post("/buchungs")
+				.post("/buchungen")
 				.then()
 				.log().body()
 				.statusCode(200)
@@ -110,7 +110,7 @@ public class BuchungIT extends ItBase {
 			.contentType(ContentType.JSON)
 			//.body(create)
 			.log().body()
-			.get("/buchungs")
+			.get("/buchungen")
 			.then()
 			.log().body()
 			.statusCode(200)
@@ -121,7 +121,7 @@ public class BuchungIT extends ItBase {
 	@Test
 	public void updateBuchung() {
 		
-		BuchungWriteTO update = buildBuchungWriteTO( buchungsklasse.getId(), land.getId());
+		BuchungWriteTO update = buildBuchungWriteTO( buchungenklasse.getId(), land.getId());
 		update.setId(buchung.getId());
 		
 		UUID id = UUID.fromString(
@@ -129,7 +129,7 @@ public class BuchungIT extends ItBase {
 				.contentType(ContentType.JSON)
 				.body(update)
 				.log().body()
-				.put("/buchungs")
+				.put("/buchungen")
 				.then()
 				.log().body()
 				.statusCode(200)
@@ -149,7 +149,7 @@ public class BuchungIT extends ItBase {
 				.contentType(ContentType.JSON)
 				//.body(buchung)
 				.log().body()
-				.get("/buchungs/"+buchung.getId() )
+				.get("/buchungen/"+buchung.getId() )
 				.then()
 				.log().body()
 				.statusCode(200)
@@ -168,7 +168,7 @@ public class BuchungIT extends ItBase {
 		.contentType(ContentType.JSON)
 		//.body(buchung)
 		.log().body()
-		.delete("/buchungs/"+buchung.getId())
+		.delete("/buchungen/"+buchung.getId())
 		.then()
 		.log().body()
 		.statusCode(200);

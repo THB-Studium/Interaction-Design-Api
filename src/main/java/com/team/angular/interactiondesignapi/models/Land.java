@@ -3,6 +3,7 @@ package com.team.angular.interactiondesignapi.models;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,13 +58,13 @@ public class Land {
     @OneToOne(fetch = FetchType.LAZY)
     private ReiseAngebot reiseAngebot;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
 	private List<LandInfo> landInfo;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Highlight> highlights;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Unterkunft> unterkunft;
-
 }
