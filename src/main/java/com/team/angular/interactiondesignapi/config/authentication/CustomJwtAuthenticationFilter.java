@@ -52,7 +52,6 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
             // allow for Refresh Token creation if following conditions are true.
             if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refreshtoken")) {
                 allowForRefreshToken(ex, request);
-                System.out.println("allowForRefreshToken");
             } else
                 request.setAttribute("exception", ex);
 
