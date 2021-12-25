@@ -52,7 +52,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthenticationResponse(authenticationRequest.getEmail(), token));
     }
 
-    @RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
+    @GetMapping(value = "/refreshtoken")
     public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
         // From the HttpRequest get the claims
         DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
