@@ -33,8 +33,8 @@ public class Unterkunft {
 
 	private String link;
 
-	@NotBlank
-	private String adresse;
+	//@NotBlank
+	private String addresse;
 
 	private String beschreibung;
 

@@ -55,7 +55,7 @@ public class UnterkunftService {
 
 		newUnterkunft.setName(unterkunft.getName());
 		newUnterkunft.setLink(unterkunft.getLink());
-		newUnterkunft.setAdresse(unterkunft.getAddresse());
+		newUnterkunft.setAddresse(unterkunft.getAddresse());
 		newUnterkunft.setBeschreibung(unterkunft.getBeschreibung());
 		newUnterkunft.setBilder(bilder);
 		if(unterkunft.getLandId() != null) {
@@ -95,7 +95,7 @@ public class UnterkunftService {
 		if (unterkunft.getLink() != null)
 			actual_unterkunft.setLink(unterkunft.getLink());
 		if (unterkunft.getAddresse() != null)
-			actual_unterkunft.setAdresse(unterkunft.getAddresse());
+			actual_unterkunft.setAddresse(unterkunft.getAddresse());
 		if (unterkunft.getBeschreibung() != null)
 			actual_unterkunft.setBeschreibung(unterkunft.getBeschreibung());
 
