@@ -48,7 +48,7 @@ public class UnterkunftController {
 	@ApiOperation("Add One Unterkunft")
 	@PostMapping("")
 	public UnterkunftReadTO addUnterkunft(
-			@ApiParam(name = "Unterkunft", value = "Unterkunft to add") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
+			@ApiParam(name = "Unterkunft", value = "TO to add Unterkunft: (String name, String link, String adresse, String beschreibung, UUID landId)") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
 			@RequestPart(value = "files") List<MultipartFile> files) {
 		return unterkunftService.addUnterkunft(unterkunft, files);
 	}
@@ -56,7 +56,7 @@ public class UnterkunftController {
 	@ApiOperation("Update Unterkunft")
 	@PutMapping("")
 	public UnterkunftReadTO updateUnterkunft(
-			@ApiParam(name = "Unterkunft", value = "Unterkunft to update") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
+			@ApiParam(name = "Unterkunft", value = "TO to update Unterkunft: (String name, String link, String adresse, String beschreibung, UUID landId)\"") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
 			@RequestPart(value = "files") List<MultipartFile> files) {
 		return unterkunftService.updateUnterkunft(unterkunft, files);
 	}

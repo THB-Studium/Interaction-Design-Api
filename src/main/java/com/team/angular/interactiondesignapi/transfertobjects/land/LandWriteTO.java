@@ -20,20 +20,20 @@ public class LandWriteTO {
 
 	private String unterkunft_text;
 
-	private String corona_infos;
+	private String corona_infos; // TODO remove
 
-	private String klima;
+	private String klima; // TODO remove
 
-	private String gesundheit;
+	private String gesundheit; // TODO remove
 
-	private String reiseOrdnung;
+	private String reiseOrdnung; // TODO remove
 
-	private String hinweise;
+	private String hinweise; // TODO remove to reiseAngebot
 
-	private List<String> mitReiserBerechtigt;
+	private List<String> mitReiserBerechtigt; // in reiseAngebot
 
-	private String sonstigeHinweise;
+	private String sonstigeHinweise; // TODO remove to reiseAngebot
 	
 	private UUID reiseAngebotId;
-
+	
 }

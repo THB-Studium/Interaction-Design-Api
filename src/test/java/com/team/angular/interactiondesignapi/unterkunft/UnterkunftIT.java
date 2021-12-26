@@ -139,7 +139,7 @@ public class UnterkunftIT extends ItBase {
 		assertThat(unterkunft.getId(), is(updated_unterkunft.getId()));
 		assertThat(unterkunftWrite1.getName(), is(updated_unterkunft.getName()));
 		assertThat(unterkunftWrite1.getLink(), is(updated_unterkunft.getLink()));
-		assertThat(unterkunftWrite1.getAdresse(), is(updated_unterkunft.getAdresse()));
+		assertThat(unterkunftWrite1.getAddresse(), is(updated_unterkunft.getAdresse()));
 		assertThat(unterkunftWrite1.getBeschreibung(), is(updated_unterkunft.getBeschreibung()));
 		assertThat(unterkunftWrite1.getLandId(), is(updated_unterkunft.getLand().getId()));
 	}

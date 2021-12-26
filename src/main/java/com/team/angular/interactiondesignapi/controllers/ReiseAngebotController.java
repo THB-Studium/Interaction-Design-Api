@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi.controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,7 +50,7 @@ public class ReiseAngebotController {
     @ApiOperation("Add One ReiseAngebot")
     @PostMapping("")
     public ReiseAngebotReadTO addReiseAngebot(
-            @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestPart(value = "reiseAngebot")
+            @ApiParam(name = "ReiseAngebot", value = "Transfert Object to add Land: (String titel, byte[] startbild, Date startDatum)") @RequestPart(value = "reiseAngebot")
                     ReiseAngebotWriteTO reiseAngebot, @RequestPart(value = "bild") MultipartFile bild) {
         return reiseAngebotService.addReiseAngebot(reiseAngebot, bild);
     }

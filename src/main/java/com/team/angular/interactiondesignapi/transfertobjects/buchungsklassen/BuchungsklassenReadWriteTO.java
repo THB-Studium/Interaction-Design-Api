@@ -15,5 +15,7 @@ public class BuchungsklassenReadWriteTO {
     private String type;
     private double preis;
     private UUID reiseAngebotId;
+    
+    // TODO Add description
 
 }

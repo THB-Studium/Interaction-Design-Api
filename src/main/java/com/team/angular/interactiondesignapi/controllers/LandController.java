@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@RequestMapping("/lands")
+@RequestMapping("/laender")
 @CrossOrigin(origins = "*")
 public class LandController {
 
@@ -47,7 +47,7 @@ public class LandController {
 	@ApiOperation("Add One Land")
 	@PostMapping("")
 	public LandReadTO addLand(
-			@ApiParam(name = "Land", value = "Land to add") @RequestPart(value = "land") LandWriteTO land,
+			@ApiParam(name = "Land", value = "Transfert Object to add Land: (String name, List flughafen, String unterkunft_text, String corona_infos, String klima, String gesundheit, String reiseOrdnung, String hinweise, List mitReiserBerechtigt, String sonstigeHinweise, UUID reiseAngebotId)") @RequestPart(value = "land") LandWriteTO land,
 			@RequestPart(value = "bild") MultipartFile bild) {
 		return landService.addLand(land, bild);
 	}
@@ -55,7 +55,7 @@ public class LandController {
 	@ApiOperation("Update Land")
 	@PutMapping("")
 	public LandReadTO updateLand(
-			@ApiParam(name = "Land", value = "Land to add") @RequestPart(value = "land") LandWriteTO land,
+			@ApiParam(name = "Land", value = "Transfert Object to update Land: (String name, List flughafen, String unterkunft_text, String corona_infos, String klima, String gesundheit, String reiseOrdnung, String hinweise, List mitReiserBerechtigt, String sonstigeHinweise, UUID reiseAngebotId)") @RequestPart(value = "land") LandWriteTO land,
 			@RequestPart(value = "bild") MultipartFile bild) {
 		return landService.updateLand(land, bild);
 	}

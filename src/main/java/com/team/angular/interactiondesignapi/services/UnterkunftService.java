@@ -51,17 +51,18 @@ public class UnterkunftService {
 			bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
 		}
 		
-		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
-				-> new ResourceNotFoundException("Cannot find Unterkunft with id: " + unterkunft.getId()));
-
 		Unterkunft newUnterkunft = new Unterkunft();
 
 		newUnterkunft.setName(unterkunft.getName());
 		newUnterkunft.setLink(unterkunft.getLink());
-		newUnterkunft.setAdresse(unterkunft.getAdresse());
+		newUnterkunft.setAdresse(unterkunft.getAddresse());
 		newUnterkunft.setBeschreibung(unterkunft.getBeschreibung());
 		newUnterkunft.setBilder(bilder);
-		newUnterkunft.setLand(land);
+		if(unterkunft.getLandId() != null) {
+			Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(() 
+					-> new ResourceNotFoundException("Cannot find Land with id: " + unterkunft.getLandId()));
+			newUnterkunft.setLand(land);
+		}
 
 		return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(newUnterkunft));
 	}
@@ -93,8 +94,8 @@ public class UnterkunftService {
 			actual_unterkunft.setName(unterkunft.getName());
 		if (unterkunft.getLink() != null)
 			actual_unterkunft.setLink(unterkunft.getLink());
-		if (unterkunft.getAdresse() != null)
-			actual_unterkunft.setAdresse(unterkunft.getAdresse());
+		if (unterkunft.getAddresse() != null)
+			actual_unterkunft.setAdresse(unterkunft.getAddresse());
 		if (unterkunft.getBeschreibung() != null)
 			actual_unterkunft.setBeschreibung(unterkunft.getBeschreibung());
 
