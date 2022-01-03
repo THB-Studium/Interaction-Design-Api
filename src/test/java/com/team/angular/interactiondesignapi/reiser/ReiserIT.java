@@ -55,9 +55,6 @@ public class ReiserIT extends ItBase {
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
-		erwartungen = buildErwartungen();
-		erwartungen = erwartungenRepository.save(erwartungen);
-		
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		

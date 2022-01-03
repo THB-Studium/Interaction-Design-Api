@@ -62,12 +62,6 @@ public class LandIT extends ItBase {
 		reiser1 = buildReiser();
 		reiser1 = reiserRepository.save(reiser1);
 		
-		erwartungen = buildErwartungen();
-		erwartungen = erwartungenRepository.save(erwartungen);
-		
-		infos_land = buildInfosLand();
-		infos_land = landInfoRepository.save(infos_land);
-		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		

@@ -22,6 +22,7 @@ import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Feedback;
+import com.team.angular.interactiondesignapi.models.Highlight;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.LandInfo;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
@@ -32,6 +33,7 @@ import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
 import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
+import com.team.angular.interactiondesignapi.repositories.HighlightRepository;
 import com.team.angular.interactiondesignapi.repositories.LandInfoRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
@@ -39,7 +41,10 @@ import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.hightlight.HighlightReadWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoReadWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
@@ -72,6 +77,8 @@ public class ItBase {
 	@Autowired
 	protected ReiseAngebotRepository reiseAngebotRepository;
 	@Autowired
+	protected HighlightRepository highlightRepository;
+	@Autowired
 	private WebApplicationContext wac;
 
 	@BeforeEach
@@ -86,9 +93,10 @@ public class ItBase {
 		feedbackRepository.deleteAll();
 		buchungRepository.deleteAll();
 		unterkunftRepository.deleteAll();
+		landInfoRepository.deleteAll();
+		highlightRepository.deleteAll();
 		landRepository.deleteAll();
 		buchungsklasseRepository.deleteAll();
-		landInfoRepository.deleteAll();
 		erwartungenRepository.deleteAll();
 		reiserRepository.deleteAll();
 		reiseAngebotRepository.deleteAll();
@@ -245,7 +253,7 @@ public class ItBase {
 		return newBuchung;
 	}
 
-	protected Erwartungen buildErwartungen() {
+	protected Erwartungen buildErwartungen(ReiseAngebot reiseAngebot) {
 		Erwartungen newErwartungen = new Erwartungen();
 
 		newErwartungen.setAbenteuer(12);
@@ -255,15 +263,42 @@ public class ItBase {
 		newErwartungen.setSonne_strand(12);
 		newErwartungen.setSicherheit(12);
 		newErwartungen.setRoad(12);
+		newErwartungen.setReiseAngebot(reiseAngebot);
+
+		return newErwartungen;
+	}
+	
+	protected ErwartungenReadWriteTO buildErwartungenReadWriteTO(UUID reiseAngebotId) {
+		ErwartungenReadWriteTO newErwartungen = new ErwartungenReadWriteTO();
+
+		newErwartungen.setAbenteuer(12);
+		newErwartungen.setEntschleunigung(12);
+		newErwartungen.setKonfort(12);
+		newErwartungen.setNachhaltigkeit(12);
+		newErwartungen.setSonne_strand(12);
+		newErwartungen.setSicherheit(12);
+		newErwartungen.setRoad(12);
+		newErwartungen.setReiseAngebotId(reiseAngebotId);
 
 		return newErwartungen;
 	}
 
-	protected LandInfo buildInfosLand() {
+	protected LandInfo buildInfosLand(Land land) {
 		LandInfo newBuchung = new LandInfo();
 
 		newBuchung.setTitel(UUID.randomUUID().toString());
 		newBuchung.setDescription(UUID.randomUUID().toString());
+		newBuchung.setLand(land);
+
+		return newBuchung;
+	}
+	
+	protected LandInfoReadWriteTO buildLandInfoReadWriteTO(UUID landId) {
+		LandInfoReadWriteTO newBuchung = new LandInfoReadWriteTO();
+
+		newBuchung.setTitel(UUID.randomUUID().toString());
+		newBuchung.setDescription(UUID.randomUUID().toString());
+		newBuchung.setLandId(landId);
 
 		return newBuchung;
 	}
@@ -323,5 +358,27 @@ public class ItBase {
 		reiseAngebot.setSonstigeHinweise(UUID.randomUUID().toString());
 
 		return reiseAngebot;
+	}
+	
+	protected Highlight buildHighlight(Land land) {
+		Highlight newBuchung = new Highlight();
+
+		newBuchung.setName(UUID.randomUUID().toString());
+		newBuchung.setDescription(UUID.randomUUID().toString());
+		newBuchung.setBild("1234567890".getBytes());
+		newBuchung.setLand(land);
+
+		return newBuchung;
+	}
+	
+	protected HighlightReadWriteTO buildHighlightWriteTO(UUID landId) {
+		HighlightReadWriteTO newBuchung = new HighlightReadWriteTO();
+
+		newBuchung.setName(UUID.randomUUID().toString());
+		newBuchung.setDescription(UUID.randomUUID().toString());
+		newBuchung.setBild("1234567890".getBytes());
+		newBuchung.setLandId(landId);
+
+		return newBuchung;
 	}
 }

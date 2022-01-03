@@ -55,9 +55,6 @@ public class BuchungIT extends ItBase {
 		
 		beschreibung.add(UUID.randomUUID().toString());
 		
-		erwartungen = buildErwartungen();
-		erwartungen = erwartungenRepository.save(erwartungen);
-		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
