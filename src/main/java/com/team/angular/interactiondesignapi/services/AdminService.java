@@ -84,7 +84,6 @@ public class AdminService implements UserDetailsService {//
             }
         }
 
-        //System.out.println(admin.getNewPassword() != null && admin.getOldPassword() != null);
         // control if the old password is correct before set the new
         if (admin.getNewPassword() != null && admin.getOldPassword() != null) {
             if (bcryptEncoder.matches(admin.getOldPassword(), _admin.getPassword())) {
