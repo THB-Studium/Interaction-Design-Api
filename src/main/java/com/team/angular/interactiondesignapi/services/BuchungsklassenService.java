@@ -76,11 +76,6 @@ public class BuchungsklassenService {
             _buchungsklassen.setPreis(buchungsklassen.getPreis());
         if (!buchungsklassen.getDescription().isEmpty())
             _buchungsklassen.setDescription(buchungsklassen.getDescription());
-        if (buchungsklassen.getReiseAngebotId() != null) {
-            ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(buchungsklassen.getReiseAngebotId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + buchungsklassen.getReiseAngebotId()));
-            _buchungsklassen.setReiseAngebot(reiseAngebot);
-        }
 
         buchungsklassenRepository.save(_buchungsklassen);
 
