@@ -10,12 +10,14 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminOutTO {
-    private UUID id;
+public class AdminWriteTO {
 
+    private UUID id;
     private String name;
     private String surname;
-    private String password;
+    private String oldPassword;
+    private String newPassword;
     @Email
     private String email;
+
 }
