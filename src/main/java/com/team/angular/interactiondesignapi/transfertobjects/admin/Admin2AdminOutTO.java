@@ -12,6 +12,7 @@ public class Admin2AdminOutTO {
         out.setId(in.getId());
         out.setName(in.getName());
         out.setSurname(in.getSurname());
+        out.setPassword(in.getPassword());
         out.setEmail(in.getEmail());
 
         return out;

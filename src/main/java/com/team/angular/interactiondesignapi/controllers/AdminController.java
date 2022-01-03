@@ -3,6 +3,7 @@ package com.team.angular.interactiondesignapi.controllers;
 import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.services.AdminService;
 import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminOutTO;
+import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminWriteTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class AdminController {
 
     @ApiOperation("Update Admin")
     @PutMapping("")
-    public AdminOutTO updateAdmin(@ApiParam(name = "Admin", value = "Admin to update") @RequestBody Admin admin) throws Exception {
+    public AdminOutTO updateAdmin(@ApiParam(name = "AdminWriteTO", value = "Admin to update") @RequestBody AdminWriteTO admin) throws Exception {
         return adminService.updateAdmin(admin);
     }
 

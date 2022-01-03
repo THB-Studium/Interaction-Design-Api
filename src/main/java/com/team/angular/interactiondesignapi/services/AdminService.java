@@ -5,6 +5,7 @@ import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.repositories.AdminRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.admin.Admin2AdminOutTO;
 import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminOutTO;
+import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminWriteTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class AdminService implements UserDetailsService {//
             _admin.setCreationDate(LocalDateTime.now());
             return Admin2AdminOutTO.apply(adminRepository.save(_admin));
         } else {
-            throw new Exception("Email is invalid");
+            throw new Exception("Email has already been taken");
         }
     }
 
@@ -64,9 +65,7 @@ public class AdminService implements UserDetailsService {//
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public AdminOutTO updateAdmin(Admin admin) throws Exception {
-
-        System.out.println(admin);
+    public AdminOutTO updateAdmin(AdminWriteTO admin) throws Exception {
         Admin _admin = adminRepository.findById(admin.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + admin.getId()));
 
@@ -76,15 +75,27 @@ public class AdminService implements UserDetailsService {//
             _admin.setSurname(admin.getSurname());
 
         // control if new email does not exist
-        if (admin.getEmail() != null && !Objects.equals(admin.getEmail(), _admin.getEmail())
-                && !adminRepository.existsAdminByEmail(admin.getEmail())) {
-            _admin.setEmail(admin.getEmail());
-        } else {
-            throw new Exception("Email is invalid");
+        if (admin.getEmail() != null) {
+            if (!Objects.equals(admin.getEmail(), _admin.getEmail())
+                    && !adminRepository.existsAdminByEmail(admin.getEmail())) {
+                _admin.setEmail(admin.getEmail());
+            } else {
+                throw new Exception("Email has already been taken");
+            }
         }
 
-        if (admin.getPassword() != null)
-            _admin.setPassword(bcryptEncoder.encode(admin.getPassword()));
+        // control if the old password is correct before set the new
+        if (admin.getNewPassword() != null && admin.getOldPassword() != null) {
+            if (bcryptEncoder.matches(admin.getOldPassword(), _admin.getPassword())) {
+                _admin.setPassword(bcryptEncoder.encode(admin.getNewPassword()));
+            } else {
+                throw new Exception("The Old password is invalid");
+            }
+        } else if ((admin.getNewPassword() != null && admin.getOldPassword() == null) ||
+                (admin.getNewPassword() == null && admin.getOldPassword() != null)) {
+            throw new Exception("both old and new passwords are required");
+        }
+
 
         _admin.setUpdateDate(LocalDateTime.now());
 

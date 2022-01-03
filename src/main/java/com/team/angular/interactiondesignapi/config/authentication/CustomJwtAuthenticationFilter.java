@@ -43,7 +43,7 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
                 // that the current user is authenticated. So it passes the
                 // Spring Security Configurations successfully.
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            } else {
+            } else { // todo: will be deleted
                 System.out.println("request without token - Cannot set the Security Context");
             }
         } catch (ExpiredJwtException ex) {
@@ -52,7 +52,6 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
             // allow for Refresh Token creation if following conditions are true.
             if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refreshtoken")) {
                 allowForRefreshToken(ex, request);
-                System.out.println("allowForRefreshToken");
             } else
                 request.setAttribute("exception", ex);
 
