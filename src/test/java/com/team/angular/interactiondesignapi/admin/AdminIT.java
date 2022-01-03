@@ -58,7 +58,7 @@ public class AdminIT extends ItBase {
 		
 		assertThat(create.getName(), is(admin.getName()));
 		assertThat(create.getSurname(), is(admin.getSurname()));
-		//assertThat(create.getPassword(), is(admin.getPassword()));
+		assertThat(bcryptEncoder.matches(create.getPassword(), admin.getPassword()), is(true));
 		assertThat(create.getEmail(), is(admin.getEmail()));
 		assertThat("ROLE_ADMIN", is(admin.getRole()));
 
@@ -85,9 +85,26 @@ public class AdminIT extends ItBase {
 	@Test
 	public void updateAdmin() {
 		
+		Admin create = buildAdmin();
+		
+		UUID id_adm = UUID.fromString(
+				given()
+					.contentType(ContentType.JSON)
+					.body(create)
+					.log().body()
+					.post("/admins")
+					.then()
+					.log().body()
+					.statusCode(200)
+					.extract().body().path("id"));
+		
+		Admin admin = adminRepository.findById(id_adm).get();
+		
+		System.out.println(admin);
+		
 		AdminWriteTO update = buildAdminWriteTO();
 		update.setId(admin.getId());
-		update.setOldPassword(admin.getPassword());
+		update.setOldPassword(create.getPassword());
 		
 		UUID id = UUID.fromString(
 				given()
@@ -107,7 +124,7 @@ public class AdminIT extends ItBase {
 		assertThat(update.getSurname(), is(admin_.getSurname()));
 		assertThat(update.getEmail(), is(admin_.getEmail()));
 		
-		assertThat(update.getNewPassword(), is(admin_.getPassword()));
+		assertThat(bcryptEncoder.matches(update.getNewPassword(), admin_.getPassword()), is(true));
 	}
 	
 	@Test

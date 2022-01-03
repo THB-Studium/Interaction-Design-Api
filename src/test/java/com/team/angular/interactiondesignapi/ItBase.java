@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -85,6 +86,8 @@ public class ItBase {
 	protected AdminRepository adminRepository;
 	@Autowired
 	private WebApplicationContext wac;
+    @Autowired
+	protected PasswordEncoder bcryptEncoder;
 
 	@BeforeEach
 	public void setup() {
@@ -407,7 +410,7 @@ public class ItBase {
 		newBuchung.setSurname(UUID.randomUUID().toString());
 		//newBuchung.setOldPassword(UUID.randomUUID().toString());
 		newBuchung.setNewPassword(UUID.randomUUID().toString());
-		newBuchung.setEmail(UUID.randomUUID().toString());
+		newBuchung.setEmail(UUID.randomUUID().toString()+"@test.com");
 
 		return newBuchung;
 	}

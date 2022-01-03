@@ -22,7 +22,7 @@ public class Helper {
 
         byte[] toReturn = new byte[(int) convertedFile.length()];
 
-        //convertedFile.delete();
+        convertedFile.delete();
 
         return toReturn;
     }
