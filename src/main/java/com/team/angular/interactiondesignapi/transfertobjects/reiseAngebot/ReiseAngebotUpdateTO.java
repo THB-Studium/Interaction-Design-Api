@@ -6,7 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,4 +37,12 @@ public class ReiseAngebotUpdateTO {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
+    
+	private String hinweise;
+	
+	@ElementCollection
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<String> mitReiserBerechtigt;
+
+	private String sonstigeHinweise;
 }

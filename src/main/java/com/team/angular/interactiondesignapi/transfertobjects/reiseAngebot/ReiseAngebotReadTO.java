@@ -44,4 +44,10 @@ public class ReiseAngebotReadTO {
 
     private UUID landId;
 
+	private String hinweise;
+
+	private List<String> mitReiserBerechtigt;
+
+	private String sonstigeHinweise;
+
 }

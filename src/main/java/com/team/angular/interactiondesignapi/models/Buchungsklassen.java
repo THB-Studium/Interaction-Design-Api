@@ -1,28 +1,35 @@
 package com.team.angular.interactiondesignapi.models;
 
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Buchungsklassen {
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID id;
+	@Id
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	private UUID id;
 
-    private String type;
+	private String type;
 
-    private double preis;
+	private double preis;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ReiseAngebot reiseAngebot;
+	private String description;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	private ReiseAngebot reiseAngebot;
 }

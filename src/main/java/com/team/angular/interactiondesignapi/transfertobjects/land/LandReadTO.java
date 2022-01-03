@@ -25,8 +25,6 @@ public class LandReadTO {
 
 	private String unterkunft_text;
 
-	private String corona_infos;
-
 	private byte[] karte_bild;
 
 	private String klima;
@@ -34,12 +32,6 @@ public class LandReadTO {
 	private String gesundheit;
 
 	private String reiseOrdnung;
-
-	private String hinweise;
-
-	private List<String> mitReiserBerechtigt;
-
-	private String sonstigeHinweise;
 
 	private ReiseAngebotReadTO reiseAngebot;
 

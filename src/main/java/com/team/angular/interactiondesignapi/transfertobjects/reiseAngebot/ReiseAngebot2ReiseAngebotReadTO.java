@@ -20,6 +20,9 @@ public class ReiseAngebot2ReiseAngebotReadTO {
         out.setInteressiert(in.getInteressiert());
         out.setAnmeldungsFrist(in.getAnmeldungsFrist());
         out.setLeistungen(in.getLeistungen());
+        out.setHinweise(in.getHinweise());
+        out.setMitReiserBerechtigt(in.getMitReiserBerechtigt());
+        out.setSonstigeHinweise(in.getSonstigeHinweise());
 
         if (in.getBuchungsklassen() != null)
             out.setBuchungsklassenReadListTO(Buchungsklassen2BuchungsklassenReadListTO.apply(in.getBuchungsklassen()));

@@ -177,7 +177,8 @@ public class UnterkunftIT extends ItBase {
 		.then()
 		.log().body()
 		.statusCode(200);
-			
+
+		assertThat(unterkunftRepository.findById(unterkunft.getId()).isPresent(), is(false));
 	}
 
 }

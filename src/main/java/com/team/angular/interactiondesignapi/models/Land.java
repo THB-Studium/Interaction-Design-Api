@@ -40,19 +40,9 @@ public class Land {
 
 	private String unterkunft_text;
 
-	private String corona_infos;
-
 	private byte[] karte_bild;
 
-	private String hinweise;
-
-	@ElementCollection
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<String> mitReiserBerechtigt;
-
-	private String sonstigeHinweise;
-
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "land",fetch = FetchType.LAZY)
     private ReiseAngebot reiseAngebot;
 
 	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)

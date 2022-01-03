@@ -171,7 +171,8 @@ public class ReiserIT extends ItBase {
 		.then()
 		.log().body()
 		.statusCode(200);
-			
+
+		assertThat(reiserRepository.findById(reiser.getId()).isPresent(), is(false));
 	}
 
 }

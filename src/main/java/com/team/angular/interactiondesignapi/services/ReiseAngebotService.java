@@ -64,6 +64,12 @@ public class ReiseAngebotService {
             _reiseAngebot.setAnmeldungsFrist(reiseAngebot.getAnmeldungsFrist());
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setLeistungen(reiseAngebot.getLeistungen());
+        if (reiseAngebot.getLeistungen() != null)
+        	_reiseAngebot.setHinweise(reiseAngebot.getHinweise());
+        if (reiseAngebot.getLeistungen() != null)
+        	_reiseAngebot.setMitReiserBerechtigt(reiseAngebot.getMitReiserBerechtigt());
+        if (reiseAngebot.getLeistungen() != null)
+        	_reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
         // Save Buchungsklassen
         if (reiseAngebot.getBuchungsklassen() != null) {
@@ -132,6 +138,12 @@ public class ReiseAngebotService {
             _reiseAngebot.setAnmeldungsFrist(reiseAngebot.getAnmeldungsFrist());
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setLeistungen(reiseAngebot.getLeistungen());
+        if (reiseAngebot.getLeistungen() != null)
+        	_reiseAngebot.setHinweise(reiseAngebot.getHinweise());
+        if (reiseAngebot.getLeistungen() != null)
+        	_reiseAngebot.setMitReiserBerechtigt(reiseAngebot.getMitReiserBerechtigt());
+        if (reiseAngebot.getLeistungen() != null)
+        	_reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
         reiseAngebotRepository.save(_reiseAngebot);
 

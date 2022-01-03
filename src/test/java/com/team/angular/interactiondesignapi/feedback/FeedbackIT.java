@@ -173,7 +173,8 @@ public class FeedbackIT extends ItBase {
 		.then()
 		.log().body()
 		.statusCode(200);
-			
+
+		assertThat(feedbackRepository.findById(feedback.getId()).isPresent(), is(false));
 	}
 
 }

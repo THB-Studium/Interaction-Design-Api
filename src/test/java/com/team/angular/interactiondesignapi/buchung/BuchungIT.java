@@ -64,7 +64,7 @@ public class BuchungIT extends ItBase {
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
-		buchungsklasse = buildBuchungsKlasse(land);
+		buchungsklasse = buildBuchungsKlasse(reiseAngebot);
 		buchungsklasseRepository.save(buchungsklasse);
 		
 		buchung = buildBuchung(reiser);
@@ -172,7 +172,8 @@ public class BuchungIT extends ItBase {
 		.then()
 		.log().body()
 		.statusCode(200);
-			
+	
+		assertThat(buchungRepository.findById(buchung.getId()).isPresent(), is(false));
 	}
 
 }
