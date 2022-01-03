@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
@@ -29,6 +30,7 @@ import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
+import com.team.angular.interactiondesignapi.repositories.AdminRepository;
 import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
@@ -39,6 +41,7 @@ import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadWriteTO;
@@ -79,6 +82,8 @@ public class ItBase {
 	@Autowired
 	protected HighlightRepository highlightRepository;
 	@Autowired
+	protected AdminRepository adminRepository;
+	@Autowired
 	private WebApplicationContext wac;
 
 	@BeforeEach
@@ -100,6 +105,7 @@ public class ItBase {
 		erwartungenRepository.deleteAll();
 		reiserRepository.deleteAll();
 		reiseAngebotRepository.deleteAll();
+		adminRepository.deleteAll();
 	}
 
 	protected Feedback buildFeedback() {
@@ -378,6 +384,30 @@ public class ItBase {
 		newBuchung.setDescription(UUID.randomUUID().toString());
 		newBuchung.setBild("1234567890".getBytes());
 		newBuchung.setLandId(landId);
+
+		return newBuchung;
+	}
+	
+	protected Admin buildAdmin() {
+		Admin newBuchung = new Admin();
+
+		newBuchung.setName(UUID.randomUUID().toString());
+		newBuchung.setSurname(UUID.randomUUID().toString());
+		newBuchung.setPassword(UUID.randomUUID().toString());
+		newBuchung.setEmail(UUID.randomUUID().toString()+"@test.com");
+		newBuchung.setRole(UUID.randomUUID().toString());
+
+		return newBuchung;
+	}
+	
+	protected AdminWriteTO buildAdminWriteTO() {
+		AdminWriteTO newBuchung = new AdminWriteTO();
+
+		newBuchung.setName(UUID.randomUUID().toString());
+		newBuchung.setSurname(UUID.randomUUID().toString());
+		//newBuchung.setOldPassword(UUID.randomUUID().toString());
+		newBuchung.setNewPassword(UUID.randomUUID().toString());
+		newBuchung.setEmail(UUID.randomUUID().toString());
 
 		return newBuchung;
 	}
