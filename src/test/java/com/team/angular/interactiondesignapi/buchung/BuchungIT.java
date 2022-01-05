@@ -55,16 +55,13 @@ public class BuchungIT extends ItBase {
 		
 		beschreibung.add(UUID.randomUUID().toString());
 		
-		erwartungen = buildErwartungen();
-		erwartungen = erwartungenRepository.save(erwartungen);
-		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
-		buchungsklasse = buildBuchungsKlasse(land);
+		buchungsklasse = buildBuchungsKlasse(reiseAngebot);
 		buchungsklasseRepository.save(buchungsklasse);
 		
 		buchung = buildBuchung(reiser);
@@ -172,7 +169,8 @@ public class BuchungIT extends ItBase {
 		.then()
 		.log().body()
 		.statusCode(200);
-			
+	
+		assertThat(buchungRepository.findById(buchung.getId()).isPresent(), is(false));
 	}
 
 }

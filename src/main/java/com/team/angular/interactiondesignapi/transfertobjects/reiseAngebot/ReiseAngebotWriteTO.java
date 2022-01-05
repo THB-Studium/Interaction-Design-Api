@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -43,4 +47,12 @@ public class ReiseAngebotWriteTO {
     private Erwartungen erwartungen;
 
     private UUID landId;
+    
+	private String hinweise;
+	
+	@ElementCollection
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<String> mitReiserBerechtigt;
+
+	private String sonstigeHinweise;
 }

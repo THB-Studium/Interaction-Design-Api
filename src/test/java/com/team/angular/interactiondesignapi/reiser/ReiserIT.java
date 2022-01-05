@@ -55,9 +55,6 @@ public class ReiserIT extends ItBase {
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
-		erwartungen = buildErwartungen();
-		erwartungen = erwartungenRepository.save(erwartungen);
-		
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
@@ -171,7 +168,8 @@ public class ReiserIT extends ItBase {
 		.then()
 		.log().body()
 		.statusCode(200);
-			
+
+		assertThat(reiserRepository.findById(reiser.getId()).isPresent(), is(false));
 	}
 
 }

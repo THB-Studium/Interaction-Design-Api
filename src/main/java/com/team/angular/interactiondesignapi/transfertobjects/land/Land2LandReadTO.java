@@ -18,11 +18,7 @@ public class Land2LandReadTO {
         out.setName(in.getName());
         out.setFlughafen(in.getFlughafen());
         out.setUnterkunft_text(in.getUnterkunft_text());
-        out.setCorona_infos(in.getCorona_infos());
         out.setKarte_bild(in.getKarte_bild());
-        out.setHinweise(in.getHinweise());
-        out.setMitReiserBerechtigt(in.getMitReiserBerechtigt());
-        out.setSonstigeHinweise(in.getSonstigeHinweise());
         
         if(in.getReiseAngebot() != null)
         	out.setReiseAngebot(ReiseAngebot2ReiseAngebotReadTO.apply(in.getReiseAngebot()));

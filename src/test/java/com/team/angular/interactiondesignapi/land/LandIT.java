@@ -62,12 +62,6 @@ public class LandIT extends ItBase {
 		reiser1 = buildReiser();
 		reiser1 = reiserRepository.save(reiser1);
 		
-		erwartungen = buildErwartungen();
-		erwartungen = erwartungenRepository.save(erwartungen);
-		
-		infos_land = buildInfosLand();
-		infos_land = landInfoRepository.save(infos_land);
-		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
@@ -77,7 +71,7 @@ public class LandIT extends ItBase {
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
-		buchungsklasse = buildBuchungsKlasse(land);
+		buchungsklasse = buildBuchungsKlasse(reiseAngebot);
 		buchungsklasseRepository.save(buchungsklasse);
 		
 		land1 = buildLand(reiseAngebot);
@@ -114,10 +108,6 @@ public class LandIT extends ItBase {
 		//assertThat("something12354565".getBytes(), is(land.getKarte_bild()));
 		assertThat(create.getFlughafen(), is(land.getFlughafen()));
 		assertThat(create.getUnterkunft_text(), is(land.getUnterkunft_text()));
-		assertThat(create.getCorona_infos(), is(land.getCorona_infos()));
-		assertThat(create.getHinweise(), is(land.getHinweise()));
-		assertThat(create.getMitReiserBerechtigt(), is(land.getMitReiserBerechtigt()));
-		assertThat(create.getSonstigeHinweise(), is(land.getSonstigeHinweise()));
 		
 		assertThat(create.getReiseAngebotId(), is(reiseAngebot.getId()));
 	}
@@ -164,10 +154,6 @@ public class LandIT extends ItBase {
 		//assertThat("something12354565".getBytes(), is(land_.getKarte_bild()));
 		assertThat(update.getFlughafen(), is(land_.getFlughafen()));
 		assertThat(update.getUnterkunft_text(), is(land_.getUnterkunft_text()));
-		assertThat(update.getCorona_infos(), is(land_.getCorona_infos()));
-		assertThat(update.getHinweise(), is(land_.getHinweise()));
-		assertThat(update.getMitReiserBerechtigt(), is(land_.getMitReiserBerechtigt()));
-		assertThat(update.getSonstigeHinweise(), is(land_.getSonstigeHinweise()));
 		
 		assertThat(update.getReiseAngebotId(), is(reiseAngebot1.getId()));
 	}
@@ -195,10 +181,6 @@ public class LandIT extends ItBase {
 		//assertThat("something12354565".getBytes(), is(land_.getKarte_bild()));
 		assertThat(land.getFlughafen().size(), is(land_.getFlughafen().size()));
 		assertThat(land.getUnterkunft_text(), is(land_.getUnterkunft_text()));
-		assertThat(land.getCorona_infos(), is(land_.getCorona_infos()));
-		assertThat(land.getHinweise(), is(land.getHinweise()));
-		assertThat(land.getMitReiserBerechtigt().size(), is(land_.getMitReiserBerechtigt().size()));
-		assertThat(land.getSonstigeHinweise(), is(land_.getSonstigeHinweise()));
 	}
 	
 	@Test
@@ -212,7 +194,8 @@ public class LandIT extends ItBase {
 		.then()
 		.log().body()
 		.statusCode(200);
-			
+	
+		assertThat(landRepository.findById(land.getId()).isPresent(), is(false));
 	}
 
 }

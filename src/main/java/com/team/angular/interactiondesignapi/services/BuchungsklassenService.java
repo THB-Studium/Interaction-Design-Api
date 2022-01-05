@@ -44,6 +44,8 @@ public class BuchungsklassenService {
             _buchungsklassen.setType(buchungsklassen.getType());
         if (buchungsklassen.getPreis() != 0)
             _buchungsklassen.setPreis(buchungsklassen.getPreis());
+        if (!buchungsklassen.getDescription().isEmpty())
+            _buchungsklassen.setDescription(buchungsklassen.getDescription());
         if (buchungsklassen.getReiseAngebotId() != null) {
             ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(buchungsklassen.getReiseAngebotId())
                     .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + buchungsklassen.getReiseAngebotId()));
@@ -63,7 +65,7 @@ public class BuchungsklassenService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadListTO buchungsklassen) {
+    public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
 
         Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(()
                 -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
@@ -72,6 +74,8 @@ public class BuchungsklassenService {
             _buchungsklassen.setType(buchungsklassen.getType());
         if (buchungsklassen.getPreis() != 0)
             _buchungsklassen.setPreis(buchungsklassen.getPreis());
+        if (!buchungsklassen.getDescription().isEmpty())
+            _buchungsklassen.setDescription(buchungsklassen.getDescription());
 
         buchungsklassenRepository.save(_buchungsklassen);
 

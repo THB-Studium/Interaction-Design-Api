@@ -52,9 +52,6 @@ public class UnterkunftIT extends ItBase {
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
-		erwartungen = buildErwartungen();
-		erwartungen = erwartungenRepository.save(erwartungen);
-		
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
@@ -177,7 +174,8 @@ public class UnterkunftIT extends ItBase {
 		.then()
 		.log().body()
 		.statusCode(200);
-			
+
+		assertThat(unterkunftRepository.findById(unterkunft.getId()).isPresent(), is(false));
 	}
 
 }

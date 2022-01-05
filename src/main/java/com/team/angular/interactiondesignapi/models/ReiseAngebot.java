@@ -8,6 +8,8 @@ import java.util.UUID;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,16 +42,24 @@ public class ReiseAngebot {
     
     private Date anmeldungsFrist;
 
+	private String hinweise;
+	
+	@ElementCollection
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<String> mitReiserBerechtigt;
+
+	private String sonstigeHinweise;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
 
-    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Buchungsklassen> buchungsklassen;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Erwartungen erwartungen;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private Land land;
 
     @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)

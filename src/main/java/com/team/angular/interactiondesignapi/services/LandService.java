@@ -46,11 +46,7 @@ public class LandService {
 		Land newLand = new Land();
 		newLand.setName(land.getName());
 		newLand.setFlughafen(land.getFlughafen());
-		newLand.setCorona_infos(land.getCorona_infos());
 		newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
-		newLand.setHinweise(land.getHinweise());
-		newLand.setMitReiserBerechtigt(land.getMitReiserBerechtigt());
-		newLand.setSonstigeHinweise(land.getSonstigeHinweise());
 		newLand.setReiseAngebot(reiseAngebot);
 
 		return Land2LandReadTO.apply(landRepository.save(newLand));
@@ -77,16 +73,8 @@ public class LandService {
 			newLand.setName(land.getName());
 		if (land.getFlughafen() != null)
 			newLand.setFlughafen(land.getFlughafen());
-		if (land.getCorona_infos() != null)
-			newLand.setCorona_infos(land.getCorona_infos());
 		if (bild != null)
 			newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
-		if (land.getHinweise() != null)
-			newLand.setHinweise(land.getHinweise());
-		if (land.getMitReiserBerechtigt() != null)
-			newLand.setMitReiserBerechtigt(land.getMitReiserBerechtigt());
-		if (land.getSonstigeHinweise() != null)
-			newLand.setSonstigeHinweise(land.getSonstigeHinweise());
 		if(land.getReiseAngebotId() != null)
 		    newLand.setReiseAngebot(reiseAngebot);
 

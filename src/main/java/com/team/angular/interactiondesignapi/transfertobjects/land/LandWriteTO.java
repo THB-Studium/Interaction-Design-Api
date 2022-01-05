@@ -19,20 +19,6 @@ public class LandWriteTO {
 	private List<String> flughafen;
 
 	private String unterkunft_text;
-
-	private String corona_infos; // TODO remove
-
-	private String klima; // TODO remove
-
-	private String gesundheit; // TODO remove
-
-	private String reiseOrdnung; // TODO remove
-
-	private String hinweise; // TODO remove to reiseAngebot
-
-	private List<String> mitReiserBerechtigt; // in reiseAngebot
-
-	private String sonstigeHinweise; // TODO remove to reiseAngebot
 	
 	private UUID reiseAngebotId;
 	
