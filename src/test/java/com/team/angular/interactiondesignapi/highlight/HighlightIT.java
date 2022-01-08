@@ -68,7 +68,7 @@ public class HighlightIT extends ItBase {
     }
 
 	
-	@Test
+	/*@Test
 	public void createHighlight() {
 		
 		highlightWrite1 = buildHighlightWriteTO(land.getId());
@@ -94,7 +94,7 @@ public class HighlightIT extends ItBase {
 		//assertThat(highlightWrite1.getBild(), is(highlight.getBild()));
 		assertThat(highlightWrite1.getLandId(), is(highlight.getLand().getId()));
 		
-	}
+	}*/
 	
 	@Test
 	public void listHighlights() {	

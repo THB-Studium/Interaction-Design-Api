@@ -5,9 +5,7 @@ import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.land.Land2LandReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.land.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +26,8 @@ public class LandService {
     @Autowired
     private ReiseAngebotRepository reiseAngebotRepository;
 
-    public List<LandReadTO> getAll() {
-        return Land2LandReadTO.apply(landRepository.findAll());
+    public List<LandReadListTO> getAll() {
+        return Land2LandReadListTO.apply(landRepository.findAll());
     }
 
     public LandReadTO addLand(LandWriteTO land, MultipartFile bild) {

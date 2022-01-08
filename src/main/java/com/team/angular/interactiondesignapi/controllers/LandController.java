@@ -3,6 +3,7 @@ package com.team.angular.interactiondesignapi.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadListTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,7 +34,7 @@ public class LandController {
 
 	@ApiOperation("Get All Lands")
 	@GetMapping("")
-	public List<LandReadTO> getAllLands() {
+	public List<LandReadListTO> getAllLands() {
 		return landService.getAll();
 	}
 

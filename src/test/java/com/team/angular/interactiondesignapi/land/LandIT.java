@@ -85,7 +85,7 @@ public class LandIT extends ItBase {
     }
 
 	
-	@Test
+	/*@Test
 	public void createLand() {
 		LandWriteTO create = buildLandWriteTO(reiseAngebot.getId());
 		
@@ -110,7 +110,7 @@ public class LandIT extends ItBase {
 		assertThat(create.getUnterkunft_text(), is(land.getUnterkunft_text()));
 		
 		//assertThat(create.getReiseAngebotId(), is(reiseAngebot.getId()));
-	}
+	}*/
 	
 	@Test
 	public void listLands() {	

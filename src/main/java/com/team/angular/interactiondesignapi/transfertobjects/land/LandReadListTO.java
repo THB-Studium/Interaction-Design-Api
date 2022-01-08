@@ -1,24 +1,21 @@
-package com.team.angular.interactiondesignapi.transfertobjects.unterkunft;
+package com.team.angular.interactiondesignapi.transfertobjects.land;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UnterkunftReadListTO {
-
+public class LandReadListTO {
     private UUID id;
 
     private String name;
 
-    private String link;
+    private List<String> flughafen;
 
-    private String adresse;
-
-    private String beschreibung;
-
+    private String unterkunft_text;
 }
