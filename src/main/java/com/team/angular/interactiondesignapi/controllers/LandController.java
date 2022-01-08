@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team.angular.interactiondesignapi.services.LandService;
-import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
 
@@ -34,7 +33,7 @@ public class LandController {
 
 	@ApiOperation("Get All Lands")
 	@GetMapping("")
-	public List<LandReadListTO> getAllLands() {
+	public List<LandReadTO> getAllLands() {
 		return landService.getAll();
 	}
 
@@ -52,6 +51,7 @@ public class LandController {
 		return landService.addLand(land, bild);
 	}
 
+	// todo: @RequestPart(value = "bild", required = false) MultipartFile bild
 	@ApiOperation("Update Land")
 	@PutMapping("")
 	public LandReadTO updateLand(
@@ -62,7 +62,7 @@ public class LandController {
 
 	@ApiOperation("Delete Land")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> daleteLand(@ApiParam(name = "LandId", value = "Id of the Land") @PathVariable UUID id) {
+	public ResponseEntity<?> deleteLand(@ApiParam(name = "LandId", value = "Id of the Land") @PathVariable UUID id) {
 		return landService.deleteLand(id);
 
 	}
