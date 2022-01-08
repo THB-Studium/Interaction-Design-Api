@@ -3,13 +3,7 @@ package com.team.angular.interactiondesignapi.models;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -45,13 +39,13 @@ public class Land {
     @OneToOne(mappedBy = "land",fetch = FetchType.LAZY)
     private ReiseAngebot reiseAngebot;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<LandInfo> landInfo;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Highlight> highlights;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Unterkunft> unterkunft;
 
 }

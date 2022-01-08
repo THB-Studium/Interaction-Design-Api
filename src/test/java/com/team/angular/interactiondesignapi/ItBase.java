@@ -172,7 +172,7 @@ public class ItBase {
 
 		land.setName(UUID.randomUUID().toString());
 		land.setFlughafen(flug);
-		land.setReiseAngebotId(reiseAngebotId);
+		//land.setReiseAngebotId(reiseAngebotId);
 
 		return land;
 	}

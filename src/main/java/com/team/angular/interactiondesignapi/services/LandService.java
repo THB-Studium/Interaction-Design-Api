@@ -40,14 +40,11 @@ public class LandService {
 
 	public LandReadTO addLand(LandWriteTO land, MultipartFile bild) {
 
-		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(land.getReiseAngebotId())
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + land.getReiseAngebotId()));
-
 		Land newLand = new Land();
 		newLand.setName(land.getName());
 		newLand.setFlughafen(land.getFlughafen());
+		newLand.setUnterkunft_text(land.getUnterkunft_text());
 		newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
-		newLand.setReiseAngebot(reiseAngebot);
 
 		return Land2LandReadTO.apply(landRepository.save(newLand));
 
@@ -63,7 +60,7 @@ public class LandService {
 
 	public LandReadTO updateLand(LandWriteTO land, MultipartFile bild) {
 
-		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(land.getReiseAngebotId())
+		/*ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(land.getReiseAngebotId())
 		.orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + land.getReiseAngebotId()));
 
 		Land newLand = landRepository.findById(land.getId())
@@ -78,7 +75,8 @@ public class LandService {
 		if(land.getReiseAngebotId() != null)
 		    newLand.setReiseAngebot(reiseAngebot);
 
-		return Land2LandReadTO.apply(landRepository.save(newLand));
+		return Land2LandReadTO.apply(landRepository.save(newLand));*/
+		return null;
 	}
 
 	public ResponseEntity<?> deleteLand(UUID id) {
