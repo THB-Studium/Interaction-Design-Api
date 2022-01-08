@@ -39,7 +39,7 @@ public class ReiserController {
 
 	@ApiOperation("Get One Reiser")
 	@GetMapping("/{id}")
-	public ReiserReadTO getReiserById(@ApiParam(name = "ReiserId", value = "get One Reiser") @PathVariable UUID id) {
+	public ReiserReadTO getReiserById(@ApiParam(name = "ReiserId", value = "ID of the Reiser") @PathVariable UUID id) {
 		return reiserService.getReiser(id);
 	}
 
@@ -59,7 +59,7 @@ public class ReiserController {
 
 	@ApiOperation("Delete Reiser")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> daleteReiser(
+	public ResponseEntity<?> deleteReiser(
 			@ApiParam(name = "ReiserId", value = "Id of the Reiser") @PathVariable UUID id) {
 		return reiserService.deleteReiser(id);
 

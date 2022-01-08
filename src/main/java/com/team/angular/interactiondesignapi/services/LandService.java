@@ -51,7 +51,6 @@ public class LandService {
     }
 
     public LandReadTO updateLand(LandWriteTO land, MultipartFile bild) {
-
         Land newLand = landRepository.findById(land.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + land.getId()));
 

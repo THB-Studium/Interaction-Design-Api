@@ -41,7 +41,7 @@ public class ReiseAngebotController {
     @ApiOperation("Get One ReiseAngebot")
     @GetMapping("/{id}")
     public ReiseAngebotReadTO getReiseAngebotById(
-            @ApiParam(name = "ReiseAngebotId", value = "get One ReiseAngebot") @PathVariable UUID id) {
+            @ApiParam(name = "ReiseAngebotId", value = "ID of the ReiseAngebot") @PathVariable UUID id) {
         return reiseAngebotService.getReiseAngebot(id);
     }
 
@@ -49,7 +49,7 @@ public class ReiseAngebotController {
     @ApiOperation("Add One ReiseAngebot")
     @PostMapping("")
     public ReiseAngebotReadTO addReiseAngebot(
-            @ApiParam(name = "ReiseAngebot", value = "Transfert Object to add Land: (String titel, byte[] startbild, Date startDatum)") @RequestPart(value = "reiseAngebot")
+            @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestPart(value = "reiseAngebot")
                     ReiseAngebotWriteTO reiseAngebot, @RequestPart(value = "bild") MultipartFile bild) {
         return reiseAngebotService.addReiseAngebot(reiseAngebot, bild);
     }
@@ -58,7 +58,7 @@ public class ReiseAngebotController {
     @PutMapping("")
     public ReiseAngebotReadTO updateReiseAngebot(@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update")
                                            @RequestPart(value = "reiseAngebot") ReiseAngebotUpdateTO reiseAngebot,
-                                           @RequestPart(value = "bild") MultipartFile bild) {
+                                           @RequestPart(required = false, value = "bild") MultipartFile bild) {
         return reiseAngebotService.updateReiseAngebot(reiseAngebot, bild);
     }
 

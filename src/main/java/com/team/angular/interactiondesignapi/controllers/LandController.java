@@ -39,24 +39,23 @@ public class LandController {
 
 	@ApiOperation("Get One Land")
 	@GetMapping("/{id}")
-	public LandReadTO getLandById(@ApiParam(name = "LandId", value = "get One Land") @PathVariable UUID id) {
+	public LandReadTO getLandById(@ApiParam(name = "LandId", value = "ID of the Land") @PathVariable UUID id) {
 		return landService.getLand(id);
 	}
 
 	@ApiOperation("Add One Land")
 	@PostMapping("")
 	public LandReadTO addLand(
-			@ApiParam(name = "Land", value = "Transfert Object to add Land: (String name, List flughafen, String unterkunft_text, String corona_infos, String klima, String gesundheit, String reiseOrdnung, String hinweise, List mitReiserBerechtigt, String sonstigeHinweise, UUID reiseAngebotId)") @RequestPart(value = "land") LandWriteTO land,
+			@ApiParam(name = "Land", value = "Land to add") @RequestPart(value = "land") LandWriteTO land,
 			@RequestPart(value = "bild") MultipartFile bild) {
 		return landService.addLand(land, bild);
 	}
 
-	// todo: @RequestPart(value = "bild", required = false) MultipartFile bild
 	@ApiOperation("Update Land")
 	@PutMapping("")
 	public LandReadTO updateLand(
-			@ApiParam(name = "Land", value = "Transfert Object to update Land: (String name, List flughafen, String unterkunft_text, String corona_infos, String klima, String gesundheit, String reiseOrdnung, String hinweise, List mitReiserBerechtigt, String sonstigeHinweise, UUID reiseAngebotId)") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild") MultipartFile bild) {
+			@ApiParam(name = "Land", value = "Land to update") @RequestPart(value = "land") LandWriteTO land,
+			@RequestPart(required = false, value = "bild") MultipartFile bild) {
 		return landService.updateLand(land, bild);
 	}
 

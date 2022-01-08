@@ -29,14 +29,14 @@ public class HighlightController {
     @ApiOperation("Get One Highlight")
     @GetMapping("/{id}")
     public HighlightReadWriteTO getHighlightById(
-            @ApiParam(name = "HighlightId", value = "get One Highlight") @PathVariable UUID id) {
+            @ApiParam(name = "HighlightId", value = "ID of the Highlight") @PathVariable UUID id) {
         return highlightService.getHighlight(id);
     }
 
     @ApiOperation("Add One Highlight")
     @PostMapping("")
     public HighlightReadWriteTO addHighlight(
-            @ApiParam(name = "Highlight", value = "TO to add Highlight: (String name, String description, byte[] bild, UUID landId)") @RequestPart(value = "highlight")
+            @ApiParam(name = "Highlight", value = "Highlight to add") @RequestPart(value = "highlight")
                     HighlightReadWriteTO highlight, @RequestPart(value = "files") MultipartFile bild) {
         return highlightService.addHighlight(highlight, bild);
     }
@@ -44,8 +44,8 @@ public class HighlightController {
     @ApiOperation("Update Highlight")
     @PutMapping("")
     public HighlightReadWriteTO updateHighlight(
-            @ApiParam(name = "Highlight", value = "TO to update Highlight: (UUID id, String name, String description, byte[] bild, UUID landId)") @RequestPart(value = "highlight")
-                    HighlightReadListTO highlight, @RequestPart(value = "files") MultipartFile bild) {
+            @ApiParam(name = "Highlight", value = "Highlight to update") @RequestPart(value = "highlight")
+                    HighlightReadListTO highlight, @RequestPart(required = false, value = "files") MultipartFile bild) {
         return highlightService.updateHighlight(highlight, bild);
     }
 

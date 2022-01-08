@@ -41,7 +41,7 @@ public class BuchungController {
 	@ApiOperation("Get One Buchung")
 	@GetMapping("/{id}")
 	public BuchungReadTO getBuchungById(
-			@ApiParam(name = "BuchungId", value = "get One Buchung") @PathVariable UUID id) {
+			@ApiParam(name = "BuchungId", value = "ID f the Buchung") @PathVariable UUID id) {
 		return buchungService.getBuchung(id);
 	}
 

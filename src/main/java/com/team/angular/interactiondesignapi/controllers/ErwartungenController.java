@@ -38,7 +38,7 @@ public class ErwartungenController {
     @ApiOperation("Get One Erwartungen")
     @GetMapping("/{id}")
     public ErwartungenReadWriteTO getErwartungenById(
-            @ApiParam(name = "ErwartungenId", value = "get One Erwartungen") @PathVariable UUID id) {
+            @ApiParam(name = "ErwartungenId", value = "ID of the Erwartungen") @PathVariable UUID id) {
         return erwartungenService.getErwartungen(id);
     }
 
