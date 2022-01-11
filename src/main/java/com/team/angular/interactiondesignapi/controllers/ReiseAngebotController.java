@@ -50,7 +50,7 @@ public class ReiseAngebotController {
     @PostMapping("")
     public ReiseAngebotReadTO addReiseAngebot(
             @ApiParam(name = "ReiseAngebot", value = "Transfert Object to add Land: (String titel, byte[] startbild, Date startDatum)") @RequestPart(value = "reiseAngebot")
-                    ReiseAngebotWriteTO reiseAngebot, @RequestPart(value = "bild") MultipartFile bild) {
+                    ReiseAngebotWriteTO reiseAngebot, @RequestPart(value = "bild", required = false) MultipartFile bild) {
         return reiseAngebotService.addReiseAngebot(reiseAngebot, bild);
     }
 
@@ -58,7 +58,7 @@ public class ReiseAngebotController {
     @PutMapping("")
     public ReiseAngebotReadTO updateReiseAngebot(@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update")
                                            @RequestPart(value = "reiseAngebot") ReiseAngebotUpdateTO reiseAngebot,
-                                           @RequestPart(value = "bild") MultipartFile bild) {
+                                           @RequestPart(value = "bild", required = false) MultipartFile bild) {
         return reiseAngebotService.updateReiseAngebot(reiseAngebot, bild);
     }
 

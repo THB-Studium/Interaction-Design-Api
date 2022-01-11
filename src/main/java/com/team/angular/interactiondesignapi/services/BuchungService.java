@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
 import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadTO;
@@ -38,6 +40,9 @@ public class BuchungService {
 	private ReiserRepository reiserRepository;
 	
 	@Autowired
+	private ReiseAngebotRepository reiseAngebotRepository;
+	
+	@Autowired
 	private ReiserService reiserService;
 
 	private static final Logger log = LoggerFactory.getLogger(BuchungService.class);
@@ -54,6 +59,9 @@ public class BuchungService {
 		Reiser reiser = ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getReiser()));
 		
 		Reiser mitReiser = ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getMitReiser()));
+		
+		ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
+				() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
 			
 		Buchung newBuchung = new Buchung();
 		newBuchung.setDatum(buchung.getDatum());
@@ -64,6 +72,7 @@ public class BuchungService {
 		newBuchung.setKoffer(buchung.getKoffer());
 		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
 		newBuchung.setReiser(reiser);
+		newBuchung.setReiseAngebot(ra);
 
 		return Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
 
@@ -82,6 +91,7 @@ public class BuchungService {
 		Buchungsklassen tarif = null;
 		Reiser reiser = null;
 		Reiser mitReiser = null;
+		ReiseAngebot ra = null;
 
 		Buchung actual = buchungRepository.findById(buchung.getId())
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + buchung.getId()));
@@ -114,8 +124,11 @@ public class BuchungService {
 			actual.setKoffer(buchung.getKoffer());
 		if(buchung.getZahlungMethod() != null)
 			actual.setZahlungMethod(buchung.getZahlungMethod());
-		//if(buchung.getReiseAngebot() != null)
-			//actual.setReiseAngebot(reiseAngebot);
+		if(buchung.getReiseAngebotId() != null) {
+			ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
+					() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
+			actual.setReiseAngebot(ra);
+		}
 
 		return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
 	}

@@ -64,10 +64,10 @@ public class BuchungIT extends ItBase {
 		buchungsklasse = buildBuchungsKlasse(reiseAngebot);
 		buchungsklasseRepository.save(buchungsklasse);
 		
-		buchung = buildBuchung(reiser);
+		buchung = buildBuchung(reiser, reiseAngebot);
 		buchung = buchungRepository.save(buchung);
 		
-		buchung1 = buildBuchung(reiser1);
+		buchung1 = buildBuchung(reiser1, reiseAngebot);
 		buchung1 = buchungRepository.save(buchung1);
 		
 	}
@@ -80,7 +80,7 @@ public class BuchungIT extends ItBase {
 	
 	@Test
 	public void createBuchung() {
-		BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), land.getId());
+		BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), land.getId(), reiseAngebot.getId());
 		
 		UUID id = UUID.fromString(
 				given()
@@ -96,8 +96,9 @@ public class BuchungIT extends ItBase {
 		Buchung buchung = buchungRepository.findById(id).get();
 		
 		assertThat(create.getDatum(), is(buchung.getDatum()));
-		//assertThat(create.getMitReiser().getId(), is(buchung.getMitReiserId()));
-
+		assertThat(create.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
+		assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
+		assertThat(create.getFlugAhfen(), is(buchung.getFlugAhfen()));
 	}
 	
 	@Test
@@ -118,7 +119,7 @@ public class BuchungIT extends ItBase {
 	@Test
 	public void updateBuchung() {
 		
-		BuchungWriteTO update = buildBuchungWriteTO( buchungsklasse.getId(), land.getId());
+		BuchungWriteTO update = buildBuchungWriteTO( buchungsklasse.getId(), land.getId(), reiseAngebot.getId());
 		update.setId(buchung.getId());
 		
 		UUID id = UUID.fromString(
@@ -134,8 +135,10 @@ public class BuchungIT extends ItBase {
 		
 		Buchung buchung = buchungRepository.findById(id).get();
 		
-		assertThat(update.getId(), is(buchung.getId()));
-		assertThat(update.getDatum(), is(buchung.getDatum()));		
+		assertThat(update.getDatum(), is(buchung.getDatum()));
+		assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
+		assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
+		assertThat(update.getFlugAhfen(), is(buchung.getFlugAhfen()));	
 	}
 	
 	@Test

@@ -48,7 +48,7 @@ public class LandController {
 	@PostMapping("")
 	public LandReadTO addLand(
 			@ApiParam(name = "Land", value = "Transfert Object to add Land: (String name, List flughafen, String unterkunft_text, String corona_infos, String klima, String gesundheit, String reiseOrdnung, String hinweise, List mitReiserBerechtigt, String sonstigeHinweise, UUID reiseAngebotId)") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild") MultipartFile bild) {
+			@RequestPart(value = "bild", required = false) MultipartFile bild) {
 		return landService.addLand(land, bild);
 	}
 
@@ -56,7 +56,7 @@ public class LandController {
 	@PutMapping("")
 	public LandReadTO updateLand(
 			@ApiParam(name = "Land", value = "Transfert Object to update Land: (String name, List flughafen, String unterkunft_text, String corona_infos, String klima, String gesundheit, String reiseOrdnung, String hinweise, List mitReiserBerechtigt, String sonstigeHinweise, UUID reiseAngebotId)") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild") MultipartFile bild) {
+			@RequestPart(value = "bild", required = false) MultipartFile bild) {
 		return landService.updateLand(land, bild);
 	}
 

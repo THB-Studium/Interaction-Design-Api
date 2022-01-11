@@ -31,7 +31,5 @@ public class BuchungReadTO {
 	private ZahlungMethod zahlungMethod;
 
 	private UUID reiserId;
-
-	private UUID landId;
 	
 }

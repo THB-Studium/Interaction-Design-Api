@@ -49,7 +49,7 @@ public class UnterkunftController {
 	@PostMapping("")
 	public UnterkunftReadTO addUnterkunft(
 			@ApiParam(name = "Unterkunft", value = "TO to add Unterkunft: (String name, String link, String adresse, String beschreibung, UUID landId)") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
-			@RequestPart(value = "files") List<MultipartFile> files) {
+			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
 		return unterkunftService.addUnterkunft(unterkunft, files);
 	}
 
@@ -57,7 +57,7 @@ public class UnterkunftController {
 	@PutMapping("")
 	public UnterkunftReadTO updateUnterkunft(
 			@ApiParam(name = "Unterkunft", value = "TO to update Unterkunft: (String name, String link, String adresse, String beschreibung, UUID landId)\"") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
-			@RequestPart(value = "files") List<MultipartFile> files) {
+			@RequestPart(value = "files", required = false) List<MultipartFile> files) {
 		return unterkunftService.updateUnterkunft(unterkunft, files);
 	}
 
