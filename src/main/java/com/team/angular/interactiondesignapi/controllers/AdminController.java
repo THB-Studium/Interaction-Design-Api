@@ -38,7 +38,7 @@ public class AdminController {
 
     @ApiOperation("Get One Admin")
     @GetMapping("/{id}")
-    public AdminOutTO getAdminById(@ApiParam(name = "AdminId", value = "get One Admin") @PathVariable UUID id) {
+    public AdminOutTO getAdminById(@ApiParam(name = "AdminId", value = "ID of the Admin") @PathVariable UUID id) {
         return adminService.getAdmin(id);
     }
 

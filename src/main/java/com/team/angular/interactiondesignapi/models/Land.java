@@ -3,18 +3,12 @@ package com.team.angular.interactiondesignapi.models;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,13 +39,16 @@ public class Land {
     @OneToOne(mappedBy = "land",fetch = FetchType.LAZY)
     private ReiseAngebot reiseAngebot;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<LandInfo> landInfo;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Highlight> highlights;
 
-	@OneToMany(mappedBy = "land", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "land", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Unterkunft> unterkunft;
 
 }

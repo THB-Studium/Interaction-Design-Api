@@ -3,6 +3,7 @@ package com.team.angular.interactiondesignapi.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadListTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team.angular.interactiondesignapi.services.LandService;
-import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
 
@@ -40,29 +40,29 @@ public class LandController {
 
 	@ApiOperation("Get One Land")
 	@GetMapping("/{id}")
-	public LandReadTO getLandById(@ApiParam(name = "LandId", value = "get One Land") @PathVariable UUID id) {
+	public LandReadTO getLandById(@ApiParam(name = "LandId", value = "ID of the Land") @PathVariable UUID id) {
 		return landService.getLand(id);
 	}
 
 	@ApiOperation("Add One Land")
 	@PostMapping("")
 	public LandReadTO addLand(
-			@ApiParam(name = "Land", value = "Transfert Object to add Land: (String name, List flughafen, String unterkunft_text, String corona_infos, String klima, String gesundheit, String reiseOrdnung, String hinweise, List mitReiserBerechtigt, String sonstigeHinweise, UUID reiseAngebotId)") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild", required = false) MultipartFile bild) {
+			@ApiParam(name = "Land", value = "Land to add") @RequestPart(value = "land") LandWriteTO land,
+			@RequestPart(value = "bild") MultipartFile bild) {
 		return landService.addLand(land, bild);
 	}
 
 	@ApiOperation("Update Land")
 	@PutMapping("")
 	public LandReadTO updateLand(
-			@ApiParam(name = "Land", value = "Transfert Object to update Land: (String name, List flughafen, String unterkunft_text, String corona_infos, String klima, String gesundheit, String reiseOrdnung, String hinweise, List mitReiserBerechtigt, String sonstigeHinweise, UUID reiseAngebotId)") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild", required = false) MultipartFile bild) {
+			@ApiParam(name = "Land", value = "Land to update") @RequestPart(value = "land") LandWriteTO land,
+			@RequestPart(required = false, value = "bild") MultipartFile bild) {
 		return landService.updateLand(land, bild);
 	}
 
 	@ApiOperation("Delete Land")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> daleteLand(@ApiParam(name = "LandId", value = "Id of the Land") @PathVariable UUID id) {
+	public ResponseEntity<?> deleteLand(@ApiParam(name = "LandId", value = "Id of the Land") @PathVariable UUID id) {
 		return landService.deleteLand(id);
 
 	}

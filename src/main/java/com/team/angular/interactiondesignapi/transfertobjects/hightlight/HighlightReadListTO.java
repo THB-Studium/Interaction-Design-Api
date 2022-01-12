@@ -13,5 +13,4 @@ public class HighlightReadListTO {
     private UUID id;
     private String name;
     private String description;
-    private byte[] bild;
 }

@@ -7,7 +7,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
@@ -24,8 +28,12 @@ public class Buchungsklassen {
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	private UUID id;
 
+	// todo: replace "type" by "name"
+	@NotNull
 	private String type;
 
+	@NotNull
+	@Positive
 	private double preis;
 
 	private String description;

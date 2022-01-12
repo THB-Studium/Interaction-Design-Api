@@ -28,7 +28,7 @@ public class LandInfoController {
     @ApiOperation("Get One LandInfo")
     @GetMapping("/{id}")
     public LandInfoReadWriteTO getLandInfoById(
-            @ApiParam(name = "LandInfoId", value = "get One LandInfo") @PathVariable UUID id) {
+            @ApiParam(name = "LandInfoId", value = "ID of the LandInfo") @PathVariable UUID id) {
         return landInfoService.getLandInfo(id);
     }
 

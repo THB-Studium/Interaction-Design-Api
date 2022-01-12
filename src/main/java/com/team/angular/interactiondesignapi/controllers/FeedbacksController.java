@@ -39,7 +39,7 @@ public class FeedbacksController {
 
 	@ApiOperation("Get One Feedback")
 	@GetMapping("/{id}")
-	public Feedback getFeedbackById(@ApiParam(name = "FeedbackId", value = "get One Feedback") @PathVariable UUID id) {
+	public Feedback getFeedbackById(@ApiParam(name = "FeedbackId", value = "ID of the Feedback") @PathVariable UUID id) {
 		return feedbackService.getFeedback(id);
 	}
 
@@ -47,7 +47,7 @@ public class FeedbacksController {
 	@PostMapping("")
 	public Feedback addFeedback(
 			@ApiParam(name = "Feedback", value = "Feedback to add") @RequestPart(value = "feedback") FeedbackReadListTO feedback,
-			@RequestPart(value = "bild") MultipartFile bild) {
+			@RequestPart(required = false, value = "bild") MultipartFile bild) {
 		return feedbackService.addFeedback(feedback, bild);
 	}
 
@@ -55,7 +55,7 @@ public class FeedbacksController {
 	@PutMapping("")
 	public Feedback updateFeedback(
 			@ApiParam(name = "Feedback", value = "Feedback to update") @RequestPart Feedback feedback,
-			@RequestPart(value = "bild") MultipartFile bild) {
+			@RequestPart(required = false, value = "bild") MultipartFile bild) {
 		return feedbackService.updateFeedback(feedback, bild);
 	}
 

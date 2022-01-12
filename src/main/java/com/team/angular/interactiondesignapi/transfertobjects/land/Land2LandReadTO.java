@@ -1,13 +1,13 @@
 package com.team.angular.interactiondesignapi.transfertobjects.land;
 
+import com.team.angular.interactiondesignapi.models.Land;
+import com.team.angular.interactiondesignapi.transfertobjects.hightlight.Highlight2HighlightReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfo2LandInfoReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadListTO;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.transfertobjects.hightlight.Highlight2HighlightReadWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfo2LandInfoReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebot2ReiseAngebotReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadListTO;
 
 public class Land2LandReadTO {
 
@@ -19,15 +19,9 @@ public class Land2LandReadTO {
         out.setFlughafen(in.getFlughafen());
         out.setUnterkunft_text(in.getUnterkunft_text());
         out.setKarte_bild(in.getKarte_bild());
-        
-        if(in.getReiseAngebot() != null)
-        	out.setReiseAngebot(ReiseAngebot2ReiseAngebotReadTO.apply(in.getReiseAngebot()));
-        if (in.getLandInfo() != null)
-            out.setInfosLands(LandInfo2LandInfoReadListTO.apply(in.getLandInfo()));
-        if (in.getHighlights() != null)
-            out.setHighlights(Highlight2HighlightReadWriteTO.apply(in.getHighlights()));
-        if (in.getUnterkunft() != null)
-            out.setUnterkunft(Unterkunft2UnterkunftReadListTO.apply(in.getUnterkunft()));
+        out.setLandInfo(LandInfo2LandInfoReadListTO.apply(in.getLandInfo()));
+        out.setHighlights(Highlight2HighlightReadListTO.apply(in.getHighlights()));
+        out.setUnterkunft(Unterkunft2UnterkunftReadListTO.apply(in.getUnterkunft()));
 
         return out;
     }
