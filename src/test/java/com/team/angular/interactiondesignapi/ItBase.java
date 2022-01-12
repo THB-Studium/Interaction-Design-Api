@@ -211,7 +211,7 @@ public class ItBase {
 		return reiser;
 	}
 
-	protected Buchung buildBuchung(Reiser reiser) {
+	protected Buchung buildBuchung(Reiser reiser, ReiseAngebot ra) {
 		Buchung newBuchung = new Buchung();
 
 		newBuchung.setDatum(new Date());
@@ -221,11 +221,12 @@ public class ItBase {
 		newBuchung.setKoffer(UUID.randomUUID().toString());
 		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
 		newBuchung.setReiser(reiser);
+		newBuchung.setReiseAngebot(ra);
 
 		return newBuchung;
 	}
 
-	protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID landId) {
+	protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID landId, UUID raId) {
 		BuchungWriteTO newBuchung = new BuchungWriteTO();
 
 		newBuchung.setDatum(new Date());
@@ -236,6 +237,7 @@ public class ItBase {
 		newBuchung.setKoffer(UUID.randomUUID().toString());
 		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
 		newBuchung.setReiser(buildReiserWriteTO());
+		newBuchung.setReiseAngebotId(raId);
 
 		return newBuchung;
 	}

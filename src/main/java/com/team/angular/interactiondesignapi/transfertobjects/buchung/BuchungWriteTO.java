@@ -32,5 +32,7 @@ public class BuchungWriteTO {
 	private ZahlungMethod zahlungMethod;
 	
 	private ReiserWriteTO reiser;
+	
+	private UUID reiseAngebotId;
 
 }

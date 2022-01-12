@@ -58,10 +58,10 @@ public class ReiserIT extends ItBase {
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
-		buchung = buildBuchung(reiser1);
+		buchung = buildBuchung(reiser1, reiseAngebot);
 		buchung = buchungRepository.save(buchung);
 		
-		buchung1 = buildBuchung(reiser1);
+		buchung1 = buildBuchung(reiser1, reiseAngebot);
 		buchung1 = buchungRepository.save(buchung1);
 		
 		reiserWrite1 = buildReiserWriteTO();
