@@ -13,6 +13,9 @@ spring:
     url: jdbc:postgresql://localhost/interaction-design
     username: postgres_1
     password: postgresQL
+    
+    hikari:
+      auto-commit: false
 
   jpa:
     show-sql: false
@@ -24,6 +27,7 @@ spring:
             non_contextual_creation: true
 
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  
 
     hibernate:
       # Hibernate ddl auto (create, create-drop, validate, update)
