@@ -42,7 +42,7 @@ public class Buchung {
     private UUID buchungsklasseId;
 
     @NotBlank
-    private String flugAhfen;
+    private String flugHafen;
 
     private String handGepaeck;
 

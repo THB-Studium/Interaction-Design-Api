@@ -22,7 +22,7 @@ public class BuchungUpdateTO {
 
 	private UUID buchungsklasseId;
 
-	private String flugAhfen;
+	private String flugHafen;
 
 	private String handGepaeck;
 
