@@ -19,6 +19,8 @@ public class Buchung2BuchungReadListTO {
 		out.setKoffer(in.getKoffer());
 		out.setZahlungMethod(in.getZahlungMethod());
 		out.setReiserId(in.getReiser().getId());
+		if(in.getReiseAngebot() != null)
+			out.setReiseAngebotId(in.getReiseAngebot().getId());
 
 		return out;
 	}

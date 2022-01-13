@@ -32,6 +32,6 @@ public class BuchungReadListTO {
 
 	private UUID reiserId;
 
-	private UUID landId;
+	private UUID reiseAngebotId;
 
 }
