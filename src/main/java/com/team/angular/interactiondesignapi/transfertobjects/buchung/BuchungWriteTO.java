@@ -23,7 +23,7 @@ public class BuchungWriteTO {
 
 	private UUID buchungsklasseId;
 
-	private String flugAhfen;
+	private String flugHafen;
 
 	private String handGepaeck;
 

@@ -67,7 +67,7 @@ public class BuchungService {
 		newBuchung.setDatum(buchung.getDatum());
 		newBuchung.setMitReiserId(mitReiser.getId());
 		newBuchung.setBuchungsklasseId(tarif.getId());
-		newBuchung.setFlugAhfen(buchung.getFlugAhfen());
+		newBuchung.setFlugHafen(buchung.getFlugHafen());
 		newBuchung.setHandGepaeck(buchung.getHandGepaeck());
 		newBuchung.setKoffer(buchung.getKoffer());
 		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
@@ -116,8 +116,8 @@ public class BuchungService {
 		
 		if(buchung.getDatum() != null)
 			actual.setDatum(buchung.getDatum());
-		if(buchung.getFlugAhfen() != null)
-			actual.setFlugAhfen(buchung.getFlugAhfen());
+		if(buchung.getFlugHafen() != null)
+			actual.setFlugHafen(buchung.getFlugHafen());
 		if(buchung.getHandGepaeck() != null)
 			actual.setHandGepaeck(buchung.getHandGepaeck());
 		if(buchung.getKoffer() != null)
