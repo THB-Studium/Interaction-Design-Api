@@ -34,7 +34,7 @@ public class LandService {
 
         Land newLand = new Land();
         newLand.setName(land.getName());
-        newLand.setFlughafen(land.getFlughafen());
+        newLand.setFlugHafen(land.getFlugHafen());
         newLand.setUnterkunft_text(land.getUnterkunft_text());
         newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
 
@@ -54,8 +54,8 @@ public class LandService {
 
         if (land.getName() != null)
             newLand.setName(land.getName());
-        if (land.getFlughafen() != null)
-            newLand.setFlughafen(land.getFlughafen());
+        if (land.getFlugHafen() != null)
+            newLand.setFlugHafen(land.getFlugHafen());
         if (land.getUnterkunft_text() != null)
             newLand.setUnterkunft_text(land.getUnterkunft_text());
         if (bild != null)

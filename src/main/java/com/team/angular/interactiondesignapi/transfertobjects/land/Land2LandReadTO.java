@@ -16,7 +16,7 @@ public class Land2LandReadTO {
 
         out.setId(in.getId());
         out.setName(in.getName());
-        out.setFlughafen(in.getFlughafen());
+        out.setFlugHafen(in.getFlugHafen());
         out.setUnterkunft_text(in.getUnterkunft_text());
         out.setKarte_bild(in.getKarte_bild());
         out.setLandInfo(LandInfo2LandInfoReadListTO.apply(in.getLandInfo()));

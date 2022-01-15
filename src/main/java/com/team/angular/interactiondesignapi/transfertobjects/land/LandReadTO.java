@@ -19,7 +19,7 @@ public class LandReadTO {
 
     private String name;
 
-    private List<String> flughafen;
+    private List<String> flugHafen;
 
     private String unterkunft_text;
 

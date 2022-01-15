@@ -14,7 +14,7 @@ public class Land2LandReadListTO {
 
         out.setId(in.getId());
         out.setName(in.getName());
-        out.setFlughafen(in.getFlughafen());
+        out.setFlugHafen(in.getFlugHafen());
         out.setUnterkunft_text(in.getUnterkunft_text());
 
         return out;

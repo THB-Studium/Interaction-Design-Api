@@ -22,7 +22,7 @@ public class BuchungReadTO {
 
 	private UUID tarifId;
 
-	private String flugAhfen;
+	private String flugHafen;
 
 	private String handGepaeck;
 
