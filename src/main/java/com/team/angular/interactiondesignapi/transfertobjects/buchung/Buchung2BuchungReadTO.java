@@ -2,6 +2,7 @@ package com.team.angular.interactiondesignapi.transfertobjects.buchung;
 
 import com.team.angular.interactiondesignapi.models.Buchung;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,8 +25,8 @@ public class Buchung2BuchungReadTO {
         return out;
     }
 
-    public static Set<BuchungReadTO> apply(Set<Buchung> buchungs) {
-        return buchungs.stream().map(u -> apply(u)).collect(Collectors.toSet());
+    public static List<BuchungReadTO> apply(List<Buchung> buchungs) {
+        return buchungs.stream().map(u -> apply(u)).collect(Collectors.toList());
     }
 
 }
