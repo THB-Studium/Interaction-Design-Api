@@ -1,37 +1,38 @@
 package com.team.angular.interactiondesignapi.transfertobjects.buchung;
 
-import java.util.Date;
-import java.util.UUID;
-
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BuchungReadListTO {
 
-	private UUID id;
+    // todo: i think we don't need it; we need only BuchungReadTO
 
-	private Date datum;
+    private UUID id;
 
-	private UUID mitReiserId;
+    private Date datum;
 
-    private UUID buchungsKlasseId;;
+    private UUID mitReiserId;
 
-	private String flugHafen;
+    private UUID buchungsklasseId;
 
-	private String handGepaeck;
+    private String flugHafen;
 
-	private String koffer;
+    private String handGepaeck;
 
-	private ZahlungMethod zahlungMethod;
+    private String koffer;
 
-	private UUID reiserId;
+    private ZahlungMethod zahlungMethod;
 
-	private UUID reiseAngebotId;
+    private UUID reiserId;
+
+    private UUID reiseAngebotId;
 
 }
