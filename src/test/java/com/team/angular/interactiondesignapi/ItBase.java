@@ -156,7 +156,7 @@ public class ItBase {
 		Land land = new Land();
 
 		land.setName(UUID.randomUUID().toString());
-		land.setFlughafen(flug);
+		land.setFlugHafen(flug);
 		land.setKarte_bild(UUID.randomUUID().toString().getBytes());
 		land.setReiseAngebot(reiseAngebot);
 
@@ -171,7 +171,7 @@ public class ItBase {
 		flug.add(UUID.randomUUID().toString());
 
 		land.setName(UUID.randomUUID().toString());
-		land.setFlughafen(flug);
+		land.setFlugHafen(flug);
 		//land.setReiseAngebotId(reiseAngebotId);
 
 		return land;
