@@ -66,6 +66,10 @@ public class BuchungService {
         newBuchung.setReiser(reiser);
         newBuchung.setReiseAngebot(ra);
 
+        //update freiPlaetze after a new Buchung
+        ra.setFreiPlaetze(ra.getPlaetze()-1);
+        reiseAngebotRepository.save(ra);
+
         return Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
 
     }

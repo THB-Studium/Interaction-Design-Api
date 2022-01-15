@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
@@ -34,6 +36,8 @@ public class ReiseAngebot {
 
     private Date endDatum;
 
+    @NotNull
+    @Positive
     private int plaetze;
 
     private int freiPlaetze;
