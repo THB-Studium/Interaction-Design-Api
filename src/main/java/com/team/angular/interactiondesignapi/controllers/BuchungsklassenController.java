@@ -35,7 +35,7 @@ public class BuchungsklassenController {
     @ApiOperation("Add One Buchungsklassen")
     @PostMapping("")
     public BuchungsklassenReadWriteTO addBuchungsklassen(
-            @ApiParam(name = "Buchungsklassen", value = "Buchungsklassen to add") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) {
+            @ApiParam(name = "Buchungsklassen", value = "Buchungsklassen to add") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
         return buchungsklassenService.addBuchungsklassen(buchungsklassen);
     }
 

@@ -37,11 +37,15 @@ public class BuchungsklassenService {
         return Buchungsklassen2BuchungsklassenReadListTO.apply(buchungsklassenRepository.findAll());
     }
 
-    public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
+    public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
         Buchungsklassen _buchungsklassen = new Buchungsklassen();
 
-        if (buchungsklassen.getType() != null)
+        if (!buchungsklassenRepository.existsBuchungsklassenByType(buchungsklassen.getType())) {
             _buchungsklassen.setType(buchungsklassen.getType());
+        } else {
+            throw new Exception(buchungsklassen.getType() + " already exists");
+        }
+
         if (buchungsklassen.getPreis() != 0)
             _buchungsklassen.setPreis(buchungsklassen.getPreis());
         if (!buchungsklassen.getDescription().isEmpty())
