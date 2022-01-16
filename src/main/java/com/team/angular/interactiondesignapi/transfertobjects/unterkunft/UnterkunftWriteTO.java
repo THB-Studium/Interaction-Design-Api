@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi.transfertobjects.unterkunft;
 
+import java.util.List;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ public class UnterkunftWriteTO {
 	private String addresse;
 
 	private String beschreibung;
+	
+	private List<String> startbild;
 
 	private UUID landId;
 

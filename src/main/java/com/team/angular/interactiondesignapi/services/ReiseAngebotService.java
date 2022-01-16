@@ -10,6 +10,8 @@ import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.*;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +45,13 @@ public class ReiseAngebotService {
         return ReiseAngebot2ReiseAngebotReadListTO.apply(reiseAngebotRepository.findAll());
     }
 
-    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot, MultipartFile bild) {
+    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot) {
         ReiseAngebot _reiseAngebot = new ReiseAngebot();
 
         if (reiseAngebot.getTitel() != null)
             _reiseAngebot.setTitel(reiseAngebot.getTitel());
-        if (bild != null)
-            _reiseAngebot.setStartbild(Helper.convertMultiPartFileToByte(bild));
+        if (reiseAngebot.getStartbild() != null)
+            _reiseAngebot.setStartbild(Base64.decodeBase64(reiseAngebot.getStartbild().substring(22)));
         if (reiseAngebot.getStartDatum() != null)
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)
@@ -116,14 +118,14 @@ public class ReiseAngebotService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotUpdateTO reiseAngebot, MultipartFile bild) {
+    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotUpdateTO reiseAngebot) {
         ReiseAngebot _reiseAngebot = reiseAngebotRepository.findById(reiseAngebot.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + reiseAngebot.getId()));
 
         if (reiseAngebot.getTitel() != null)
             _reiseAngebot.setTitel(reiseAngebot.getTitel());
-        if (bild != null)
-            _reiseAngebot.setStartbild(Helper.convertMultiPartFileToByte(bild));
+        if (reiseAngebot.getStartbild() != null)
+            _reiseAngebot.setStartbild(Base64.decodeBase64(reiseAngebot.getStartbild().substring(22)));
         if (reiseAngebot.getStartDatum() != null)
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)

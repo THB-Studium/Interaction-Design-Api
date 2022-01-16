@@ -24,6 +24,8 @@ public class ReiseAngebotUpdateTO {
     private String titel;
 
     private Date startDatum;
+    
+    private String startbild;
 
     private Date endDatum;
 

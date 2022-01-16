@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 public class Highlight2HighlightReadWriteTO {
 
-    public static HighlightReadWriteTO apply(Highlight in) {
-        HighlightReadWriteTO out = new HighlightReadWriteTO();
+    public static HighlightReadReadTO apply(Highlight in) {
+    	HighlightReadReadTO out = new HighlightReadReadTO();
         out.setId(in.getId());
         out.setName(in.getName());
         out.setDescription(in.getDescription());
@@ -19,7 +19,7 @@ public class Highlight2HighlightReadWriteTO {
         return out;
     }
 
-    public static List<HighlightReadWriteTO> apply(List<Highlight> highlights) {
+    public static List<HighlightReadReadTO> apply(List<Highlight> highlights) {
         return highlights.stream().map(highlight -> apply(highlight)).collect(Collectors.toList());
     }
 

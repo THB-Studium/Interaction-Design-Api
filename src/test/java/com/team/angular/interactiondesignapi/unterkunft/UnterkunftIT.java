@@ -79,10 +79,10 @@ public class UnterkunftIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("unterkunft", unterkunftWrite1,"application/json")
-				.multiPart("files", "something123".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+//				.multiPart("unterkunft", unterkunftWrite1,"application/json")
+//				.multiPart("files", "something123".getBytes())
+				.body(unterkunftWrite1)
 				.log().body()
 				.post("/unterkunfte")
 				.then()
@@ -120,10 +120,10 @@ public class UnterkunftIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("unterkunft", unterkunftWrite1,"application/json")
-				.multiPart("files", "something123".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+//				.multiPart("unterkunft", unterkunftWrite1,"application/json")
+//				.multiPart("files", "something123".getBytes())
+				.body(unterkunftWrite1)
 				.log().body()
 				.put("/unterkunfte")
 				.then()
