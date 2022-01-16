@@ -20,7 +20,6 @@ public class LandInfo {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @NotNull
     @NotBlank
     private String titel;
     @Lob

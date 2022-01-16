@@ -39,7 +39,7 @@ public class UnterkunftController {
     @PostMapping("")
     public UnterkunftReadTO addUnterkunft(
             @ApiParam(name = "Unterkunft", value = "Unterkunft to add") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
-            @RequestPart(value = "files") List<MultipartFile> files) {
+            @RequestPart(value = "files") List<MultipartFile> files) throws Exception {
         return unterkunftService.addUnterkunft(unterkunft, files);
     }
 
@@ -47,7 +47,7 @@ public class UnterkunftController {
     @PutMapping("")
     public UnterkunftReadTO updateUnterkunft(
             @ApiParam(name = "Unterkunft", value = "Unterkunft to update") @RequestPart(value = "unterkunft") UnterkunftWriteTO unterkunft,
-            @RequestPart(required = false, value = "files") List<MultipartFile> files) {
+            @RequestPart(required = false, value = "files") List<MultipartFile> files) throws Exception {
         return unterkunftService.updateUnterkunft(unterkunft, files);
     }
 
