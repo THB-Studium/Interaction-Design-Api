@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface HighlightRepository extends JpaRepository<Highlight, UUID> {
+    Boolean existsHighlightByName(String name);
 }

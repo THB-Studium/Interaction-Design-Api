@@ -221,7 +221,7 @@ public class ItBase {
 
 		newBuchung.setDatum(new Date());
 		newBuchung.setMitReiserId(UUID.randomUUID());
-		newBuchung.setFlugHafen(UUID.randomUUID().toString());
+		newBuchung.setFlughafen(UUID.randomUUID().toString());
 		newBuchung.setHandGepaeck(UUID.randomUUID().toString());
 		newBuchung.setKoffer(UUID.randomUUID().toString());
 		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
@@ -237,7 +237,7 @@ public class ItBase {
 		newBuchung.setDatum(new Date());
 		newBuchung.setBuchungsklasseId(buchungsklasseId);
 		newBuchung.setMitReiser(buildReiserWriteTO());
-		newBuchung.setFlugHafen(UUID.randomUUID().toString());
+		newBuchung.setFlughafen(UUID.randomUUID().toString());
 		newBuchung.setHandGepaeck(UUID.randomUUID().toString());
 		newBuchung.setKoffer(UUID.randomUUID().toString());
 		newBuchung.setZahlungMethod(ZahlungMethod.Einmal);

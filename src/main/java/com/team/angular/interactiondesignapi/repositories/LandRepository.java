@@ -1,13 +1,12 @@
 package com.team.angular.interactiondesignapi.repositories;
 
-import java.util.UUID;
-
+import com.team.angular.interactiondesignapi.models.Land;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.team.angular.interactiondesignapi.models.Land;
+import java.util.UUID;
 
 @Repository
 public interface LandRepository extends JpaRepository<Land, UUID> {
-
+    Boolean existsLandByName(String name);
 }

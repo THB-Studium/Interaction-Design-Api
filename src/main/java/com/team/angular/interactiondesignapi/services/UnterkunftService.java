@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.models.Land;
+import com.team.angular.interactiondesignapi.models.Unterkunft;
+import com.team.angular.interactiondesignapi.repositories.LandRepository;
+import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +22,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
-import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.Unterkunft;
-import com.team.angular.interactiondesignapi.repositories.LandRepository;
-import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UnterkunftService {
@@ -130,5 +132,90 @@ public class UnterkunftService {
 
 		return convertedFile;
 	}
+
+    public UnterkunftReadTO addUnterkunft(UnterkunftWriteTO unterkunft, List<MultipartFile> files) throws Exception {
+
+        List<byte[]> bilder = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
+        }
+
+        Unterkunft newUnterkunft = new Unterkunft();
+
+        if (!unterkunftRepository.existsUnterkunftByName(unterkunft.getName())) {
+            newUnterkunft.setName(unterkunft.getName());
+        } else {
+            throw new Exception(unterkunft.getName() + " already exists");
+        }
+
+        newUnterkunft.setLink(unterkunft.getLink());
+        newUnterkunft.setAddresse(unterkunft.getAddresse());
+        newUnterkunft.setBeschreibung(unterkunft.getBeschreibung());
+        newUnterkunft.setBilder(bilder);
+        if (unterkunft.getLandId() != null) {
+            Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(()
+                    -> new ResourceNotFoundException("Cannot find Land with id: " + unterkunft.getLandId()));
+            newUnterkunft.setLand(land);
+        }
+
+        return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(newUnterkunft));
+    }
+
+    public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft, List<MultipartFile> files) throws Exception {
+
+        Unterkunft actual_unterkunft = unterkunftRepository.findById(unterkunft.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
+
+        List<byte[]> bilder = new ArrayList<>();
+
+        if (files != null) {
+            if (files.size() > 0) {
+                for (MultipartFile file : files) {
+                    bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
+                }
+                actual_unterkunft.setBilder(bilder);
+            }
+        }
+
+        Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(()
+                -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
+
+        //Land land = null;
+        if (unterkunft.getLandId() != null)
+            land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
+                    () -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
+        actual_unterkunft.setLand(land);
+
+        if (unterkunft.getName() != null) {
+            if (!unterkunftRepository.existsUnterkunftByName(unterkunft.getName())) {
+                actual_unterkunft.setName(unterkunft.getName());
+            } else {
+                throw new Exception(unterkunft.getName() + " already exists");
+            }
+        }
+
+        if (unterkunft.getLink() != null)
+            actual_unterkunft.setLink(unterkunft.getLink());
+        if (unterkunft.getAddresse() != null)
+            actual_unterkunft.setAddresse(unterkunft.getAddresse());
+        if (unterkunft.getBeschreibung() != null)
+            actual_unterkunft.setBeschreibung(unterkunft.getBeschreibung());
+
+        return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(actual_unterkunft));
+    }
+
+    
+
+    private File convertMultiPartFileToFile(MultipartFile file) {
+        File convertedFile = new File(file.getOriginalFilename());
+        try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
+            fos.write(file.getBytes());
+        } catch (IOException e) {
+            log.error("Failed to convert the MultipartFile to a File");
+        }
+
+        return convertedFile;
+    }
 
 }

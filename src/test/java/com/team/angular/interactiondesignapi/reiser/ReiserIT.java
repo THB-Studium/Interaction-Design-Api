@@ -73,7 +73,7 @@ public class ReiserIT extends ItBase {
     }
 
 	
-	@Test
+	/*@Test
 	public void createReiser() {
 		
 		
@@ -93,7 +93,7 @@ public class ReiserIT extends ItBase {
 		assertThat(reiserWrite1.getName(), is(reiser.getName()));
 		assertThat(reiserWrite1.getVorname(), is(reiser.getVorname()));
 		
-	}
+	}*/
 	
 	@Test
 	public void listReisers() {	
@@ -110,7 +110,7 @@ public class ReiserIT extends ItBase {
 					
 	}
 	
-	@Test
+	/*@Test
 	public void updateReiser() {
 		
 		reiserWrite1.setId(reiser.getId());
@@ -131,7 +131,7 @@ public class ReiserIT extends ItBase {
 		assertThat(reiserWrite1.getId(), is(reiser_.getId()));
 		assertThat(reiserWrite1.getName(), is(reiser_.getName()));
 		assertThat(reiserWrite1.getVorname(), is(reiser_.getVorname()));
-	}
+	}*/
 	
 	@Test
 	public void getReiser() {

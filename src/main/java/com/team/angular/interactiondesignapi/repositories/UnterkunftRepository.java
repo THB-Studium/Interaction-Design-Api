@@ -9,5 +9,5 @@ import com.team.angular.interactiondesignapi.models.Unterkunft;
 
 @Repository
 public interface UnterkunftRepository extends JpaRepository<Unterkunft, UUID> {
-
+    Boolean existsUnterkunftByName(String name);
 }

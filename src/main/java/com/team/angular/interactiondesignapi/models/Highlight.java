@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
@@ -18,9 +20,12 @@ public class Highlight {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
+    @NotBlank
     private String name;
+
     @Lob
     private String description;
+
     private byte[] bild;
 
     @ManyToOne(fetch = FetchType.LAZY)

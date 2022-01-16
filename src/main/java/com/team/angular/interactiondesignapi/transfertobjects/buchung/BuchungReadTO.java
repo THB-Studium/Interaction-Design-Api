@@ -20,9 +20,9 @@ public class BuchungReadTO {
 
 	private UUID mitReiserId;
 
-	private UUID tarifId;
+	private UUID buchungsklasseId;
 
-	private String flugAhfen;
+	private String flughafen;
 
 	private String handGepaeck;
 
@@ -31,5 +31,7 @@ public class BuchungReadTO {
 	private ZahlungMethod zahlungMethod;
 
 	private UUID reiserId;
+
+	private UUID reiseAngebotId;
 	
 }

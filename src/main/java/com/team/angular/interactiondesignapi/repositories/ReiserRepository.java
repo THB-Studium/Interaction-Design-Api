@@ -9,5 +9,5 @@ import com.team.angular.interactiondesignapi.models.Reiser;
 
 @Repository
 public interface ReiserRepository extends JpaRepository<Reiser, UUID> {
-
+    Boolean existsReiserByTelefonnummer(long telefonnummer);
 }

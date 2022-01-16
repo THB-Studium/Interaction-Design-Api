@@ -38,10 +38,15 @@ public class LandInfoService {
         return LandInfo2LandInfoReadListTO.apply(landInfoRepository.findAll());
     }
 
-    public LandInfoReadWriteTO addLandInfo(LandInfoReadWriteTO landInfo) {
+    public LandInfoReadWriteTO addLandInfo(LandInfoReadWriteTO landInfo) throws Exception {
         LandInfo _landInfo = new LandInfo();
-        if (landInfo.getTitel() != null)
+
+        if (!landInfoRepository.existsLandInfoByTitel(landInfo.getTitel())) {
             _landInfo.setTitel(landInfo.getTitel());
+        } else {
+            throw new Exception(landInfo.getTitel() + " already exists");
+        }
+
         if (landInfo.getDescription() != null)
             _landInfo.setDescription(landInfo.getDescription());
         if (landInfo.getLandId() != null)
@@ -65,13 +70,18 @@ public class LandInfoService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public LandInfoReadListTO updateLandInfo(LandInfoReadListTO landInfo) {
+    public LandInfoReadListTO updateLandInfo(LandInfoReadListTO landInfo) throws Exception {
         LandInfo _landInfo = landInfoRepository.findById(landInfo.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Update Error: Cannot find LandInfo with id: " + landInfo.getId()));
 
-        if (landInfo.getTitel() != null)
-            _landInfo.setTitel(landInfo.getTitel());
+        if (landInfo.getTitel() != null) {
+            if (!landInfoRepository.existsLandInfoByTitel(landInfo.getTitel())) {
+                _landInfo.setTitel(landInfo.getTitel());
+            } else {
+                throw new Exception(landInfo.getTitel() + " already exists");
+            }
+        }
         if (landInfo.getDescription() != null)
             _landInfo.setDescription(landInfo.getDescription());
 

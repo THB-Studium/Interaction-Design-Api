@@ -35,14 +35,14 @@ public class LandInfoController {
     @ApiOperation("Add One LandInfo")
     @PostMapping("")
     public LandInfoReadWriteTO addLandInfo(
-            @ApiParam(name = "LandInfo", value = "LandInfo to add") @RequestBody LandInfoReadWriteTO landInfo) {
+            @ApiParam(name = "LandInfo", value = "LandInfo to add") @RequestBody LandInfoReadWriteTO landInfo) throws Exception {
         return landInfoService.addLandInfo(landInfo);
     }
 
     @ApiOperation("Update LandInfo")
     @PutMapping("")
     public LandInfoReadListTO updateLandInfo(@ApiParam(name = "LandInfo", value = "LandInfo to update")
-                                          @RequestBody LandInfoReadListTO landInfo) {
+                                          @RequestBody LandInfoReadListTO landInfo) throws Exception {
         return landInfoService.updateLandInfo(landInfo);
     }
 

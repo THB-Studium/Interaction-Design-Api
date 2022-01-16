@@ -46,7 +46,7 @@ public class HighlightController {
 	@ApiOperation("Add One Highlight")
 	@PostMapping("")
 	public HighlightReadReadTO addHighlight(
-			@ApiParam(name = "Highlight", value = "Highlight to add") @RequestBody HighlightReadWriteTO highlight) {
+			@ApiParam(name = "Highlight", value = "Highlight to add") @RequestBody HighlightReadWriteTO highlight) throws Exception {
 		return highlightService.addHighlight(highlight);
 	}
 

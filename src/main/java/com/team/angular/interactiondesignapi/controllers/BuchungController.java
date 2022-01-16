@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi.controllers;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,7 +35,7 @@ public class BuchungController {
 
 	@ApiOperation("Get All Buchungs")
 	@GetMapping("")
-	public Set<BuchungReadListTO> getAllBuchungs() {
+	public List<BuchungReadTO> getAllBuchungs() {
 		return buchungService.getAll();
 	}
 
@@ -48,7 +49,7 @@ public class BuchungController {
 	@ApiOperation("Add One Buchung")
 	@PostMapping("")
 	public BuchungReadTO addBuchung(
-			@ApiParam(name = "Buchung", value = "Buchung to add") @RequestBody BuchungWriteTO buchung) {
+			@ApiParam(name = "Buchung", value = "Buchung to add") @RequestBody BuchungWriteTO buchung) throws Exception {
 		return buchungService.addBuchung(buchung);
 	}
 

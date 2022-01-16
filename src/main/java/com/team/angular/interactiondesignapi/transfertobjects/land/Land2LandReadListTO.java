@@ -1,9 +1,6 @@
 package com.team.angular.interactiondesignapi.transfertobjects.land;
 
 import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.transfertobjects.hightlight.Highlight2HighlightReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfo2LandInfoReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadListTO;
 
 import java.util.List;
 import java.util.stream.Collectors;

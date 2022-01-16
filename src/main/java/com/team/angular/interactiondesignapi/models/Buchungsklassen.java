@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -28,8 +29,7 @@ public class Buchungsklassen {
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	private UUID id;
 
-	// todo: replace "type" by "name"
-	@NotNull
+	@NotBlank
 	private String type;
 
 	@NotNull

@@ -45,13 +45,20 @@ public class ReiseAngebotService {
         return ReiseAngebot2ReiseAngebotReadListTO.apply(reiseAngebotRepository.findAll());
     }
 
-    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot) {
+    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot) throws Exception{
         ReiseAngebot _reiseAngebot = new ReiseAngebot();
 
-        if (reiseAngebot.getTitel() != null)
-            _reiseAngebot.setTitel(reiseAngebot.getTitel());
-        if (reiseAngebot.getStartbild() != null)
+        if (!reiseAngebotRepository.existsReiseAngebotByTitel(reiseAngebot.getTitel())) {
+            _reiseAngebot.setTitel(reiseAngebot.getTitel());}
+         else {
+            throw new Exception(reiseAngebot.getTitel() + " already exists");
+        }
+
+        if (reiseAngebot.getStartbild() != null){
             _reiseAngebot.setStartbild(Base64.decodeBase64(reiseAngebot.getStartbild().substring(22)));
+        }
+
+       
         if (reiseAngebot.getStartDatum() != null)
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)
@@ -67,11 +74,11 @@ public class ReiseAngebotService {
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setLeistungen(reiseAngebot.getLeistungen());
         if (reiseAngebot.getLeistungen() != null)
-        	_reiseAngebot.setHinweise(reiseAngebot.getHinweise());
+            _reiseAngebot.setHinweise(reiseAngebot.getHinweise());
         if (reiseAngebot.getLeistungen() != null)
-        	_reiseAngebot.setMitReiserBerechtigt(reiseAngebot.getMitReiserBerechtigt());
+            _reiseAngebot.setMitReiserBerechtigt(reiseAngebot.getMitReiserBerechtigt());
         if (reiseAngebot.getLeistungen() != null)
-        	_reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
+            _reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
         // Save Buchungsklassen
         if (reiseAngebot.getBuchungsklassen() != null) {
@@ -98,7 +105,7 @@ public class ReiseAngebotService {
         // Buchungsklassen Update with ID of ReiseAngebot
         if (reiseAngebot.getBuchungsklassen() != null) {
             List<Buchungsklassen> Buchungsklassenlist = reiseAngebot.getBuchungsklassen();
-            for (Buchungsklassen element :Buchungsklassenlist ){
+            for (Buchungsklassen element : Buchungsklassenlist) {
                 element.setReiseAngebot(savedReiseAngebot);
                 buchungsklassenRepository.save(element);
             }
@@ -118,14 +125,24 @@ public class ReiseAngebotService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotUpdateTO reiseAngebot) {
+    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotUpdateTO reiseAngebot) throws Exception{
         ReiseAngebot _reiseAngebot = reiseAngebotRepository.findById(reiseAngebot.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + reiseAngebot.getId()));
 
-        if (reiseAngebot.getTitel() != null)
-            _reiseAngebot.setTitel(reiseAngebot.getTitel());
+        
         if (reiseAngebot.getStartbild() != null)
             _reiseAngebot.setStartbild(Base64.decodeBase64(reiseAngebot.getStartbild().substring(22)));
+    
+
+        if (reiseAngebot.getTitel() != null) {
+            if (!reiseAngebotRepository.existsReiseAngebotByTitel(reiseAngebot.getTitel())) {
+                _reiseAngebot.setTitel(reiseAngebot.getTitel());
+            } else {
+                throw new Exception(reiseAngebot.getTitel() + " already exists");
+            }
+        }
+
+        
         if (reiseAngebot.getStartDatum() != null)
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)
@@ -141,15 +158,33 @@ public class ReiseAngebotService {
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setLeistungen(reiseAngebot.getLeistungen());
         if (reiseAngebot.getLeistungen() != null)
-        	_reiseAngebot.setHinweise(reiseAngebot.getHinweise());
+            _reiseAngebot.setHinweise(reiseAngebot.getHinweise());
         if (reiseAngebot.getLeistungen() != null)
-        	_reiseAngebot.setMitReiserBerechtigt(reiseAngebot.getMitReiserBerechtigt());
+            _reiseAngebot.setMitReiserBerechtigt(reiseAngebot.getMitReiserBerechtigt());
         if (reiseAngebot.getLeistungen() != null)
-        	_reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
+            _reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
         reiseAngebotRepository.save(_reiseAngebot);
 
         return ReiseAngebot2ReiseAngebotReadTO.apply(_reiseAngebot);
+    }
+
+    public ResponseEntity<?> addInteressiert(UUID id) {
+        ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
+
+        reiseAngebot.setInteressiert(reiseAngebot.getInteressiert() + 1);
+        reiseAngebotRepository.save(reiseAngebot);
+        return new ResponseEntity<>("Successfully added", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> resetInteressiert(UUID id) {
+        ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
+
+        reiseAngebot.setInteressiert(0);
+        reiseAngebotRepository.save(reiseAngebot);
+        return new ResponseEntity<>("Successfully reset", HttpStatus.OK);
     }
 
 }

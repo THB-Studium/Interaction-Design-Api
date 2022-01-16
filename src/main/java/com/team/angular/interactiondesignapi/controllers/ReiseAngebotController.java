@@ -20,9 +20,15 @@ import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.Reise
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
-
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/reiseAngebot")
@@ -48,14 +54,14 @@ public class ReiseAngebotController {
 	@ApiOperation("Add One ReiseAngebot")
 	@PostMapping("")
 	public ReiseAngebotReadTO addReiseAngebot(
-			@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestBody ReiseAngebotWriteTO reiseAngebot) {
+			@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestBody ReiseAngebotWriteTO reiseAngebot) throws Exception {
 		return reiseAngebotService.addReiseAngebot(reiseAngebot);
 	}
 
 	@ApiOperation("Update ReiseAngebot")
 	@PutMapping("")
 	public ReiseAngebotReadTO updateReiseAngebot(
-			@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update") @RequestBody ReiseAngebotUpdateTO reiseAngebot) {
+			@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update") @RequestBody ReiseAngebotUpdateTO reiseAngebot) throws Exception {
 		return reiseAngebotService.updateReiseAngebot(reiseAngebot);
 	}
 
@@ -65,5 +71,19 @@ public class ReiseAngebotController {
 			@ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
 		return reiseAngebotService.deleteReiseAngebot(id);
 	}
+
+    @ApiOperation("Add Interessiert")
+    @PostMapping("/addInteressiert/{id}")
+    public ResponseEntity<?> addInteressiert(
+            @ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
+        return reiseAngebotService.addInteressiert(id);
+    }
+
+    @ApiOperation("Reset Interessiert")
+    @PostMapping("/resetInteressiert/{id}")
+    public ResponseEntity<?> resetInteressiert(
+            @ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
+        return reiseAngebotService.resetInteressiert(id);
+    }
 
 }

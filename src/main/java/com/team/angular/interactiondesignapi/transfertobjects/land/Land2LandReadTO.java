@@ -18,12 +18,12 @@ public class Land2LandReadTO {
         out.setFlughafen(in.getFlughafen());
         out.setUnterkunft_text(in.getUnterkunft_text());
         out.setKarte_bild(in.getKarte_bild());
-        if(in.getLandInfo() != null)
-        	out.setLandInfo(LandInfo2LandInfoReadListTO.apply(in.getLandInfo()));
-        if(in.getHighlights() != null)
-        	out.setHighlights(Highlight2HighlightReadListTO.apply(in.getHighlights()));
-        if(in.getUnterkunft() != null)
-        	out.setUnterkunft(Unterkunft2UnterkunftReadListTO.apply(in.getUnterkunft()));
+        if (in.getLandInfo() != null)
+            out.setLandInfo(LandInfo2LandInfoReadListTO.apply(in.getLandInfo()));
+        if (in.getHighlights() != null)
+            out.setHighlights(Highlight2HighlightReadListTO.apply(in.getHighlights()));
+        if (in.getUnterkunft() != null)
+            out.setUnterkunft(Unterkunft2UnterkunftReadListTO.apply(in.getUnterkunft()));
 
         return out;
     }
