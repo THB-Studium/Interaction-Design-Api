@@ -49,7 +49,7 @@ public class BuchungController {
 	@ApiOperation("Add One Buchung")
 	@PostMapping("")
 	public BuchungReadTO addBuchung(
-			@ApiParam(name = "Buchung", value = "Buchung to add") @RequestBody BuchungWriteTO buchung) {
+			@ApiParam(name = "Buchung", value = "Buchung to add") @RequestBody BuchungWriteTO buchung) throws Exception {
 		return buchungService.addBuchung(buchung);
 	}
 

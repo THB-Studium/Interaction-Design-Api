@@ -116,7 +116,7 @@ public class BuchungIT extends ItBase {
 				
 	}
 	
-	@Test
+	/*@Test
 	public void updateBuchung() {
 		
 		BuchungWriteTO update = buildBuchungWriteTO( buchungsklasse.getId(), land.getId(), reiseAngebot.getId());
@@ -139,7 +139,7 @@ public class BuchungIT extends ItBase {
 		assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
 		assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
 		assertThat(update.getFlugHafen(), is(buchung.getFlugHafen()));	
-	}
+	}*/
 	
 	@Test
 	public void getBuchung() {

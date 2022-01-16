@@ -43,21 +43,25 @@ public class BuchungService {
         return Buchung2BuchungReadTO.apply(buchungRepository.findAll());
     }
 
-    public BuchungReadTO addBuchung(BuchungWriteTO buchung) {
+    public BuchungReadTO addBuchung(BuchungWriteTO buchung) throws Exception {
 
         Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId()).orElseThrow
                 (() -> new ResourceNotFoundException("Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
 
+        // todo: pourquoi convertir d'abord?
         Reiser reiser = ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getReiser()));
+        //Reiser reiser = buchung.getReiser();
 
-        Reiser mitReiser = ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getMitReiser()));
+        //Reiser mitReiser = ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getMitReiser()));
 
         ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
 
         Buchung newBuchung = new Buchung();
         newBuchung.setDatum(buchung.getDatum());
-        newBuchung.setMitReiserId(mitReiser.getId());
+        if (buchung.getMitReiser() != null) {
+            newBuchung.setMitReiserId(buchung.getMitReiser().getId());
+        }
         newBuchung.setBuchungsklasseId(tarif.getId());
         newBuchung.setFlugHafen(buchung.getFlugHafen());
         newBuchung.setHandGepaeck(buchung.getHandGepaeck());
@@ -67,8 +71,13 @@ public class BuchungService {
         newBuchung.setReiseAngebot(ra);
 
         //update freiPlaetze after a new Buchung
-        ra.setFreiPlaetze(ra.getPlaetze()-1);
-        reiseAngebotRepository.save(ra);
+        if(ra.getFreiPlaetze() >0){
+            ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
+            reiseAngebotRepository.save(ra);
+        }else{
+            throw new Exception("The trip is fully booked");
+        }
+
 
         return Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
 
@@ -129,6 +138,7 @@ public class BuchungService {
         return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
     }
 
+    //todo update increment freiplatze
     public ResponseEntity<?> deleteBuchung(UUID id) {
         Buchung actual = buchungRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
