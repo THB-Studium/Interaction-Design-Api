@@ -48,7 +48,6 @@ public class BuchungService {
         Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId()).orElseThrow
                 (() -> new ResourceNotFoundException("Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
 
-        // todo: pourquoi convertir d'abord?
         Reiser reiser = ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getReiser()));
         //Reiser reiser = buchung.getReiser();
 
@@ -70,11 +69,11 @@ public class BuchungService {
         newBuchung.setReiser(reiser);
         newBuchung.setReiseAngebot(ra);
 
-        //update freiPlaetze after a new Buchung
-        if(ra.getFreiPlaetze() >0){
+        //update freiPlaetze after adding a new Buchung
+        if (ra.getFreiPlaetze() > 0) {
             ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
             reiseAngebotRepository.save(ra);
-        }else{
+        } else {
             throw new Exception("The trip is fully booked");
         }
 
@@ -138,12 +137,17 @@ public class BuchungService {
         return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
     }
 
-    //todo update increment freiplatze
     public ResponseEntity<?> deleteBuchung(UUID id) {
-        Buchung actual = buchungRepository.findById(id)
+        Buchung buchung = buchungRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
 
-        buchungRepository.deleteById(actual.getId());
+        buchungRepository.deleteById(buchung.getId());
+
+        //update freiPlaetze after deleting a new Buchung
+        ReiseAngebot ra = buchung.getReiseAngebot();
+        ra.setFreiPlaetze(buchung.getReiseAngebot().getFreiPlaetze() + 1);
+        reiseAngebotRepository.save(ra);
+
         log.info("successfully deleted");
 
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);

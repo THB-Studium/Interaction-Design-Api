@@ -48,6 +48,7 @@ public class Buchung {
     private Reiser reiser;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
     private ReiseAngebot reiseAngebot;
 
 }
