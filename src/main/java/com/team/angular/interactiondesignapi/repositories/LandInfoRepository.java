@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface LandInfoRepository extends JpaRepository<LandInfo, UUID> {
+    Boolean existsLandInfoByTitel(String titel);
 }

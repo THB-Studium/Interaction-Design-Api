@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +20,8 @@ public class LandInfo {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
+    @NotNull
+    @NotBlank
     private String titel;
     @Lob
     private String description;
