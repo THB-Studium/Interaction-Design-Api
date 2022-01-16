@@ -75,11 +75,14 @@ public class HighlightService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Update Error: Cannot find Highlight with id: " + highlight.getId()));
 
-        if (!highlightRepository.existsHighlightByName(highlight.getName())) {
-            _highlight.setName(highlight.getName());
-        } else {
-            throw new Exception(highlight.getName() + " already exists");
+        if (highlight.getName() != null){
+            if (!highlightRepository.existsHighlightByName(highlight.getName())) {
+                _highlight.setName(highlight.getName());
+            } else {
+                throw new Exception(highlight.getName() + " already exists");
+            }
         }
+
         if (highlight.getDescription() != null)
             _highlight.setDescription(highlight.getDescription());
         if (bild != null)

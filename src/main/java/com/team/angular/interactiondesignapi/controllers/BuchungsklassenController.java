@@ -42,7 +42,7 @@ public class BuchungsklassenController {
     @ApiOperation("Update Buchungsklassen")
     @PutMapping("")
     public BuchungsklassenReadListTO updateBuchungsklassen(@ApiParam(name = "Buchungsklassen", value =
-            "Buchungsklassen to update") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) {
+            "Buchungsklassen to update") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
         return buchungsklassenService.updateBuchungsklassen(buchungsklassen);
     }
 

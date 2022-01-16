@@ -69,14 +69,20 @@ public class BuchungsklassenService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    // todo: check if exist
-    public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
+    public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
 
         Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(()
                 -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
 
-        if (buchungsklassen.getType() != null)
-            _buchungsklassen.setType(buchungsklassen.getType());
+        if (buchungsklassen.getType() != null) {
+            if (!buchungsklassenRepository.existsBuchungsklassenByType(buchungsklassen.getType())) {
+                _buchungsklassen.setType(buchungsklassen.getType());
+            } else {
+                throw new Exception(buchungsklassen.getType() + " already exists");
+            }
+        }
+
+
         if (buchungsklassen.getPreis() != 0)
             _buchungsklassen.setPreis(buchungsklassen.getPreis());
         if (!buchungsklassen.getDescription().isEmpty())
