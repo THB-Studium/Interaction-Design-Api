@@ -39,10 +39,15 @@ public class HighlightService {
         return Highlight2HighlightReadListTO.apply(highlightRepository.findAll());
     }
 
-    public HighlightReadWriteTO addHighlight(HighlightReadWriteTO highlight, MultipartFile bild) {
+    public HighlightReadWriteTO addHighlight(HighlightReadWriteTO highlight, MultipartFile bild) throws Exception {
         Highlight _highlight = new Highlight();
-        if (highlight.getName() != null)
+
+        if (!highlightRepository.existsHighlightByName(highlight.getName())) {
             _highlight.setName(highlight.getName());
+        } else {
+            throw new Exception(highlight.getName() + " already exists");
+        }
+
         if (highlight.getDescription() != null)
             _highlight.setDescription(highlight.getDescription());
         if (bild != null)
@@ -65,13 +70,16 @@ public class HighlightService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public HighlightReadWriteTO updateHighlight(HighlightReadListTO highlight, MultipartFile bild) {
+    public HighlightReadWriteTO updateHighlight(HighlightReadListTO highlight, MultipartFile bild) throws Exception {
         Highlight _highlight = highlightRepository.findById(highlight.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Update Error: Cannot find Highlight with id: " + highlight.getId()));
 
-        if (highlight.getName() != null)
+        if (!highlightRepository.existsHighlightByName(highlight.getName())) {
             _highlight.setName(highlight.getName());
+        } else {
+            throw new Exception(highlight.getName() + " already exists");
+        }
         if (highlight.getDescription() != null)
             _highlight.setDescription(highlight.getDescription());
         if (bild != null)

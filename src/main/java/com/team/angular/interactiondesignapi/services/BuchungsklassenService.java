@@ -69,6 +69,7 @@ public class BuchungsklassenService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
+    // todo: check if exist
     public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
 
         Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(()

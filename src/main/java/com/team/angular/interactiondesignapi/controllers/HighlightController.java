@@ -37,7 +37,7 @@ public class HighlightController {
     @PostMapping("")
     public HighlightReadWriteTO addHighlight(
             @ApiParam(name = "Highlight", value = "Highlight to add") @RequestPart(value = "highlight")
-                    HighlightReadWriteTO highlight, @RequestPart(value = "bild") MultipartFile bild) {
+                    HighlightReadWriteTO highlight, @RequestPart(value = "bild") MultipartFile bild) throws Exception {
         return highlightService.addHighlight(highlight, bild);
     }
 
@@ -45,7 +45,7 @@ public class HighlightController {
     @PutMapping("")
     public HighlightReadWriteTO updateHighlight(
             @ApiParam(name = "Highlight", value = "Highlight to update") @RequestPart(value = "highlight")
-                    HighlightReadListTO highlight, @RequestPart(required = false, value = "bild") MultipartFile bild) {
+                    HighlightReadListTO highlight, @RequestPart(required = false, value = "bild") MultipartFile bild) throws Exception {
         return highlightService.updateHighlight(highlight, bild);
     }
 
