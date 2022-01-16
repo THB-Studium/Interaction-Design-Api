@@ -46,14 +46,14 @@ public class ReiserController {
 	@ApiOperation("Add One Reiser")
 	@PostMapping("")
 	public ReiserReadTO addReiser(
-			@ApiParam(name = "Reiser", value = "Reiser to add") @RequestBody ReiserWriteTO reiser) {
+			@ApiParam(name = "Reiser", value = "Reiser to add") @RequestBody ReiserWriteTO reiser) throws Exception {
 		return reiserService.addReiser(reiser);
 	}
 
 	@ApiOperation("Update Reiser")
 	@PutMapping("")
 	public ReiserReadTO updateReiser(
-			@ApiParam(name = "Reiser", value = "Reiser to update") @RequestBody ReiserWriteTO reiser) {
+			@ApiParam(name = "Reiser", value = "Reiser to update") @RequestBody ReiserWriteTO reiser) throws Exception {
 		return reiserService.updateReiser(reiser);
 	}
 

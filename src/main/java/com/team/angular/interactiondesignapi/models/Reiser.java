@@ -1,21 +1,17 @@
 package com.team.angular.interactiondesignapi.models;
 
-import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.util.Date;
+import java.util.Set;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -23,36 +19,39 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Reiser {
 
-	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
-	private UUID id;
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID id;
 
-	@NotBlank
-	private String name;
+    @NotBlank
+    private String name;
 
-	@NotBlank
-	private String vorname;
+    @NotBlank
+    private String vorname;
 
-	private Date geburtsdatum;
+    @NotNull
+    private Date geburtsdatum;
 
-	private long telefonnummer;
+    @NotNull
+    @Positive
+    private long telefonnummer;
 
-	@NotBlank
-	private String email;
+    @NotBlank
+    private String email;
 
-	private String hochschule;
+    private String hochschule;
 
-	@NotBlank
-	private String adresse;
+    @NotBlank
+    private String adresse;
 
-	private String studiengang;
+    private String studiengang;
 
-	private String arbeitBei;
+    private String arbeitBei;
 
-	private boolean schonTeilgenommen;
+    private boolean schonTeilgenommen;
 
-	@OneToMany(mappedBy = "reiser", fetch = FetchType.EAGER)
-	private Set<Buchung> buchungen;
+    @OneToMany(mappedBy = "reiser", fetch = FetchType.EAGER)
+    private Set<Buchung> buchungen;
 
 }
