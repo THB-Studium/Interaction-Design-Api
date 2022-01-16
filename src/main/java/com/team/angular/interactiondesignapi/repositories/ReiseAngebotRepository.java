@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface ReiseAngebotRepository extends JpaRepository<ReiseAngebot, UUID> {
+    Boolean existsReiseAngebotByTitel(String titel);
 }

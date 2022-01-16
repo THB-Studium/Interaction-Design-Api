@@ -43,11 +43,15 @@ public class ReiseAngebotService {
         return ReiseAngebot2ReiseAngebotReadListTO.apply(reiseAngebotRepository.findAll());
     }
 
-    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot, MultipartFile bild) {
+    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot, MultipartFile bild) throws Exception {
         ReiseAngebot _reiseAngebot = new ReiseAngebot();
 
-        if (reiseAngebot.getTitel() != null)
+        if (!reiseAngebotRepository.existsReiseAngebotByTitel(reiseAngebot.getTitel())) {
             _reiseAngebot.setTitel(reiseAngebot.getTitel());
+        } else {
+            throw new Exception(reiseAngebot.getTitel() + " already exists");
+        }
+
         if (bild != null)
             _reiseAngebot.setStartbild(Helper.convertMultiPartFileToByte(bild));
         if (reiseAngebot.getStartDatum() != null)
@@ -116,12 +120,18 @@ public class ReiseAngebotService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotUpdateTO reiseAngebot, MultipartFile bild) {
+    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotUpdateTO reiseAngebot, MultipartFile bild) throws Exception {
         ReiseAngebot _reiseAngebot = reiseAngebotRepository.findById(reiseAngebot.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + reiseAngebot.getId()));
 
-        if (reiseAngebot.getTitel() != null)
-            _reiseAngebot.setTitel(reiseAngebot.getTitel());
+        if (reiseAngebot.getTitel() != null) {
+            if (!reiseAngebotRepository.existsReiseAngebotByTitel(reiseAngebot.getTitel())) {
+                _reiseAngebot.setTitel(reiseAngebot.getTitel());
+            } else {
+                throw new Exception(reiseAngebot.getTitel() + " already exists");
+            }
+        }
+
         if (bild != null)
             _reiseAngebot.setStartbild(Helper.convertMultiPartFileToByte(bild));
         if (reiseAngebot.getStartDatum() != null)

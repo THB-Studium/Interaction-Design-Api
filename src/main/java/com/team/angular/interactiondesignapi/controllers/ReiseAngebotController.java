@@ -40,7 +40,7 @@ public class ReiseAngebotController {
     @PostMapping("")
     public ReiseAngebotReadTO addReiseAngebot(
             @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestPart(value = "reiseAngebot")
-                    ReiseAngebotWriteTO reiseAngebot, @RequestPart(value = "bild") MultipartFile bild) {
+                    ReiseAngebotWriteTO reiseAngebot, @RequestPart(value = "bild") MultipartFile bild) throws Exception {
         return reiseAngebotService.addReiseAngebot(reiseAngebot, bild);
     }
 
@@ -48,7 +48,7 @@ public class ReiseAngebotController {
     @PutMapping("")
     public ReiseAngebotReadTO updateReiseAngebot(@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update")
                                                  @RequestPart(value = "reiseAngebot") ReiseAngebotUpdateTO reiseAngebot,
-                                                 @RequestPart(required = false, value = "bild") MultipartFile bild) {
+                                                 @RequestPart(required = false, value = "bild") MultipartFile bild) throws Exception {
         return reiseAngebotService.updateReiseAngebot(reiseAngebot, bild);
     }
 

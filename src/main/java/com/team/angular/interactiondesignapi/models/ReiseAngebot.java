@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -28,6 +29,7 @@ public class ReiseAngebot {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
+    @NotBlank
     private String titel;
 
     private byte[] startbild;
