@@ -136,6 +136,10 @@ public class ItBase {
 	}
 
 	protected UnterkunftWriteTO buildUnterkunftWriteTO(UUID landId) {
+		
+		List<String> un = new ArrayList();
+		//un.add("wrwer");
+		
 		UnterkunftWriteTO unterkunft = new UnterkunftWriteTO();
 
 		unterkunft.setName(UUID.randomUUID().toString());
@@ -143,6 +147,7 @@ public class ItBase {
 		unterkunft.setAddresse(UUID.randomUUID().toString());
 		unterkunft.setBeschreibung(UUID.randomUUID().toString());
 		unterkunft.setLandId(landId);
+		unterkunft.setStartbild(un);
 
 		return unterkunft;
 	}
@@ -169,7 +174,7 @@ public class ItBase {
 		List<String> flug = new ArrayList<String>();
 		flug.add(UUID.randomUUID().toString());
 		flug.add(UUID.randomUUID().toString());
-
+		//land.setImage(UUID.randomUUID().toString());
 		land.setName(UUID.randomUUID().toString());
 		land.setFlughafen(flug);
 		//land.setReiseAngebotId(reiseAngebotId);
@@ -327,7 +332,7 @@ public class ItBase {
 		ReiseAngebot reiseAngebot = new ReiseAngebot();
 
 		reiseAngebot.setTitel(UUID.randomUUID().toString());
-		reiseAngebot.setStartbild("1234567890".getBytes());
+		reiseAngebot.setStartbild(UUID.randomUUID().toString().getBytes());
 		reiseAngebot.setStartDatum(new Date());
 		reiseAngebot.setEndDatum(new Date());
 		reiseAngebot.setPlaetze(12);
@@ -355,7 +360,7 @@ public class ItBase {
 		ReiseAngebotWriteTO reiseAngebot = new ReiseAngebotWriteTO();
 
 		reiseAngebot.setTitel(UUID.randomUUID().toString());
-		reiseAngebot.setStartbild("1234567890".getBytes());
+		//reiseAngebot.setStartbild(UUID.randomUUID().toString());
 		reiseAngebot.setStartDatum(new Date());
 		reiseAngebot.setEndDatum(new Date());
 		reiseAngebot.setPlaetze(12);
@@ -376,7 +381,7 @@ public class ItBase {
 
 		newBuchung.setName(UUID.randomUUID().toString());
 		newBuchung.setDescription(UUID.randomUUID().toString());
-		newBuchung.setBild("1234567890".getBytes());
+		newBuchung.setBild(UUID.randomUUID().toString().getBytes());
 		newBuchung.setLand(land);
 
 		return newBuchung;
@@ -387,7 +392,7 @@ public class ItBase {
 
 		newBuchung.setName(UUID.randomUUID().toString());
 		newBuchung.setDescription(UUID.randomUUID().toString());
-		newBuchung.setBild("1234567890".getBytes());
+		//newBuchung.setBild(UUID.randomUUID().toString());
 		newBuchung.setLandId(landId);
 
 		return newBuchung;

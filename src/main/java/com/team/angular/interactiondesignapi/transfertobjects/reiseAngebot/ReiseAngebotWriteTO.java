@@ -25,7 +25,7 @@ public class ReiseAngebotWriteTO {
 
     private String titel;
 
-    private byte[] startbild;
+    private String startbild;
 
     private Date startDatum;
 

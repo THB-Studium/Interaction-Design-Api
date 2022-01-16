@@ -85,16 +85,16 @@ public class LandIT extends ItBase {
     }
 
 	
-	/*@Test
+	@Test
 	public void createLand() {
 		LandWriteTO create = buildLandWriteTO(reiseAngebot.getId());
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("land", create,"application/json")
-				.multiPart("bild", "something12354565".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+//				.multiPart("land", create,"application/json")
+//				.multiPart("bild", "something12354565".getBytes())
+				.body(create)
 				.log().body()
 				.post("/laender")
 				.then()
@@ -105,12 +105,12 @@ public class LandIT extends ItBase {
 		Land land = landRepository.findById(id).get();
 		
 		assertThat(create.getName(), is(land.getName()));
-		//assertThat("something12354565".getBytes(), is(land.getKarte_bild()));
+		assertThat(create.getImage(), is(land.getKarte_bild()));
 		assertThat(create.getFlughafen(), is(land.getFlughafen()));
 		assertThat(create.getUnterkunft_text(), is(land.getUnterkunft_text()));
 		
 		//assertThat(create.getReiseAngebotId(), is(reiseAngebot.getId()));
-	}*/
+	}
 	
 	@Test
 	public void listLands() {	
@@ -136,10 +136,10 @@ public class LandIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("land", update,"application/json")
-				.multiPart("bild", "something123".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+//				.multiPart("land", update,"application/json")
+//				.multiPart("bild", "something123".getBytes())
+				.body(update)
 				.log().body()
 				.put("/laender")
 				.then()
@@ -151,7 +151,7 @@ public class LandIT extends ItBase {
 		
 		assertThat(update.getId(), is(land_.getId()));
 		assertThat(update.getName(), is(land_.getName()));
-		//assertThat("something12354565".getBytes(), is(land_.getKarte_bild()));
+		//assertThat(update.getImage(), is(land_.getKarte_bild()));
 		assertThat(update.getFlughafen(), is(land_.getFlughafen()));
 		assertThat(update.getUnterkunft_text(), is(land_.getUnterkunft_text()));
 		

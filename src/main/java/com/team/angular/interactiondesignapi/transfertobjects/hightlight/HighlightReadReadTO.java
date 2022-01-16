@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HighlightReadWriteTO {
+public class HighlightReadReadTO {
 	
     private UUID id;
     
@@ -17,7 +17,7 @@ public class HighlightReadWriteTO {
     
     private String description;
     
-    private String bild;
+    private byte[] bild;
     
     private UUID landId;
 }

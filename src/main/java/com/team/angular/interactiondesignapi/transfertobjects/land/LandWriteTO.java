@@ -19,5 +19,7 @@ public class LandWriteTO {
     private List<String> flughafen;
 
     private String unterkunft_text;
+    
+    private String image;
 
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +43,13 @@ public class UnterkunftService {
 		return Unterkunft2UnterkunftReadListTO.apply(unterkunftRepository.findAll());
 	}
 
-	public UnterkunftReadTO addUnterkunft(UnterkunftWriteTO unterkunft, List<MultipartFile> files) {
+	public UnterkunftReadTO addUnterkunft(UnterkunftWriteTO unterkunft) {
 
 		List<byte[]> bilder = new ArrayList<>();
 
-		for (MultipartFile file : files) {
+		for (String file : unterkunft.getStartbild()) {
 
-			bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
+			bilder.add(Base64.decodeBase64(file.substring(22)));
 		}
 		
 		Unterkunft newUnterkunft = new Unterkunft();
@@ -67,17 +68,18 @@ public class UnterkunftService {
 		return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(newUnterkunft));
 	}
 
-	public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft, List<MultipartFile> files) {
+	public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft) {
 
 		Unterkunft actual_unterkunft = unterkunftRepository.findById(unterkunft.getId()).orElseThrow(
 				() -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
 		List<byte[]> bilder = new ArrayList<>();
 
-		if (files.size() > 0) {
-			for (MultipartFile file : files) {
+		if (unterkunft.getStartbild().size() > 0) {
 
-				bilder.add(new byte[(int) convertMultiPartFileToFile(file).length()]);
+			for (String file : unterkunft.getStartbild()) {
+
+				bilder.add(Base64.decodeBase64(file.substring(22)));
 			}
 			actual_unterkunft.setBilder(bilder);
 		}

@@ -3,7 +3,6 @@ package com.team.angular.interactiondesignapi.controllers;
 import java.util.List;
 import java.util.UUID;
 
-import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadListTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,12 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.team.angular.interactiondesignapi.services.LandService;
+import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
 
@@ -47,17 +46,15 @@ public class LandController {
 	@ApiOperation("Add One Land")
 	@PostMapping("")
 	public LandReadTO addLand(
-			@ApiParam(name = "Land", value = "Land to add") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild") MultipartFile bild) {
-		return landService.addLand(land, bild);
+			@ApiParam(name = "Land", value = "Land to add") @RequestBody LandWriteTO land) {
+		return landService.addLand(land);
 	}
 
 	@ApiOperation("Update Land")
 	@PutMapping("")
 	public LandReadTO updateLand(
-			@ApiParam(name = "Land", value = "Land to update") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(required = false, value = "bild") MultipartFile bild) {
-		return landService.updateLand(land, bild);
+			@ApiParam(name = "Land", value = "Land to update") @RequestBody LandWriteTO land) {
+		return landService.updateLand(land);
 	}
 
 	@ApiOperation("Delete Land")

@@ -68,7 +68,7 @@ public class HighlightIT extends ItBase {
     }
 
 	
-	/*@Test
+	@Test
 	public void createHighlight() {
 		
 		highlightWrite1 = buildHighlightWriteTO(land.getId());
@@ -76,10 +76,10 @@ public class HighlightIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("highlight", highlightWrite1,"application/json")
-				.multiPart("files", "something123".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+//				.multiPart("highlight", highlightWrite1,"application/json")
+//				.multiPart("files", "something123".getBytes())
+				.body(highlightWrite1)
 				.log().body()
 				.post("/highlights")
 				.then()
@@ -91,10 +91,10 @@ public class HighlightIT extends ItBase {
 		
 		assertThat(highlightWrite1.getName(), is(highlight.getName()));
 		assertThat(highlightWrite1.getDescription(), is(highlight.getDescription()));
-		//assertThat(highlightWrite1.getBild(), is(highlight.getBild()));
+		assertThat(highlightWrite1.getBild(), is(highlight.getBild()));
 		assertThat(highlightWrite1.getLandId(), is(highlight.getLand().getId()));
 		
-	}*/
+	}
 	
 	@Test
 	public void listHighlights() {	
@@ -119,10 +119,10 @@ public class HighlightIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("highlight", highlightWrite1,"application/json")
-				.multiPart("files", "something123".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+//				.multiPart("highlight", highlightWrite1,"application/json")
+//				.multiPart("files", "something123".getBytes())
+				.body(highlightWrite1)
 				.log().body()
 				.put("/highlights")
 				.then()
@@ -158,7 +158,7 @@ public class HighlightIT extends ItBase {
 		assertThat(highlight.getId(), is(highlight_.getId()));
 		assertThat(highlight.getName(), is(highlight_.getName()));
 		assertThat(highlight.getDescription(), is(highlight_.getDescription()));
-		//assertThat(highlightWrite1.getBild(), is(updated_highlight.getBild()));
+		assertThat(highlight.getBild(), is(highlight_.getBild()));
 		assertThat(highlight.getLand().getId(), is(highlight_.getLand().getId()));
 	}
 	

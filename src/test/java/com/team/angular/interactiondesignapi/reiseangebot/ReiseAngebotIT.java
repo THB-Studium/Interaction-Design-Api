@@ -83,10 +83,10 @@ public class ReiseAngebotIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-					//.contentType(ContentType.JSON)
-					.multiPart("reiseAngebot", create,"application/json")
-					.multiPart("bild", "something12354565".getBytes())
-					//.body(create)
+					.contentType(ContentType.JSON)
+//					.multiPart("reiseAngebot", create,"application/json")
+//					.multiPart("bild", "something12354565".getBytes())
+					.body(create)
 					.log().body()
 					.post("/reiseAngebot")
 					.then()
@@ -97,7 +97,7 @@ public class ReiseAngebotIT extends ItBase {
 		ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id).get();
 		
 		assertThat(create.getTitel(), is(reiseAngebot.getTitel()));
-		//assertThat("something12354565".getBytes(), is(reiseAngebot.getStartbild()));
+		//assertThat(create.getStartbild().getBytes(), is(reiseAngebot.getStartbild()));
 		assertThat(create.getStartDatum(), is(reiseAngebot.getStartDatum()));
 		assertThat(create.getEndDatum(), is(reiseAngebot.getEndDatum()));
 		assertThat(create.getFreiPlaetze(), is(reiseAngebot.getFreiPlaetze()));
@@ -133,10 +133,10 @@ public class ReiseAngebotIT extends ItBase {
 		
 		UUID id = UUID.fromString(
 				given()
-					//.contentType(ContentType.JSON)
-					.multiPart("reiseAngebot", update,"application/json")
-					.multiPart("bild", "something123".getBytes())
-					//.body(create)
+					.contentType(ContentType.JSON)
+//					.multiPart("reiseAngebot", update,"application/json")
+//					.multiPart("bild", "something123".getBytes())
+					.body(update)
 					.log().body()
 					.put("/reiseAngebot")
 					.then()
@@ -147,7 +147,7 @@ public class ReiseAngebotIT extends ItBase {
 		ReiseAngebot reiseAngebot_ = reiseAngebotRepository.findById(id).get();
 		
 		assertThat(update.getTitel(), is(reiseAngebot_.getTitel()));
-		//assertThat("something12354565".getBytes(), is(reiseAngebot_.getStartbild()));
+		//assertThat(update.getStartbild().getBytes(), is(reiseAngebot_.getStartbild()));
 		assertThat(update.getStartDatum(), is(reiseAngebot_.getStartDatum()));
 		assertThat(update.getEndDatum(), is(reiseAngebot_.getEndDatum()));
 		assertThat(update.getFreiPlaetze(), is(reiseAngebot_.getFreiPlaetze()));
