@@ -60,14 +60,14 @@ public class ReiseAngebotController {
     }
 
     @ApiOperation("Add Interessiert")
-    @GetMapping("/addInteressiert/{id}")
+    @PostMapping("/addInteressiert/{id}")
     public ResponseEntity<?> addInteressiert(
             @ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
         return reiseAngebotService.addInteressiert(id);
     }
 
     @ApiOperation("Reset Interessiert")
-    @GetMapping("/resetInteressiert/{id}")
+    @PostMapping("/resetInteressiert/{id}")
     public ResponseEntity<?> resetInteressiert(
             @ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
         return reiseAngebotService.resetInteressiert(id);
