@@ -48,7 +48,7 @@ public class LandController {
 	@PostMapping("")
 	public LandReadTO addLand(
 			@ApiParam(name = "Land", value = "Land to add") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(value = "bild") MultipartFile bild) {
+			@RequestPart(value = "bild") MultipartFile bild) throws Exception {
 		return landService.addLand(land, bild);
 	}
 
@@ -56,7 +56,7 @@ public class LandController {
 	@PutMapping("")
 	public LandReadTO updateLand(
 			@ApiParam(name = "Land", value = "Land to update") @RequestPart(value = "land") LandWriteTO land,
-			@RequestPart(required = false, value = "bild") MultipartFile bild) {
+			@RequestPart(required = false, value = "bild") MultipartFile bild) throws Exception {
 		return landService.updateLand(land, bild);
 	}
 

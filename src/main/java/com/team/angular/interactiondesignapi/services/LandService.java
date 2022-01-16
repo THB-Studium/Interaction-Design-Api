@@ -30,10 +30,16 @@ public class LandService {
         return Land2LandReadListTO.apply(landRepository.findAll());
     }
 
-    public LandReadTO addLand(LandWriteTO land, MultipartFile bild) {
+    public LandReadTO addLand(LandWriteTO land, MultipartFile bild) throws Exception {
 
         Land newLand = new Land();
-        newLand.setName(land.getName());
+
+        if (!landRepository.existsLandByName(land.getName())) {
+            newLand.setName(land.getName());
+        } else {
+            throw new Exception(land.getName() + " already exists");
+        }
+
         newLand.setFlughafen(land.getFlughafen());
         newLand.setUnterkunft_text(land.getUnterkunft_text());
         newLand.setKarte_bild(Helper.convertMultiPartFileToByte(bild));
@@ -48,12 +54,16 @@ public class LandService {
         return Land2LandReadTO.apply(land);
     }
 
-    public LandReadTO updateLand(LandWriteTO land, MultipartFile bild) {
+    public LandReadTO updateLand(LandWriteTO land, MultipartFile bild) throws Exception {
         Land newLand = landRepository.findById(land.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + land.getId()));
 
         if (land.getName() != null)
-            newLand.setName(land.getName());
+            if (!landRepository.existsLandByName(land.getName())) {
+                newLand.setName(land.getName());
+            } else {
+                throw new Exception(land.getName() + " already exists");
+            }
         if (land.getFlughafen() != null)
             newLand.setFlughafen(land.getFlughafen());
         if (land.getUnterkunft_text() != null)
