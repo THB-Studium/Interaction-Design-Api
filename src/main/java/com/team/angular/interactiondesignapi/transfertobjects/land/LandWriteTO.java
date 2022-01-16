@@ -16,7 +16,7 @@ public class LandWriteTO {
 
     private String name;
 
-    private List<String> flugHafen;
+    private List<String> flughafen;
 
     private String unterkunft_text;
 

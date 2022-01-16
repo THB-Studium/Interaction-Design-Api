@@ -152,7 +152,7 @@ public class LandIT extends ItBase {
 		assertThat(update.getId(), is(land_.getId()));
 		assertThat(update.getName(), is(land_.getName()));
 		//assertThat("something12354565".getBytes(), is(land_.getKarte_bild()));
-		assertThat(update.getFlugHafen(), is(land_.getFlugHafen()));
+		assertThat(update.getFlughafen(), is(land_.getFlughafen()));
 		assertThat(update.getUnterkunft_text(), is(land_.getUnterkunft_text()));
 		
 		//assertThat(update.getReiseAngebotId(), is(reiseAngebot1.getId()));
@@ -179,7 +179,7 @@ public class LandIT extends ItBase {
 		assertThat(land.getName(), is(land_.getName()));
 		assertThat(land.getName(), is(land_.getName()));
 		//assertThat("something12354565".getBytes(), is(land_.getKarte_bild()));
-		assertThat(land.getFlugHafen().size(), is(land_.getFlugHafen().size()));
+		assertThat(land.getFlughafen().size(), is(land_.getFlughafen().size()));
 		assertThat(land.getUnterkunft_text(), is(land_.getUnterkunft_text()));
 	}
 	

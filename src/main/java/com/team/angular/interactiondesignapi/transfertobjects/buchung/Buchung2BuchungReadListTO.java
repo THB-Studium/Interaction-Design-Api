@@ -15,7 +15,7 @@ public class Buchung2BuchungReadListTO {
         out.setDatum(in.getDatum());
         out.setMitReiserId(in.getMitReiserId());
         out.setBuchungsklasseId(in.getBuchungsklasseId());
-        out.setFlugHafen(in.getFlugHafen());
+        out.setFlughafen(in.getFlughafen());
         out.setHandGepaeck(in.getHandGepaeck());
         out.setKoffer(in.getKoffer());
         out.setZahlungMethod(in.getZahlungMethod());

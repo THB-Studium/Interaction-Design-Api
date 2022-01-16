@@ -3,7 +3,6 @@ package com.team.angular.interactiondesignapi.transfertobjects.land;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.transfertobjects.hightlight.Highlight2HighlightReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfo2LandInfoReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadListTO;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public class Land2LandReadTO {
 
         out.setId(in.getId());
         out.setName(in.getName());
-        out.setFlugHafen(in.getFlugHafen());
+        out.setFlughafen(in.getFlughafen());
         out.setUnterkunft_text(in.getUnterkunft_text());
         out.setKarte_bild(in.getKarte_bild());
         out.setLandInfo(LandInfo2LandInfoReadListTO.apply(in.getLandInfo()));

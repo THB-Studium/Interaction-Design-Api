@@ -3,7 +3,6 @@ package com.team.angular.interactiondesignapi.transfertobjects.buchung;
 import com.team.angular.interactiondesignapi.models.Buchung;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Buchung2BuchungReadTO {
@@ -15,7 +14,7 @@ public class Buchung2BuchungReadTO {
         out.setDatum(in.getDatum());
         out.setMitReiserId(in.getMitReiserId());
         out.setBuchungsklasseId(in.getBuchungsklasseId());
-        out.setFlugHafen(in.getFlugHafen());
+        out.setFlughafen(in.getFlughafen());
         out.setHandGepaeck(in.getHandGepaeck());
         out.setKoffer(in.getKoffer());
         out.setZahlungMethod(in.getZahlungMethod());

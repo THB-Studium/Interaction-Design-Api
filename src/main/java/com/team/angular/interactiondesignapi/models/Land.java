@@ -30,7 +30,7 @@ public class Land {
 
 	@ElementCollection
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<String> flugHafen;
+	private List<String> flughafen;
 
 	private String unterkunft_text;
 

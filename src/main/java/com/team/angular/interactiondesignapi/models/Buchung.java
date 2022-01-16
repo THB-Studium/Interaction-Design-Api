@@ -33,7 +33,7 @@ public class Buchung {
     private UUID buchungsklasseId; // Tarif
 
     @NotBlank
-    private String flugHafen;
+    private String flughafen;
 
     private String handGepaeck;
 
