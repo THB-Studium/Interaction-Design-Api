@@ -23,7 +23,7 @@ public class BuchungReadListTO {
 
     private UUID buchungsklasseId;
 
-    private String flugHafen;
+    private String flughafen;
 
     private String handGepaeck;
 
