@@ -53,7 +53,7 @@ public class HighlightController {
 	@ApiOperation("Update Highlight")
 	@PutMapping("")
 	public HighlightReadReadTO updateHighlight(
-			@ApiParam(name = "Highlight", value = "Highlight to update") @RequestBody HighlightReadWriteTO highlight) {
+			@ApiParam(name = "Highlight", value = "Highlight to update") @RequestBody HighlightReadWriteTO highlight) throws Exception {
 		return highlightService.updateHighlight(highlight);
 	}
 

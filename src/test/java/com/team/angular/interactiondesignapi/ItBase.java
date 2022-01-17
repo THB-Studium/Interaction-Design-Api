@@ -147,7 +147,7 @@ public class ItBase {
 		unterkunft.setAddresse(UUID.randomUUID().toString());
 		unterkunft.setBeschreibung(UUID.randomUUID().toString());
 		unterkunft.setLandId(landId);
-		unterkunft.setStartbild(un);
+		unterkunft.setBilder(un);
 
 		return unterkunft;
 	}

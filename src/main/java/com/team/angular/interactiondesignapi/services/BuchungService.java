@@ -58,15 +58,19 @@ public class BuchungService {
 
         Buchung newBuchung = new Buchung();
         newBuchung.setDatum(buchung.getDatum());
+
         if (buchung.getMitReiser() != null) {
             newBuchung.setMitReiserId(buchung.getMitReiser().getId());
         }
+
         newBuchung.setBuchungsklasseId(tarif.getId());
         newBuchung.setFlughafen(buchung.getFlughafen());
         newBuchung.setHandGepaeck(buchung.getHandGepaeck());
         newBuchung.setKoffer(buchung.getKoffer());
         newBuchung.setZahlungMethod(buchung.getZahlungMethod());
+        // new Reiser will be created
         newBuchung.setReiser(reiser);
+
         newBuchung.setReiseAngebot(ra);
 
         //update freiPlaetze after adding a new Buchung
@@ -76,7 +80,6 @@ public class BuchungService {
         } else {
             throw new Exception("The trip is fully booked");
         }
-
 
         return Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
 

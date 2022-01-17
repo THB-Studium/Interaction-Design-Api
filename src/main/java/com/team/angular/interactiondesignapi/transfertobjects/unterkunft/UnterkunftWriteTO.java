@@ -22,7 +22,7 @@ public class UnterkunftWriteTO {
 
 	private String beschreibung;
 	
-	private List<String> startbild;
+	private List<String> bilder;
 
 	private UUID landId;
 
