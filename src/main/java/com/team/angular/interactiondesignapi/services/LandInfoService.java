@@ -75,7 +75,7 @@ public class LandInfoService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Update Error: Cannot find LandInfo with id: " + landInfo.getId()));
 
-        if (landInfo.getTitel() != null) {
+        if (landInfo.getTitel() != null && !_landInfo.getTitel().equals(landInfo.getTitel())) {
             if (!landInfoRepository.existsLandInfoByTitel(landInfo.getTitel())) {
                 _landInfo.setTitel(landInfo.getTitel());
             } else {

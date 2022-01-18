@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -97,6 +98,51 @@ public class BuchungsklassenIT extends ItBase {
 		assertThat(create.getPreis(), is(buchungsklassen.getPreis()));
 		assertThat(create.getDescription(), is(buchungsklassen.getDescription()));
 		assertThat(create.getReiseAngebotId(), is(buchungsklassen.getReiseAngebot().getId()));
+	}
+	
+	@Test
+	public void createBuchungsklassen__type_exist() {
+		
+		BuchungsklassenReadWriteTO create = buildBuchungsKlasseReadWriteTO(reiseAngebot.getId());
+		create.setType(buchungsklassen.getType());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(create)
+						.log().body()
+						.post("/buchungsklassen")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+buchungsklassen.getType()+" already exists", ex.getLocalizedMessage());
+	}
+	
+	@Test
+	public void updateBuchungsklassen__type_exist() {
+		
+		BuchungsklassenReadWriteTO update = buildBuchungsKlasseReadWriteTO(reiseAngebot.getId());
+		update.setId(buchungsklassen.getId());
+		update.setType(buchungsklassen1.getType());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(update)
+						.log().body()
+						.put("/buchungsklassen")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+buchungsklassen1.getType()+" already exists", ex.getLocalizedMessage());
 	}
 	
 	@Test

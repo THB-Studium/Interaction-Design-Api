@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -64,7 +65,6 @@ public class ReiserIT extends ItBase {
 		buchung1 = buildBuchung(reiser1, reiseAngebot);
 		buchung1 = buchungRepository.save(buchung1);
 		
-		reiserWrite1 = buildReiserWriteTO();
 	}
 	
     @AfterEach
@@ -73,9 +73,10 @@ public class ReiserIT extends ItBase {
     }
 
 	
-	/*@Test
+	@Test
 	public void createReiser() {
 		
+		reiserWrite1 = buildReiserWriteTO();
 		
 		UUID id = UUID.fromString(
 				given()
@@ -93,7 +94,54 @@ public class ReiserIT extends ItBase {
 		assertThat(reiserWrite1.getName(), is(reiser.getName()));
 		assertThat(reiserWrite1.getVorname(), is(reiser.getVorname()));
 		
-	}*/
+	}
+	
+	@Test
+	public void createReiser__Phonenumber_exist() {
+		
+		reiserWrite1 = buildReiserWriteTO();
+		reiserWrite1.setTelefonnummer(reiser1.getTelefonnummer());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+//						.multiPart("reiseAngebot", update,"application/json")
+//						.multiPart("bild", "something123".getBytes())
+						.body(reiserWrite1)
+						.log().body()
+						.post("/reisers")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+reiser1.getTelefonnummer()+" already exists", ex.getLocalizedMessage());
+	}
+	
+	@Test
+	public void updateReiser__Phonenumber_exist() {
+		
+		reiserWrite1 = buildReiserWriteTO();
+		reiserWrite1.setId(reiser1.getId());
+		reiserWrite1.setTelefonnummer(reiser.getTelefonnummer());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(reiserWrite1)
+						.log().body()
+						.put("/reisers")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+reiser.getTelefonnummer()+" already exists", ex.getLocalizedMessage());
+	}
 	
 	@Test
 	public void listReisers() {	
@@ -110,9 +158,10 @@ public class ReiserIT extends ItBase {
 					
 	}
 	
-	/*@Test
+	@Test
 	public void updateReiser() {
 		
+		reiserWrite1 = buildReiserWriteTO();
 		reiserWrite1.setId(reiser.getId());
 		
 		UUID id = UUID.fromString(
@@ -131,7 +180,7 @@ public class ReiserIT extends ItBase {
 		assertThat(reiserWrite1.getId(), is(reiser_.getId()));
 		assertThat(reiserWrite1.getName(), is(reiser_.getName()));
 		assertThat(reiserWrite1.getVorname(), is(reiser_.getVorname()));
-	}*/
+	}
 	
 	@Test
 	public void getReiser() {
