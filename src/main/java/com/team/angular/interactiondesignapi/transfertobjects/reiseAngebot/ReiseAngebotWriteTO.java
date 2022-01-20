@@ -1,18 +1,17 @@
 package com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
-
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import java.util.Date;
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -27,9 +26,11 @@ public class ReiseAngebotWriteTO {
 
     private String startbild;
 
-    private Date startDatum;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate startDatum;
 
-    private Date endDatum;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate endDatum;
 
     private int plaetze;
 
@@ -37,7 +38,8 @@ public class ReiseAngebotWriteTO {
 
     private int interessiert;
 
-    private Date anmeldungsFrist;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate anmeldungsFrist;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
@@ -47,12 +49,12 @@ public class ReiseAngebotWriteTO {
     private Erwartungen erwartungen;
 
     private UUID landId;
-    
-	private String hinweise;
-	
-	@ElementCollection
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<String> mitReiserBerechtigt;
 
-	private String sonstigeHinweise;
+    private String hinweise;
+
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> mitReiserBerechtigt;
+
+    private String sonstigeHinweise;
 }

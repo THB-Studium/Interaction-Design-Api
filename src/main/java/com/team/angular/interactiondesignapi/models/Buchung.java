@@ -1,14 +1,16 @@
 package com.team.angular.interactiondesignapi.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -22,7 +24,8 @@ public class Buchung {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    private Date datum;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate datum;
 
     //private Reiser mitReiser;
 

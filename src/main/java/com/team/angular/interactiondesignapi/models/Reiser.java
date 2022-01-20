@@ -1,15 +1,16 @@
 package com.team.angular.interactiondesignapi.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,11 +32,11 @@ public class Reiser {
     private String vorname;
 
     @NotNull
-    private Date geburtsdatum;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate geburtsdatum;
 
-    @NotNull
-    @Positive
-    private long telefonnummer;
+    @NotBlank
+    private String telefonnummer;
 
     @NotBlank
     private String email;

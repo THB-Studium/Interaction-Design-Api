@@ -1,22 +1,21 @@
 package com.team.angular.interactiondesignapi.models;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-
-import org.hibernate.annotations.*;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -34,9 +33,11 @@ public class ReiseAngebot {
 
     private byte[] startbild;
 
-    private Date startDatum;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate startDatum;
 
-    private Date endDatum;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate endDatum;
 
     @NotNull
     @Positive
@@ -45,16 +46,17 @@ public class ReiseAngebot {
     private int freiPlaetze;
 
     private int interessiert;
-    
-    private Date anmeldungsFrist;
 
-	private String hinweise;
-	
-	@ElementCollection
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<String> mitReiserBerechtigt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate anmeldungsFrist;
 
-	private String sonstigeHinweise;
+    private String hinweise;
+
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> mitReiserBerechtigt;
+
+    private String sonstigeHinweise;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
@@ -65,7 +67,7 @@ public class ReiseAngebot {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Erwartungen erwartungen;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Land land;
 
     @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)

@@ -1,7 +1,9 @@
 package com.team.angular.interactiondesignapi.transfertobjects.reiser;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,26 +14,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReiserReadListTO {
 
-	private UUID id;
+    private UUID id;
 
-	private String name;
+    private String name;
 
-	private String vorname;
+    private String vorname;
 
-	private Date geburtsdatum;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate geburtsdatum;
 
-	private long telefonnummer;
+    private String telefonnummer;
 
-	private String email;
+    private String email;
 
-	private String hochschule;
+    private String hochschule;
 
-	private String adresse;
+    private String adresse;
 
-	private String studiengang;
+    private String studiengang;
 
-	private String arbeitBei;
+    private String arbeitBei;
 
-	private boolean schonTeilgenommen;
+    private boolean schonTeilgenommen;
 
 }

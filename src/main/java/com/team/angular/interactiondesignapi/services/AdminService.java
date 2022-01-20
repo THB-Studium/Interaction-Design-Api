@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -48,7 +49,7 @@ public class AdminService implements UserDetailsService {//
             _admin.setPassword(bcryptEncoder.encode(admin.getPassword()));
             _admin.setEmail(admin.getEmail());
             _admin.setRole("ROLE_ADMIN");
-            _admin.setCreationDate(LocalDateTime.now());
+            _admin.setCreationDate(LocalDate.now());
             return Admin2AdminOutTO.apply(adminRepository.save(_admin));
         } else {
             throw new Exception("Email has already been taken");
@@ -97,7 +98,7 @@ public class AdminService implements UserDetailsService {//
         }
 
 
-        _admin.setUpdateDate(LocalDateTime.now());
+        _admin.setUpdateDate(LocalDate.now());
 
         adminRepository.save(_admin);
 
