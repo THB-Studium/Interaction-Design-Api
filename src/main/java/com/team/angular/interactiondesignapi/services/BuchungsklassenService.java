@@ -21,76 +21,76 @@ import java.util.UUID;
 
 @Service
 public class BuchungsklassenService {
-	private static final Logger log = LoggerFactory.getLogger(BuchungsklassenService.class);
-	@Autowired
-	private BuchungsklassenRepository buchungsklassenRepository;
-	@Autowired
-	private ReiseAngebotRepository reiseAngebotRepository;
+    private static final Logger log = LoggerFactory.getLogger(BuchungsklassenService.class);
+    @Autowired
+    private BuchungsklassenRepository buchungsklassenRepository;
+    @Autowired
+    private ReiseAngebotRepository reiseAngebotRepository;
 
-	public BuchungsklassenReadWriteTO getBuchungsklassen(UUID id) {
-		Buchungsklassen buchungsklassen = buchungsklassenRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + id));
-		return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassen);
-	}
+    public BuchungsklassenReadWriteTO getBuchungsklassen(UUID id) {
+        Buchungsklassen buchungsklassen = buchungsklassenRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + id));
+        return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassen);
+    }
 
-	public List<BuchungsklassenReadListTO> getAll() {
-		return Buchungsklassen2BuchungsklassenReadListTO.apply(buchungsklassenRepository.findAll());
-	}
+    public List<BuchungsklassenReadListTO> getAll() {
+        return Buchungsklassen2BuchungsklassenReadListTO.apply(buchungsklassenRepository.findAll());
+    }
 
-	public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
-		Buchungsklassen _buchungsklassen = new Buchungsklassen();
+    public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
+        Buchungsklassen _buchungsklassen = new Buchungsklassen();
 
-		if (!buchungsklassenRepository.existsBuchungsklassenByType(buchungsklassen.getType())) {
-			_buchungsklassen.setType(buchungsklassen.getType());
-		} else {
-			throw new Exception(buchungsklassen.getType() + " already exists");
-		}
+        if (!buchungsklassenRepository.existsBuchungsklassenByType(buchungsklassen.getType())) {
+            _buchungsklassen.setType(buchungsklassen.getType());
+        } else {
+            throw new Exception(buchungsklassen.getType() + " already exists");
+        }
 
-		if (buchungsklassen.getPreis() != 0)
-			_buchungsklassen.setPreis(buchungsklassen.getPreis());
-		if (!buchungsklassen.getDescription().isEmpty())
-			_buchungsklassen.setDescription(buchungsklassen.getDescription());
-		if (buchungsklassen.getReiseAngebotId() != null) {
-			ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(buchungsklassen.getReiseAngebotId())
-					.orElseThrow(() -> new ResourceNotFoundException(
-							"Cannot find ReiseAngebot with id: " + buchungsklassen.getReiseAngebotId()));
-			_buchungsklassen.setReiseAngebot(reiseAngebot);
-		}
+        if (buchungsklassen.getPreis() != 0)
+            _buchungsklassen.setPreis(buchungsklassen.getPreis());
+        if (!buchungsklassen.getDescription().isEmpty())
+            _buchungsklassen.setDescription(buchungsklassen.getDescription());
+        if (buchungsklassen.getReiseAngebotId() != null) {
+            ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(buchungsklassen.getReiseAngebotId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            "Cannot find ReiseAngebot with id: " + buchungsklassen.getReiseAngebotId()));
+            _buchungsklassen.setReiseAngebot(reiseAngebot);
+        }
 
-		return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassenRepository.save(_buchungsklassen));
-	}
+        return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassenRepository.save(_buchungsklassen));
+    }
 
-	public ResponseEntity<?> deleteBuchungsklassen(UUID id) {
-		Buchungsklassen actual = buchungsklassenRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + id));
+    public ResponseEntity<?> deleteBuchungsklassen(UUID id) {
+        Buchungsklassen actual = buchungsklassenRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + id));
 
-		buchungsklassenRepository.deleteById(actual.getId());
-		log.info("Buchungsklassen successfully deleted");
+        buchungsklassenRepository.deleteById(actual.getId());
+        log.info("Buchungsklassen successfully deleted");
 
-		return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-	}
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+    }
 
-	public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen)
-			throws Exception {
+    public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen)
+            throws Exception {
 
-		Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
+        Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
 
-		if (buchungsklassen.getType() != null && !_buchungsklassen.getType().equals(buchungsklassen.getType())) {
-			if (!buchungsklassenRepository.existsBuchungsklassenByType(buchungsklassen.getType())) {
-				_buchungsklassen.setType(buchungsklassen.getType());
-			} else {
-				throw new Exception(buchungsklassen.getType() + " already exists");
-			}
-		}
+        if (buchungsklassen.getType() != null && !_buchungsklassen.getType().equals(buchungsklassen.getType())) {
+            if (!buchungsklassenRepository.existsBuchungsklassenByType(buchungsklassen.getType())) {
+                _buchungsklassen.setType(buchungsklassen.getType());
+            } else {
+                throw new Exception(buchungsklassen.getType() + " already exists");
+            }
+        }
 
-		if (buchungsklassen.getPreis() != 0)
-			_buchungsklassen.setPreis(buchungsklassen.getPreis());
-		if (!buchungsklassen.getDescription().isEmpty())
-			_buchungsklassen.setDescription(buchungsklassen.getDescription());
+        if (buchungsklassen.getPreis() != 0)
+            _buchungsklassen.setPreis(buchungsklassen.getPreis());
+        if (!buchungsklassen.getDescription().isEmpty())
+            _buchungsklassen.setDescription(buchungsklassen.getDescription());
 
-		buchungsklassenRepository.save(_buchungsklassen);
+        buchungsklassenRepository.save(_buchungsklassen);
 
-		return Buchungsklassen2BuchungsklassenReadListTO.apply(_buchungsklassen);
-	}
+        return Buchungsklassen2BuchungsklassenReadListTO.apply(_buchungsklassen);
+    }
 }
