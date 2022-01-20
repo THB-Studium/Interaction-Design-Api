@@ -1,11 +1,13 @@
 package com.team.angular.interactiondesignapi.transfertobjects.buchung;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -17,7 +19,8 @@ public class BuchungReadListTO {
 
     private UUID id;
 
-    private Date datum;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate datum;
 
     private UUID mitReiserId;
 

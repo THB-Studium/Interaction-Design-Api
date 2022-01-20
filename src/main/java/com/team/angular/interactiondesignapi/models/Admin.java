@@ -1,19 +1,18 @@
 package com.team.angular.interactiondesignapi.models;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.PastOrPresent;
-
-import org.hibernate.annotations.GenericGenerator;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -33,9 +32,12 @@ public class Admin {
     private String role;
 
     @PastOrPresent
-    private LocalDateTime creationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate creationDate;
+
     @PastOrPresent
-    private LocalDateTime updateDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate updateDate;
 
     /*@Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean enabled;*/

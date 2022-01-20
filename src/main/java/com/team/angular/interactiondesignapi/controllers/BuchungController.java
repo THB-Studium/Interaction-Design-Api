@@ -65,7 +65,13 @@ public class BuchungController {
 	public ResponseEntity<?> daleteBuchung(
 			@ApiParam(name = "BuchungId", value = "Id of the Buchung") @PathVariable UUID id) {
 		return buchungService.deleteBuchung(id);
+	}
 
+	@ApiOperation("Remove MitReiser Buchung")
+	@DeleteMapping("/removeMitReiser/{id}")
+	public ResponseEntity<?> removeMitReiser(
+			@ApiParam(name = "BuchungId", value = "Id of the Buchung") @PathVariable UUID id) {
+		return buchungService.removeMitReiser(id);
 	}
 
 }

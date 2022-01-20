@@ -1,13 +1,13 @@
 package com.team.angular.interactiondesignapi.repositories;
 
-import java.util.UUID;
-
+import com.team.angular.interactiondesignapi.models.Reiser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.team.angular.interactiondesignapi.models.Reiser;
+import java.util.UUID;
 
 @Repository
 public interface ReiserRepository extends JpaRepository<Reiser, UUID> {
-    Boolean existsReiserByTelefonnummer(long telefonnummer);
+    Boolean existsReiserByTelefonnummer(String telefonnummer);
+    Reiser getReisersByTelefonnummer(String telefonnummer);
 }

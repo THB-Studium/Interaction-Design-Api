@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -23,9 +24,11 @@ public class ReiseAngebotReadTO {
 
     private byte[] startbild;
 
-    private Date startDatum;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate startDatum;
 
-    private Date endDatum;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate endDatum;
 
     private int plaetze;
 
@@ -33,7 +36,8 @@ public class ReiseAngebotReadTO {
 
     private int interessiert;
 
-    private Date anmeldungsFrist;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate anmeldungsFrist;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
@@ -44,10 +48,10 @@ public class ReiseAngebotReadTO {
 
     private UUID landId;
 
-	private String hinweise;
+    private String hinweise;
 
-	private List<String> mitReiserBerechtigt;
+    private List<String> mitReiserBerechtigt;
 
-	private String sonstigeHinweise;
+    private String sonstigeHinweise;
 
 }

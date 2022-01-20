@@ -22,6 +22,7 @@ public class LandInfo {
 
     @NotBlank
     private String titel;
+
     @Lob
     private String description;
 

@@ -1,13 +1,12 @@
 package com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
+import java.time.LocalDate;
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -20,9 +19,11 @@ public class ReiseAngebotReadListTO {
 
     private byte[] startbild;
 
-    private Date startDatum;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate startDatum;
 
-    private Date endDatum;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate endDatum;
 
     private int plaetze;
 
@@ -30,7 +31,8 @@ public class ReiseAngebotReadListTO {
 
     private int interessiert;
 
-    private Date anmeldungsFrist;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate anmeldungsFrist;
 
     // not necessary for the workflow
     /*@ElementCollection(fetch = FetchType.EAGER)
