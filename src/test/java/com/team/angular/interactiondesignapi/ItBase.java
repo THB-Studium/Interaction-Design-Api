@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,7 +189,7 @@ public class ItBase {
 		reiser.setName(UUID.randomUUID().toString());
 		reiser.setVorname(UUID.randomUUID().toString());
 		reiser.setGeburtsdatum(new Date());
-		reiser.setTelefonnummer(1232354);
+		reiser.setTelefonnummer(ThreadLocalRandom.current().nextLong(500L, 1000L));
 		reiser.setEmail(UUID.randomUUID().toString());
 		reiser.setHochschule(UUID.randomUUID().toString());
 		reiser.setAdresse(UUID.randomUUID().toString());
@@ -205,7 +206,7 @@ public class ItBase {
 		reiser.setName(UUID.randomUUID().toString());
 		reiser.setVorname(UUID.randomUUID().toString());
 		reiser.setGeburtsdatum(new Date());
-		reiser.setTelefonnummer(1232354);
+		reiser.setTelefonnummer(ThreadLocalRandom.current().nextLong(500L, 1000L));
 		reiser.setEmail(UUID.randomUUID().toString());
 		reiser.setHochschule(UUID.randomUUID().toString());
 		reiser.setAdresse(UUID.randomUUID().toString());

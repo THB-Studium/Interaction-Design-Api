@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -107,6 +108,56 @@ public class ReiseAngebotIT extends ItBase {
 		assertThat(create.getLandId(), is(reiseAngebot.getLand().getId()));
 		assertThat(create.getMitReiserBerechtigt(), is(reiseAngebot.getMitReiserBerechtigt()));
 		assertThat(create.getSonstigeHinweise(), is(reiseAngebot.getSonstigeHinweise()));
+	}
+	
+	@Test
+	public void createReiseAngebot__titel_exist() {
+		
+		ReiseAngebotWriteTO create = buildReiseAngebotWriteTO(land.getId());
+		create.setId(reiseAngebot.getId());
+		create.setTitel(reiseAngebot1.getTitel());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID id = UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+//						.multiPart("reiseAngebot", update,"application/json")
+//						.multiPart("bild", "something123".getBytes())
+						.body(create)
+						.log().body()
+						.post("/reiseAngebot")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+reiseAngebot1.getTitel()+" already exists", ex.getLocalizedMessage());
+	}
+	
+	@Test
+	public void updateReiseAngebot__titel_exist() {
+		
+		ReiseAngebotWriteTO update = buildReiseAngebotWriteTO(land.getId());
+		update.setId(reiseAngebot.getId());
+		update.setTitel(reiseAngebot1.getTitel());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID id = UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+//						.multiPart("reiseAngebot", update,"application/json")
+//						.multiPart("bild", "something123".getBytes())
+						.body(update)
+						.log().body()
+						.put("/reiseAngebot")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+reiseAngebot1.getTitel()+" already exists", ex.getLocalizedMessage());
 	}
 	
 	@Test

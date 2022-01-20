@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -94,6 +95,51 @@ public class HighlightIT extends ItBase {
 		assertThat(highlightWrite1.getBild(), is(highlight.getBild()));
 		assertThat(highlightWrite1.getLandId(), is(highlight.getLand().getId()));
 		
+	}
+	
+	@Test
+	public void createHighlight__name_exist() {
+		
+		highlightWrite1 = buildHighlightWriteTO(land.getId());
+		highlightWrite1.setName(highlight.getName());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(highlightWrite1)
+						.log().body()
+						.post("/highlights")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+highlight.getName()+" already exists", ex.getLocalizedMessage());
+	}
+	
+	@Test
+	public void updateHighlight__name_exist() {
+		
+		highlightWrite1 = buildHighlightWriteTO(land.getId());
+		highlightWrite1.setId(highlight.getId());
+		highlightWrite1.setName(highlight1.getName());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(highlightWrite1)
+						.log().body()
+						.put("/highlights")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+highlight1.getName()+" already exists", ex.getLocalizedMessage());
 	}
 	
 	@Test

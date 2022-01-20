@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -95,6 +96,51 @@ public class UnterkunftIT extends ItBase {
 		assertThat(unterkunftWrite1.getName(), is(unterkunft.getName()));
 //		assertThat(unterkunft.getLand().getUnterkunft(), containsInAnyOrder(unterkunft));
 		
+	}
+	
+	@Test
+	public void createUnterkunft__name_exist() {
+		
+		unterkunftWrite1 = buildUnterkunftWriteTO(land.getId());
+		unterkunftWrite1.setName(unterkunft.getName());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(unterkunftWrite1)
+						.log().body()
+						.post("/unterkunfte")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+unterkunft.getName()+" already exists", ex.getLocalizedMessage());
+	}
+	
+	@Test
+	public void updateUnterkunft__name_exist() {
+		
+		unterkunftWrite1 = buildUnterkunftWriteTO(land.getId());
+		unterkunftWrite1.setId(unterkunft.getId());
+		unterkunftWrite1.setName(unterkunft1.getName());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(unterkunftWrite1)
+						.log().body()
+						.put("/unterkunfte")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+unterkunft1.getName()+" already exists", ex.getLocalizedMessage());
 	}
 	
 	@Test

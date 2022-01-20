@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -99,6 +100,51 @@ public class LandInfoIT extends ItBase {
 		assertThat(create.getTitel(), is(landInfo.getTitel()));
 		assertThat(create.getDescription(), is(landInfo.getDescription()));
 		assertThat(create.getLandId(), is(landInfo.getLand().getId()));
+	}
+	
+	@Test
+	public void createLandInfo__titel_exist() {
+		
+		LandInfoReadWriteTO create = buildLandInfoReadWriteTO(land.getId());
+		create.setTitel(landInfo.getTitel());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(create)
+						.log().body()
+						.post("/landInfos")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+landInfo.getTitel()+" already exists", ex.getLocalizedMessage());
+	}
+	
+	@Test
+	public void updateLandInfo__titel_exist() {
+		
+		LandInfoReadWriteTO update = buildLandInfoReadWriteTO(land.getId());
+		update.setId(landInfo.getId());
+		update.setTitel(landInfo1.getTitel());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(update)
+						.log().body()
+						.put("/landInfos")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+landInfo1.getTitel()+" already exists", ex.getLocalizedMessage());
 	}
 	
 	@Test

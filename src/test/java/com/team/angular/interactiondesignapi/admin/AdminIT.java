@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.is;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -65,6 +66,51 @@ public class AdminIT extends ItBase {
 	}
 	
 	@Test
+	public void createAdmin__email_exist() {
+		
+		Admin create = buildAdmin();
+			  create.setEmail(admin.getEmail());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(create)
+						.log().body()
+						.post("/admins")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: Email has already been taken", ex.getLocalizedMessage());
+	}
+	
+	@Test
+	public void updateAdmin__email_exist() {
+			
+		AdminWriteTO update = buildAdminWriteTO();
+		update.setId(admin.getId());
+		update.setEmail(admin1.getEmail());
+		
+		Exception ex = Assertions.assertThrows(Exception.class, () -> {
+			UUID.fromString(
+					given()
+						.contentType(ContentType.JSON)
+						.body(update)
+						.log().body()
+						.put("/admins")
+						.then()
+						.log().body()
+						.statusCode(200)
+						.extract().body().path("id"));
+		});
+		
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: Email has already been taken", ex.getLocalizedMessage());
+	}
+	
+	@Test
 	public void listAdmins() {	
 		
 			given()
@@ -99,8 +145,6 @@ public class AdminIT extends ItBase {
 					.extract().body().path("id"));
 		
 		Admin admin = adminRepository.findById(id_adm).get();
-		
-		System.out.println(admin);
 		
 		AdminWriteTO update = buildAdminWriteTO();
 		update.setId(admin.getId());
