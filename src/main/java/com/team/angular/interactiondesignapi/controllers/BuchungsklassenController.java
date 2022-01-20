@@ -35,14 +35,14 @@ public class BuchungsklassenController {
     @ApiOperation("Add One Buchungsklassen")
     @PostMapping("")
     public BuchungsklassenReadWriteTO addBuchungsklassen(
-            @ApiParam(name = "Buchungsklassen", value = "Buchungsklassen to add") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
+            @ApiParam(name = "Buchungsklassen", value = "Buchungsklassen to add") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) {
         return buchungsklassenService.addBuchungsklassen(buchungsklassen);
     }
 
     @ApiOperation("Update Buchungsklassen")
     @PutMapping("")
     public BuchungsklassenReadListTO updateBuchungsklassen(@ApiParam(name = "Buchungsklassen", value =
-            "Buchungsklassen to update") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
+            "Buchungsklassen to update") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) {
         return buchungsklassenService.updateBuchungsklassen(buchungsklassen);
     }
 

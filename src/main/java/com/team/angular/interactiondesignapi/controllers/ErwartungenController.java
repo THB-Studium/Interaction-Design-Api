@@ -1,26 +1,16 @@
 package com.team.angular.interactiondesignapi.controllers;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.team.angular.interactiondesignapi.services.ErwartungenService;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadWriteTO;
-
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/erwartungen")
@@ -53,7 +43,7 @@ public class ErwartungenController {
     @ApiOperation("Update Erwartungen")
     @PutMapping("")
     public ErwartungenReadListTO updateErwartungen(@ApiParam(name = "Erwartungen", value = "Erwartungen to update")
-                                         @RequestBody ErwartungenReadListTO erwartungen) {
+                                                   @RequestBody ErwartungenReadListTO erwartungen) {
         return erwartungenService.updateErwartungen(erwartungen);
     }
 

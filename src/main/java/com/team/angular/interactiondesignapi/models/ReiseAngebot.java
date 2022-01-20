@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.*;
 
 import lombok.AllArgsConstructor;
@@ -63,9 +64,11 @@ public class ReiseAngebot {
     private List<Buchungsklassen> buchungsklassen;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
     private Erwartungen erwartungen;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @EqualsAndHashCode.Exclude
     private Land land;
 
     @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)

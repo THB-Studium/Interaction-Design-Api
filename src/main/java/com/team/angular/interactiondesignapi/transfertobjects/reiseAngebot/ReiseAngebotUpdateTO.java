@@ -18,6 +18,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//todo: must be deleted
 public class ReiseAngebotUpdateTO {
     private UUID id;
 

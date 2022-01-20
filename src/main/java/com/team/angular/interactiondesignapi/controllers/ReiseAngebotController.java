@@ -61,7 +61,7 @@ public class ReiseAngebotController {
 	@ApiOperation("Update ReiseAngebot")
 	@PutMapping("")
 	public ReiseAngebotReadTO updateReiseAngebot(
-			@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update") @RequestBody ReiseAngebotUpdateTO reiseAngebot) throws Exception {
+			@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update") @RequestBody ReiseAngebotWriteTO reiseAngebot) throws Exception {
 		return reiseAngebotService.updateReiseAngebot(reiseAngebot);
 	}
 
