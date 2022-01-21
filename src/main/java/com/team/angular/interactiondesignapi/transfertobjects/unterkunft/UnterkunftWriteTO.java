@@ -18,7 +18,7 @@ public class UnterkunftWriteTO {
 
 	private String link;
 
-	private String addresse;
+	private String adresse;
 
 	private String beschreibung;
 	

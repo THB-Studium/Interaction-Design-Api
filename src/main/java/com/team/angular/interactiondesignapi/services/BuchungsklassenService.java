@@ -37,14 +37,10 @@ public class BuchungsklassenService {
         return Buchungsklassen2BuchungsklassenReadListTO.apply(buchungsklassenRepository.findAll());
     }
 
-    public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) throws Exception {
+    public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
         Buchungsklassen _buchungsklassen = new Buchungsklassen();
 
-        if (!buchungsklassenRepository.existsBuchungsklassenByType(buchungsklassen.getType())) {
-            _buchungsklassen.setType(buchungsklassen.getType());
-        } else {
-            throw new Exception(buchungsklassen.getType() + " already exists");
-        }
+        _buchungsklassen.setType(buchungsklassen.getType());
 
         if (buchungsklassen.getPreis() != 0)
             _buchungsklassen.setPreis(buchungsklassen.getPreis());
@@ -70,19 +66,12 @@ public class BuchungsklassenService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen)
-            throws Exception {
+    public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
 
         Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
 
-        if (buchungsklassen.getType() != null && !_buchungsklassen.getType().equals(buchungsklassen.getType())) {
-            if (!buchungsklassenRepository.existsBuchungsklassenByType(buchungsklassen.getType())) {
-                _buchungsklassen.setType(buchungsklassen.getType());
-            } else {
-                throw new Exception(buchungsklassen.getType() + " already exists");
-            }
-        }
+        _buchungsklassen.setType(buchungsklassen.getType());
 
         if (buchungsklassen.getPreis() != 0)
             _buchungsklassen.setPreis(buchungsklassen.getPreis());

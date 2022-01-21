@@ -27,7 +27,7 @@ public class Unterkunft {
     private String link;
 
     //@NotBlank
-    private String addresse;
+    private String adresse;
 
     private String beschreibung;
 

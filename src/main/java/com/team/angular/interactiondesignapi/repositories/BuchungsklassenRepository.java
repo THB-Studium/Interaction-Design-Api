@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 @Repository
 public interface BuchungsklassenRepository extends JpaRepository<Buchungsklassen, UUID> {
-    Boolean existsBuchungsklassenByType(String type);
+
 }

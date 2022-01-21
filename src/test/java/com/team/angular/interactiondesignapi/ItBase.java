@@ -101,7 +101,7 @@ public class ItBase {
 
 		unterkunft.setName(UUID.randomUUID().toString());
 		unterkunft.setLink(UUID.randomUUID().toString());
-		unterkunft.setAddresse(UUID.randomUUID().toString());
+		unterkunft.setAdresse(UUID.randomUUID().toString());
 		unterkunft.setBeschreibung(UUID.randomUUID().toString());
 		unterkunft.setBilder(bilder);
 		unterkunft.setLand(land);
@@ -118,7 +118,7 @@ public class ItBase {
 
 		unterkunft.setName(UUID.randomUUID().toString());
 		unterkunft.setLink(UUID.randomUUID().toString());
-		unterkunft.setAddresse(UUID.randomUUID().toString());
+		unterkunft.setAdresse(UUID.randomUUID().toString());
 		unterkunft.setBeschreibung(UUID.randomUUID().toString());
 		unterkunft.setLandId(landId);
 		unterkunft.setBilder(un);
