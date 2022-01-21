@@ -1,23 +1,18 @@
 package com.team.angular.interactiondesignapi.models;
 
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
-import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-
-import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -46,28 +41,28 @@ public class ReiseAngebot {
     private int freiPlaetze;
 
     private int interessiert;
-    
+
     private Date anmeldungsFrist;
 
-	private String hinweise;
-	
-	@ElementCollection
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<String> mitReiserBerechtigt;
+    private String hinweise;
 
-	private String sonstigeHinweise;
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> mitReiserBerechtigt;
+
+    private String sonstigeHinweise;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
 
-    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Buchungsklassen> buchungsklassen;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Erwartungen erwartungen;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Land land;
 
