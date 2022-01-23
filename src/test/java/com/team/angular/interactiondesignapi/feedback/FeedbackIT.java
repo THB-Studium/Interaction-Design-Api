@@ -2,8 +2,8 @@ package com.team.angular.interactiondesignapi.feedback;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
 
 import java.util.UUID;
 
@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Feedback;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.Feedback2FeedbackWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackWriteTO;
 
 import io.restassured.http.ContentType;
 
@@ -43,14 +45,12 @@ public class FeedbackIT extends ItBase {
 	
 	@Test
 	public void createFeedback() {
-		Feedback create = buildFeedback();
+		FeedbackWriteTO create = buildFeedbackWriteTO();
 		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("feedback", create,"application/json")
-				.multiPart("bild", "something123".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+				.body(create)
 				.log().body()
 				.post("/feedbacks")
 				.then()
@@ -89,12 +89,12 @@ public class FeedbackIT extends ItBase {
 		feedback.setAutor(newAuhtor);
 		feedbackRepository.save(feedback);
 		
+		FeedbackWriteTO feedb_ = Feedback2FeedbackWriteTO.apply(feedback);
+		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("feedback", feedback,"application/json")
-				.multiPart("bild", "something123".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+				.body(feedb_)
 				.log().body()
 				.put("/feedbacks")
 				.then()
@@ -117,12 +117,12 @@ public class FeedbackIT extends ItBase {
 		feedback1.setBild(null);
 		feedback1.setDescription(null);
 		
+		FeedbackWriteTO feedb_ = Feedback2FeedbackWriteTO.apply(feedback1);
+		
 		UUID id = UUID.fromString(
 				given()
-				//.contentType(ContentType.JSON)
-				.multiPart("feedback", feedback1,"application/json")
-				.multiPart("bild", "something123".getBytes())
-				//.body(create)
+				.contentType(ContentType.JSON)
+				.body(feedb_)
 				.log().body()
 				.put("/feedbacks")
 				.then()

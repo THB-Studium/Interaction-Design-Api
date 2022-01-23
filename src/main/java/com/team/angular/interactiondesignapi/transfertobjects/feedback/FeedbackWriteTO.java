@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedbacktTO {
+public class FeedbackWriteTO {
 	
 	private UUID id;
 	
@@ -19,6 +19,6 @@ public class FeedbacktTO {
 	
 	private String description;
 	
-	private byte[] bild;
+	private String bild;
 
 }

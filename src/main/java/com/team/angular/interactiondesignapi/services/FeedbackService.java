@@ -1,21 +1,22 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.config.Helper;
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
-import com.team.angular.interactiondesignapi.models.Feedback;
-import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.feedback.Feedback2FeedbackListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackReadListTO;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.UUID;
+import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.models.Feedback;
+import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.Feedback2FeedbackListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackWriteTO;
 
 @Service
 public class FeedbackService {
@@ -28,13 +29,14 @@ public class FeedbackService {
         return Feedback2FeedbackListTO.apply(feedbackRepository.findAll());
     }
 
-    public Feedback addFeedback(FeedbackReadListTO feedback, MultipartFile bild) {
+    public Feedback addFeedback(FeedbackWriteTO feedback) {
 
         Feedback newFeedback = new Feedback();
         newFeedback.setAutor(feedback.getAutor());
         newFeedback.setDescription(feedback.getDescription());
         newFeedback.setVeroefentlich(false);
-        newFeedback.setBild(Helper.convertMultiPartFileToByte(bild));
+        if(feedback.getBild() != null)
+        	newFeedback.setBild(Base64.decodeBase64(feedback.getBild().substring(22)));
 
         Feedback saved = feedbackRepository.save(newFeedback);
 
@@ -53,17 +55,18 @@ public class FeedbackService {
 
     }
 
-    public Feedback updateFeedback(Feedback feedback_, MultipartFile bild) {
+    public Feedback updateFeedback(FeedbackWriteTO feedback_) {
 
         Feedback feedback = getFeedback(feedback_.getId());
 
         if (feedback_.getAutor() != null)
             feedback.setAutor(feedback_.getAutor());
-        if (feedback_.getBild() != null)
-            feedback.setBild(Helper.convertMultiPartFileToByte(bild));
+        if(feedback_.getBild() != null)
+        	feedback.setBild(Base64.decodeBase64(feedback_.getBild().substring(22)));
         if (feedback_.getDescription() != null)
             feedback.setDescription(feedback_.getDescription());
-
+        feedback.setVeroefentlich(feedback_.isVeroefentlich());
+        
         return feedback;
     }
 

@@ -1,18 +1,11 @@
 package com.team.angular.interactiondesignapi;
 
-import com.team.angular.interactiondesignapi.models.*;
-import com.team.angular.interactiondesignapi.repositories.*;
-import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.hightlight.HighlightReadWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoReadWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
-import io.restassured.module.mockmvc.RestAssuredMockMvc;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +19,42 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDate;
-import java.util.*;
+import com.team.angular.interactiondesignapi.models.Admin;
+import com.team.angular.interactiondesignapi.models.Buchung;
+import com.team.angular.interactiondesignapi.models.Buchungsklassen;
+import com.team.angular.interactiondesignapi.models.Erwartungen;
+import com.team.angular.interactiondesignapi.models.Feedback;
+import com.team.angular.interactiondesignapi.models.Highlight;
+import com.team.angular.interactiondesignapi.models.Land;
+import com.team.angular.interactiondesignapi.models.LandInfo;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
+import com.team.angular.interactiondesignapi.models.Reiser;
+import com.team.angular.interactiondesignapi.models.Unterkunft;
+import com.team.angular.interactiondesignapi.models.ZahlungMethod;
+import com.team.angular.interactiondesignapi.repositories.AdminRepository;
+import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
+import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
+import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
+import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
+import com.team.angular.interactiondesignapi.repositories.HighlightRepository;
+import com.team.angular.interactiondesignapi.repositories.LandInfoRepository;
+import com.team.angular.interactiondesignapi.repositories.LandRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
+import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.hightlight.HighlightReadWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.land.LandWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoReadWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
+
+import io.restassured.module.mockmvc.RestAssuredMockMvc;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.yml")
@@ -92,6 +119,17 @@ public class ItBase {
 		feedback.setDescription(UUID.randomUUID().toString());
 		feedback.setVeroefentlich(true);
 		feedback.setBild(UUID.randomUUID().toString().getBytes());
+
+		return feedback;
+	}
+	
+	protected FeedbackWriteTO buildFeedbackWriteTO() {
+		FeedbackWriteTO feedback = new FeedbackWriteTO();
+
+		feedback.setAutor(UUID.randomUUID().toString());
+		feedback.setDescription(UUID.randomUUID().toString());
+		feedback.setVeroefentlich(true);
+		//feedback.setBild(UUID.randomUUID().toString());
 
 		return feedback;
 	}

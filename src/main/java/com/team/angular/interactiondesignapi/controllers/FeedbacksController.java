@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.team.angular.interactiondesignapi.models.Feedback;
 import com.team.angular.interactiondesignapi.services.FeedbackService;
 import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackWriteTO;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -46,17 +46,15 @@ public class FeedbacksController {
 	@ApiOperation("Add One Feedback")
 	@PostMapping("")
 	public Feedback addFeedback(
-			@ApiParam(name = "Feedback", value = "Feedback to add") @RequestPart(value = "feedback") FeedbackReadListTO feedback,
-			@RequestPart(required = false, value = "bild") MultipartFile bild) {
-		return feedbackService.addFeedback(feedback, bild);
+			@ApiParam(name = "Feedback", value = "Feedback to add") @RequestBody FeedbackWriteTO feedback) {
+		return feedbackService.addFeedback(feedback);
 	}
 
 	@ApiOperation("Update Feedback")
 	@PutMapping("")
 	public Feedback updateFeedback(
-			@ApiParam(name = "Feedback", value = "Feedback to update") @RequestPart Feedback feedback,
-			@RequestPart(required = false, value = "bild") MultipartFile bild) {
-		return feedbackService.updateFeedback(feedback, bild);
+			@ApiParam(name = "Feedback", value = "Feedback to update") @RequestBody FeedbackWriteTO feedback) {
+		return feedbackService.updateFeedback(feedback);
 	}
 
 	@ApiOperation("Delete Feedback")
