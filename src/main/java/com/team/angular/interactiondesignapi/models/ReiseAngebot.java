@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -61,13 +62,15 @@ public class ReiseAngebot {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
 
-    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Buchungsklassen> buchungsklassen;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
     private Erwartungen erwartungen;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
     private Land land;
 
     @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)

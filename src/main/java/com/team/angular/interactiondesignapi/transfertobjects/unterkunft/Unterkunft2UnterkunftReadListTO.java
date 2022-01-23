@@ -13,7 +13,7 @@ public class Unterkunft2UnterkunftReadListTO {
 		out.setId(in.getId());
 		out.setName(in.getName());
 		out.setLink(in.getLink());
-		out.setAdresse(in.getAddresse());
+		out.setAdresse(in.getAdresse());
 		out.setBeschreibung(in.getBeschreibung());
 
 		return out;

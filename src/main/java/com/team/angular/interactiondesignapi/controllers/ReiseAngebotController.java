@@ -18,17 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.team.angular.interactiondesignapi.services.ReiseAngebotService;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/reiseAngebot")
@@ -61,7 +53,7 @@ public class ReiseAngebotController {
 	@ApiOperation("Update ReiseAngebot")
 	@PutMapping("")
 	public ReiseAngebotReadTO updateReiseAngebot(
-			@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update") @RequestBody ReiseAngebotUpdateTO reiseAngebot) throws Exception {
+			@ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update") @RequestBody ReiseAngebotWriteTO reiseAngebot) throws Exception {
 		return reiseAngebotService.updateReiseAngebot(reiseAngebot);
 	}
 
