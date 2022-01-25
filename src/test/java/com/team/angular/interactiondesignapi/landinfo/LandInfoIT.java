@@ -1,28 +1,22 @@
 package com.team.angular.interactiondesignapi.landinfo;
 
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import com.team.angular.interactiondesignapi.ItBase;
+import com.team.angular.interactiondesignapi.models.*;
+import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoReadWriteTO;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.team.angular.interactiondesignapi.ItBase;
-import com.team.angular.interactiondesignapi.models.LandInfo;
-import com.team.angular.interactiondesignapi.models.Erwartungen;
-import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.models.Reiser;
-import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoReadWriteTO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-import io.restassured.http.ContentType;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
 
 public class LandInfoIT extends ItBase {
 	
@@ -123,28 +117,28 @@ public class LandInfoIT extends ItBase {
 		
 		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+landInfo.getTitel()+" already exists", ex.getLocalizedMessage());
 	}
-	
+
 	@Test
 	public void updateLandInfo__titel_exist() {
-		
+
 		LandInfoReadWriteTO update = buildLandInfoReadWriteTO(land.getId());
 		update.setId(landInfo.getId());
 		update.setTitel(landInfo1.getTitel());
-		
+
 		Exception ex = Assertions.assertThrows(Exception.class, () -> {
 			UUID.fromString(
 					given()
-						.contentType(ContentType.JSON)
-						.body(update)
-						.log().body()
-						.put("/landInfos")
-						.then()
-						.log().body()
-						.statusCode(200)
-						.extract().body().path("id"));
+							.contentType(ContentType.JSON)
+							.body(update)
+							.log().body()
+							.put("/landInfos")
+							.then()
+							.log().body()
+							.statusCode(200)
+							.extract().body().path("id"));
 		});
-		
-		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: "+landInfo1.getTitel()+" already exists", ex.getLocalizedMessage());
+
+		Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: " + landInfo1.getTitel() + " already exists", ex.getLocalizedMessage());
 	}
 	
 	@Test
