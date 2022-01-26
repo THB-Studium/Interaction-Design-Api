@@ -90,12 +90,9 @@ public class UnterkunftService {
 			actual_unterkunft.setBilder(bilder);
 		}
 
-		Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
-
 		// Land land = null;
 		if (unterkunft.getLandId() != null) {
-			land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
+			Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
 					() -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 			actual_unterkunft.setLand(land);
 		}
