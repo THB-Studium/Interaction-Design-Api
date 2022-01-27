@@ -32,6 +32,8 @@ public class ReiserWriteTO {
     private String adresse;
 
     private String studiengang;
+    
+    private String status;
 
     private String arbeitBei;
 

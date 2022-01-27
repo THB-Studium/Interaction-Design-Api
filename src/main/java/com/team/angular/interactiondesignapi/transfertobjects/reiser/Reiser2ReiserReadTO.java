@@ -19,6 +19,7 @@ public class Reiser2ReiserReadTO {
 		out.setHochschule(in.getHochschule());
 		out.setAdresse(in.getAdresse());
 		out.setStudiengang(in.getStudiengang());
+		out.setStatus(in.getStatus());
 		out.setArbeitBei(in.getArbeitBei());
 		out.setSchonTeilgenommen(in.isSchonTeilgenommen());
 		return out;

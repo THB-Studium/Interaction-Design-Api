@@ -190,6 +190,7 @@ public class ItBase {
         reiser.setHochschule(UUID.randomUUID().toString());
         reiser.setAdresse(UUID.randomUUID().toString());
         reiser.setStudiengang(UUID.randomUUID().toString());
+        reiser.setStatus(UUID.randomUUID().toString());
         reiser.setArbeitBei(UUID.randomUUID().toString());
         reiser.setSchonTeilgenommen(true);
 
