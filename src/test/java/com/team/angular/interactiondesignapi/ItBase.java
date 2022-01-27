@@ -228,7 +228,7 @@ public class ItBase {
         return newBuchung;
     }
 
-    protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID landId, UUID raId) {
+    protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID raId) {
         BuchungWriteTO newBuchung = new BuchungWriteTO();
 
         newBuchung.setDatum(LocalDate.now());

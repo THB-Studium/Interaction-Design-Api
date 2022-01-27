@@ -29,11 +29,11 @@ public class BuchungIT extends ItBase {
 	
 	Buchung buchung, buchung1, buchung2;
 	
-	Buchungsklassen buchungsklasse;
+	Buchungsklassen buchungsklasse, buchungsklasse1;
 	
 	ReiserWriteTO reiserWrite1;
 	
-	Land land;
+	Land land, land1;
 	
 	private List<String> beschreibung = new ArrayList<>();
 	
@@ -41,7 +41,7 @@ public class BuchungIT extends ItBase {
 	
 	Erwartungen erwartungen;
 	
-	ReiseAngebot reiseAngebot;
+	ReiseAngebot reiseAngebot, reiseAngebot1;
 	
 	@BeforeEach
 	public void setup() {
@@ -58,11 +58,17 @@ public class BuchungIT extends ItBase {
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);
 		
+		reiseAngebot1 = buildReiseAngebot();
+		reiseAngebot1 = reiseAngebotRepository.save(reiseAngebot1);
+		
 		land = buildLand(reiseAngebot);
 		land = landRepository.save(land);
 		
 		buchungsklasse = buildBuchungsKlasse(reiseAngebot);
-		buchungsklasseRepository.save(buchungsklasse);
+		buchungsklasse = buchungsklasseRepository.save(buchungsklasse);
+		
+		buchungsklasse1 = buildBuchungsKlasse(reiseAngebot);
+		buchungsklasse1 =buchungsklasseRepository.save(buchungsklasse);
 		
 		buchung = buildBuchung(reiser, reiseAngebot);
 		buchung = buchungRepository.save(buchung);
@@ -78,9 +84,9 @@ public class BuchungIT extends ItBase {
     }
 
 	
-	/*@Test
+	@Test
 	public void createBuchung() {
-		BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), land.getId(), reiseAngebot.getId());
+		BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
 		
 		UUID id = UUID.fromString(
 				given()
@@ -99,7 +105,7 @@ public class BuchungIT extends ItBase {
 		assertThat(create.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
 		assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
 		assertThat(create.getFlughafen(), is(buchung.getFlughafen()));
-	}*/
+	}
 	
 	@Test
 	public void listBuchungs() {	
@@ -116,10 +122,10 @@ public class BuchungIT extends ItBase {
 				
 	}
 	
-	/*@Test
+	@Test
 	public void updateBuchung() {
 		
-		BuchungWriteTO update = buildBuchungWriteTO( buchungsklasse.getId(), land.getId(), reiseAngebot.getId());
+		BuchungWriteTO update = buildBuchungWriteTO( buchungsklasse1.getId(), reiseAngebot1.getId());
 		update.setId(buchung.getId());
 		
 		UUID id = UUID.fromString(
@@ -139,7 +145,7 @@ public class BuchungIT extends ItBase {
 		assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
 		assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
 		assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
-	}*/
+	}
 	
 	@Test
 	public void getBuchung() {

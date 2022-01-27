@@ -84,6 +84,11 @@ public class BuchungService {
         //update freiPlaetze after adding a new Buchung
         if (ra.getFreiPlaetze() > 0) {
             ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
+        	
+        	if(buchung.getMitReiser() != null) {
+        		ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
+        	}
+        	
             reiseAngebotRepository.save(ra);
         } else {
             throw new Exception("The trip is fully booked");
