@@ -105,6 +105,7 @@ public class BuchungIT extends ItBase {
 		assertThat(create.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
 		assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
 		assertThat(create.getFlughafen(), is(buchung.getFlughafen()));
+		//assertThat(reiseAngebot.getFreiPlaetze(), is(reiseAngebot.getFreiPlaetze() - 1));
 	}
 	
 	@Test

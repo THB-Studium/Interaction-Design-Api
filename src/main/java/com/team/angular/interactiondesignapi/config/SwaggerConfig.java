@@ -22,7 +22,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo getApiInfo() {
-		return new ApiInfoBuilder().title("Reddit Clone API").version("1.0")
+		return new ApiInfoBuilder().title("University Travel Club API").version("1.0")
 				.description("API for University Travel Club")
 				.contact(new Contact("Julia Schnitzer", " ", "post@university-travel-club.org"))
 				.license("Apache License Version 2.0").build();
