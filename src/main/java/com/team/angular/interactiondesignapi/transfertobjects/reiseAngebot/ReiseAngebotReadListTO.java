@@ -33,6 +33,8 @@ public class ReiseAngebotReadListTO {
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate anmeldungsFrist;
+    
+    private UUID landId;
 
     // not necessary for the workflow
     /*@ElementCollection(fetch = FetchType.EAGER)

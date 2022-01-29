@@ -48,6 +48,10 @@ public class ReiserService {
         if (reiser.getStudiengang() != null) {
             newReiser.setStudiengang(reiser.getStudiengang());
         }
+        
+        if (reiser.getStatus() != null) {
+            newReiser.setStatus(reiser.getStatus());
+        }
 
         if (reiser.getArbeitBei() != null) {
             newReiser.setArbeitBei(reiser.getArbeitBei());
@@ -94,6 +98,8 @@ public class ReiserService {
             actual.setAdresse(reiser.getAdresse());
         if (reiser.getStudiengang() != null)
             actual.setStudiengang(reiser.getStudiengang());
+        if (reiser.getStatus() != null)
+            actual.setStatus(reiser.getStatus());
         if (reiser.getArbeitBei() != null)
             actual.setArbeitBei(reiser.getArbeitBei());
         if (reiser.isSchonTeilgenommen() != actual.isSchonTeilgenommen())

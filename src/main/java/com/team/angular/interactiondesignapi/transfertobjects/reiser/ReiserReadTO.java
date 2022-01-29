@@ -34,6 +34,8 @@ public class ReiserReadTO {
     private String adresse;
 
     private String studiengang;
+    
+    private String status;
 
     private String arbeitBei;
 

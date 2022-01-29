@@ -190,6 +190,7 @@ public class ItBase {
         reiser.setHochschule(UUID.randomUUID().toString());
         reiser.setAdresse(UUID.randomUUID().toString());
         reiser.setStudiengang(UUID.randomUUID().toString());
+        reiser.setStatus(UUID.randomUUID().toString());
         reiser.setArbeitBei(UUID.randomUUID().toString());
         reiser.setSchonTeilgenommen(true);
 
@@ -228,7 +229,7 @@ public class ItBase {
         return newBuchung;
     }
 
-    protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID landId, UUID raId) {
+    protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID raId) {
         BuchungWriteTO newBuchung = new BuchungWriteTO();
 
         newBuchung.setDatum(LocalDate.now());
