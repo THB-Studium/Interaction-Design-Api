@@ -16,10 +16,14 @@ public class LandWriteTO {
 
     private String name;
 
+    private String headerFarbe;
+
+    private String bodyFarbe;
+
     private List<String> flughafen;
 
     private String unterkunft_text;
-    
+
     private String image;
 
 }

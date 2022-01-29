@@ -36,6 +36,10 @@ public class Land {
 
 	private byte[] karte_bild;
 
+	private String headerFarbe;
+
+	private String bodyFarbe;
+
     @OneToOne(mappedBy = "land",fetch = FetchType.LAZY)
     private ReiseAngebot reiseAngebot;
 
