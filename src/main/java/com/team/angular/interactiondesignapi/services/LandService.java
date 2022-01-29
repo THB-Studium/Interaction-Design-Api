@@ -41,6 +41,12 @@ public class LandService {
 
         newLand.setFlughafen(land.getFlughafen());
         newLand.setUnterkunft_text(land.getUnterkunft_text());
+
+        if (land.getHeaderFarbe() != null)
+            newLand.setHeaderFarbe(land.getHeaderFarbe());
+        if (land.getBodyFarbe() != null)
+            newLand.setBodyFarbe(land.getBodyFarbe());
+
         if (land.getImage() != null)
             newLand.setKarte_bild(Base64.decodeBase64(land.getImage().substring(22)));
 
@@ -64,6 +70,11 @@ public class LandService {
             } else {
                 throw new Exception(land.getName() + " already exists");
             }
+
+        if (land.getHeaderFarbe() != null)
+            newLand.setHeaderFarbe(land.getHeaderFarbe());
+        if (land.getBodyFarbe() != null)
+            newLand.setBodyFarbe(land.getBodyFarbe());
         if (land.getFlughafen() != null)
             newLand.setFlughafen(land.getFlughafen());
         if (land.getUnterkunft_text() != null)

@@ -1,12 +1,12 @@
 package com.team.angular.interactiondesignapi.transfertobjects.land;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.transfertobjects.hightlight.Highlight2HighlightReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfo2LandInfoReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.Unterkunft2UnterkunftReadListTO;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Land2LandReadTO {
 
@@ -18,6 +18,8 @@ public class Land2LandReadTO {
         out.setFlughafen(in.getFlughafen());
         out.setUnterkunft_text(in.getUnterkunft_text());
         out.setKarte_bild(in.getKarte_bild());
+        out.setHeaderFarbe(in.getHeaderFarbe());
+        out.setBodyFarbe(in.getBodyFarbe());
         if (in.getLandInfo() != null)
             out.setLandInfo(LandInfo2LandInfoReadListTO.apply(in.getLandInfo()));
         if (in.getHighlights() != null)
