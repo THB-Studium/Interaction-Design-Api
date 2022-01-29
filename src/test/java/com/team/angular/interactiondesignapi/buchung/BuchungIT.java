@@ -20,6 +20,7 @@ import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.models.Reiser;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
 
@@ -37,7 +38,7 @@ public class BuchungIT extends ItBase {
 	
 	private List<String> beschreibung = new ArrayList<>();
 	
-	Reiser reiser, reiser1, mitReiser;
+	Reiser reiser, reiser1, mitReiser, reiser2, mitReiser1;
 	
 	Erwartungen erwartungen;
 	
@@ -52,6 +53,15 @@ public class BuchungIT extends ItBase {
 		
 		reiser1 = buildReiser();
 		reiser1 = reiserRepository.save(reiser1);
+		
+		reiser2 = buildReiser();
+		reiser2 = reiserRepository.save(reiser2);
+		
+		mitReiser1 = buildReiser();
+		mitReiser1 = reiserRepository.save(mitReiser1);
+		
+		mitReiser = buildReiser();
+		mitReiser = reiserRepository.save(mitReiser);
 		
 		beschreibung.add(UUID.randomUUID().toString());
 		
@@ -126,7 +136,7 @@ public class BuchungIT extends ItBase {
 	@Test
 	public void updateBuchung() {
 		
-		BuchungWriteTO update = buildBuchungWriteTO( buchungsklasse1.getId(), reiseAngebot1.getId());
+		BuchungUpdateTO update = buildBuchungUpdateTO( buchungsklasse1.getId(), reiseAngebot1.getId(), mitReiser1.getId(), reiser1.getId() );
 		update.setId(buchung.getId());
 		
 		UUID id = UUID.fromString(
@@ -145,6 +155,9 @@ public class BuchungIT extends ItBase {
 		assertThat(update.getDatum(), is(buchung.getDatum()));
 		assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
 		assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
+		assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
+		assertThat(update.getReiserId(), is(reiser1.getId()));
+		assertThat(update.getMitReiserId(), is(mitReiser1.getId()));
 		assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
 	}
 	

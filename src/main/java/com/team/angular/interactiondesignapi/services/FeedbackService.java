@@ -64,9 +64,10 @@ public class FeedbackService {
             feedback.setBild(Base64.decodeBase64(feedback_.getBild().substring(22)));
         if (feedback_.getDescription() != null)
             feedback.setDescription(feedback_.getDescription());
+        
         feedback.setVeroefentlich(feedback_.isVeroefentlich());
 
-        return feedback;
+        return feedbackRepository.save(feedback);
     }
 
     public ResponseEntity<?> deleteFeedback(UUID id) {

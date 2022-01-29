@@ -132,6 +132,8 @@ public class BuchungService {
             mitReiser = reiserRepository.findById(buchung.getMitReiserId()).orElseThrow(
                     () -> new ResourceNotFoundException("Cannot find MitReiser with id: " + buchung.getMitReiserId()));
             actual.setMitReiserId(mitReiser.getId());
+        } else if (buchung.getMitReiserId() == null) {
+        	actual.setMitReiserId(null);
         }
 
         if (buchung.getDatum() != null)

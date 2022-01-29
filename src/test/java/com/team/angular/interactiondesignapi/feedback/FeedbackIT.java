@@ -110,6 +110,35 @@ public class FeedbackIT extends ItBase {
 	}
 	
 	@Test
+	public void updateFeedback_veröffentlich_false() {
+		
+		String newAuhtor = UUID.randomUUID().toString();
+		feedback.setAutor(newAuhtor);
+		feedback.setVeroefentlich(true);
+		feedbackRepository.save(feedback);
+		
+		FeedbackWriteTO feedb_ = Feedback2FeedbackWriteTO.apply(feedback);
+		
+		UUID id = UUID.fromString(
+				given()
+				.contentType(ContentType.JSON)
+				.body(feedb_)
+				.log().body()
+				.put("/feedbacks")
+				.then()
+				.log().body()
+				.statusCode(200)
+				.extract().body().path("id"));
+		
+		Feedback feedback = feedbackRepository.findById(id).get();
+		
+		assertThat(feedback.getId(), is(feedback.getId()));
+		assertThat(newAuhtor, is(feedback.getAutor()));
+		assertThat(feedback.getDescription(), is(feedback.getDescription()));
+		assertThat(feedback.isVeroefentlich(), is(true));
+	}
+	
+	@Test
 	public void updateFeedback_Bild_Description_Null() {
 		
 		feedback1 = buildFeedback();
@@ -133,7 +162,7 @@ public class FeedbackIT extends ItBase {
 		Feedback feedback_ = feedbackRepository.findById(id).get();
 		
 		assertThat(feedback.getId(), is(feedback_.getId()));
-		assertThat(feedback.getAutor(), is(feedback_.getAutor()));
+		assertThat(feedback_.getAutor(), is(feedback1.getAutor()));
 		assertThat(feedback.getDescription(), is(feedback_.getDescription()));
 		assertThat(feedback.isVeroefentlich(), is(feedback_.isVeroefentlich()));
 	}
