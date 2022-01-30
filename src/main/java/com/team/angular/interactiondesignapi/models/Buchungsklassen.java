@@ -28,6 +28,7 @@ public class Buchungsklassen {
     @Positive
     private double preis;
 
+    @Lob
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)

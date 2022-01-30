@@ -29,6 +29,7 @@ public class Unterkunft {
     //@NotBlank
     private String adresse;
 
+    @Lob
     private String beschreibung;
 
     @ElementCollection

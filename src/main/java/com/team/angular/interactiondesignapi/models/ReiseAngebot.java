@@ -51,12 +51,14 @@ public class ReiseAngebot {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate anmeldungsFrist;
 
+    @Lob
     private String hinweise;
 
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<String> mitReiserBerechtigt;
 
+    @Lob
     private String sonstigeHinweise;
 
     @ElementCollection(fetch = FetchType.EAGER)
