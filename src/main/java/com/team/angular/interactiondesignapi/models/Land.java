@@ -32,6 +32,7 @@ public class Land {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> flughafen;
 
+	@Lob
 	private String unterkunft_text;
 
 	private byte[] karte_bild;
