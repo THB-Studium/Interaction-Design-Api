@@ -65,17 +65,25 @@ public class ReiseAngebotController {
 	}
 
     @ApiOperation("Add Interessiert")
-    @PostMapping("/addInteressiert/{id}")
+    @PutMapping("/addInteressiert/{id}")
     public ResponseEntity<?> addInteressiert(
             @ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
         return reiseAngebotService.addInteressiert(id);
     }
 
     @ApiOperation("Reset Interessiert")
-    @PostMapping("/resetInteressiert/{id}")
+    @PutMapping("/resetInteressiert/{id}")
     public ResponseEntity<?> resetInteressiert(
             @ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
         return reiseAngebotService.resetInteressiert(id);
     }
+
+
+	@ApiOperation("uninteressiert")
+	@PutMapping("/uninteressiert/{id}")
+	public ResponseEntity<?> uninteressiert(
+			@ApiParam(name = "ReiseAngebotId", value = "Id of the ReiseAngebot") @PathVariable UUID id) {
+		return reiseAngebotService.uninteressiert(id);
+	}
 
 }

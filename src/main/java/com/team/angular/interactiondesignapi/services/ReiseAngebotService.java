@@ -188,4 +188,13 @@ public class ReiseAngebotService {
         return new ResponseEntity<>("Successfully reset", HttpStatus.OK);
     }
 
+    public ResponseEntity<?> uninteressiert(UUID id) {
+        ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
+
+        reiseAngebot.setInteressiert(reiseAngebot.getInteressiert() - 1);
+        reiseAngebotRepository.save(reiseAngebot);
+        return new ResponseEntity<>("Successfully updated", HttpStatus.OK);
+    }
+
 }
