@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Lob;
 import java.util.UUID;
 
 @Data
@@ -12,5 +13,7 @@ import java.util.UUID;
 public class HighlightReadListTO {
     private UUID id;
     private String name;
+    @Lob
     private String description;
+    private byte[] bild;
 }
