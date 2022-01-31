@@ -11,6 +11,7 @@ public class Buchungsklassen2BuchungsklassenReadListTO {
         out.setId(in.getId());
         out.setType(in.getType());
         out.setPreis(in.getPreis());
+        out.setDescription(in.getDescription());
         return out;
     }
 
