@@ -14,7 +14,7 @@ public class Land2LandReadListTO {
         out.setHeaderFarbe(in.getHeaderFarbe());
         out.setBodyFarbe(in.getBodyFarbe());
         out.setFlughafen(in.getFlughafen());
-        out.setUnterkunft_text(in.getUnterkunft_text());
+        //out.setUnterkunft_text(in.getUnterkunft_text());
 
         return out;
     }

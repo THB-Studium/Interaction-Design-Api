@@ -22,6 +22,6 @@ public class LandReadListTO {
 
     private List<String> flughafen;
 
-    @Lob
-    private String unterkunft_text;
+    /*@Lob
+    private String unterkunft_text;*/
 }
