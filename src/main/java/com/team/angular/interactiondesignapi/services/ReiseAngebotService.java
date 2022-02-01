@@ -42,6 +42,10 @@ public class ReiseAngebotService {
         return ReiseAngebot2ReiseAngebotReadListTO.apply(reiseAngebotRepository.findAll());
     }
 
+    public List<ReiseAngebotHomeTO> getAllForHome() {
+        return ReiseAngebot2ReiseAngebotHomeTO.apply(reiseAngebotRepository.findAll());
+    }
+
     public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot) throws Exception {
         ReiseAngebot _reiseAngebot = new ReiseAngebot();
 
@@ -192,7 +196,7 @@ public class ReiseAngebotService {
         ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
 
-        if(reiseAngebot.getInteressiert() >=0 ){
+        if (reiseAngebot.getInteressiert() >= 0) {
             reiseAngebot.setInteressiert(reiseAngebot.getInteressiert() - 1);
             reiseAngebotRepository.save(reiseAngebot);
         }
