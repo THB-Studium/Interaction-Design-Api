@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Lob;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,7 @@ public class UnterkunftWriteTO {
 
 	private String adresse;
 
+	@Lob
 	private String beschreibung;
 	
 	private List<String> bilder;

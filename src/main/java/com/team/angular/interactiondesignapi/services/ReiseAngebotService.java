@@ -192,8 +192,10 @@ public class ReiseAngebotService {
         ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
 
-        reiseAngebot.setInteressiert(reiseAngebot.getInteressiert() - 1);
-        reiseAngebotRepository.save(reiseAngebot);
+        if(reiseAngebot.getInteressiert() >=0 ){
+            reiseAngebot.setInteressiert(reiseAngebot.getInteressiert() - 1);
+            reiseAngebotRepository.save(reiseAngebot);
+        }
         return new ResponseEntity<>("Successfully updated", HttpStatus.OK);
     }
 

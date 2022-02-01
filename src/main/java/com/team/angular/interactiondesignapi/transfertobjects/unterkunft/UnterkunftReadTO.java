@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Lob;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class UnterkunftReadTO {
 
 	private String adresse;
 
+	@Lob
 	private String beschreibung;
 
 	private UUID landId;
