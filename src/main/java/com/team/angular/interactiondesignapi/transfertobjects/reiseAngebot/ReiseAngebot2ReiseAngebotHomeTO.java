@@ -13,7 +13,7 @@ public class ReiseAngebot2ReiseAngebotHomeTO {
         out.setStartbild(in.getStartbild());
         out.setStartDatum(in.getStartDatum());
         out.setEndDatum(in.getEndDatum());
-        if(in.getLand() != null)
+        if (in.getLand() != null)
             out.setLandName(in.getLand().getName());
 
         return out;

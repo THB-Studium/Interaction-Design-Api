@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 public class Highlight2HighlightReadWriteTO {
 
     public static HighlightReadReadTO apply(Highlight in) {
-    	HighlightReadReadTO out = new HighlightReadReadTO();
+        HighlightReadReadTO out = new HighlightReadReadTO();
         out.setId(in.getId());
         out.setName(in.getName());
         out.setDescription(in.getDescription());
         out.setBild(in.getBild());
-        if(in.getLand() != null)
+        if (in.getLand() != null)
             out.setLandId(in.getLand().getId());
 
         return out;

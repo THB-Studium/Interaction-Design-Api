@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,7 +23,7 @@ public class Buchung {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datum;
 
     //private Reiser mitReiser;

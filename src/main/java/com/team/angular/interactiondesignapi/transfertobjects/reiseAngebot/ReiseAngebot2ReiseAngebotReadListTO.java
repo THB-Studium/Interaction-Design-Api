@@ -17,8 +17,8 @@ public class ReiseAngebot2ReiseAngebotReadListTO {
         out.setFreiPlaetze(in.getFreiPlaetze());
         out.setInteressiert(in.getInteressiert());
         out.setAnmeldungsFrist(in.getAnmeldungsFrist());
-        if(in.getLand() != null)
-        	out.setLandId(in.getLand().getId());
+        if (in.getLand() != null)
+            out.setLandId(in.getLand().getId());
 
         return out;
     }

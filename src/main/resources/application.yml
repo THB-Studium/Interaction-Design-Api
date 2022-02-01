@@ -1,6 +1,6 @@
 jwt.secret: secretfortravel
-jwt.jwtExpirationInMs: 5000000
-jwt.refreshExpirationDateInMs: 9000000
+jwt.jwtExpirationInMs: 7000000 #2h
+jwt.refreshExpirationDateInMs: 5000000
 
 server.port: 5050
 

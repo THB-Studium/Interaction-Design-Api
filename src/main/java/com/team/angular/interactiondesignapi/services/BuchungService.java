@@ -84,11 +84,11 @@ public class BuchungService {
         //update freiPlaetze after adding a new Buchung
         if (ra.getFreiPlaetze() > 0) {
             ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
-        	
-        	if(buchung.getMitReiser() != null) {
-        		ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
-        	}
-        	
+
+            if (buchung.getMitReiser() != null) {
+                ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
+            }
+
             reiseAngebotRepository.save(ra);
         } else {
             throw new Exception("The trip is fully booked");
@@ -133,7 +133,7 @@ public class BuchungService {
                     () -> new ResourceNotFoundException("Cannot find MitReiser with id: " + buchung.getMitReiserId()));
             actual.setMitReiserId(mitReiser.getId());
         } else if (buchung.getMitReiserId() == null) {
-        	actual.setMitReiserId(null);
+            actual.setMitReiserId(null);
         }
 
         if (buchung.getDatum() != null)

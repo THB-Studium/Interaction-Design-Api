@@ -23,7 +23,6 @@ public class BuchungsklassenReadWriteTO {
     private String type;
 
     @ApiModelProperty(notes = "Description of the Buchungsklasse", name = "description", required = true, value = "mit privatem Bad")
-    @Lob
     private String description;
 
     @ApiModelProperty(notes = "Preis of the Buchungsklasse", name = "preis", required = true, value = "1000")

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -31,9 +30,9 @@ public class ReiseAngebotReadListTO {
 
     private int interessiert;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate anmeldungsFrist;
-    
+
     private UUID landId;
 
     // not necessary for the workflow

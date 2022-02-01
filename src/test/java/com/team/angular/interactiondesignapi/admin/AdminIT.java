@@ -122,7 +122,6 @@ public class AdminIT extends ItBase {
                 .body("id", containsInAnyOrder(admin.getId().toString(), admin1.getId().toString()))
                 .body("name", containsInAnyOrder(admin.getName(), admin1.getName()))
                 .body("surname", containsInAnyOrder(admin.getSurname(), admin1.getSurname()))
-                .body("password", containsInAnyOrder(admin.getPassword(), admin1.getPassword()))
                 .body("email", containsInAnyOrder(admin.getEmail(), admin1.getEmail()));
     }
 

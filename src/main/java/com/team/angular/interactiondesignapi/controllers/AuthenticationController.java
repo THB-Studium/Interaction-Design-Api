@@ -1,7 +1,12 @@
 package com.team.angular.interactiondesignapi.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.team.angular.interactiondesignapi.services.AdminService;
+import com.team.angular.interactiondesignapi.services.authentication.JwtUtil;
+import com.team.angular.interactiondesignapi.transfertobjects.authentication.AuthenticationRequest;
+import com.team.angular.interactiondesignapi.transfertobjects.authentication.AuthenticationResponse;
+import io.jsonwebtoken.impl.DefaultClaims;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,21 +14,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.team.angular.interactiondesignapi.services.AdminService;
-import com.team.angular.interactiondesignapi.services.authentication.JwtUtil;
-import com.team.angular.interactiondesignapi.transfertobjects.authentication.AuthenticationRequest;
-import com.team.angular.interactiondesignapi.transfertobjects.authentication.AuthenticationResponse;
-
-import io.jsonwebtoken.impl.DefaultClaims;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/adminPanel")

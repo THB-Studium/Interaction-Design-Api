@@ -5,7 +5,6 @@ import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungRea
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -22,7 +21,7 @@ public class ReiserReadTO {
 
     private String vorname;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate geburtsdatum;
 
     private String telefonnummer;
@@ -34,7 +33,7 @@ public class ReiserReadTO {
     private String adresse;
 
     private String studiengang;
-    
+
     private String status;
 
     private String arbeitBei;

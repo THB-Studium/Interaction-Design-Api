@@ -6,7 +6,6 @@ import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWrite
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -18,7 +17,7 @@ public class BuchungWriteTO {
 
     private UUID id;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datum;
 
     private ReiserWriteTO mitReiser;

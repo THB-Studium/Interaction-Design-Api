@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Lob;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ public class LandWriteTO {
 
     private List<String> flughafen;
 
+    @Lob
     private String unterkunft_text;
 
     private String image;

@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -32,7 +31,7 @@ public class Reiser {
     private String vorname;
 
     @NotNull
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate geburtsdatum;
 
     @NotBlank
@@ -47,7 +46,7 @@ public class Reiser {
     private String adresse;
 
     private String studiengang;
-    
+
     private String status;
 
     private String arbeitBei;

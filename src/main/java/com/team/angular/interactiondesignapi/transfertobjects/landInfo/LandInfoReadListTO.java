@@ -1,12 +1,11 @@
 package com.team.angular.interactiondesignapi.transfertobjects.landInfo;
 
-import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Lob;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
