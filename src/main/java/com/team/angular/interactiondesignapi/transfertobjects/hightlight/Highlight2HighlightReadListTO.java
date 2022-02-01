@@ -12,7 +12,7 @@ public class Highlight2HighlightReadListTO {
 		out.setId(in.getId());
 		out.setName(in.getName());
 		out.setDescription(in.getDescription());
-		out.setBild(in.getBild());
+		//out.setBild(in.getBild());
 		return out;
 	}
 

@@ -15,5 +15,5 @@ public class HighlightReadListTO {
     private String name;
     @Lob
     private String description;
-    private byte[] bild;
+    //private byte[] bild;
 }
