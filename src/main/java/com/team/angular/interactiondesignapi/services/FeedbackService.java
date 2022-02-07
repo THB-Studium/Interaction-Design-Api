@@ -14,8 +14,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+
+import static com.team.angular.interactiondesignapi.config.CompressImage.compressBild;
 
 @Service
 public class FeedbackService {
@@ -28,18 +43,18 @@ public class FeedbackService {
         return Feedback2FeedbackListTO.apply(feedbackRepository.findAll());
     }
 
-    public Feedback addFeedback(FeedbackWriteTO feedback) {
+    public Feedback addFeedback(FeedbackWriteTO feedback) throws Exception {
 
         Feedback newFeedback = new Feedback();
         newFeedback.setAutor(feedback.getAutor());
         newFeedback.setDescription(feedback.getDescription());
         newFeedback.setVeroefentlich(false);
-        if (feedback.getBild() != null)
-            newFeedback.setBild(Base64.decodeBase64(feedback.getBild().substring(22)));
 
-        Feedback saved = feedbackRepository.save(newFeedback);
+        if (feedback.getBild() != null){
+            newFeedback.setBild(compressBild(feedback.getBild()));
+        }
 
-        return saved;
+        return feedbackRepository.save(newFeedback);
 
     }
 
