@@ -44,7 +44,7 @@ public class FeedbacksController {
     @ApiOperation("Update Feedback")
     @PutMapping("")
     public Feedback updateFeedback(
-            @ApiParam(name = "Feedback", value = "Feedback to update") @RequestBody FeedbackWriteTO feedback) {
+            @ApiParam(name = "Feedback", value = "Feedback to update") @RequestBody FeedbackWriteTO feedback) throws Exception {
         return feedbackService.updateFeedback(feedback);
     }
 

@@ -36,7 +36,7 @@ public class CompressImage {
 
             int size_index = (int) Files.size(Path.of(FILEPATH)) / (1024 * 500);
 
-            switch (size_index) {
+            switch (size_index) { // compression quality depend on the size
                 case 0:
                     saveJPG(bufferedImage, outputStream, 90);
                     break;
@@ -69,6 +69,13 @@ public class CompressImage {
                     break;
             }
         }
+        // delete File
+        /*try {
+            imageFile.delete();
+            compressedImageFile.delete();
+        } catch (Exception e) {
+            System.out.println(e);
+        }*/
 
         // from file to bytes[]
         return Files.readAllBytes(Paths.get(FILEPATH_COMPRESS));

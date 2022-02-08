@@ -6,7 +6,6 @@ import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.repositories.HighlightRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.hightlight.*;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+
+import static com.team.angular.interactiondesignapi.config.CompressImage.compressBild;
 
 @Service
 public class HighlightService {
@@ -47,7 +48,7 @@ public class HighlightService {
         if (highlight.getDescription() != null)
             _highlight.setDescription(highlight.getDescription());
         if (highlight.getBild() != null)
-            _highlight.setBild(Base64.decodeBase64(highlight.getBild().substring(22)));
+            _highlight.setBild(compressBild(highlight.getBild()));
         if (highlight.getLandId() != null) {
             Land land = landRepository.findById(highlight.getLandId())
                     .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + highlight.getLandId()));
@@ -82,7 +83,7 @@ public class HighlightService {
         if (highlight.getDescription() != null)
             _highlight.setDescription(highlight.getDescription());
         if (highlight.getBild() != null)
-            _highlight.setBild(Base64.decodeBase64(highlight.getBild().substring(22)));
+            _highlight.setBild(compressBild(highlight.getBild()));
 
         return Highlight2HighlightReadWriteTO.apply(highlightRepository.save(_highlight));
     }

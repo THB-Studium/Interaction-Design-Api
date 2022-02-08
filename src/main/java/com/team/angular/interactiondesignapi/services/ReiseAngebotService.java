@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static com.team.angular.interactiondesignapi.config.CompressImage.compressBild;
+
 @Service
 public class ReiseAngebotService {
     private static final Logger log = LoggerFactory.getLogger(ReiseAngebotService.class);
@@ -56,7 +58,7 @@ public class ReiseAngebotService {
         }
 
         if (reiseAngebot.getStartbild() != null) {
-            _reiseAngebot.setStartbild(Base64.decodeBase64(reiseAngebot.getStartbild().substring(22)));
+            _reiseAngebot.setStartbild(compressBild(reiseAngebot.getStartbild()));
         }
 
         if (reiseAngebot.getStartDatum() != null)
@@ -137,7 +139,7 @@ public class ReiseAngebotService {
         }
 
         if (reiseAngebot.getStartbild() != null)
-            _reiseAngebot.setStartbild(Base64.decodeBase64(reiseAngebot.getStartbild().substring(22)));
+            _reiseAngebot.setStartbild(compressBild(reiseAngebot.getStartbild()));
         if (reiseAngebot.getStartDatum() != null)
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)
