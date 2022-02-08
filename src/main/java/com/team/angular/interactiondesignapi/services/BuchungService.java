@@ -16,6 +16,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,9 @@ import net.sf.jasperreports.engine.JasperReport;
 
 @Service
 public class BuchungService {
+	
+	@Value("${template.link}")
+	private String templateLink;
 
 	private static final Logger log = LoggerFactory.getLogger(BuchungService.class);
 	@Autowired
@@ -142,21 +146,10 @@ public class BuchungService {
 						"Cannot find ReiseAngebot with id" + buchung.getReiseAngebot().getId()));
 
 		// print pdf
-		File file = null;
+		//File file = null;
 		// file = ResourceUtils.getFile("classpath:Booking.jrxml");
 
-		file = Paths.get(new URL("http://85.214.194.89/dev/Booking.jrxml").toURI().getPath()).toFile();
-//		
-//		Resource resource = resourceLoader.getResource("http://85.214.194.89/dev/Booking.jrxml");
-//		InputStream inputStream = resource.getInputStream();
-//
-//		
-//		InputStream stream = InteractionDesignApiApplication.class.getResourceAsStream("/Booking.jrxml");
-//
-//		System.out.println(file.getAbsolutePath());
-//		System.out.println(stream);
-		JasperReport jasperReport = JasperCompileManager.compileReport("/opt/services/Booking.jrxml");
-		// JRBeanCollectionDataSource datasource = new JRBeanCollectionDataSource();
+		JasperReport jasperReport = JasperCompileManager.compileReport(templateLink);
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("ziel", ra.getLand() != null ? ra.getLand().getName() : ra.getTitel());

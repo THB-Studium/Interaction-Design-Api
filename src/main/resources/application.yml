@@ -4,6 +4,9 @@ jwt.refreshExpirationDateInMs: 5000000
 
 server.port: 5050
 
+template:
+  link: /opt/services/Booking.jrxml
+
 spring:
   application:
     name: interaction-design-api
