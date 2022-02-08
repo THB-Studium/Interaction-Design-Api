@@ -39,7 +39,7 @@
 		</dependency>
 		<!-- jsonwebtoken - END -->
 
-		<!-- module for encrypt token secret java 11 need it-->
+		<!-- module for encrypt token secret java 11 need it -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
@@ -81,14 +81,8 @@
 		</dependency>
 		<!-- lombok END -->
 
-		<!--
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-         -->
+		<!-- <dependency> <groupId>org.jetbrains</groupId> <artifactId>annotations</artifactId> 
+			<version>RELEASE</version> <scope>compile</scope> </dependency> -->
 
 		<!-- postgresql start -->
 		<dependency>
@@ -121,6 +115,34 @@
 		</dependency>
 		<!-- Swagger End -->
 
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.4.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.lowagie</groupId>
+					<artifactId>itext</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.olap4j</groupId>
+					<artifactId>olap4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.olap4j</groupId>
+			<artifactId>olap4j</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+
 		<!-- Tests start -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -152,7 +174,7 @@
 			<scope>test</scope>
 		</dependency>
 
-        <!-- Tests end -->
+		<!-- Tests end -->
 
 	</dependencies>
 

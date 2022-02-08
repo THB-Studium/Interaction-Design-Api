@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Booking" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isTitleNewPage="true" uuid="56dcc0bb-62e8-447a-9b66-8ae5854ccf35">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="ziel" class="java.lang.String"/>
+	<parameter name="start_end" class="java.lang.String"/>
+	<parameter name="name_vorname" class="java.lang.String"/>
+	<parameter name="postanschrift" class="java.lang.String"/>
+	<parameter name="geburtsdatum" class="java.lang.String"/>
+	<parameter name="handynummer" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="studiengang" class="java.lang.String"/>
+	<parameter name="hochschule" class="java.lang.String"/>
+	<parameter name="status" class="java.lang.String"/>
+	<parameter name="arbeit_bei" class="java.lang.String"/>
+	<parameter name="schonteilgenommen" class="java.lang.String"/>
+	<parameter name="mit_mitreiser" class="java.lang.String"/>
+	<parameter name="copyright_monat_jahr" class="java.lang.String"/>
+	<parameter name="reise_datum" class="java.lang.String"/>
+	<parameter name="buchungsklasse" class="java.lang.String"/>
+	<parameter name="zahlungsmethode" class="java.lang.String"/>
+	<parameter name="flughafen" class="java.lang.String"/>
+	<parameter name="handgepaeck" class="java.lang.String"/>
+	<parameter name="koffer" class="java.lang.String"/>
+	<parameter name="jahr" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="449" y="6" width="100" height="100" uuid="767e6c29-d969-479a-90b9-80b6369545b2"/>
+				<imageExpression><![CDATA["logo_black.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="7" y="6" width="160" height="30" uuid="9519f0c9-273e-460a-b6ba-3322710bdd1f"/>
+				<imageExpression><![CDATA["entete.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="7" y="120" width="533" height="1" uuid="1a7897ec-5830-4019-a902-00970f1315ff"/>
+			</line>
+			<textField>
+				<reportElement x="6" y="36" width="374" height="35" uuid="26bd22c6-6dfd-4cbc-a4cc-074c0c000e7c"/>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="74" width="160" height="19" uuid="1219b785-2fc6-4269-95c8-4adcaf531ff7"/>
+				<textFieldExpression><![CDATA[$P{start_end}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="130" width="430" height="20" uuid="41708a9e-1113-4644-9f2c-5b0ef5c6f88f"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ich möchte mich hiermit verbindlich für die Studienreise ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="257" width="396" height="21" uuid="7145f0b8-a14a-488b-84e4-14a749c2a0e9"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAME, VORNAME: (wie im Reisepass genannt)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="83" y="278" width="396" height="23" uuid="aba1b967-b33c-45b8-a5dd-687418a644af"/>
+				<textFieldExpression><![CDATA[$P{name_vorname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="299" width="196" height="21" uuid="404a1067-3bf6-4dd8-81d6-4c05b68e3aec"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POSTANSCHRIFT PRIVAT: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="83" y="321" width="396" height="22" uuid="bee749f8-d9de-4ec7-92f8-7d500aa5113e"/>
+				<textFieldExpression><![CDATA[$P{postanschrift}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="341" width="197" height="21" uuid="fd11bac1-8073-45de-9d3d-7e1b6aa89792"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Geburtsdatum:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="365" width="397" height="19" uuid="bd9f4e7f-68a2-4a97-9d2f-10f5ca7b1616"/>
+				<textFieldExpression><![CDATA[$P{geburtsdatum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="384" width="197" height="21" uuid="b306cb2a-9a4d-417b-9ad3-38027891cfe4"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Handynummer:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="409" width="397" height="23" uuid="02c598eb-2ce2-4174-938f-fe4f02f45ad9"/>
+				<textFieldExpression><![CDATA[$P{handynummer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="78" y="434" width="200" height="21" uuid="ede0d92d-9a3b-447b-9062-f5a78bb64807"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mail-Adresse:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="460" width="400" height="25" uuid="f5732c20-5ab2-4587-ab12-f49dd6f012d0"/>
+				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="485" width="200" height="21" uuid="7f2f6900-7336-4fd7-ab8b-ff22c365fb10"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Studiengang:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="505" width="399" height="19" uuid="ab7d9dfc-5855-4d8f-bef2-ac69619f656d"/>
+				<textFieldExpression><![CDATA[$P{studiengang}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="79" y="525" width="200" height="21" uuid="dc91083c-c71f-46ff-8db3-9ff5412207ce"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hochschule:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="545" width="399" height="23" uuid="c5ac271d-ca02-448f-b4a4-502c8cef8c56"/>
+				<textFieldExpression><![CDATA[$P{hochschule}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="78" y="567" width="200" height="21" uuid="b1797eea-a283-491c-8ee8-5e27e4998e0d"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="592" width="397" height="20" uuid="faa0ce78-ef5d-4480-b3a1-cbe56564d7b3"/>
+				<textFieldExpression><![CDATA[$P{status}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="78" y="615" width="200" height="21" uuid="d1094d12-f939-4dd4-8346-f330ff5b9182"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Arbeit Bei:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="641" width="402" height="24" uuid="765e330d-de49-40ef-8af7-02ab101bf378"/>
+				<textFieldExpression><![CDATA[$P{arbeit_bei}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="79" y="666" width="200" height="21" uuid="feb78f5e-89a8-427a-baa7-a2d3bc81295b"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Schon teilgenommen:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="688" width="399" height="20" uuid="d1f2a7e2-3b5c-4357-970d-d61f8962b8bb"/>
+				<textFieldExpression><![CDATA[$P{schonteilgenommen}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="68" y="218" width="230" height="30" uuid="d4ba6bc1-1b92-45dd-a73e-0d14ce40ae92"/>
+				<textElement>
+					<font fontName="Arial Nova" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reiser Informationen:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="712" width="200" height="21" uuid="a04309f2-6072-4655-b7d3-fc2608d2c55e"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ich bin mit einem Mitreiser:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="79" y="737" width="401" height="25" uuid="2b18a0f3-f1f3-4335-976c-417de3e29a4b"/>
+				<textFieldExpression><![CDATA[$P{mit_mitreiser}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="774" width="240" height="21" uuid="442c1720-676f-4b39-b9c2-fe89eef20c8b"/>
+				<text><![CDATA[© University Travel Club, Prof. Julia Schnitzer/Stand:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="774" width="120" height="21" uuid="f4e3f99f-ffc7-4dbc-9265-3c44b7b8367a"/>
+				<textFieldExpression><![CDATA[$P{copyright_monat_jahr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="151" width="390" height="19" uuid="15614fd7-ac0f-4534-8439-7893bad24061"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="172" width="280" height="21" uuid="9c4b7b3e-58a2-472f-a0df-50fb7341c901"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[anmelden bzw. meine Anmeldung vom Jahr ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="323" y="172" width="54" height="21" uuid="9bae9d1e-08be-415b-9e51-32682218fa2d"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{jahr}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="369" y="172" width="91" height="21" uuid="4cd70be1-ad40-4037-9f47-0caf26ac2c00"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[bestätigen:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="168" width="209" height="30" uuid="d04fd698-db66-40f3-a144-ca55943c53ba"/>
+				<textElement>
+					<font fontName="Arial Nova" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reise Informationen:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="208" width="200" height="21" uuid="9da55065-08ce-47af-b76d-de8769625f37"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reise Datum:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="232" width="321" height="20" uuid="fbaa01b6-9708-47bf-831f-f15a1367e707"/>
+				<textFieldExpression><![CDATA[$P{reise_datum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="92" y="255" width="200" height="21" uuid="7ff55aec-a19d-4901-89be-4c6b994fa84e"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Buchungsklasse:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="98" y="278" width="320" height="20" uuid="eacd08b3-7946-4447-8a38-f2c7d8a79142"/>
+				<textFieldExpression><![CDATA[$P{buchungsklasse}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="92" y="302" width="200" height="21" uuid="fbf7e46e-11fe-4645-b80e-93547b585d2b"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zahlungsmethode:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="348" width="200" height="21" uuid="2e38c3d8-a651-459b-ad31-20e98f72fc3f"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Flughafen:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="375" width="321" height="23" uuid="37a801a5-ee13-4c91-9527-3f34b7724e46"/>
+				<textFieldExpression><![CDATA[$P{flughafen}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="93" y="401" width="200" height="21" uuid="17a36235-ba47-4779-8a21-0d5e034cd34f"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Handgepäck:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="428" width="447" height="50" uuid="87f8e6c9-4725-4f36-ac70-1d0f80a2afe4"/>
+				<textFieldExpression><![CDATA[$P{handgepaeck}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="93" y="484" width="200" height="21" uuid="179d690a-d110-4198-a3f9-f0f59de32134"/>
+				<textElement>
+					<font fontName="Arial Nova" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Koffer:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="98" y="508" width="446" height="80" uuid="5843a3db-b51a-4164-95f4-da102b3c9ed4"/>
+				<textFieldExpression><![CDATA[$P{koffer}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="449" y="9" width="100" height="100" uuid="80529ebe-15c1-44ae-a349-913b81531b7f"/>
+				<imageExpression><![CDATA["logo_black.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="10" y="9" width="160" height="30" uuid="1efbbb14-8627-4999-8d89-a76bd47300d1"/>
+				<imageExpression><![CDATA["entete.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="97" y="330" width="321" height="18" uuid="38c0f8ef-33f1-4adb-817b-7f749a4eafeb"/>
+				<textFieldExpression><![CDATA[$P{zahlungsmethode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="766" width="240" height="21" uuid="8b94b383-fc01-47b2-b46b-edc7ccdb1576"/>
+				<text><![CDATA[© University Travel Club, Prof. Julia Schnitzer/Stand:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="766" width="120" height="21" uuid="47855c2f-d0a8-485f-b656-2597a80a805f"/>
+				<textFieldExpression><![CDATA[$P{copyright_monat_jahr}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="7" y="120" width="533" height="1" uuid="06e0bc59-bd86-4268-8ff4-e8e98fa9457b"/>
+			</line>
+			<break>
+				<reportElement x="0" y="793" width="561" height="1" uuid="acdc1bf9-0030-4fab-a558-713275e9a1ca"/>
+			</break>
+			<textField>
+				<reportElement x="10" y="36" width="374" height="35" uuid="671f0eaa-d1ae-4d9f-818c-b303fd9a4f5f"/>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="74" width="160" height="19" uuid="7e6ffd80-5f1c-4d3f-afd5-446b142b55b2"/>
+				<textFieldExpression><![CDATA[$P{start_end}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="10" y="9" width="160" height="30" uuid="06251b48-c647-4613-8577-7ccae977f92b"/>
+				<imageExpression><![CDATA["entete.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="449" y="9" width="100" height="100" uuid="56d6a923-6a23-4550-b07f-a8aac1c33d02"/>
+				<imageExpression><![CDATA["logo_black.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="7" y="120" width="533" height="1" uuid="12461c86-cfea-47a7-afcc-f3b6db8e7356"/>
+			</line>
+			<staticText>
+				<reportElement x="80" y="168" width="398" height="30" uuid="40e29355-b167-4566-8522-aeb24dcff54f"/>
+				<textElement>
+					<font fontName="Arial Nova" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALLGEMEINE GESCHÄFTSBEDINGUNGEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="196" width="341" height="21" uuid="863aa3e3-9bc9-4d72-8b68-a29e1f1ff03d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[für die Vermittlung von Pauschalreisen gem. § 651V BGB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="230" width="528" height="46" uuid="5ce081f9-59a9-4002-a971-85ab680afa8e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[MD.H Studienreisen / University Travel Club Germany, Reisebüro und Reiseveranstalter. Ansprechpartner: Julia Schnitzer, Immanuelkirchstrasse 33, 10405 Berlin
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="278" width="160" height="24" uuid="e2d59798-d9a4-462c-ba13-a468cb52141c"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§1    Geltungsbereich]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="310" width="549" height="70" uuid="e3af1db5-2059-4a8d-8133-fbf995eb8fe0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Diese Vertragsbedingungen über die Reisevermittlung von Pauschalreiseverträgen sind anwendbar, wenn der Reisever-mittler das Formblatt über Pauschalreisen aushändigt. In dem Formblatt ist der vermittelte Reiseveranstalter als verantwortlicher Unternehmer für die Erbringung der Pauschalreise ausgewiesen.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="390" width="160" height="24" uuid="2f815970-8809-43d4-9c46-04b825a76a00"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§2   Vertragsschluss]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="420" width="549" height="110" uuid="59171bd5-6bd7-4882-ba5e-69f222269a42"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[2.1 Mit Abschluss des Buchungsvorgangs, der mündlich, schriftlich, telefonisch, per Telefax oder auf elektronischem Wege (E-Mail / Internet) erteilt werden kann, bietet der Kunde dem Reisebüro, den Abschluss eines Vermittlungsver-trages über Reisedienstleistungen an, der durch die Annahmeerklärung des Reisebüros zustande kommt.Wird der Auftrag auf elektronischem Weg erteilt, so bestätigt das Reisebüro grundsätzlich zunächst nur den Eingang des Auftrags auf elektronischem Wege. Eine Eingangsbestätigung stellt noch keine Annahme des Vermittlungs-auftrags dar.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="536" width="547" height="94" uuid="9dc995b8-4ddd-452f-82d2-49b67b1355e5"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[2.2 Die beiderseitigen Rechte und Pflichten des Kunden und des Reisevermittlers ergeben sich, soweit dem nicht zwingende gesetzliche Bestimmungen entgegenstehen, aus den im Einzelfall vertraglich getroffenen Vereinbarungen, die-sen Geschäftsbedingungen und den gesetzlichen Vorschriften, insbesondere der §§ 651a ff BGB i.V.m. Art. 250ff. EGBGB und §§ 675, 631 ff. BGB über die entgeltliche Geschäftsbesorgung.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="635" width="549" height="110" uuid="afce918d-7586-420d-8ffa-8ebdb7eedae0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[2.3 Für die Rechte und Pflichten des Kunden gegenüber dem vermittelten Reiseveranstalter gelten ausschließlich die mit diesem getroffenen Vereinbarungen, insbesondere -soweit wirksam vereinbart -dessen Reise-oder Geschäfts-bedingungen. Ohne besondere Vereinbarung oder ohne besonderen Hinweis gelten bei Beförderungsleistungen die auf gesetzlicher Grundlage von der zuständigen Verkehrsbehörde oder aufgrund internationaler Überein-kommen erlassenen Beförderungsbedingungen und Tarifbestimmungen.]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="793" width="561" height="1" uuid="412fa1ee-2a2d-4516-9575-4703c88eda8d"/>
+			</break>
+			<staticText>
+				<reportElement x="80" y="766" width="240" height="21" uuid="9d1ce3b7-b8cc-42fc-809d-191596eb1a1f"/>
+				<text><![CDATA[© University Travel Club, Prof. Julia Schnitzer/Stand:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="766" width="120" height="21" uuid="c394164b-e596-42fa-82fc-ee1683263d8c"/>
+				<textFieldExpression><![CDATA[$P{copyright_monat_jahr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="36" width="374" height="35" uuid="d8cbfd3a-3142-42ab-a380-83b7f6404b3b"/>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="74" width="160" height="19" uuid="f42ce156-a1ed-4dbd-bb10-38d64f6c98ea"/>
+				<textFieldExpression><![CDATA[$P{start_end}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="10" y="9" width="160" height="30" uuid="0086834f-adee-4164-8b01-217dd503ef5e"/>
+				<imageExpression><![CDATA["entete.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="449" y="9" width="100" height="100" uuid="9a09e8dd-8e1a-40d1-a27f-eb4b8e6772ed"/>
+				<imageExpression><![CDATA["logo_black.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="7" y="120" width="533" height="1" uuid="4e6e61cc-a20e-4c6d-bc90-8118ea15d73a"/>
+			</line>
+			<staticText>
+				<reportElement x="20" y="140" width="269" height="24" uuid="1f9300c9-25fd-4478-9f01-aebd22b7f0bc"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§3    Zahlungen und Mängelanzeigen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="166" width="549" height="74" uuid="5d49c56d-56c5-49dd-a6d8-3f2422a64091"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[3.1 Reisevermittler und Reiseveranstalter dürfen Zahlungen auf den Reisepreis vor Beendigung der Pauschalreise nur fordern oder annehmen, wenn ein wirksamer Kundengeldabsicherungsvertrag des Reiseveranstalters besteht und dem Kunden der Sicherungsschein mit Namen und Kontaktdaten des Kundengeldabsicherers in klarer, verständlicher und hervorgehobener Weise übergeben wurde.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="247" width="549" height="93" uuid="c6c08ea2-b429-4207-a4f4-f98a1a5022bb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[3.2 Der Reisevermittler gilt als vom Reiseveranstalter bevollmächtigt, Mängelanzeigen sowie andere Erklärungen des Kun-den/Reisenden bezüglich der Erbringung der Pauschalreise entgegenzunehmen. Der Reisevermittler wird den Reiseveranstalter unverzüglich von solchen Erklärungen des Reisenden in Kenntnis setzen. Der Reisevermittler empfiehlt zur Vermeidung von Zeitverlusten trotz unverzüglicher Weiterleitung, entsprechende Erklärungen un-mittelbar gegenüber der Reiseleitung oder der Kontaktstelle des Reiseveranstalters zu erklären.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="380" width="549" height="70" uuid="50877e3e-51e9-421f-94d5-b7c8788052be"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[4.1 Auf Wunsch wird dann die Buchungsanfrage beim Pauschalreiseveranstalter durch den Reisevermittler vorgenommen. Sofern nicht ausdrücklich vereinbart wurde, dass der Pauschalreiseveranstalter dem Kunden die Reiseunterlagen direkt übermittelt, gehört zur Leistungspflicht des Reisevermittlers.  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="349" width="269" height="24" uuid="1ae3dd1f-b559-4641-acd6-77f3b421d55c"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§4     Auskünfte und Hinweise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="458" width="549" height="122" uuid="9c30374a-0791-4228-9fef-c587b8ea37a9"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[4.2 Bei der Erteilung von sonstigen Hinweisen und Auskünften, zu deren Angabe der Reisevermittler nicht nach § 651v Abs. 1 BGB i.V.m. Art. 250 § 1 bis 3 EGBGB verpflichtet ist, haftet der Reisevermittler im Rahmen des Gesetzes und der vertraglichen Vereinbarungen für die richtigeAuswahl der Informationsquelle und die korrekte Weitergabe an den Kunden. Ein Auskunftsvertrag mit einer vertraglichen Hauptpflicht zur Auskunftserteilung kommt nur bei einer entsprechenden ausdrücklichen Vereinbarung zustande. Für die Richtigkeit erteilter Auskünfte haftet der Reisevermittler gemäß § 675 Abs. 2 BGB nicht, es sei denn, dass ein besonderer Auskunftsvertrag abgeschlossen wurde.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="587" width="549" height="43" uuid="3a85119e-d146-4513-8085-fda02e403879"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[4.3 Der Reisevermittler ist nur bei Vorliegen einer ausdrücklichen Vereinbarung dazu verpflichtet, den jeweils günstigsten Anbieter der angefragten Reiseleistung zu ermitteln und/oder anzubieten. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="640" width="549" height="70" uuid="20e624bd-202b-462d-8ba6-dc7cd011097a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[4.4  Ohne  ausdrückliche  Vereinbarung  übernimmt  der  Reisevermittler  bezüglich  Auskünften  zu  Preisen,  Leistungen,  Bu-chungskonditionen und sonstigen Umständen der Reiseleistungkeine Garantie i.S. von § 276 Abs. 1 Satz 1 BGB und bezüglich Auskünften über die Verfügbarkeit der vom Reisevermittler zu vermittelnden Leistungen keine Beschaffungsgarantie im Sinne dieser Vorschrift.]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="793" width="561" height="1" uuid="ba42db0e-d699-4230-99fc-370c66f53646"/>
+			</break>
+			<staticText>
+				<reportElement x="80" y="766" width="240" height="21" uuid="b39c6ade-cb23-4a59-a148-95016a93d81d"/>
+				<text><![CDATA[© University Travel Club, Prof. Julia Schnitzer/Stand:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="766" width="120" height="21" uuid="2e8c062d-6bb8-484b-be4f-515040eb90a5"/>
+				<textFieldExpression><![CDATA[$P{copyright_monat_jahr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="36" width="374" height="35" uuid="b242d8cb-0986-4b0e-ae2b-0cce1458cbfe"/>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="74" width="160" height="19" uuid="f5d55226-5609-4b8e-8b11-c10e09987912"/>
+				<textFieldExpression><![CDATA[$P{start_end}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="3" y="143" width="549" height="127" uuid="fc053941-3f1b-4f56-b57e-d62a6ec6743e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[4.5 Der Reisevermittler nimmt Sonderwünsche des Kunden entgegen und leitet diese an den Reiseveranstalter weiter. Für die Erfüllung solcher Sonderwünsche steht der Reisevermittler nur ein, soweit dies ausdrücklich vereinbart ist. Die Erfüllung der Sonderwünsche ist nicht Bedingung oder Vertragsgrundlage für den Vermittlungsauftrag oder für die vom Reisevermittler an den Pauschalreiseveranstalter zu übermittelnde Buchungserklärung des Kunden, sofern dies nicht ausdrücklich vereinbart wurde. Der Kunde wird darauf hingewiesen, dass Sonderwünsche im Regelfall nur durch ausdrückliche Bestätigung des Pauschalreiseveranstalters zum Inhalt der vertraglichen Ver-pflichtungen des Pauschalreiseveranstalters werden.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="9" width="160" height="30" uuid="7f409d29-7f5a-464b-8a0f-540164e4ee06"/>
+				<imageExpression><![CDATA["entete.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="449" y="9" width="100" height="100" uuid="b0817ad5-3f59-4f43-8a37-e21a14549e39"/>
+				<imageExpression><![CDATA["logo_black.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="7" y="120" width="533" height="1" uuid="32d08d49-8e32-4e2a-b70a-fbac71eb1f9e"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="312" width="549" height="121" uuid="ee21668d-94de-4f1d-8e2f-2bbcabbf2ff1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[5.1 Der Vermittler ist berechtigt, Zahlungen entsprechend den Leistungs-und Zahlungsbestimmungen der vermittelten Leis-tungserbringer zu verlangen, soweit diese wirksam zwischen dem Leistungserbringer und dem Kunden verein-bart sind und rechtswirksame Zahlungsbestimmungen enthalten.Zahlungsansprüche gegenüber dem Kunden kann der Vermittler, soweit dies den Vereinbarungen zwischen dem Vermittler und dem Leistungserbringer entspricht, als dessen Inkassobevollmächtigter geltend machen, jedoch auch aus eigenem Recht auf Grundlage der gesetzlichen Vorschusspflicht des Kunden als Auftraggeber gemäß § 669 BGB.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="280" width="269" height="24" uuid="1e58ac9c-6f5f-4110-b428-71653dea7bf6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§5     Auskünfte und Hinweise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="433" width="549" height="36" uuid="b74c4e0a-bf84-4aec-acf7-1b49c0f44f77"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[5.2 Die vorstehenden Regelungen gelten entsprechend für Stornokosten (Rücktrittsentschädigungen) und sonstige gesetzlich oder vertraglich begründete Forderungen des vermittelten Leistungserbringers.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="476" width="549" height="105" uuid="67f1cd2c-e8bf-4cc1-9700-97a0a7ac72c2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[5.3 Der Kunde kann eigenen Zahlungsansprüchen des Vermittlers nicht im Wege der Zurückbehaltung oder Aufrechnung entgegenhalten, dass der Kunde Ansprüche gegenüber dem vermittelten Leistungserbringer, insbesondere auf-grund mangelhafter Erfüllung des vermittelten Vertrages, hat. Dies gilt nicht, wenn für das Entstehen solcher Ansprüche eine schuldhafte Verletzung von Vertragspflichten des Vermittlers ursächlich oder mitursächlich ge-worden ist oder der Vermittler aus anderen Gründen gegenüber dem Kunden für die geltend gemachten Gegen-ansprüche haftet.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="617" width="549" height="146" uuid="0836b66e-bc50-408f-88bd-be77ac1a6fbe"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[6.1 Entsprechend der EU-Verordnung Nr. 2111/2005 über die Erstellung einer gemeinschaftlichen Liste der Luftfahrtunter-nehmen ist der Vermittler verpflichtet, den Fluggast bei der Buchung über die Identität der ausführenden Flug-gesellschaft zu unterrichten. Sofern bei der Buchung die ausführende Fluggesellschaft noch nicht feststeht, wird der Vermittler ihm die vom vermittelten Unternehmen vorliegenden Informationen über diejenige Fluggesell-schaft  übermitteln,  die  wahrscheinlich  den  Flug  durchführt.  Bei  einem  Wechsel  der  Fluggesellschaft  wird  der Kunde unverzüglich über den Wechsel unterrichtet. Die gemeinschaftliche Liste über die mit Flugverbot in der Europäischen Union belegten Fluggesellschaften ist über die Internetseitenhttp://ec.europa.eu/transport/mo-des/air/safety/air-ban/index_de.htmundwww.lba.deabrufbar.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="589" width="370" height="24" uuid="afada4c6-4511-407c-a7b9-057fcfa4f938"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§6     Vermittlung von Flugbeförderungsleistungen]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="793" width="561" height="1" uuid="a56e228e-5b35-4992-9b83-a339a18d478b"/>
+			</break>
+			<staticText>
+				<reportElement x="80" y="766" width="240" height="21" uuid="19496772-0069-4a77-b500-20b148a60ed0"/>
+				<text><![CDATA[© University Travel Club, Prof. Julia Schnitzer/Stand:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="766" width="120" height="21" uuid="8c261041-815f-4d59-a192-51042765c3a0"/>
+				<textFieldExpression><![CDATA[$P{copyright_monat_jahr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="36" width="374" height="35" uuid="b5895d96-b32c-4ce0-86b8-e3fc2392832f"/>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="74" width="160" height="19" uuid="52b8f4d5-838f-4262-a6d6-16a334e609d1"/>
+				<textFieldExpression><![CDATA[$P{start_end}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="10" y="9" width="160" height="30" uuid="12799ea4-9fb7-4e20-b75e-da06862e353f"/>
+				<imageExpression><![CDATA["entete.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="449" y="9" width="100" height="100" uuid="5897d106-70c4-4ce7-b70d-68f65297d582"/>
+				<imageExpression><![CDATA["logo_black.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="7" y="117" width="533" height="1" uuid="841ac085-8308-41eb-a242-f06e2a7ff6a5"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="126" width="549" height="213" uuid="dde471e8-afdd-411c-98f2-085e172b4c16"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[6.2 Für das Vertragsverhältnis zwischen dem Kunden und der Fluggesellschaft gelten –soweit jeweils anwendbar -die ge-setzlichen Bestimmungen des deutschen Luftverkehrsgesetzes, des Warschauer und Montrealer Übereinkom-mens und unmittelbar, wie inländische gesetzliche Bestimmungen, die Verordnung (EG) Nr. 261/2004 zu Flug-passagierrechten, die Verordnung (EG) Nr. 2111/2005 über die Erstellung einer gemeinschaftlichen Liste der Luft-fahrtunternehmen, gegen die in der Gemeinschaft eine Betriebsuntersagung ergangen ist, sowie über die Unter-richtung von Fluggästen über die Identität des ausführenden Luftfahrtunternehmens, die Verordnung (EG) Nr. 1107/2006  des  Europäischen  Parlaments  und  des  Rates  über  die  Rechte  von  behinderten  Flugreisenden  und Flugreisenden mit eingeschränkter Mobilität.
+
+Dem Kunden wird dringend empfohlen, sich über seine Rechte als Fluggast, z.B. durch die Aushänge in den Flug-häfen, durch die Informationen des ausführenden Luftfahrtunternehmens oder durch die Informationsblätter des Luftfahrtbundesamts unter www.lba.de zu informieren.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="332" width="258" height="24" uuid="db3ef49d-4c6c-411e-b1ce-1bbcd5a50030"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§7     Prüfung der Reiseunterlagen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="358" width="549" height="100" uuid="97bfad4d-2256-4dea-9aef-2b0c72127a4d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[7.1 Sowohl den Kunden, wie auch den Reisevermittler trifft die Pflicht, Vertrags-und sonstige Unterlagen des vermittelten Pauschalreiseveranstalters über die Pauschalreise, die dem Kunden durch den Reisevermittler ausgehändigt wur-den, insbesondere Buchungsbestätigungen, Flugscheine, Hotelgutscheine,Visa, Versicherungsscheine und sons-tige Unterlagen über die vermittelte Pauschalreise auf Richtigkeit und Vollständigkeit, insbesondere auf die Über-einstimmung mit der Buchung und dem Vermittlungsauftrag zu überprüfen.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="455" width="549" height="50" uuid="ee6c544a-21fa-4bec-a81c-c61398f31700"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[7.2 Soweit Unterlagen über die vermittelte Pauschalreise dem Kunden nicht direkt vom vermittelten Pauschalreiseveranstal-ter übermittelt werden, erfolgt die Aushändigung durch den Reisevermittler durch postalischen oder elektroni-schen Versand.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="534" width="549" height="81" uuid="1fb031f9-a70e-474c-a551-a2d7329bbb46"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[8.1 Der Kunde hat fürihn erkennbare Fehler oder Mängel der Vermittlungstätigkeit des Reisevermittlers nach deren Feststel-lung diesem unverzüglich mitzuteilen. Hierunter fallen insbesondere fehlerhafte oder unvollständige Angaben von persönli-chen Kundendaten, sonstiger Informationen, Auskünfte und Unterlagen über die vermittelte Pauschalreise sowie die nicht vollständige Ausführung von Vermittlungsleistungen (z.B. nicht vorgenommene Buchungen oder Reservierungen).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="508" width="228" height="24" uuid="f20f9199-d151-4fb5-98ef-2a879d85af14"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§8     Mitwirkung des Kunden]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="616" width="549" height="143" uuid="910ad81b-8b3b-4da0-8ab3-4e923ddcaec3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[8.2 Erfolgt keine Anzeige nach Ziff. 8.1 durch den Kunden, so gilt:a) Unterbleibt die Anzeige des Kunden nach Ziff. 8.1 unverschuldet, entfallen seine Ansprüche nicht.b) Ansprüche des Kunden an den Reisevermittler entfallen insoweit, als dieser nachweist, dass dem Kunden ein Schaden bei ordnungsgemäßer Anzeige nicht oder nicht in der vom Kunden geltend gemachten Höhe entstanden wäre. Dies gilt insbesondere, soweit der Reisevermittler nachweist, dass eine unverzügliche Anzeige durch den Kunden dem Reisevermittler die Möglichkeit zur Behebung des Mangels oder der Verringerung eines Schadens, z.B. durch Umbuchung, Zusatzbuchung oder Stornierung mit dem vermittelten Pauschalreiseveranstalter ermöglicht hätte.c) Ansprüche des Kunden im Falle einer unterbliebenen Anzeige nach Ziff. 8.1 entfallen nicht]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="793" width="561" height="1" uuid="3df5a87f-10bd-44c6-8a41-8ab17680582d"/>
+			</break>
+			<staticText>
+				<reportElement x="80" y="766" width="240" height="21" uuid="ee3dda88-337d-4f94-8956-fc741a4f456e"/>
+				<text><![CDATA[© University Travel Club, Prof. Julia Schnitzer/Stand:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="766" width="120" height="21" uuid="eac79831-4e27-4dab-a4ec-ce5d6849e599"/>
+				<textFieldExpression><![CDATA[$P{copyright_monat_jahr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="36" width="374" height="35" uuid="60313d2c-41b9-4c19-9e32-f9ca5cb951ed"/>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="74" width="160" height="19" uuid="764597ef-a19a-43a4-98b6-a00d2cbf72d3"/>
+				<textFieldExpression><![CDATA[$P{start_end}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="10" y="9" width="160" height="30" uuid="0030d2cf-4b87-4c01-b88b-5e4dec058644"/>
+				<imageExpression><![CDATA["entete.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="449" y="9" width="100" height="100" uuid="884a047c-3de5-40b5-8187-fa3d0f174b2c"/>
+				<imageExpression><![CDATA["logo_black.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="7" y="120" width="533" height="1" uuid="ce608489-bf59-4a15-90b6-f96bcdb6096e"/>
+			</line>
+			<staticText>
+				<reportElement x="6" y="126" width="549" height="202" uuid="a2023796-c9e9-4aa2-ac11-fafabd1298c1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[bei Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit, die auf einer vorsätzlichen oder fahrläs-sigen Pflichtverletzung des Reisevermittlers oder eines gesetzlichen Vertreters oder Erfüllungsgehilfen des Reisevermitt-lers resultieren;
+
+bei Ansprüchen auf den Ersatz sonstiger Schäden, die auf einer vorsätzlichen oder grob fahrlässigen Pflichtverletzung des Reisevermittlers oder eines gesetzlichen Vertreters oder Erfüllungsgehilfen des Reisevermittlers beruhen;
+
+bei Verletzung einer wesentlichen Pflicht, deren Erfüllung die ordnungsgemäße Durchführung des Vermittlungsvertra-ges überhaupt erst ermöglicht oder deren Verletzung die Erreichung des Vertragszwecks gefährdet.
+
+Die Haftung für Buchungsfehler nach § 651x BGB bleibt unberührt.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="373" width="549" height="121" uuid="dedc975b-bc09-4d0d-8a5b-3307efb9209e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Der Kunde kann Mängelanzeigen sowie andere Erklärungen bezüglich der Erbringung der Reiseleistungen durch den Pau-schalreiseveranstalter auch seinem Reisevermittler, über den er die Pauschalreise gebucht hat, zur Kenntnis bringen.
+
+Es besteht jedoch keine Pflicht des Reisevermittlers, den Kunden bezüglich Art, Umfang, Höhe, Anspruchsvoraus-setzungen und einzuhaltende Fristen oder sonstige rechtliche Bestimmungen, die Ansprüche gegenüber den ver-mittelten Pauschalreiseveranstaltern betreffend, zu beraten. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="330" width="533" height="37" uuid="3894c0d0-d2f6-4518-a8fa-fe0d02f6cad9"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§9     Pflichten des Reisevermittlers bei Reklamationen gegenüber den vermittelten Pauschalreiseveranstaltern.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="491" width="450" height="20" uuid="dc55300b-e0cb-4e03-a21a-76093982a6cd"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§10     Wichtige Hinweise zu Versicherungen von Pauschalreisen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="519" width="549" height="251" uuid="d9474de1-ea84-450c-811c-72c69370b754"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[10.1 Der Reisevermittler weist auf die Möglichkeit hin, zur Minimierung eines Kostenrisikos bei Stornierungen durch den Kunden eine Reiserücktrittskostenversicherung bei Buchung abzuschließen.
+
+10.2 Der Kunde wird weiterhin darauf hingewiesen, dass eine Reiserücktrittskostenversicherung üblicherweise nicht den en-stehenden Schaden abdeckt, der ihm durch einen -auch unverschuldeten -Abbruch der Inanspruchnahme der Pauschalreise nach deren Antritt entstehen kann. Eine Reiseabbruchversicherung ist in der Regel gesondert ab-zuschließen.
+
+10.3 Der Reisevermittler empfiehlt zusätzlich, bei Reisen ins Auslandauf ausreichenden Auslandskrankenversicherungsschutz zu achten.
+
+10.4 Bei der Vermittlung von Reiseversicherungen wird der Kunde darauf hingewiesen, dass die Versicherungsbedingungen der vermittelten Reiseversicherungen besondere Vertragsbedingungen und/oder Mitwirkungspflichten des Kun-den enthalten können, insbesondere Haftungsausschlüsse (z.B. bei Vorerkrankungen), die Obliegenheit zur un-verzüglichen Stornierung in der Reiserücktrittskostenversicherung, Fristen für die Schadensanzeige und Selbst-behalte. ]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="793" width="561" height="1" uuid="bc271879-a9b9-4f4e-8cf9-d846ac793929"/>
+			</break>
+			<staticText>
+				<reportElement x="80" y="766" width="240" height="21" uuid="7c06588b-73c9-4c76-a12a-b32af4fd5a7e"/>
+				<text><![CDATA[© University Travel Club, Prof. Julia Schnitzer/Stand:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="766" width="120" height="21" uuid="e278cdc0-345d-49c3-bdb2-966df68930fc"/>
+				<textFieldExpression><![CDATA[$P{copyright_monat_jahr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="36" width="374" height="35" uuid="45f36aa7-d0c2-4fc5-8d83-4ee5d5c11310"/>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="74" width="160" height="19" uuid="a60cea61-ba76-4fb3-bf77-a5b8d02e93e3"/>
+				<textFieldExpression><![CDATA[$P{start_end}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="10" y="9" width="160" height="30" uuid="428bc988-d2fa-473d-b3a7-e84f94ec4677"/>
+				<imageExpression><![CDATA["entete.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="449" y="9" width="100" height="100" uuid="265f3930-555e-46e1-ba68-7f54421026de"/>
+				<imageExpression><![CDATA["logo_black.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="7" y="120" width="533" height="1" uuid="857e6810-7a69-479b-b350-5943598b4305"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="135" width="549" height="53" uuid="bddf1fe0-a035-4fbf-95c3-1661fdc7a565"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Der Vermittler haftet nicht, soweit er keine Falschauskunft bezüglich der Versicherungsbedingungen getätigt hat und der vermittelte Reiseversicherer aufgrund von wirksam vereinbarten Versicherungsbedingun-gen ein Leistungsverweigerungsrecht gegenüber dem Kunden hat.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="200" width="142" height="20" uuid="813fe986-a53d-4620-9c45-7040824c3fde"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§11     Haftung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="230" width="549" height="170" uuid="087677fa-96f9-46a2-8d69-cb4e95a52246"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[11.1 Der Reisevermittler haftet nicht für das Zustandekommen von Verträgen mit den zu vermittelnden Pauschalreiseveran-staltern, sofern er eine entsprechende vertragliche Pflicht nicht ausdrücklich vereinbarthat. 
+
+11.2  Der  Reisevermittler  haftet  nicht  für  Mängel  und  Schäden,  die  dem  Kunden  im  Zusammenhang  mit  der  vermittelten Reiseleistung entstehen. Dies gilt nicht bei einer ausdrücklichen diesbezüglichen Vereinbarung oder Zusicherung des Reisevermittlers, insbesondere, wenn diese von der Leistungsbeschreibung des Pauschalreiseveranstalters erheblich abweicht.
+
+11.3 Eine etwaige eigene Haftung des Reisevermittlers aus § 651x BGB oder der schuldhaften Verletzung von Reisevermitt-lerpflichten bleibt von den vorstehenden Bestimmungen unberührt.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="410" width="268" height="20" uuid="9ea36303-e626-4363-9060-7763397c4331"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[§12     Verbraucherstreitbeilegung]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="436" width="549" height="234" uuid="b2588304-dedd-4193-88c6-8372202de6f9"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Der Reisevermittler weist im Hinblick auf das Gesetz über Verbraucherstreitbeilegung darauf hin, dass der Reisevermittler an  einem  Streitbeilegungsverfahren  vor  der  Verbraucherschlichtungsstelle  teilnimmt.  
+
+Die  zuständige  Verbraucherschlich-tungsstelle ist:NameSchiedsamt Pankow, Breite Str. 24a-26, 13062 Berlin, https://www.berlin.de/ba-pankow/politik-und-ver-waltung/aemter/amt-fuer-buergerdienste/schiedsamt/
+
+Sofern eine Verbraucherstreitbeilegung nach Drucklegung dieser Geschäftsbedingungen über die Vermittlung von Pau-schalreisen für den Reisevermittler verpflichtend würde, informiert der Reisevermittler die Verbraucher hierüber in ge-eigneter Form. 
+
+Der  Reisevermittler  verweist  für  alleVerträge  über  Pauschalreisen,  die  im  elektronischen  Rechtsverkehr  geschlossen wurden, auf die europäische Online-Streitbeilegungs-Plattformhttp://ec.europa.eu/consumers/odrhin.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="774" width="240" height="21" uuid="b2a21baf-6dd0-4798-b72e-17530e2f88e8"/>
+				<text><![CDATA[© University Travel Club, Prof. Julia Schnitzer/Stand:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="774" width="120" height="21" uuid="07d68406-818c-489c-84e3-11e7cdb0a93c"/>
+				<textFieldExpression><![CDATA[$P{copyright_monat_jahr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="36" width="374" height="35" uuid="1ee75e2e-9c48-4708-a867-4b9602ac6001"/>
+				<textFieldExpression><![CDATA[$P{ziel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="74" width="160" height="19" uuid="f9bb1931-70ca-4b84-9466-7bc2fc7cfa01"/>
+				<textFieldExpression><![CDATA[$P{start_end}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
