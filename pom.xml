@@ -121,6 +121,13 @@
 		</dependency>
 		<!-- Swagger End -->
 
+		<!-- https://mvnrepository.com/artifact/com.wizzardo.tools/tools -->
+		<dependency>
+			<groupId>com.wizzardo.tools</groupId>
+			<artifactId>tools</artifactId>
+			<version>0.23</version>
+		</dependency>
+
 		<!-- Tests start -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

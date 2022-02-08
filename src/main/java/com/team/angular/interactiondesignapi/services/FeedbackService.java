@@ -14,19 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +37,7 @@ public class FeedbackService {
         newFeedback.setDescription(feedback.getDescription());
         newFeedback.setVeroefentlich(false);
 
-        if (feedback.getBild() != null){
+        if (feedback.getBild() != null) {
             newFeedback.setBild(compressBild(feedback.getBild()));
         }
 
