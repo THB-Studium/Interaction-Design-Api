@@ -110,11 +110,11 @@ public class FeedbackIT extends ItBase {
 	}
 	
 	@Test
-	public void updateFeedback_veröffentlich_false() {
-		
+	public void updateFeedbackVeroeffentlichFalse() {
+
 		String newAuhtor = UUID.randomUUID().toString();
 		feedback.setAutor(newAuhtor);
-		feedback.setVeroefentlich(true);
+		feedback.setVeroeffentlich(true);
 		feedbackRepository.save(feedback);
 		
 		FeedbackWriteTO feedb_ = Feedback2FeedbackWriteTO.apply(feedback);
@@ -135,7 +135,7 @@ public class FeedbackIT extends ItBase {
 		assertThat(feedback.getId(), is(feedback.getId()));
 		assertThat(newAuhtor, is(feedback.getAutor()));
 		assertThat(feedback.getDescription(), is(feedback.getDescription()));
-		assertThat(feedback.isVeroefentlich(), is(true));
+		assertThat(feedback.isVeroeffentlich(), is(true));
 	}
 	
 	@Test
@@ -164,7 +164,7 @@ public class FeedbackIT extends ItBase {
 		assertThat(feedback.getId(), is(feedback_.getId()));
 		assertThat(feedback_.getAutor(), is(feedback1.getAutor()));
 		assertThat(feedback.getDescription(), is(feedback_.getDescription()));
-		assertThat(feedback.isVeroefentlich(), is(feedback_.isVeroefentlich()));
+		assertThat(feedback.isVeroeffentlich(), is(feedback_.isVeroeffentlich()));
 	}
 	
 	@Test

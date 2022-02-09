@@ -34,7 +34,7 @@ public class FeedbackService {
         Feedback newFeedback = new Feedback();
         newFeedback.setAutor(feedback.getAutor());
         newFeedback.setDescription(feedback.getDescription());
-        newFeedback.setVeroefentlich(false);
+        newFeedback.setVeroeffentlich(false);
 
         if (feedback.getBild() != null) {
             newFeedback.setBild(compressBild(feedback.getBild()));
@@ -65,7 +65,7 @@ public class FeedbackService {
         if (feedback_.getDescription() != null)
             feedback.setDescription(feedback_.getDescription());
 
-        feedback.setVeroefentlich(feedback_.isVeroefentlich());
+        feedback.setVeroeffentlich(feedback_.isVeroeffentlich());
 
         return feedbackRepository.save(feedback);
     }

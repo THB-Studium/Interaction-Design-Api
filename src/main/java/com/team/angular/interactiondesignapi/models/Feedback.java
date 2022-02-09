@@ -23,7 +23,7 @@ public class Feedback {
 
     private String autor;
 
-    private boolean veroefentlich;
+    private boolean veroeffentlich;
 
     private byte[] bild;
 
