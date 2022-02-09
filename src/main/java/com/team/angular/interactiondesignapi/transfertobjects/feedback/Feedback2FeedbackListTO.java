@@ -12,7 +12,7 @@ public class Feedback2FeedbackListTO {
 
         out.setId(in.getId());
         out.setAutor(in.getAutor());
-        out.setVeroefentlich(in.isVeroefentlich());
+        out.setVeroeffentlich(in.isVeroeffentlich());
         out.setDescription(in.getDescription());
         return out;
     }

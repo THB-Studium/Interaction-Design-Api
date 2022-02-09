@@ -15,7 +15,7 @@ public class FeedbackReadListTO {
 
     private String autor;
 
-    private boolean veroefentlich;
+    private boolean veroeffentlich;
 
     private String description;
 

@@ -15,7 +15,7 @@ public class FeedbackWriteTO {
 
     private String autor;
 
-    private boolean veroefentlich;
+    private boolean veroeffentlich;
 
     private String description;
 

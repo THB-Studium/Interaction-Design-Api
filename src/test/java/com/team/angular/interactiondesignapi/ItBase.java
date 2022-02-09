@@ -1,49 +1,7 @@
 package com.team.angular.interactiondesignapi;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import com.team.angular.interactiondesignapi.models.Admin;
-import com.team.angular.interactiondesignapi.models.Buchung;
-import com.team.angular.interactiondesignapi.models.Buchungsklassen;
-import com.team.angular.interactiondesignapi.models.Erwartungen;
-import com.team.angular.interactiondesignapi.models.Feedback;
-import com.team.angular.interactiondesignapi.models.Highlight;
-import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.LandInfo;
-import com.team.angular.interactiondesignapi.models.Newsletter;
-import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.models.Reiser;
-import com.team.angular.interactiondesignapi.models.Unterkunft;
-import com.team.angular.interactiondesignapi.models.ZahlungMethod;
-import com.team.angular.interactiondesignapi.repositories.AdminRepository;
-import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
-import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
-import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
-import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
-import com.team.angular.interactiondesignapi.repositories.HighlightRepository;
-import com.team.angular.interactiondesignapi.repositories.LandInfoRepository;
-import com.team.angular.interactiondesignapi.repositories.LandRepository;
-import com.team.angular.interactiondesignapi.repositories.NewsletterRepository;
-import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
-import com.team.angular.interactiondesignapi.repositories.ReiserRepository;
-import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
+import com.team.angular.interactiondesignapi.models.*;
+import com.team.angular.interactiondesignapi.repositories.*;
 import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
@@ -56,8 +14,21 @@ import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoR
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftWriteTO;
-
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.time.LocalDate;
+import java.util.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.yml")
@@ -132,8 +103,9 @@ public class ItBase {
 
         feedback.setAutor(UUID.randomUUID().toString());
         feedback.setDescription(UUID.randomUUID().toString());
-        feedback.setVeroefentlich(true);
-        feedback.setBild(UUID.randomUUID().toString().getBytes());
+        feedback.setVeroeffentlich(true);
+        // todo: check again test of picture
+        // feedback.setBild(UUID.randomUUID().toString().getBytes());
 
         return feedback;
     }
@@ -143,8 +115,9 @@ public class ItBase {
 
         feedback.setAutor(UUID.randomUUID().toString());
         feedback.setDescription(UUID.randomUUID().toString());
-        feedback.setVeroefentlich(true);
-        //feedback.setBild(UUID.randomUUID().toString());
+        feedback.setVeroeffentlich(true);
+        // todo: check again test of picture
+        // feedback.setBild(UUID.randomUUID().toString());
 
         return feedback;
     }
@@ -274,9 +247,9 @@ public class ItBase {
 
         return newBuchung;
     }
-    
+
     protected BuchungUpdateTO buildBuchungUpdateTO(UUID buchungsklasseId, UUID raId, UUID mitReiserId, UUID reiserId) {
-    	BuchungUpdateTO newBuchung = new BuchungUpdateTO();
+        BuchungUpdateTO newBuchung = new BuchungUpdateTO();
 
         newBuchung.setDatum(LocalDate.now());
         newBuchung.setBuchungsklasseId(buchungsklasseId);

@@ -5,7 +5,6 @@ import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.land.*;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+
+import static com.team.angular.interactiondesignapi.config.CompressImage.compressBild;
 
 @Service
 public class LandService {
@@ -48,10 +49,9 @@ public class LandService {
             newLand.setBodyFarbe(land.getBodyFarbe());
 
         if (land.getImage() != null)
-            newLand.setKarte_bild(Base64.decodeBase64(land.getImage().substring(22)));
+            newLand.setKarte_bild(compressBild(land.getImage()));
 
         return Land2LandReadTO.apply(landRepository.save(newLand));
-
     }
 
     public LandReadTO getLand(UUID id) {
@@ -80,7 +80,7 @@ public class LandService {
         if (land.getUnterkunft_text() != null)
             newLand.setUnterkunft_text(land.getUnterkunft_text());
         if (land.getImage() != null)
-            newLand.setKarte_bild(Base64.decodeBase64(land.getImage().substring(22)));
+            newLand.setKarte_bild(compressBild(land.getImage()));
 
         return Land2LandReadTO.apply(landRepository.save(newLand));
     }

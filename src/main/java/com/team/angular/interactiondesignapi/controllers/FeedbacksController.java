@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,14 +37,14 @@ public class FeedbacksController {
     @ApiOperation("Add One Feedback")
     @PostMapping("")
     public Feedback addFeedback(
-            @ApiParam(name = "Feedback", value = "Feedback to add") @RequestBody FeedbackWriteTO feedback) {
+            @ApiParam(name = "Feedback", value = "Feedback to add") @RequestBody FeedbackWriteTO feedback) throws Exception {
         return feedbackService.addFeedback(feedback);
     }
 
     @ApiOperation("Update Feedback")
     @PutMapping("")
     public Feedback updateFeedback(
-            @ApiParam(name = "Feedback", value = "Feedback to update") @RequestBody FeedbackWriteTO feedback) {
+            @ApiParam(name = "Feedback", value = "Feedback to update") @RequestBody FeedbackWriteTO feedback) throws Exception {
         return feedbackService.updateFeedback(feedback);
     }
 

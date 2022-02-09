@@ -12,7 +12,7 @@ public class Feedback2FeedbackWriteTO {
 
         out.setId(in.getId());
         out.setAutor(in.getAutor());
-        out.setVeroefentlich(in.isVeroefentlich());
+        out.setVeroeffentlich(in.isVeroeffentlich());
         out.setDescription(in.getDescription());
         if (in.getBild() != null)
             out.setBild("data:image/png;base64," + UUID.randomUUID().toString());

@@ -6,7 +6,6 @@ import com.team.angular.interactiondesignapi.models.Unterkunft;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.UnterkunftRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.*;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static com.team.angular.interactiondesignapi.config.CompressImage.compressBild;
 
 @Service
 public class UnterkunftService {
@@ -45,7 +46,7 @@ public class UnterkunftService {
 
         if (unterkunft.getBilder() != null) {
             for (String file : unterkunft.getBilder()) {
-                bilder.add(Base64.decodeBase64(file.substring(22)));
+                bilder.add(compressBild(file));
             }
             newUnterkunft.setBilder(bilder);
         }
@@ -80,7 +81,7 @@ public class UnterkunftService {
 
         if (unterkunft.getBilder() != null && unterkunft.getBilder().size() > 0) {
             for (String file : unterkunft.getBilder()) {
-                bilder.add(Base64.decodeBase64(file.substring(22)));
+                bilder.add(compressBild(file));
             }
             actual_unterkunft.setBilder(bilder);
         }
@@ -114,7 +115,6 @@ public class UnterkunftService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
 
         unterkunftRepository.delete(unterkunft);
-
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
