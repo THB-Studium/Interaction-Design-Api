@@ -12,8 +12,8 @@ import java.nio.file.Paths;
 
 
 public class CompressImage {
-    final static String FILEPATH = "./temp/img_temp.jpg";
-    final static String FILEPATH_COMPRESS = "./temp/compressed_img.jpg";
+    final static String FILEPATH = "./img_temp.jpg";
+    final static String FILEPATH_COMPRESS = "./compressed_img.jpg";
 
     public static byte[] compressBild(String bild) throws Exception {
         // from byte to file
