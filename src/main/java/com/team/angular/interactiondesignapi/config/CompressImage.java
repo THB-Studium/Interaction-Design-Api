@@ -38,34 +38,34 @@ public class CompressImage {
 
             switch (size_index) { // compression quality depend on the size
                 case 0:
-                    saveJPG(bufferedImage, outputStream, 90);
-                    break;
-                case 1:
-                    saveJPG(bufferedImage, outputStream, 60);
-                    break;
-                case 2:
-                    saveJPG(bufferedImage, outputStream, 40);
-                    break;
-                case 3:
-                    saveJPG(bufferedImage, outputStream, 35);
-                    break;
-                case 4:
-                    saveJPG(bufferedImage, outputStream, 30);
-                    break;
-                case 5:
-                    saveJPG(bufferedImage, outputStream, 25);
-                    break;
-                case 6:
-                    saveJPG(bufferedImage, outputStream, 20);
-                    break;
-                case 7:
                     saveJPG(bufferedImage, outputStream, 15);
                     break;
-                case 8:
+                case 1:
                     saveJPG(bufferedImage, outputStream, 10);
                     break;
-                case 9:
+                case 2:
+                    saveJPG(bufferedImage, outputStream, 9);
+                    break;
+                case 3:
+                    saveJPG(bufferedImage, outputStream, 8);
+                    break;
+                case 4:
+                    saveJPG(bufferedImage, outputStream, 7);
+                    break;
+                case 5:
+                    saveJPG(bufferedImage, outputStream, 6);
+                    break;
+                case 6:
                     saveJPG(bufferedImage, outputStream, 5);
+                    break;
+                case 7:
+                    saveJPG(bufferedImage, outputStream, 4);
+                    break;
+                case 8:
+                    saveJPG(bufferedImage, outputStream, 3);
+                    break;
+                case 9:
+                    saveJPG(bufferedImage, outputStream, 2);
                     break;
             }
         }
