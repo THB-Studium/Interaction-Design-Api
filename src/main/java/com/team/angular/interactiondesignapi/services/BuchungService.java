@@ -20,13 +20,16 @@ import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException
 import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
+import com.team.angular.interactiondesignapi.models.Reisender;
 import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
+import com.team.angular.interactiondesignapi.repositories.ReisenderRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderRead2ReisenderTO;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -51,11 +54,11 @@ public class BuchungService {
 	@Autowired
 	private BuchungsklassenRepository buchungsklassenRepository;
 	@Autowired
-	private ReiserRepository reiserRepository;
+	private ReisenderRepository reiserRepository;
 	@Autowired
 	private ReiseAngebotRepository reiseAngebotRepository;
 	@Autowired
-	private ReiserService reiserService;
+	private ReisenderService reiserService;
 
 
 	public List<BuchungReadTO> getAll() {
@@ -68,9 +71,9 @@ public class BuchungService {
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
 
-		// Reiser reiser = buchung.getReiser();
-		// Reiser mitReiser =
-		// ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getMitReiser()));
+		// Reisender reiser = buchung.getReisender();
+		// Reisender mitReisender =
+		// ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender()));
 
 		ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
 				() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
@@ -78,13 +81,13 @@ public class BuchungService {
 		Buchung newBuchung = new Buchung();
 		newBuchung.setDatum(buchung.getDatum());
 
-		// check if the MitReiser already exists and save when not
-		if (buchung.getMitReiser() != null) {
-			if (reiserRepository.getReisersByTelefonnummer(buchung.getMitReiser().getTelefonnummer()) != null) {
-				newBuchung.setMitReiserId(buchung.getMitReiser().getId());
+		// check if the MitReisender already exists and save when not
+		if (buchung.getMitReisender() != null) {
+			if (reiserRepository.getReisenderByTelefonnummer(buchung.getMitReisender().getTelefonnummer()) != null) {
+				newBuchung.setMitReisenderId(buchung.getMitReisender().getId());
 			} else {
-				newBuchung.setMitReiserId(
-						ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getMitReiser())).getId());
+				newBuchung.setMitReisenderId(
+						ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender())).getId());
 			}
 		}
 
@@ -94,11 +97,11 @@ public class BuchungService {
 		newBuchung.setKoffer(buchung.getKoffer());
 		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
 
-		// check if the Reiser already exists and save when not
-		if (reiserRepository.getReisersByTelefonnummer(buchung.getReiser().getTelefonnummer()) != null) {
-			newBuchung.setReiser(reiserRepository.getReisersByTelefonnummer(buchung.getReiser().getTelefonnummer()));
+		// check if the Reisender already exists and save when not
+		if (reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
+			newBuchung.setReisender(reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
 		} else {
-			newBuchung.setReiser(ReiserRead2ReiserTO.apply(reiserService.addReiser(buchung.getReiser())));
+			newBuchung.setReisender(ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getReisender())));
 		}
 
 		newBuchung.setReiseAngebot(ra);
@@ -107,7 +110,7 @@ public class BuchungService {
 		if (ra.getFreiPlaetze() > 0) {
 			ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
 
-			if (buchung.getMitReiser() != null) {
+			if (buchung.getMitReisender() != null) {
 				ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
 			}
 
@@ -135,19 +138,18 @@ public class BuchungService {
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Cannot find ReiseAngebot with id" + buchung.getReiseAngebot().getId()));
 
-		System.out.println(1234234);
 		// print pdf
 //		File file = null;
 //		
 //		file = ResourceUtils.getFile("classpath:Booking.jrxml");
 //		
-//		if(buchung.getMitReiserId() != null) {
+//		if(buchung.getMitReisenderId() != null) {
 //			file = ResourceUtils.getFile("classpath:Booking_mitReisende.jrxml");
 //		}
 
 		JasperReport jasperReport = JasperCompileManager.compileReport(templateLink);
 		
-		if(buchung.getMitReiserId() != null) {
+		if(buchung.getMitReisenderId() != null) {
 			jasperReport = JasperCompileManager.compileReport(templateLink_MitReisende);
 		}
 		
@@ -156,31 +158,31 @@ public class BuchungService {
 		params.put("ziel", ra.getLand() != null ? ra.getLand().getName() : ra.getTitel());
 		params.put("start_end", ra.getStartDatum().getDayOfMonth() + "." + ra.getStartDatum().getMonth().toString()
 				+ " - " + ra.getEndDatum().toString());
-		params.put("name_vorname", buchung.getReiser().getName() + "  " + buchung.getReiser().getVorname());
-		params.put("postanschrift", buchung.getReiser().getAdresse());
-		params.put("geburtsdatum", buchung.getReiser().getGeburtsdatum().toString());
-		params.put("handynummer", buchung.getReiser().getTelefonnummer());
-		params.put("email", buchung.getReiser().getEmail());
-		params.put("studiengang", buchung.getReiser().getStudiengang());
-		params.put("hochschule", buchung.getReiser().getHochschule());
-		params.put("status", buchung.getReiser().getStatus());
-		params.put("arbeit_bei", buchung.getReiser().getArbeitBei());
-		params.put("schonteilgenommen", buchung.getReiser().isSchonTeilgenommen() ? "Ja" : "Nein");
-		params.put("mit_mitreiser", buchung.getMitReiserId() != null ? "Ja" : "Nein");
+		params.put("name_vorname", buchung.getReisender().getName() + "  " + buchung.getReisender().getVorname());
+		params.put("postanschrift", buchung.getReisender().getAdresse());
+		params.put("geburtsdatum", buchung.getReisender().getGeburtsdatum().toString());
+		params.put("handynummer", buchung.getReisender().getTelefonnummer());
+		params.put("email", buchung.getReisender().getEmail());
+		params.put("studiengang", buchung.getReisender().getStudiengang());
+		params.put("hochschule", buchung.getReisender().getHochschule());
+		params.put("status", buchung.getReisender().getStatus());
+		params.put("arbeit_bei", buchung.getReisender().getArbeitBei());
+		params.put("schonteilgenommen", buchung.getReisender().isSchonTeilgenommen() ? "Ja" : "Nein");
+		params.put("mit_mitreiser", buchung.getMitReisenderId() != null ? "Ja" : "Nein");
 		
 		
-		if(buchung.getMitReiserId() != null) {
-			Reiser mitReiser = reiserRepository.findById(buchung.getMitReiserId()).get();
-			params.put("mitReiser_name_vorname", mitReiser.getName() + "  " + mitReiser.getVorname());
-			params.put("mitReiser_postanschrift", mitReiser.getAdresse());
-			params.put("mitReiser_geburtsdatum", mitReiser.getGeburtsdatum().toString());
-			params.put("mitReiser_handynummer", mitReiser.getTelefonnummer());
-			params.put("mitReiser_email", mitReiser.getEmail());
-			params.put("mitReiser_studiengang", mitReiser.getStudiengang());
-			params.put("mitReiser_hochschule", mitReiser.getHochschule());
-			params.put("mitReiser_status", mitReiser.getStatus());
-			params.put("mitReiser_arbeit_bei", mitReiser.getArbeitBei());
-			params.put("mitReiser_schonteilgenommen", mitReiser.isSchonTeilgenommen() ? "Ja" : "Nein");
+		if(buchung.getMitReisenderId() != null) {
+			Reisender mitReisender = reiserRepository.findById(buchung.getMitReisenderId()).get();
+			params.put("mitReisender_name_vorname", mitReisender.getName() + "  " + mitReisender.getVorname());
+			params.put("mitReisender_postanschrift", mitReisender.getAdresse());
+			params.put("mitReisender_geburtsdatum", mitReisender.getGeburtsdatum().toString());
+			params.put("mitReisender_handynummer", mitReisender.getTelefonnummer());
+			params.put("mitReisender_email", mitReisender.getEmail());
+			params.put("mitReisender_studiengang", mitReisender.getStudiengang());
+			params.put("mitReisender_hochschule", mitReisender.getHochschule());
+			params.put("mitReisender_status", mitReisender.getStatus());
+			params.put("mitReisender_arbeit_bei", mitReisender.getArbeitBei());
+			params.put("mitReisender_schonteilgenommen", mitReisender.isSchonTeilgenommen() ? "Ja" : "Nein");
 		}
 		
 		params.put("copyright_monat_jahr", LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear());
@@ -211,8 +213,8 @@ public class BuchungService {
 	public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) {
 
 		Buchungsklassen tarif = null;
-		Reiser reiser = null;
-		Reiser mitReiser = null;
+		Reisender reiser = null;
+		Reisender mitReisender = null;
 		ReiseAngebot ra = null;
 
 		Buchung actual = buchungRepository.findById(buchung.getId())
@@ -225,18 +227,18 @@ public class BuchungService {
 			actual.setBuchungsklasseId(tarif.getId());
 		}
 
-		if (buchung.getReiserId() != null) {
-			reiser = reiserRepository.findById(buchung.getReiserId()).orElseThrow(
-					() -> new ResourceNotFoundException("Cannot find Reiser with id: " + buchung.getReiserId()));
-			actual.setReiser(reiser);
+		if (buchung.getReisenderId() != null) {
+			reiser = reiserRepository.findById(buchung.getReisenderId()).orElseThrow(
+					() -> new ResourceNotFoundException("Cannot find Reisender with id: " + buchung.getReisenderId()));
+			actual.setReisender(reiser);
 		}
 
-		if (buchung.getMitReiserId() != null) {
-			mitReiser = reiserRepository.findById(buchung.getMitReiserId()).orElseThrow(
-					() -> new ResourceNotFoundException("Cannot find MitReiser with id: " + buchung.getMitReiserId()));
-			actual.setMitReiserId(mitReiser.getId());
-		} else if (buchung.getMitReiserId() == null) {
-			actual.setMitReiserId(null);
+		if (buchung.getMitReisenderId() != null) {
+			mitReisender = reiserRepository.findById(buchung.getMitReisenderId()).orElseThrow(
+					() -> new ResourceNotFoundException("Cannot find MitReisender with id: " + buchung.getMitReisenderId()));
+			actual.setMitReisenderId(mitReisender.getId());
+		} else if (buchung.getMitReisenderId() == null) {
+			actual.setMitReisenderId(null);
 		}
 
 		if (buchung.getDatum() != null)
@@ -259,11 +261,11 @@ public class BuchungService {
 		return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
 	}
 
-	public ResponseEntity<?> removeMitReiser(UUID id) {
+	public ResponseEntity<?> removeMitReisender(UUID id) {
 		Buchung buchung = buchungRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
 
-		buchung.setMitReiserId(null);
+		buchung.setMitReisenderId(null);
 		// buchungRepository.deleteById(buchung.getId());
 		buchungRepository.save(buchung);
 
