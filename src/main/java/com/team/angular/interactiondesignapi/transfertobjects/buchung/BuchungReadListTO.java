@@ -33,7 +33,7 @@ public class BuchungReadListTO {
 
     private ZahlungMethod zahlungMethod;
 
-    private UUID reiserId;
+    private UUID reisenderId;
 
     private UUID reiseAngebotId;
 

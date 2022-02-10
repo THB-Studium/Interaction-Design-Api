@@ -106,7 +106,7 @@ public class ReiseAngebotIT extends ItBase {
 		assertThat(create.getAnmeldungsFrist(), is(reiseAngebot.getAnmeldungsFrist()));
 		assertThat(create.getHinweise(), is(reiseAngebot.getHinweise()));
 		assertThat(create.getLandId(), is(reiseAngebot.getLand().getId()));
-		assertThat(create.getMitReiserBerechtigt(), is(reiseAngebot.getMitReiserBerechtigt()));
+		assertThat(create.getMitreiseberechtigt(), is(reiseAngebot.getMitreiseberechtigt()));
 		assertThat(create.getSonstigeHinweise(), is(reiseAngebot.getSonstigeHinweise()));
 	}
 	
@@ -205,7 +205,7 @@ public class ReiseAngebotIT extends ItBase {
 		assertThat(update.getInteressiert(), is(reiseAngebot_.getInteressiert()));
 		assertThat(update.getAnmeldungsFrist(), is(reiseAngebot_.getAnmeldungsFrist()));
 		assertThat(update.getHinweise(), is(reiseAngebot_.getHinweise()));
-		assertThat(update.getMitReiserBerechtigt(), is(reiseAngebot_.getMitReiserBerechtigt()));
+		assertThat(update.getMitreiseberechtigt(), is(reiseAngebot_.getMitreiseberechtigt()));
 		assertThat(update.getSonstigeHinweise(), is(reiseAngebot_.getSonstigeHinweise()));
 	}
 	
@@ -235,7 +235,7 @@ public class ReiseAngebotIT extends ItBase {
 		assertThat(reiseAngebot.getHinweise(), is(reiseAngebot_.getHinweise()));
 		assertThat(reiseAngebot.getLand(), is(reiseAngebot_.getLand()));
 		// TODO check also the array content
-		assertThat(reiseAngebot.getMitReiserBerechtigt().size(), is(reiseAngebot_.getMitReiserBerechtigt().size()));
+		assertThat(reiseAngebot.getMitreiseberechtigt().size(), is(reiseAngebot_.getMitreiseberechtigt().size()));
 		assertThat(reiseAngebot.getSonstigeHinweise(), is(reiseAngebot_.getSonstigeHinweise()));
 	}
 	

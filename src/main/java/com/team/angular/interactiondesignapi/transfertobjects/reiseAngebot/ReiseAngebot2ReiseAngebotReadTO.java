@@ -21,7 +21,7 @@ public class ReiseAngebot2ReiseAngebotReadTO {
         out.setAnmeldungsFrist(in.getAnmeldungsFrist());
         out.setLeistungen(in.getLeistungen());
         out.setHinweise(in.getHinweise());
-        out.setMitReiserBerechtigt(in.getMitReiserBerechtigt());
+        out.setMitreiseberechtigt(in.getMitreiseberechtigt());
         out.setSonstigeHinweise(in.getSonstigeHinweise());
 
         if (in.getBuchungsklassen() != null)

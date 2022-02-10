@@ -9,7 +9,6 @@ import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.*;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +77,7 @@ public class ReiseAngebotService {
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setHinweise(reiseAngebot.getHinweise());
         if (reiseAngebot.getLeistungen() != null)
-            _reiseAngebot.setMitReiserBerechtigt(reiseAngebot.getMitReiserBerechtigt());
+            _reiseAngebot.setMitreiseberechtigt(reiseAngebot.getMitreiseberechtigt());
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
@@ -157,7 +156,7 @@ public class ReiseAngebotService {
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setHinweise(reiseAngebot.getHinweise());
         if (reiseAngebot.getLeistungen() != null)
-            _reiseAngebot.setMitReiserBerechtigt(reiseAngebot.getMitReiserBerechtigt());
+            _reiseAngebot.setMitreiseberechtigt(reiseAngebot.getMitreiseberechtigt());
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 

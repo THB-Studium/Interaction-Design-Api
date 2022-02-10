@@ -54,7 +54,7 @@ public class ReiseAngebotWriteTO {
 
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<String> mitReiserBerechtigt;
+    private List<String> mitreiseberechtigt;
 
     private String sonstigeHinweise;
 }

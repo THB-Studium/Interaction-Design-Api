@@ -56,7 +56,7 @@ public class ReiseAngebot {
 
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<String> mitReiserBerechtigt;
+    private List<String> mitreiseberechtigt;
 
     @Lob
     private String sonstigeHinweise;

@@ -182,25 +182,25 @@ public class ItBase {
         return land;
     }
 
-    protected ReisenderWriteTO buildReiserWriteTO() {
-        ReisenderWriteTO reiser = new ReisenderWriteTO();
+    protected ReisenderWriteTO buildreisenderWriteTO() {
+        ReisenderWriteTO reisender = new ReisenderWriteTO();
 
-        reiser.setName(UUID.randomUUID().toString());
-        reiser.setVorname(UUID.randomUUID().toString());
-        reiser.setGeburtsdatum(LocalDate.now());
-        reiser.setTelefonnummer("+491232354" + (int) (Math.random() * 100));
-        reiser.setEmail(UUID.randomUUID().toString());
-        reiser.setHochschule(UUID.randomUUID().toString());
-        reiser.setAdresse(UUID.randomUUID().toString());
-        reiser.setStudiengang(UUID.randomUUID().toString());
-        reiser.setStatus(UUID.randomUUID().toString());
-        reiser.setArbeitBei(UUID.randomUUID().toString());
-        reiser.setSchonTeilgenommen(true);
+        reisender.setName(UUID.randomUUID().toString());
+        reisender.setVorname(UUID.randomUUID().toString());
+        reisender.setGeburtsdatum(LocalDate.now());
+        reisender.setTelefonnummer("+491232354" + (int) (Math.random() * 100));
+        reisender.setEmail(UUID.randomUUID().toString());
+        reisender.setHochschule(UUID.randomUUID().toString());
+        reisender.setAdresse(UUID.randomUUID().toString());
+        reisender.setStudiengang(UUID.randomUUID().toString());
+        reisender.setStatus(UUID.randomUUID().toString());
+        reisender.setArbeitBei(UUID.randomUUID().toString());
+        reisender.setSchonTeilgenommen(true);
 
-        return reiser;
+        return reisender;
     }
 
-    protected Reisender buildReiser() {
+    protected Reisender buildreisender() {
         Reisender reisender = new Reisender();
 
         reisender.setName(UUID.randomUUID().toString());
@@ -221,7 +221,7 @@ public class ItBase {
         Buchung newBuchung = new Buchung();
 
         newBuchung.setDatum(LocalDate.now());
-        newBuchung.setMitReiserId(UUID.randomUUID());
+        newBuchung.setMitReisenderId(UUID.randomUUID());
         newBuchung.setFlughafen(UUID.randomUUID().toString());
         newBuchung.setHandGepaeck(UUID.randomUUID().toString());
         newBuchung.setKoffer(UUID.randomUUID().toString());
@@ -237,28 +237,28 @@ public class ItBase {
 
         newBuchung.setDatum(LocalDate.now());
         newBuchung.setBuchungsklasseId(buchungsklasseId);
-        newBuchung.setMitReiser(buildReiserWriteTO());
+        newBuchung.setMitReisender(buildreisenderWriteTO());
         newBuchung.setFlughafen(UUID.randomUUID().toString());
         newBuchung.setHandGepaeck(UUID.randomUUID().toString());
         newBuchung.setKoffer(UUID.randomUUID().toString());
         newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
-        newBuchung.setReisender(buildReiserWriteTO());
+        newBuchung.setReisender(buildreisenderWriteTO());
         newBuchung.setReiseAngebotId(raId);
 
         return newBuchung;
     }
 
-    protected BuchungUpdateTO buildBuchungUpdateTO(UUID buchungsklasseId, UUID raId, UUID mitReiserId, UUID reiserId) {
+    protected BuchungUpdateTO buildBuchungUpdateTO(UUID buchungsklasseId, UUID raId, UUID mitreisenderId, UUID reisenderId) {
         BuchungUpdateTO newBuchung = new BuchungUpdateTO();
 
         newBuchung.setDatum(LocalDate.now());
         newBuchung.setBuchungsklasseId(buchungsklasseId);
-        newBuchung.setMitReisenderId(mitReiserId);
+        newBuchung.setMitReisenderId(mitreisenderId);
         newBuchung.setFlughafen(UUID.randomUUID().toString());
         newBuchung.setHandGepaeck(UUID.randomUUID().toString());
         newBuchung.setKoffer(UUID.randomUUID().toString());
         newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
-        newBuchung.setReisenderId(reiserId);
+        newBuchung.setReisenderId(reisenderId);
         newBuchung.setReiseAngebotId(raId);
 
         return newBuchung;
@@ -358,7 +358,7 @@ public class ItBase {
         reiseAngebot.setLeistungen(leistungen);
         reiseAngebot.setInteressiert(10);
         reiseAngebot.setHinweise(UUID.randomUUID().toString());
-        reiseAngebot.setMitReiserBerechtigt(reiseBerechtig);
+        reiseAngebot.setMitreisenderBerechtigt(reiseBerechtig);
         reiseAngebot.setSonstigeHinweise(UUID.randomUUID().toString());
 
         return reiseAngebot;
@@ -387,7 +387,7 @@ public class ItBase {
         reiseAngebot.setLeistungen(leistungen);
         reiseAngebot.setInteressiert(10);
         reiseAngebot.setHinweise(UUID.randomUUID().toString());
-        reiseAngebot.setMitReiserBerechtigt(reiseBerechtig);
+        reiseAngebot.setMitreisenderBerechtigt(reiseBerechtig);
         reiseAngebot.setSonstigeHinweise(UUID.randomUUID().toString());
 
         return reiseAngebot;

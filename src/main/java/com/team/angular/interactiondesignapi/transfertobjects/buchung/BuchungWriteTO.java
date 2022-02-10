@@ -20,7 +20,7 @@ public class BuchungWriteTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datum;
 
-    private ReisenderWriteTO mitReiser;
+    private ReisenderWriteTO mitReisender;
 
     private UUID buchungsklasseId;
 
