@@ -31,7 +31,7 @@ spring:
             non_contextual_creation: true
 
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  
+
 
     hibernate:
       # Hibernate ddl auto (create, create-drop, validate, update)
