@@ -56,7 +56,6 @@ public class BuchungService {
 	private ReiseAngebotRepository reiseAngebotRepository;
 	@Autowired
 	private ReiserService reiserService;
-	@Autowired
 
 
 	public List<BuchungReadTO> getAll() {
