@@ -19,14 +19,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/buchungs")
+@RequestMapping("/buchungen")
 @CrossOrigin(origins = "*")
 public class BuchungController {
 
     @Autowired
     protected BuchungService buchungService;
 
-    @ApiOperation("Get All Buchungs")
+    @ApiOperation("Get All Buchungen")
     @GetMapping("")
     public List<BuchungReadTO> getAllBuchungs() {
         return buchungService.getAll();
