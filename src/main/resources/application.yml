@@ -14,8 +14,8 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost/interaction-design
-    username: postgres
-    password: postgres
+    username: postgres_1
+    password: postgresQL
 
     hikari:
       auto-commit: false

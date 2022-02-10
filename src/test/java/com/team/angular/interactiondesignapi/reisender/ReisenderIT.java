@@ -160,6 +160,7 @@ public class ReisenderIT extends ItBase {
 		
 		reisenderWrite1 = buildReisenderWriteTO();
 		reisenderWrite1.setId(reisender.getId());
+		reisenderWrite1.setTelefonnummer(null);
 		
 		UUID id = UUID.fromString(
 				given()

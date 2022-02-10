@@ -9,19 +9,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InteractionDesignApiApplication implements CommandLineRunner {
+public class InteractionDesignApiApplication {
+    //public class InteractionDesignApiApplication implements CommandLineRunner {
 
     @Autowired
     AdminService adminService;
 
     public static void main(String[] args) throws JRException {
         SpringApplication.run(InteractionDesignApiApplication.class, args);
-
     }
 
-    @Override
+    /*@Override
     public void run(String... args) throws Exception {
         adminService.addAdmin(new Admin(null, "superadmin", "superadmin", "superadminkennwort", "superadmin@universitytravelclub.de", null, null, null));
-    }
+    }*/
 
 }
