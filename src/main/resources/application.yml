@@ -6,6 +6,7 @@ server.port: 5050
 
 template:
   link: /opt/services/Booking.jrxml
+  linkMitReisende: /opt/services/Booking_mitReisende.jrxml
 
 spring:
   application:

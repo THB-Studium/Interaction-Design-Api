@@ -41,6 +41,9 @@ public class BuchungService {
 	
 	@Value("${template.link}")
 	private String templateLink;
+	
+	@Value("${template.linkMitReisende}")
+	private String templateLink_MitReisende;
 
 	private static final Logger log = LoggerFactory.getLogger(BuchungService.class);
 	@Autowired
@@ -119,6 +122,8 @@ public class BuchungService {
 	}
 
 	public byte[] exportPdf(UUID id) throws JRException, URISyntaxException, IOException {
+		
+		
 
 		Buchung buchung = buchungRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
@@ -131,13 +136,24 @@ public class BuchungService {
 				.orElseThrow(() -> new ResourceNotFoundException(
 						"Cannot find ReiseAngebot with id" + buchung.getReiseAngebot().getId()));
 
+		System.out.println(1234234);
 		// print pdf
-		//File file = null;
-		// file = ResourceUtils.getFile("classpath:Booking.jrxml");
+//		File file = null;
+//		
+//		file = ResourceUtils.getFile("classpath:Booking.jrxml");
+//		
+//		if(buchung.getMitReiserId() != null) {
+//			file = ResourceUtils.getFile("classpath:Booking_mitReisende.jrxml");
+//		}
 
 		JasperReport jasperReport = JasperCompileManager.compileReport(templateLink);
-
+		
+		if(buchung.getMitReiserId() != null) {
+			jasperReport = JasperCompileManager.compileReport(templateLink_MitReisende);
+		}
+		
 		Map<String, Object> params = new HashMap<>();
+		
 		params.put("ziel", ra.getLand() != null ? ra.getLand().getName() : ra.getTitel());
 		params.put("start_end", ra.getStartDatum().getDayOfMonth() + "." + ra.getStartDatum().getMonth().toString()
 				+ " - " + ra.getEndDatum().toString());
@@ -152,6 +168,7 @@ public class BuchungService {
 		params.put("arbeit_bei", buchung.getReiser().getArbeitBei());
 		params.put("schonteilgenommen", buchung.getReiser().isSchonTeilgenommen() ? "Ja" : "Nein");
 		params.put("mit_mitreiser", buchung.getMitReiserId() != null ? "Ja" : "Nein");
+		
 		
 		if(buchung.getMitReiserId() != null) {
 			Reiser mitReiser = reiserRepository.findById(buchung.getMitReiserId()).get();
@@ -173,8 +190,8 @@ public class BuchungService {
 		params.put("buchungsklasse", tarif.getType());
 		params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
 		params.put("flughafen", buchung.getFlughafen());
-		params.put("handgepaeck", buchung.getHandGepaeck());
-		params.put("koffer", buchung.getKoffer());
+		params.put("handgepaeck", buchung.getHandGepaeck().equals("true") ? "ja" : "nein");
+		params.put("koffer", buchung.getKoffer().equals("true") ? "ja" : "nein");
 		params.put("jahr", "" + LocalDate.now().getYear());
 
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
