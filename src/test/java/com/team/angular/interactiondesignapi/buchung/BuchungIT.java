@@ -48,19 +48,19 @@ public class BuchungIT extends ItBase {
 	public void setup() {
 		super.setup();
 		
-		reisender = buildReiser();
+		reisender = buildReisender();
 		reisender = reisenderRepository.save(reisender);
 		
-		reisender1 = buildReiser();
+		reisender1 = buildReisender();
 		reisender1 = reisenderRepository.save(reisender1);
 		
-		reisender2 = buildReiser();
+		reisender2 = buildReisender();
 		reisender2 = reisenderRepository.save(reisender2);
 		
-		mitReisender1 = buildReiser();
+		mitReisender1 = buildReisender();
 		mitReisender1 = reisenderRepository.save(mitReisender1);
 		
-		mitReisender = buildReiser();
+		mitReisender = buildReisender();
 		mitReisender = reisenderRepository.save(mitReisender);
 		
 		beschreibung.add(UUID.randomUUID().toString());

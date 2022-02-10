@@ -50,10 +50,10 @@ public class BuchungsklassenIT extends ItBase {
 		
 		mitreiseberechtigt.add(UUID.randomUUID().toString());
 		
-		reisender = buildReiser();
+		reisender = buildReisender();
 		reisender = reisenderRepository.save(reisender);
 		
-		reisender1 = buildReiser();
+		reisender1 = buildReisender();
 		reisender1 = reisenderRepository.save(reisender1);
 		
 		reiseAngebot = buildReiseAngebot();

@@ -182,7 +182,7 @@ public class ItBase {
         return land;
     }
 
-    protected ReisenderWriteTO buildreisenderWriteTO() {
+    protected ReisenderWriteTO buildReisenderWriteTO() {
         ReisenderWriteTO reisender = new ReisenderWriteTO();
 
         reisender.setName(UUID.randomUUID().toString());
@@ -200,7 +200,7 @@ public class ItBase {
         return reisender;
     }
 
-    protected Reisender buildreisender() {
+    protected Reisender buildReisender() {
         Reisender reisender = new Reisender();
 
         reisender.setName(UUID.randomUUID().toString());
@@ -237,12 +237,12 @@ public class ItBase {
 
         newBuchung.setDatum(LocalDate.now());
         newBuchung.setBuchungsklasseId(buchungsklasseId);
-        newBuchung.setMitReisender(buildreisenderWriteTO());
+        newBuchung.setMitReisender(buildReisenderWriteTO());
         newBuchung.setFlughafen(UUID.randomUUID().toString());
         newBuchung.setHandGepaeck(UUID.randomUUID().toString());
         newBuchung.setKoffer(UUID.randomUUID().toString());
         newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
-        newBuchung.setReisender(buildreisenderWriteTO());
+        newBuchung.setReisender(buildReisenderWriteTO());
         newBuchung.setReiseAngebotId(raId);
 
         return newBuchung;
@@ -338,9 +338,9 @@ public class ItBase {
 
     protected ReiseAngebot buildReiseAngebot() {
 
-        List<String> reiseBerechtig = new ArrayList<String>();
-        reiseBerechtig.add(UUID.randomUUID().toString());
-        reiseBerechtig.add(UUID.randomUUID().toString());
+        List<String> mitreiseberechtigt = new ArrayList<>();
+        mitreiseberechtigt.add(UUID.randomUUID().toString());
+        mitreiseberechtigt.add(UUID.randomUUID().toString());
 
         Set<String> leistungen = new HashSet<String>();
         leistungen.add(UUID.randomUUID().toString());
@@ -358,7 +358,7 @@ public class ItBase {
         reiseAngebot.setLeistungen(leistungen);
         reiseAngebot.setInteressiert(10);
         reiseAngebot.setHinweise(UUID.randomUUID().toString());
-        reiseAngebot.setMitreisenderBerechtigt(reiseBerechtig);
+        reiseAngebot.setMitreiseberechtigt(mitreiseberechtigt);
         reiseAngebot.setSonstigeHinweise(UUID.randomUUID().toString());
 
         return reiseAngebot;
@@ -366,9 +366,9 @@ public class ItBase {
 
     protected ReiseAngebotWriteTO buildReiseAngebotWriteTO(UUID landId) {
 
-        List<String> reiseBerechtig = new ArrayList<String>();
-        reiseBerechtig.add(UUID.randomUUID().toString());
-        reiseBerechtig.add(UUID.randomUUID().toString());
+        List<String> mitreiseberechtigt = new ArrayList<String>();
+        mitreiseberechtigt.add(UUID.randomUUID().toString());
+        mitreiseberechtigt.add(UUID.randomUUID().toString());
 
         Set<String> leistungen = new HashSet<String>();
         leistungen.add(UUID.randomUUID().toString());
@@ -387,7 +387,7 @@ public class ItBase {
         reiseAngebot.setLeistungen(leistungen);
         reiseAngebot.setInteressiert(10);
         reiseAngebot.setHinweise(UUID.randomUUID().toString());
-        reiseAngebot.setMitreisenderBerechtigt(reiseBerechtig);
+        reiseAngebot.setMitreiseberechtigt(mitreiseberechtigt);
         reiseAngebot.setSonstigeHinweise(UUID.randomUUID().toString());
 
         return reiseAngebot;

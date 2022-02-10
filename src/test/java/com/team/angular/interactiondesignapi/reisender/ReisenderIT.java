@@ -1,4 +1,4 @@
-package com.team.angular.interactiondesignapi.reiser;
+package com.team.angular.interactiondesignapi.reisender;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,7 +27,7 @@ public class ReisenderIT extends ItBase {
 	
 	Buchung buchung, buchung1; 
 	
-	ReisenderWriteTO reiserWrite1;
+	ReisenderWriteTO reisenderWrite1;
 	
 	Land land;
 	
@@ -42,10 +42,10 @@ public class ReisenderIT extends ItBase {
 		super.setup();		
 		
 		
-		reisender = buildReiser();
+		reisender = buildReisender();
 		reisender = reisenderRepository.save(reisender);
 		
-		reisender1 = buildReiser();
+		reisender1 = buildReisender();
 		reisender1 = reisenderRepository.save(reisender1);
 		
 		beschreibung.add(UUID.randomUUID().toString());
@@ -71,16 +71,16 @@ public class ReisenderIT extends ItBase {
 
 	
 	@Test
-	public void createReiser() {
+	public void createReisender() {
 		
-		reiserWrite1 = buildReiserWriteTO();
+		reisenderWrite1 = buildReisenderWriteTO();
 		
 		UUID id = UUID.fromString(
 				given()
 				.contentType(ContentType.JSON)
-				.body(reiserWrite1)
+				.body(reisenderWrite1)
 				.log().body()
-				.post("/reisers")
+				.post("/reisende")
 				.then()
 				.log().body()
 				.statusCode(200)
@@ -88,16 +88,16 @@ public class ReisenderIT extends ItBase {
 		
 		Reisender reisender = reisenderRepository.findById(id).get();
 		
-		assertThat(reiserWrite1.getName(), is(reisender.getName()));
-		assertThat(reiserWrite1.getVorname(), is(reisender.getVorname()));
+		assertThat(reisenderWrite1.getName(), is(reisender.getName()));
+		assertThat(reisenderWrite1.getVorname(), is(reisender.getVorname()));
 		
 	}
 	
 	@Test
-	public void createReiser__Phonenumber_exist() {
+	public void createReisender__Phonenumber_exist() {
 		
-		reiserWrite1 = buildReiserWriteTO();
-		reiserWrite1.setTelefonnummer(reisender1.getTelefonnummer());
+		reisenderWrite1 = buildReisenderWriteTO();
+		reisenderWrite1.setTelefonnummer(reisender1.getTelefonnummer());
 		
 		Exception ex = Assertions.assertThrows(Exception.class, () -> {
 			UUID.fromString(
@@ -105,9 +105,9 @@ public class ReisenderIT extends ItBase {
 						.contentType(ContentType.JSON)
 //						.multiPart("reiseAngebot", update,"application/json")
 //						.multiPart("bild", "something123".getBytes())
-						.body(reiserWrite1)
+						.body(reisenderWrite1)
 						.log().body()
-						.post("/reisers")
+						.post("/reisende")
 						.then()
 						.log().body()
 						.statusCode(200)
@@ -118,19 +118,19 @@ public class ReisenderIT extends ItBase {
 	}
 	
 	@Test
-	public void updateReiser__Phonenumber_exist() {
+	public void updateReisender__Phonenumber_exist() {
 		
-		reiserWrite1 = buildReiserWriteTO();
-		reiserWrite1.setId(reisender1.getId());
-		reiserWrite1.setTelefonnummer(reisender.getTelefonnummer());
+		reisenderWrite1 = buildReisenderWriteTO();
+		reisenderWrite1.setId(reisender1.getId());
+		reisenderWrite1.setTelefonnummer(reisender.getTelefonnummer());
 		
 		Exception ex = Assertions.assertThrows(Exception.class, () -> {
 			UUID.fromString(
 					given()
 						.contentType(ContentType.JSON)
-						.body(reiserWrite1)
+						.body(reisenderWrite1)
 						.log().body()
-						.put("/reisers")
+						.put("/reisende")
 						.then()
 						.log().body()
 						.statusCode(200)
@@ -141,13 +141,13 @@ public class ReisenderIT extends ItBase {
 	}
 	
 	@Test
-	public void listReisers() {	
+	public void listReisenders() {	
 		
 		given()
 		.contentType(ContentType.JSON)
 		.body("")
 		.log().body()
-		.get("/reisers")
+		.get("/reisende")
 		.then()
 		.log().body()
 		.statusCode(200)
@@ -156,17 +156,17 @@ public class ReisenderIT extends ItBase {
 	}
 	
 	@Test
-	public void updateReiser() {
+	public void updateReisender() {
 		
-		reiserWrite1 = buildReiserWriteTO();
-		reiserWrite1.setId(reisender.getId());
+		reisenderWrite1 = buildReisenderWriteTO();
+		reisenderWrite1.setId(reisender.getId());
 		
 		UUID id = UUID.fromString(
 				given()
 				.contentType(ContentType.JSON)
-				.body(reiserWrite1)
+				.body(reisenderWrite1)
 				.log().body()
-				.put("/reisers")
+				.put("/reisende")
 				.then()
 				.log().body()
 				.statusCode(200)
@@ -174,20 +174,20 @@ public class ReisenderIT extends ItBase {
 		
 		Reisender reisender_ = reisenderRepository.findById(id).get();
 		
-		assertThat(reiserWrite1.getId(), is(reisender_.getId()));
-		assertThat(reiserWrite1.getName(), is(reisender_.getName()));
-		assertThat(reiserWrite1.getVorname(), is(reisender_.getVorname()));
+		assertThat(reisenderWrite1.getId(), is(reisender_.getId()));
+		assertThat(reisenderWrite1.getName(), is(reisender_.getName()));
+		assertThat(reisenderWrite1.getVorname(), is(reisender_.getVorname()));
 	}
 	
 	@Test
-	public void getReiser() {
+	public void getReisender() {
 		
 		UUID id = UUID.fromString(
 				given()
 				.contentType(ContentType.JSON)
 				//.body(reisender)
 				.log().body()
-				.get("/reisers/"+ reisender.getId() )
+				.get("/reisende/"+ reisender.getId() )
 				.then()
 				.log().body()
 				.statusCode(200)
@@ -201,16 +201,16 @@ public class ReisenderIT extends ItBase {
 	}
 	
 	@Test
-	public void deleteReiser() {
+	public void deleteReisender() {
 		
-		reisender = buildReiser();
+		reisender = buildReisender();
 		reisender = reisenderRepository.save(reisender);
 
 		given()
 		.contentType(ContentType.JSON)
 		//.body(reisender)
 		.log().body()
-		.delete("/reisers/"+ reisender.getId())
+		.delete("/reisende/"+ reisender.getId())
 		.then()
 		.log().body()
 		.statusCode(200);

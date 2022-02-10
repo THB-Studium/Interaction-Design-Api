@@ -50,7 +50,7 @@ public class ReiseAngebotReadTO {
 
     private String hinweise;
 
-    private List<String> mitReiserBerechtigt;
+    private List<String> mitreiseberechtigt;
 
     private String sonstigeHinweise;
 

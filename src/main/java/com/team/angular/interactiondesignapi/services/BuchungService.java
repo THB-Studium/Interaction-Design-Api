@@ -64,8 +64,8 @@ public class BuchungService {
                         "Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
 
         // Reisender reisender = buchung.getReisender();
-        // Reisender mitReiser =
-        // ReisenderRead2ReisenderTO.apply(reiserService.addReiser(buchung.getMitReiser()));
+        // Reisender mitReisender =
+        // ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender()));
 
         ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
@@ -73,13 +73,13 @@ public class BuchungService {
         Buchung newBuchung = new Buchung();
         newBuchung.setDatum(buchung.getDatum());
 
-        // check if the MitReiser already exists and save when not
-        if (buchung.getMitReiser() != null) {
-            if (reisenderRepository.getReisenderByTelefonnummer(buchung.getMitReiser().getTelefonnummer()) != null) {
-                newBuchung.setMitReisenderId(buchung.getMitReiser().getId());
+        // check if the MitReisender already exists and save when not
+        if (buchung.getMitReisender() != null) {
+            if (reisenderRepository.getReisenderByTelefonnummer(buchung.getMitReisender().getTelefonnummer()) != null) {
+                newBuchung.setMitReisenderId(buchung.getMitReisender().getId());
             } else {
                 newBuchung.setMitReisenderId(
-                        ReisenderRead2ReisenderTO.apply(reisenderService.addReisender(buchung.getMitReiser())).getId());
+                        ReisenderRead2ReisenderTO.apply(reisenderService.addReisender(buchung.getMitReisender())).getId());
             }
         }
 
@@ -102,7 +102,7 @@ public class BuchungService {
         if (ra.getFreiPlaetze() > 0) {
             ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
 
-            if (buchung.getMitReiser() != null) {
+            if (buchung.getMitReisender() != null) {
                 ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
             }
 
@@ -199,7 +199,7 @@ public class BuchungService {
 
         if (buchung.getMitReisenderId() != null) {
             mitReisender = reisenderRepository.findById(buchung.getMitReisenderId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Cannot find MitReiser with id: " + buchung.getMitReisenderId()));
+                    () -> new ResourceNotFoundException("Cannot find MitReisender with id: " + buchung.getMitReisenderId()));
             actual.setMitReisenderId(mitReisender.getId());
         } else {
             actual.setMitReisenderId(null);
@@ -225,7 +225,7 @@ public class BuchungService {
         return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
     }
 
-    public ResponseEntity<?> removeMitReiser(UUID id) {
+    public ResponseEntity<?> removeMitReisender(UUID id) {
         Buchung buchung = buchungRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
 
