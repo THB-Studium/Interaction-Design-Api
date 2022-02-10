@@ -38,36 +38,41 @@ public class CompressImage {
 
             switch (size_index) { // compression quality depend on the size
                 case 0:
-                    saveJPG(bufferedImage, outputStream, 15);
-                    break;
-                case 1:
                     saveJPG(bufferedImage, outputStream, 10);
                     break;
-                case 2:
+                case 1:
                     saveJPG(bufferedImage, outputStream, 9);
                     break;
-                case 3:
+                case 2:
                     saveJPG(bufferedImage, outputStream, 8);
                     break;
-                case 4:
+                case 3:
                     saveJPG(bufferedImage, outputStream, 7);
                     break;
-                case 5:
+                case 4:
                     saveJPG(bufferedImage, outputStream, 6);
                     break;
-                case 6:
+                case 5:
                     saveJPG(bufferedImage, outputStream, 5);
                     break;
-                case 7:
+                case 6:
                     saveJPG(bufferedImage, outputStream, 4);
                     break;
-                case 8:
+                case 7:
                     saveJPG(bufferedImage, outputStream, 3);
                     break;
-                case 9:
+                case 8:
                     saveJPG(bufferedImage, outputStream, 2);
                     break;
+                case 9:
+                    saveJPG(bufferedImage, outputStream, 1);
+                    break;
             }
+            // from file to bytes[]
+            return Files.readAllBytes(Paths.get(FILEPATH_COMPRESS));
+        } else {
+            // from file to bytes[]
+            return Files.readAllBytes(Paths.get(FILEPATH));
         }
         // delete File
         /*try {
@@ -78,7 +83,7 @@ public class CompressImage {
         }*/
 
         // from file to bytes[]
-        return Files.readAllBytes(Paths.get(FILEPATH_COMPRESS));
+        // return Files.readAllBytes(Paths.get(FILEPATH));
     }
 
     public static void saveJPG(BufferedImage im, OutputStream out, int quality) throws IOException {
