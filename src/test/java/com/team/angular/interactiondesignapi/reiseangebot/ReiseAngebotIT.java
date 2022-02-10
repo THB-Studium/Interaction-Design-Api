@@ -19,7 +19,7 @@ import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.models.Reiser;
+import com.team.angular.interactiondesignapi.models.Reisender;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
 
 import io.restassured.http.ContentType;
@@ -40,7 +40,7 @@ public class ReiseAngebotIT extends ItBase {
 	
 	private List<String> mitreiseberechtigt = new ArrayList<>();
 	
-	Reiser reiser, reiser1, mitReiser;
+	Reisender reisender, reisender1, mitReisender;
 	
 	@BeforeEach
 	public void setup() {
@@ -52,11 +52,11 @@ public class ReiseAngebotIT extends ItBase {
 		
 		mitreiseberechtigt.add(UUID.randomUUID().toString());
 		
-		reiser = buildReiser();
-		reiser = reiserRepository.save(reiser);
+		reisender = buildReiser();
+		reisender = reisenderRepository.save(reisender);
 		
-		reiser1 = buildReiser();
-		reiser1 = reiserRepository.save(reiser1);
+		reisender1 = buildReiser();
+		reisender1 = reisenderRepository.save(reisender1);
 		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);

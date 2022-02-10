@@ -9,17 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.team.angular.interactiondesignapi.models.*;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.team.angular.interactiondesignapi.ItBase;
-import com.team.angular.interactiondesignapi.models.Buchungsklassen;
-import com.team.angular.interactiondesignapi.models.Erwartungen;
-import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.models.Reiser;
+import com.team.angular.interactiondesignapi.models.Reisender;
 import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadWriteTO;
 
 import io.restassured.http.ContentType;
@@ -42,7 +38,7 @@ public class BuchungsklassenIT extends ItBase {
 	
 	private List<String> mitreiseberechtigt = new ArrayList<>();
 	
-	Reiser reiser, reiser1, mitReiser;
+	Reisender reisender, reisender1, mitReisender;
 	
 	@BeforeEach
 	public void setup() {
@@ -54,11 +50,11 @@ public class BuchungsklassenIT extends ItBase {
 		
 		mitreiseberechtigt.add(UUID.randomUUID().toString());
 		
-		reiser = buildReiser();
-		reiser = reiserRepository.save(reiser);
+		reisender = buildReiser();
+		reisender = reisenderRepository.save(reisender);
 		
-		reiser1 = buildReiser();
-		reiser1 = reiserRepository.save(reiser1);
+		reisender1 = buildReiser();
+		reisender1 = reisenderRepository.save(reisender1);
 		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);

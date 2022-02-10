@@ -26,9 +26,9 @@ public class Buchung {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datum;
 
-    //private Reiser mitReiser;
+    //private Reisender mitReisender;
 
-    private UUID mitReiserId;
+    private UUID mitReisenderId;
 
     //private Buchungsklassen buchungsklasse;
 
@@ -45,9 +45,9 @@ public class Buchung {
     private ZahlungMethod zahlungMethod;
 
     @ManyToOne
-    @JoinColumn(name = "Reiser_id")
+    @JoinColumn(name = "Reisender_id")
     @EqualsAndHashCode.Exclude
-    private Reiser reiser;
+    private Reisender reisender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude

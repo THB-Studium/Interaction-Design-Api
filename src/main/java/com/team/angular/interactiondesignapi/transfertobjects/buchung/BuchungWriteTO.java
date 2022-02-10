@@ -2,7 +2,7 @@ package com.team.angular.interactiondesignapi.transfertobjects.buchung;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
-import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderWriteTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class BuchungWriteTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datum;
 
-    private ReiserWriteTO mitReiser;
+    private ReisenderWriteTO mitReiser;
 
     private UUID buchungsklasseId;
 
@@ -32,7 +32,7 @@ public class BuchungWriteTO {
 
     private ZahlungMethod zahlungMethod;
 
-    private ReiserWriteTO reiser;
+    private ReisenderWriteTO reisender;
 
     private UUID reiseAngebotId;
 

@@ -36,7 +36,7 @@ public class LandInfoIT extends ItBase {
 	
 	private List<String> mitreiseberechtigt = new ArrayList<>();
 	
-	Reiser reiser, reiser1, mitReiser;
+	Reisender reisender, reisender1, mitReisender;
 	
 	@BeforeEach
 	public void setup() {
@@ -48,11 +48,11 @@ public class LandInfoIT extends ItBase {
 		
 		mitreiseberechtigt.add(UUID.randomUUID().toString());
 		
-		reiser = buildReiser();
-		reiser = reiserRepository.save(reiser);
+		reisender = buildReiser();
+		reisender = reisenderRepository.save(reisender);
 		
-		reiser1 = buildReiser();
-		reiser1 = reiserRepository.save(reiser1);
+		reisender1 = buildReiser();
+		reisender1 = reisenderRepository.save(reisender1);
 		
 		reiseAngebot = buildReiseAngebot();
 		reiseAngebot = reiseAngebotRepository.save(reiseAngebot);

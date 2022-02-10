@@ -19,7 +19,7 @@ public class BuchungReadTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datum;
 
-    private UUID mitReiserId;
+    private UUID mitReisenderId;
 
     private UUID buchungsklasseId;
 
@@ -31,7 +31,7 @@ public class BuchungReadTO {
 
     private ZahlungMethod zahlungMethod;
 
-    private UUID reiserId;
+    private UUID reisenderId;
 
     private UUID reiseAngebotId;
 

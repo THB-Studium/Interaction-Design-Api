@@ -12,13 +12,13 @@ public class Buchung2BuchungReadTO {
 
         out.setId(in.getId());
         out.setDatum(in.getDatum());
-        out.setMitReiserId(in.getMitReiserId());
+        out.setMitReisenderId(in.getMitReisenderId());
         out.setBuchungsklasseId(in.getBuchungsklasseId());
         out.setFlughafen(in.getFlughafen());
         out.setHandGepaeck(in.getHandGepaeck());
         out.setKoffer(in.getKoffer());
         out.setZahlungMethod(in.getZahlungMethod());
-        out.setReiserId(in.getReiser().getId());
+        out.setReisenderId(in.getReisender().getId());
         out.setReiseAngebotId(in.getReiseAngebot().getId());
 
         return out;

@@ -1,14 +1,11 @@
-package com.team.angular.interactiondesignapi.models;
+package com.team.angular.interactiondesignapi.transfertobjects.reisender;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
@@ -16,33 +13,23 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Reiser {
+public class ReisenderReadTO {
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String vorname;
 
-    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate geburtsdatum;
 
-    @NotBlank
     private String telefonnummer;
 
-    @NotBlank
     private String email;
 
     private String hochschule;
 
-    @NotBlank
     private String adresse;
 
     private String studiengang;
@@ -53,7 +40,6 @@ public class Reiser {
 
     private boolean schonTeilgenommen;
 
-    @OneToMany(mappedBy = "reiser", fetch = FetchType.EAGER)
-    private Set<Buchung> buchungen;
+    private Set<BuchungReadTO> buchungen;
 
 }

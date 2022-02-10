@@ -1,14 +1,14 @@
-package com.team.angular.interactiondesignapi.transfertobjects.reiser;
+package com.team.angular.interactiondesignapi.transfertobjects.reisender;
 
-import com.team.angular.interactiondesignapi.models.Reiser;
+import com.team.angular.interactiondesignapi.models.Reisender;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Reiser2ReiserReadListTO {
+public class ReisenderRead2ReisenderTO {
 
-    public static ReiserReadListTO apply(Reiser in) {
-        ReiserReadListTO out = new ReiserReadListTO();
+    public static Reisender apply(ReisenderReadTO in) {
+        Reisender out = new Reisender();
 
         out.setId(in.getId());
         out.setName(in.getName());
@@ -25,7 +25,7 @@ public class Reiser2ReiserReadListTO {
         return out;
     }
 
-    public static List<ReiserReadListTO> apply(List<Reiser> lands) {
+    public static List<Reisender> apply(List<ReisenderReadTO> lands) {
         return lands.stream().map(u -> apply(u)).collect(Collectors.toList());
     }
 

@@ -1,10 +1,9 @@
-package com.team.angular.interactiondesignapi.transfertobjects.reiser;
+package com.team.angular.interactiondesignapi.transfertobjects.reisender;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,7 +11,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReiserWriteTO {
+public class ReisenderWriteTO {
 
     private UUID id;
 

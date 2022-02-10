@@ -19,10 +19,10 @@ import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.models.Reiser;
+import com.team.angular.interactiondesignapi.models.Reisender;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reiser.ReiserWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderWriteTO;
 
 import io.restassured.http.ContentType;
 
@@ -32,13 +32,13 @@ public class BuchungIT extends ItBase {
 	
 	Buchungsklassen buchungsklasse, buchungsklasse1;
 	
-	ReiserWriteTO reiserWrite1;
+	ReisenderWriteTO reiserWrite1;
 	
 	Land land, land1;
 	
 	private List<String> beschreibung = new ArrayList<>();
 	
-	Reiser reiser, reiser1, mitReiser, reiser2, mitReiser1;
+	Reisender reisender, reisender1, mitReisender, reisender2, mitReisender1;
 	
 	Erwartungen erwartungen;
 	
@@ -48,20 +48,20 @@ public class BuchungIT extends ItBase {
 	public void setup() {
 		super.setup();
 		
-		reiser = buildReiser();
-		reiser = reiserRepository.save(reiser);
+		reisender = buildReiser();
+		reisender = reisenderRepository.save(reisender);
 		
-		reiser1 = buildReiser();
-		reiser1 = reiserRepository.save(reiser1);
+		reisender1 = buildReiser();
+		reisender1 = reisenderRepository.save(reisender1);
 		
-		reiser2 = buildReiser();
-		reiser2 = reiserRepository.save(reiser2);
+		reisender2 = buildReiser();
+		reisender2 = reisenderRepository.save(reisender2);
 		
-		mitReiser1 = buildReiser();
-		mitReiser1 = reiserRepository.save(mitReiser1);
+		mitReisender1 = buildReiser();
+		mitReisender1 = reisenderRepository.save(mitReisender1);
 		
-		mitReiser = buildReiser();
-		mitReiser = reiserRepository.save(mitReiser);
+		mitReisender = buildReiser();
+		mitReisender = reisenderRepository.save(mitReisender);
 		
 		beschreibung.add(UUID.randomUUID().toString());
 		
@@ -80,10 +80,10 @@ public class BuchungIT extends ItBase {
 		buchungsklasse1 = buildBuchungsKlasse(reiseAngebot);
 		buchungsklasse1 =buchungsklasseRepository.save(buchungsklasse);
 		
-		buchung = buildBuchung(reiser, reiseAngebot);
+		buchung = buildBuchung(reisender, reiseAngebot);
 		buchung = buchungRepository.save(buchung);
 		
-		buchung1 = buildBuchung(reiser1, reiseAngebot);
+		buchung1 = buildBuchung(reisender1, reiseAngebot);
 		buchung1 = buchungRepository.save(buchung1);
 		
 	}
@@ -136,7 +136,7 @@ public class BuchungIT extends ItBase {
 	@Test
 	public void updateBuchung() {
 		
-		BuchungUpdateTO update = buildBuchungUpdateTO( buchungsklasse1.getId(), reiseAngebot1.getId(), mitReiser1.getId(), reiser1.getId() );
+		BuchungUpdateTO update = buildBuchungUpdateTO( buchungsklasse1.getId(), reiseAngebot1.getId(), mitReisender1.getId(), reisender1.getId() );
 		update.setId(buchung.getId());
 		
 		UUID id = UUID.fromString(
@@ -156,8 +156,8 @@ public class BuchungIT extends ItBase {
 		assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
 		assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
 		assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
-		assertThat(update.getReiserId(), is(reiser1.getId()));
-		assertThat(update.getMitReiserId(), is(mitReiser1.getId()));
+		assertThat(update.getReisenderId(), is(reisender1.getId()));
+		assertThat(update.getMitReisenderId(), is(mitReisender1.getId()));
 		assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
 	}
 	

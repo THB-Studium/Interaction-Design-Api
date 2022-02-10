@@ -15,7 +15,7 @@ import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.models.Reiser;
+import com.team.angular.interactiondesignapi.models.Reisender;
 import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadWriteTO;
 
 import io.restassured.http.ContentType;
@@ -30,7 +30,7 @@ public class ErwartungenIT extends ItBase {
 	
 	Land land;
 
-	Reiser reiser, reiser1, mitReiser;
+	Reisender reisender, reisender1, mitReisender;
 	
 	@BeforeEach
 	public void setup() {

@@ -1,4 +1,4 @@
-package com.team.angular.interactiondesignapi.transfertobjects.reiser;
+package com.team.angular.interactiondesignapi.transfertobjects.reisender;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReiserReadListTO {
+public class ReisenderReadListTO {
 
     private UUID id;
 
