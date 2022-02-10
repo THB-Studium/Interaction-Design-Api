@@ -82,7 +82,8 @@ public class ReisenderService {
             actual.setVorname(Reisender.getVorname());
         if (Reisender.getGeburtsdatum() != null)
             actual.setGeburtsdatum(Reisender.getGeburtsdatum());
-        if (Reisender.getTelefonnummer() != null && Reisender.getTelefonnummer() != actual.getTelefonnummer()) {
+
+        if (Reisender.getTelefonnummer() != null && !Reisender.getTelefonnummer().equals(actual.getTelefonnummer())) {
             if (!reisenderRepository.existsReisenderByTelefonnummer(Reisender.getTelefonnummer())) {
                 actual.setTelefonnummer(Reisender.getTelefonnummer());
             } else {
