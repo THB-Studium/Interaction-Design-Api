@@ -23,16 +23,16 @@
 	<parameter name="handgepaeck" class="java.lang.String"/>
 	<parameter name="koffer" class="java.lang.String"/>
 	<parameter name="jahr" class="java.lang.String"/>
-	<parameter name="mitReiser_name_vorname" class="java.lang.String"/>
-	<parameter name="mitReiser_postanschrift" class="java.lang.String"/>
-	<parameter name="mitReiser_geburtsdatum" class="java.lang.String"/>
-	<parameter name="mitReiser_handynummer" class="java.lang.String"/>
-	<parameter name="mitReiser_email" class="java.lang.String"/>
-	<parameter name="mitReiser_studiengang" class="java.lang.String"/>
-	<parameter name="mitReiser_hochschule" class="java.lang.String"/>
-	<parameter name="mitReiser_status" class="java.lang.String"/>
-	<parameter name="mitReiser_arbeit_bei" class="java.lang.String"/>
-	<parameter name="mitReiser_schonteilgenommen" class="java.lang.String"/>
+	<parameter name="mitReisender_name_vorname" class="java.lang.String"/>
+	<parameter name="mitReisender_postanschrift" class="java.lang.String"/>
+	<parameter name="mitReisender_geburtsdatum" class="java.lang.String"/>
+	<parameter name="mitReisender_handynummer" class="java.lang.String"/>
+	<parameter name="mitReisender_email" class="java.lang.String"/>
+	<parameter name="mitReisender_studiengang" class="java.lang.String"/>
+	<parameter name="mitReisender_hochschule" class="java.lang.String"/>
+	<parameter name="mitReisender_status" class="java.lang.String"/>
+	<parameter name="mitReisender_arbeit_bei" class="java.lang.String"/>
+	<parameter name="mitReisender_schonteilgenommen" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -337,7 +337,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="85" y="244" width="396" height="22" uuid="973c5ab9-fbe6-4427-81db-fbe45b43b7d5"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_postanschrift}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_postanschrift}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="82" y="180" width="396" height="21" uuid="ebb3178a-a09d-47e6-8b1b-f8804960fda3"/>
@@ -347,40 +347,40 @@
 				<text><![CDATA[NAME, VORNAME: (wie im Reisepass genannt)]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="86" y="200" width="294" height="20" uuid="8d686300-9390-4a7c-9115-3086a6b0f0e5"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_name_vorname}]]></textFieldExpression>
+				<reportElement x="86" y="200" width="390" height="20" uuid="8d686300-9390-4a7c-9115-3086a6b0f0e5"/>
+				<textFieldExpression><![CDATA[$P{mitReisender_name_vorname}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="87" y="288" width="391" height="20" uuid="4da153a1-017c-4b32-b49b-342296d8113b"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_geburtsdatum}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_geburtsdatum}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="89" y="330" width="387" height="20" uuid="d86affee-6ee5-4999-bfad-ea903e848217"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_handynummer}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_handynummer}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="90" y="380" width="386" height="23" uuid="86f02fa2-2608-4fa4-a88f-c30d77014423"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_email}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_email}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="90" y="430" width="386" height="21" uuid="fbc7859b-ae56-4aad-94d5-b9d5135222ea"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_studiengang}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_studiengang}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="90" y="469" width="386" height="25" uuid="fbb725dc-f2b2-4b7a-b25d-4eac3d9f3b6f"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_hochschule}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_hochschule}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="90" y="513" width="386" height="25" uuid="7bb03c17-d6ef-45ec-9168-3d19dae26d74"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_status}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_status}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="93" y="560" width="383" height="20" uuid="cda3d2b8-66c7-452a-a898-60f2c73989db"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_arbeit_bei}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_arbeit_bei}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="94" y="610" width="382" height="20" uuid="f4ab1e09-dfd7-4173-93c7-9716641bf576"/>
-				<textFieldExpression><![CDATA[$P{mitReiser_schonteilgenommen}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{mitReisender_schonteilgenommen}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="802">
@@ -400,7 +400,7 @@
 				<text><![CDATA[Reise Datum:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="94" y="214" width="321" height="20" uuid="15773b01-1eb1-46ec-a0e4-838c8701a8ca"/>
+				<reportElement x="94" y="214" width="327" height="20" uuid="15773b01-1eb1-46ec-a0e4-838c8701a8ca"/>
 				<textFieldExpression><![CDATA[$P{reise_datum}]]></textFieldExpression>
 			</textField>
 			<staticText>
