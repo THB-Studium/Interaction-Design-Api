@@ -22,8 +22,8 @@ public class MailService {
     public void sendMail(Mail mail) {
 
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(mail.getRecipient(), mail.getRecipient());
-
+        // msg.setTo(mail.getRecipient());
+        msg.setTo(mail.getRecipient());
         msg.setSubject(mail.getSubject());
         msg.setText(mail.getMessage());
 
