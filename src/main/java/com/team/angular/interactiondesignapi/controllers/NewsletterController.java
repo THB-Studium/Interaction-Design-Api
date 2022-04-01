@@ -51,8 +51,7 @@ public class NewsletterController {
     public ResponseEntity<?> deleteNewsletter(@ApiParam(name = "NewsletterID", value = "ID of the Newsletter") @PathVariable UUID id) {
         return newsletterService.deleteNewsletter(id);
     }
-
-    // todo: needed?
+    
     @ApiOperation("Get All abonniert")
     @GetMapping("/listabonniert")
     public List<String> getAllAbonniert() {
