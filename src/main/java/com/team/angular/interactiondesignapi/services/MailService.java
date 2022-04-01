@@ -22,7 +22,7 @@ public class MailService {
     public void sendMail(Mail mail) {
 
         SimpleMailMessage msg = new SimpleMailMessage();
-        // msg.setTo(mail.getRecipient());
+
         msg.setTo(mail.getRecipient());
         msg.setSubject(mail.getSubject());
         msg.setText(mail.getMessage());
@@ -35,13 +35,14 @@ public class MailService {
 
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-        helper.setTo("to_@email");
+        helper.setTo(mail.getRecipient());
 
-        helper.setSubject("Testing from Spring Boot");
+        helper.setSubject(mail.getSubject());
 
         helper.setText("Find the attached image", true);
 
-        helper.addAttachment("hero.jpg", new ClassPathResource("hero.jpg"));
+        //image must be in resources
+        helper.addAttachment("entete.jpg", new ClassPathResource("entete.jpg"));
 
         javaMailSender.send(msg);
     }
