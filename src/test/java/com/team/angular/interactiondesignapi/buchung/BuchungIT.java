@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import com.team.angular.interactiondesignapi.ItBase;
 import com.team.angular.interactiondesignapi.models.Buchung;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
+import com.team.angular.interactiondesignapi.models.Buchungstatus;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
@@ -115,6 +116,7 @@ public class BuchungIT extends ItBase {
 		assertThat(create.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
 		assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
 		assertThat(create.getFlughafen(), is(buchung.getFlughafen()));
+		assertThat(Buchungstatus.Eingegangen, is(buchung.getStatus()));
 		//assertThat(reiseAngebot.getFreiPlaetze(), is(reiseAngebot.getFreiPlaetze() - 1));
 	}
 	
@@ -159,6 +161,36 @@ public class BuchungIT extends ItBase {
 		assertThat(update.getReisenderId(), is(reisender1.getId()));
 		assertThat(update.getMitReisenderId(), is(mitReisender1.getId()));
 		assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
+	}
+	
+	@Test
+	public void updateBuchung_status() {
+		
+		BuchungUpdateTO update = buildBuchungUpdateTO( buchungsklasse1.getId(), reiseAngebot1.getId(), mitReisender1.getId(), reisender1.getId() );
+		update.setId(buchung.getId());
+		update.setStatus(Buchungstatus.Bearbeitung);
+		
+		UUID id = UUID.fromString(
+				given()
+				.contentType(ContentType.JSON)
+				.body(update)
+				.log().body()
+				.put("/buchungen")
+				.then()
+				.log().body()
+				.statusCode(200)
+				.extract().body().path("id"));
+		
+		Buchung buchung = buchungRepository.findById(id).get();
+		
+		assertThat(update.getDatum(), is(buchung.getDatum()));
+		assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
+		assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
+		assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
+		assertThat(update.getReisenderId(), is(reisender1.getId()));
+		assertThat(update.getMitReisenderId(), is(mitReisender1.getId()));
+		assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
+		assertThat(update.getStatus(), is(buchung.getStatus()));
 	}
 	
 	@Test

@@ -1,6 +1,7 @@
 package com.team.angular.interactiondesignapi.services;
 
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.models.Mail;
 import com.team.angular.interactiondesignapi.models.Newsletter;
 import com.team.angular.interactiondesignapi.repositories.NewsletterRepository;
 import org.slf4j.Logger;
@@ -19,6 +20,9 @@ public class NewsletterService {
 
     @Autowired
     private NewsletterRepository newsletterRepository;
+
+    @Autowired
+    private MailService mailService;
 
     public List<Newsletter> getAll() {
         return newsletterRepository.findAll();
@@ -71,5 +75,23 @@ public class NewsletterService {
             _newsletter.setStatus(newsletter.isStatus());
 
         return newsletterRepository.save(_newsletter);
+    }
+
+    public List<String> getAllAbonniert() {
+        return newsletterRepository.findAllByStatusIsTrue();
+    }
+
+    public ResponseEntity<?> mailToAbonniert(Mail mail) {
+
+        List<String> listAbonniert = getAllAbonniert();
+
+
+        mail.setRecipient(listAbonniert.toArray(new String[0]));
+        mail.setSubject("ee");
+        mail.setMessage("ww");
+
+        mailService.sendMail(mail);
+
+        return new ResponseEntity<>("Successfully sent", HttpStatus.OK);
     }
 }

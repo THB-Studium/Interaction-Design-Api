@@ -233,7 +233,7 @@ public class ReiseAngebotIT extends ItBase {
 		assertThat(reiseAngebot.getInteressiert(), is(reiseAngebot_.getInteressiert()));
 		assertThat(reiseAngebot.getAnmeldungsFrist(), is(reiseAngebot_.getAnmeldungsFrist()));
 		assertThat(reiseAngebot.getHinweise(), is(reiseAngebot_.getHinweise()));
-		assertThat(reiseAngebot.getLand(), is(reiseAngebot_.getLand()));
+		assertThat(reiseAngebot.getLand().getName(), is(reiseAngebot_.getLand().getName()));
 		// TODO check also the array content
 		assertThat(reiseAngebot.getMitreiseberechtigt().size(), is(reiseAngebot_.getMitreiseberechtigt().size()));
 		assertThat(reiseAngebot.getSonstigeHinweise(), is(reiseAngebot_.getSonstigeHinweise()));

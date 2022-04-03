@@ -71,7 +71,7 @@ public class ReiseAngebot {
     @EqualsAndHashCode.Exclude
     private Erwartungen erwartungen;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Land land;
 

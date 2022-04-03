@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi.controllers;
 
+import com.team.angular.interactiondesignapi.models.Mail;
 import com.team.angular.interactiondesignapi.models.Newsletter;
 import com.team.angular.interactiondesignapi.services.NewsletterService;
 import io.swagger.annotations.ApiOperation;
@@ -49,6 +50,18 @@ public class NewsletterController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNewsletter(@ApiParam(name = "NewsletterID", value = "ID of the Newsletter") @PathVariable UUID id) {
         return newsletterService.deleteNewsletter(id);
+    }
+    
+    @ApiOperation("Get All abonniert")
+    @GetMapping("/listabonniert")
+    public List<String> getAllAbonniert() {
+        return newsletterService.getAllAbonniert();
+    }
+
+    @ApiOperation("Mail to abonniert")
+    @PostMapping("/mailToAbonniert")
+    public ResponseEntity<?> mailToAbonniert(@RequestBody Mail mail) {
+        return newsletterService.mailToAbonniert(mail);
     }
 
 }
