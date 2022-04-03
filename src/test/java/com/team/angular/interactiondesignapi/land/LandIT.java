@@ -88,7 +88,7 @@ public class LandIT extends ItBase {
 	
 	@Test
 	public void createLand() {
-		LandWriteTO create = buildLandWriteTO(reiseAngebot.getId());
+		LandWriteTO create = buildLandWriteTO();
 		
 		UUID id = UUID.fromString(
 				given()
@@ -116,7 +116,7 @@ public class LandIT extends ItBase {
 	@Test
 	public void createLand__titel_exist() {
 		
-		LandWriteTO create = buildLandWriteTO(reiseAngebot.getId());
+		LandWriteTO create = buildLandWriteTO();
 		create.setName(land1.getName());
 		
 		Exception ex = Assertions.assertThrows(Exception.class, () -> {
@@ -140,7 +140,7 @@ public class LandIT extends ItBase {
 	@Test
 	public void updateLand__name_exist() {
 		
-		LandWriteTO update = buildLandWriteTO(reiseAngebot1.getId());
+		LandWriteTO update = buildLandWriteTO();
 		update.setId(land.getId());
 		update.setName(land1.getName());
 		
@@ -171,15 +171,15 @@ public class LandIT extends ItBase {
 			.then()
 			.log().body()
 			.statusCode(200)
-			.body("id", containsInAnyOrder(land.getId().toString(), land1.getId().toString()))
-			.body("name", containsInAnyOrder(land.getName(), land1.getName()));
+			.body("id", containsInAnyOrder(land.getId().toString(), land1.getId().toString(), reiseAngebot.getLand().getId().toString(), reiseAngebot1.getLand().getId().toString()))
+			.body("name", containsInAnyOrder(land.getName(), land1.getName(), reiseAngebot.getLand().getName(), reiseAngebot1.getLand().getName()));
 				
 	}
 	
 	@Test
 	public void updateLand() {
 		
-		LandWriteTO update = buildLandWriteTO(reiseAngebot1.getId());
+		LandWriteTO update = buildLandWriteTO();
 		update.setId(land.getId());
 		
 		UUID id = UUID.fromString(

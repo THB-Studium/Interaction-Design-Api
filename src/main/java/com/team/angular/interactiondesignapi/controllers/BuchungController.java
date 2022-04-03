@@ -73,7 +73,7 @@ public class BuchungController {
     @ApiOperation("Update Buchung")
     @PutMapping("")
     public BuchungReadTO updateBuchung(
-            @ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) {
+            @ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
         return buchungService.updateBuchung(buchung);
     }
 

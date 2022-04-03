@@ -20,6 +20,7 @@ public class Buchung2BuchungReadTO {
         out.setZahlungMethod(in.getZahlungMethod());
         out.setReisenderId(in.getReisender().getId());
         out.setReiseAngebotId(in.getReiseAngebot().getId());
+        out.setStatus(in.getStatus());
 
         return out;
     }

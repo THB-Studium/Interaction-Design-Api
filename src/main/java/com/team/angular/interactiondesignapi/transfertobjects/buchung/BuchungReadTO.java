@@ -1,6 +1,7 @@
 package com.team.angular.interactiondesignapi.transfertobjects.buchung;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.team.angular.interactiondesignapi.models.Buchungstatus;
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,5 +35,7 @@ public class BuchungReadTO {
     private UUID reisenderId;
 
     private UUID reiseAngebotId;
+    
+    private Buchungstatus status;
 
 }
