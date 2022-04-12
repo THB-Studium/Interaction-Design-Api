@@ -1,6 +1,7 @@
 package com.team.angular.interactiondesignapi.transfertobjects.buchung;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.team.angular.interactiondesignapi.models.Buchungstatus;
 import com.team.angular.interactiondesignapi.models.ZahlungMethod;
 import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderWriteTO;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,8 @@ public class BuchungWriteTO {
     private String koffer;
 
     private ZahlungMethod zahlungMethod;
+
+    private Buchungstatus status;
 
     private ReisenderWriteTO reisender;
 

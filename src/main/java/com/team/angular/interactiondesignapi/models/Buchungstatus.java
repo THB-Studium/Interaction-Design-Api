@@ -2,6 +2,6 @@ package com.team.angular.interactiondesignapi.models;
 
 public enum Buchungstatus {
 
-	Eingegangen, Bearbeitung, Bestaetigt, Abgelehnt;
+    Eingegangen, Bearbeitung, Bestaetigt, Abgelehnt;
 
 }

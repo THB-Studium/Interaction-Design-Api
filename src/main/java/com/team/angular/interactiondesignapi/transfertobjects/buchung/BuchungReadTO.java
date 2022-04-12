@@ -35,7 +35,7 @@ public class BuchungReadTO {
     private UUID reisenderId;
 
     private UUID reiseAngebotId;
-    
+
     private Buchungstatus status;
 
 }

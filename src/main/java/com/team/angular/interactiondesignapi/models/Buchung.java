@@ -1,28 +1,20 @@
 package com.team.angular.interactiondesignapi.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -53,17 +45,15 @@ public class Buchung {
 
     @Enumerated(EnumType.STRING)
     private ZahlungMethod zahlungMethod;
-    
+
     @Enumerated(EnumType.STRING)
     private Buchungstatus status;
 
     @ManyToOne
     @JoinColumn(name = "Reisender_id")
-    @EqualsAndHashCode.Exclude
     private Reisender reisender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @EqualsAndHashCode.Exclude
     private ReiseAngebot reiseAngebot;
 
 }
