@@ -151,7 +151,7 @@
 			<version>2.1.7</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.wizzardo.tools/tools -->
+		<!-- https://mvnrepository.com/artifact/com.wizzardo.tools/tools -Compress Image -->
 		<dependency>
 			<groupId>com.wizzardo.tools</groupId>
 			<artifactId>tools</artifactId>
