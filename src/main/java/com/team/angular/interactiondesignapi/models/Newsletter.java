@@ -27,6 +27,7 @@ public class Newsletter {
     @NotBlank
     private String email;
 
+    // abonniert = true
     private boolean status;
 
 }
