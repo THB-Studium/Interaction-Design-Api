@@ -168,7 +168,7 @@ public class ItBase {
         return land;
     }
 
-    protected LandWriteTO buildLandWriteTO(UUID reiseAngebotId) {
+    protected LandWriteTO buildLandWriteTO() {
         LandWriteTO land = new LandWriteTO();
 
         List<String> flug = new ArrayList<String>();
@@ -228,6 +228,7 @@ public class ItBase {
         newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
         newBuchung.setReisender(reisender);
         newBuchung.setReiseAngebot(ra);
+        newBuchung.setStatus(Buchungstatus.Eingegangen);
 
         return newBuchung;
     }
@@ -345,6 +346,9 @@ public class ItBase {
         Set<String> leistungen = new HashSet<String>();
         leistungen.add(UUID.randomUUID().toString());
         leistungen.add(UUID.randomUUID().toString());
+        
+        Land land = new Land();
+        land.setName(UUID.randomUUID().toString());
 
         ReiseAngebot reiseAngebot = new ReiseAngebot();
 
@@ -360,6 +364,7 @@ public class ItBase {
         reiseAngebot.setHinweise(UUID.randomUUID().toString());
         reiseAngebot.setMitreiseberechtigt(mitreiseberechtigt);
         reiseAngebot.setSonstigeHinweise(UUID.randomUUID().toString());
+        reiseAngebot.setLand(land);
 
         return reiseAngebot;
     }

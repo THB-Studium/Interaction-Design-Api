@@ -35,16 +35,17 @@ public class BuchungController {
     @ApiOperation("Get One Buchung")
     @GetMapping("/{id}")
     public BuchungReadTO getBuchungById(
-            @ApiParam(name = "BuchungId", value = "ID f the Buchung") @PathVariable UUID id) {
+            @ApiParam(name = "BuchungId", value = "ID of the Buchung") @PathVariable UUID id) {
         return buchungService.getBuchung(id);
     }
 
     @ApiOperation("Export Buchung als pdf")
     @GetMapping("/exportPdf/{id}")
     public ResponseEntity<ByteArrayResource> exportPdf(
-            @ApiParam(name = "BuchungId", value = "ID f the Buchung") @PathVariable UUID id
-    ) throws URISyntaxException, IOException {
+            @ApiParam(name = "BuchungId", value = "ID of the Buchung") @PathVariable UUID id)
+            throws URISyntaxException, IOException {
 
+        // todo: pas de try catch dans un controller
         byte[] data = null;
         try {
             data = buchungService.exportPdf(id);
@@ -55,25 +56,25 @@ public class BuchungController {
 
         ByteArrayResource resource = new ByteArrayResource(data);
 
-
         return ResponseEntity
                 .ok().contentLength(data.length)
                 .header("Content-type", "application/octet-stream")
-                .header("Content-disposition", "attachement; filename=Buchung_" + LocalDate.now().toString() + ".pdf")
+                .header("Content-disposition", "attachement; filename=Buchung_" + LocalDate.now()
+                        .toString() + ".pdf")
                 .body(resource);
     }
 
     @ApiOperation("Add One Buchung")
     @PostMapping("")
-    public BuchungReadTO addBuchung(
-            @ApiParam(name = "Buchung", value = "Buchung to add") @RequestBody BuchungWriteTO buchung) throws Exception {
+    public BuchungReadTO addBuchung(@ApiParam(name = "Buchung", value = "Buchung to add")
+                                        @RequestBody BuchungWriteTO buchung) throws Exception {
         return buchungService.addBuchung(buchung);
     }
 
     @ApiOperation("Update Buchung")
     @PutMapping("")
     public BuchungReadTO updateBuchung(
-            @ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) {
+            @ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
         return buchungService.updateBuchung(buchung);
     }
 

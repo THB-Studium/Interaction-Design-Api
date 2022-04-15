@@ -7,6 +7,11 @@ server.port: 5050
 template:
   link: /opt/services/Booking.jrxml
   linkMitReisende: /opt/services/Booking_mitReisende.jrxml
+  email: 
+     simple-email: simple-email.html
+     new-booking: new-booking.html
+     update-booking: update-booking.html
+     html-pdf: html-pdf.html
 
 spring:
   application:
@@ -36,6 +41,18 @@ spring:
     hibernate:
       # Hibernate ddl auto (create, create-drop, validate, update)
       ddl-auto: update
+
+  mail:
+    host: smtp.elasticemail.com
+    port: 2525
+    username: authService@yahoo.fr
+    password: 4FB090468FE1BE53496E35E3EFDA574F79CA
+    protocol: smtp
+    #tls: true
+    properties.mail.smtp:
+      auth: false
+      starttls.enable: false
+      ssl.trust:
 
   #postgres
   #postgres_1
