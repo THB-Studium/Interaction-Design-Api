@@ -41,6 +41,9 @@ public class MailService {
 	
 	@Value("${template.email.simple-email}")
 	private String template_simple_email;
+	
+	@Value("${template.email.from}")
+	private String from;
 
 	public void sendMail(Mail mail) {
 
@@ -59,7 +62,7 @@ public class MailService {
 
 		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-		helper.setFrom("keunne.baudoin@yahoo.fr");
+		helper.setFrom(from);
 
 		helper.setTo(mail.getRecipient());
 
@@ -86,11 +89,17 @@ public class MailService {
         
         context.setVariables(email.getProperties());
         
-        helper.setFrom(email.getFrom());
+        helper.setFrom(from);
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
         
-        String html = templateEngine.process(email.getTemplate(), context);
+        String html = null;
+        
+        if(email.getTemplate() != null) {
+        	html = templateEngine.process(email.getTemplate(), context);
+        } else {
+        	html = templateEngine.process(template_simple_email, context);
+        }
         helper.setText(html, true);
 
         log.info("Sending email: {} with html body: {}", email, html);
@@ -114,8 +123,7 @@ public class MailService {
         Context context = new Context();
         
         context.setVariables(email.getProperties());
-        
-        helper.setFrom(email.getFrom());
+        helper.setFrom(from);
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
         
@@ -148,7 +156,7 @@ public class MailService {
         
         context.setVariables(email.getProperties());
         
-        helper.setFrom(email.getFrom());
+        helper.setFrom(from);
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
         

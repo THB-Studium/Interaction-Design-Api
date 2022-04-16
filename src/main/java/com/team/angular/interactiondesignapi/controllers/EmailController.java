@@ -38,7 +38,8 @@ public class EmailController {
     @PostMapping("/simple-email")
     public ResponseEntity<String> sendAttachmentEmail(@RequestPart Email mail) throws MessagingException, IOException {
         mailService.sendHtmlMessage(mail);
-        return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
+
+        return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
     }
     
     @PostMapping("/attachment")

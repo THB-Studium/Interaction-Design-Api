@@ -69,6 +69,9 @@ public class BuchungService {
 	@Value("${template.email.html-pdf}")
 	private String template;
 
+	@Value("${template.email.from}")
+	private String from;
+
 	@Autowired
 	private TemplateEngine templateEngine;
 	@Autowired
@@ -293,7 +296,8 @@ public class BuchungService {
 			DataSource source) {
 
 		Email email = new Email();
-		email.setFrom("keunne.baudoin@yahoo.fr");
+
+		email.setFrom(from);
 		email.setReply(false);
 		email.setTo(to);
 		email.setSubject(subject);

@@ -7,7 +7,8 @@ server.port: 5050
 template:
   link: /opt/services/Booking.jrxml
   linkMitReisende: /opt/services/Booking_mitReisende.jrxml
-  email: 
+  email:
+     from: keunne.baudoin@yahoo.fr
      simple-email: simple-email.html
      new-booking: new-booking.html
      update-booking: update-booking.html
