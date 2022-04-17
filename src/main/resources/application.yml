@@ -5,8 +5,8 @@ jwt.refreshExpirationDateInMs: 5000000
 server.port: 5050
 
 template:
-  link: /opt/services/Booking.jrxml
-  linkMitReisende: /opt/services/Booking_mitReisende.jrxml
+  link: Booking.jrxml
+  linkMitReisende: Booking_mitReisende.jrxml
   email:
      from: keunne.baudoin@yahoo.fr
      simple-email: simple-email.html

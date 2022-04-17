@@ -71,7 +71,7 @@ public class BuchungService {
 
 	@Value("${template.email.from}")
 	private String from;
-
+	
 	@Autowired
 	private TemplateEngine templateEngine;
 	@Autowired
@@ -244,7 +244,7 @@ public class BuchungService {
 			byte[] export = exportPdf(actual.getId());
 
 			// data source to write the exported pdf into
-			DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+			DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
 
 			OutputStream sourceOS = source.getOutputStream();
 			sourceOS.write(export);
