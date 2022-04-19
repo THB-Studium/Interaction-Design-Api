@@ -162,7 +162,10 @@ public class BuchungService {
 		byte[] export = exportPdf(ret.getId());
 
 		// data source to write the exported pdf into
-		DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+		// when running local
+		//DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+		// when running on the server
+		DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
 
 		OutputStream sourceOS = source.getOutputStream();
 		sourceOS.write(export);
@@ -244,6 +247,9 @@ public class BuchungService {
 			byte[] export = exportPdf(actual.getId());
 
 			// data source to write the exported pdf into
+			// when running local
+			//DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+			// when running on the server
 			DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
 
 			OutputStream sourceOS = source.getOutputStream();
