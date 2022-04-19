@@ -39,7 +39,7 @@ public class EmailController {
 		return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/simple-email", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = {
+	@RequestMapping(value = "/simple-email", produces = MediaType.APPLICATION_JSON_VALUE, method = {
 			RequestMethod.POST })
 	public ResponseEntity<String> sendAttachmentEmail(@RequestPart Email mail) throws MessagingException, IOException {
 		mailService.sendHtmlMessage(mail);
@@ -47,7 +47,7 @@ public class EmailController {
 		return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/attachment", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = {
+	@RequestMapping(value = "/attachment", produces = MediaType.APPLICATION_JSON_VALUE, method = {
 			RequestMethod.POST })
 	public ResponseEntity<String> sendAttachmentEmail(@RequestPart Email mail, @RequestPart MultipartFile content)
 			throws MessagingException, IOException {
