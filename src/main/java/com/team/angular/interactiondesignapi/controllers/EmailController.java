@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.team.angular.interactiondesignapi.models.Email;
 import com.team.angular.interactiondesignapi.models.Mail;
 import com.team.angular.interactiondesignapi.services.MailService;
+import com.team.angular.interactiondesignapi.transfertobjects.reponse.MessageResponse;
 
 @RestController
 @RequestMapping("/mail")
@@ -30,28 +31,37 @@ public class EmailController {
 		this.mailService = mailService;
 	}
 
-	// since ResponseEntity just return a text, the produce and cosume fields was added to specify that the response is as json
-	
+	// since ResponseEntity just return a text, the produce and cosume fields was
+	// added to specify that the response is as json
+
 	@RequestMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = {
 			RequestMethod.POST })
-	public ResponseEntity<String> sendMail(@RequestBody Mail mail) {
+	public ResponseEntity<MessageResponse> sendMail(@RequestBody Mail mail) {
+
 		mailService.sendMail(mail);
-		return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
+		MessageResponse resp = new MessageResponse("Email sent successfully");
+
+		return new ResponseEntity<MessageResponse>(resp, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/simple-email", produces = MediaType.APPLICATION_JSON_VALUE, method = {
 			RequestMethod.POST })
-	public ResponseEntity<String> sendAttachmentEmail(@RequestPart Email mail) throws MessagingException, IOException {
+	public ResponseEntity<MessageResponse> sendAttachmentEmail(@RequestPart Email mail)
+			throws MessagingException, IOException {
 		mailService.sendHtmlMessage(mail);
 
-		return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
+		MessageResponse resp = new MessageResponse("Email sent successfully");
+
+		return new ResponseEntity<MessageResponse>(resp, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/attachment", produces = MediaType.APPLICATION_JSON_VALUE, method = {
-			RequestMethod.POST })
-	public ResponseEntity<String> sendAttachmentEmail(@RequestPart Email mail, @RequestPart MultipartFile content)
-			throws MessagingException, IOException {
+	@RequestMapping(value = "/attachment", produces = MediaType.APPLICATION_JSON_VALUE, method = { RequestMethod.POST })
+	public ResponseEntity<MessageResponse> sendAttachmentEmail(@RequestPart Email mail,
+			@RequestPart MultipartFile content) throws MessagingException, IOException {
 		mailService.sendHtmlMessageAttachment(mail, content);
-		return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
+
+		MessageResponse resp = new MessageResponse("Attachment mail sent successfully");
+
+		return new ResponseEntity<MessageResponse>(resp, HttpStatus.OK);
 	}
 }
