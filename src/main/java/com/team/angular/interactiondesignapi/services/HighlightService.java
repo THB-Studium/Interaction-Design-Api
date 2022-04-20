@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Highlight;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.repositories.HighlightRepository;
@@ -28,7 +28,7 @@ public class HighlightService {
 
     public HighlightReadReadTO getHighlight(UUID id) {
         Highlight highlight = highlightRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Highlight with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Highlight with id: " + id));
         return Highlight2HighlightReadWriteTO.apply(highlight);
     }
 
@@ -51,7 +51,7 @@ public class HighlightService {
             _highlight.setBild(compressBild(highlight.getBild()));
         if (highlight.getLandId() != null) {
             Land land = landRepository.findById(highlight.getLandId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + highlight.getLandId()));
+                    .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + highlight.getLandId()));
             _highlight.setLand(land);
         }
         return Highlight2HighlightReadWriteTO.apply(highlightRepository.save(_highlight));
@@ -59,7 +59,7 @@ public class HighlightService {
 
     public ResponseEntity<?> deleteHighlight(UUID id) {
         Highlight actual = highlightRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Highlight with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Highlight with id: " + id));
 
         highlightRepository.deleteById(actual.getId());
         log.info("Highlight successfully deleted");
@@ -69,7 +69,7 @@ public class HighlightService {
 
     public HighlightReadReadTO updateHighlight(HighlightReadWriteTO highlight) throws Exception {
         Highlight _highlight = highlightRepository.findById(highlight.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new ApiRequestException(
                         "Update Error: Cannot find Highlight with id: " + highlight.getId()));
 
         if (highlight.getName() != null && !_highlight.getName().equals(highlight.getName())) {

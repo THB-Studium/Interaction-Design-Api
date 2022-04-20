@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Feedback;
 import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.feedback.Feedback2FeedbackListTO;
@@ -50,7 +50,7 @@ public class FeedbackService {
         //feedback = feedbackRepository.findById(id).get();
 
         return feedbackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
     }
 
     public Feedback updateFeedback(FeedbackWriteTO feedback_) throws Exception {
@@ -71,7 +71,7 @@ public class FeedbackService {
 
     public ResponseEntity<?> deleteFeedback(UUID id) {
         Feedback actual = feedbackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
 
         feedbackRepository.deleteById(actual.getId());
         log.info("successfully deleted");

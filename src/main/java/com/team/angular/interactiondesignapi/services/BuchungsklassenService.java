@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
@@ -29,7 +29,7 @@ public class BuchungsklassenService {
 
     public BuchungsklassenReadWriteTO getBuchungsklassen(UUID id) {
         Buchungsklassen buchungsklassen = buchungsklassenRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchungsklassen with id: " + id));
         return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassen);
     }
 
@@ -48,7 +48,7 @@ public class BuchungsklassenService {
             _buchungsklassen.setDescription(buchungsklassen.getDescription());
         if (buchungsklassen.getReiseAngebotId() != null) {
             ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(buchungsklassen.getReiseAngebotId())
-                    .orElseThrow(() -> new ResourceNotFoundException(
+                    .orElseThrow(() -> new ApiRequestException(
                             "Cannot find ReiseAngebot with id: " + buchungsklassen.getReiseAngebotId()));
             _buchungsklassen.setReiseAngebot(reiseAngebot);
         }
@@ -58,7 +58,7 @@ public class BuchungsklassenService {
 
     public ResponseEntity<?> deleteBuchungsklassen(UUID id) {
         Buchungsklassen actual = buchungsklassenRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchungsklassen with id: " + id));
 
         buchungsklassenRepository.deleteById(actual.getId());
         log.info("Buchungsklassen successfully deleted");
@@ -69,7 +69,7 @@ public class BuchungsklassenService {
     public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
 
         Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(
-                () -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
+                () -> new ApiRequestException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
 
         _buchungsklassen.setType(buchungsklassen.getType());
 

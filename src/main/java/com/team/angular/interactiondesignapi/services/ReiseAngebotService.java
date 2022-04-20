@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
@@ -35,7 +35,7 @@ public class ReiseAngebotService {
 
     public ReiseAngebotReadTO getReiseAngebot(UUID id) {
         ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + id));
         return ReiseAngebot2ReiseAngebotReadTO.apply(reiseAngebot);
     }
 
@@ -96,7 +96,7 @@ public class ReiseAngebotService {
         // Land
         if (reiseAngebot.getLandId() != null) {
             Land land = landRepository.findById(reiseAngebot.getLandId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Cannot find Land with id: " + reiseAngebot.getLandId()));
+                    () -> new ApiRequestException("Cannot find Land with id: " + reiseAngebot.getLandId()));
             _reiseAngebot.setLand(land);
         }
         // get saved ReiseAngebot
@@ -116,7 +116,7 @@ public class ReiseAngebotService {
 
     public ResponseEntity<?> deleteReiseAngebot(UUID id) {
         ReiseAngebot actual = reiseAngebotRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + id));
 
         reiseAngebotRepository.deleteById(actual.getId());
         log.info("ReiseAngebot successfully deleted");
@@ -127,7 +127,7 @@ public class ReiseAngebotService {
     public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotWriteTO reiseAngebot) throws Exception {
 
         ReiseAngebot _reiseAngebot = reiseAngebotRepository.findById(reiseAngebot.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + reiseAngebot.getId()));
+                .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + reiseAngebot.getId()));
 
         if (reiseAngebot.getTitel() != null && !reiseAngebot.getTitel().equals(_reiseAngebot.getTitel())) {
             if (!reiseAngebotRepository.existsReiseAngebotByTitel(reiseAngebot.getTitel())) {
@@ -168,7 +168,7 @@ public class ReiseAngebotService {
         // Land
         if (reiseAngebot.getLandId() != null) {
             Land land = landRepository.findById(reiseAngebot.getLandId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Cannot find Land with id: " + reiseAngebot.getLandId()));
+                    () -> new ApiRequestException("Cannot find Land with id: " + reiseAngebot.getLandId()));
             _reiseAngebot.setLand(land);
         }
 
@@ -177,7 +177,7 @@ public class ReiseAngebotService {
 
     public ResponseEntity<?> addInteressiert(UUID id) {
         ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + id));
 
         reiseAngebot.setInteressiert(reiseAngebot.getInteressiert() + 1);
         reiseAngebotRepository.save(reiseAngebot);
@@ -186,7 +186,7 @@ public class ReiseAngebotService {
 
     public ResponseEntity<?> resetInteressiert(UUID id) {
         ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + id));
 
         reiseAngebot.setInteressiert(0);
         reiseAngebotRepository.save(reiseAngebot);
@@ -195,7 +195,7 @@ public class ReiseAngebotService {
 
     public ResponseEntity<?> uninteressiert(UUID id) {
         ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + id));
 
         if (reiseAngebot.getInteressiert() > 0) {
             reiseAngebot.setInteressiert(reiseAngebot.getInteressiert() - 1);
