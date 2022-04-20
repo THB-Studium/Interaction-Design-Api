@@ -86,7 +86,7 @@ public class NewsletterService {
         List<String> listAbonniert = getAllAbonniert();
 
 
-        email.setRecipient(listAbonniert.toArray(new String[0]));
+        email.setTo(listAbonniert.toArray(new String[0]));
         email.setSubject("ee");
         email.setMessage("ww");
 

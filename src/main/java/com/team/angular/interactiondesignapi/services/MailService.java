@@ -42,7 +42,7 @@ public class MailService {
 
         SimpleMailMessage msg = new SimpleMailMessage();
 
-        msg.setTo(email.getRecipient());
+        msg.setTo(email.getTo());
         msg.setSubject(email.getSubject());
         msg.setText(email.getMessage());
 
@@ -57,7 +57,7 @@ public class MailService {
 
         helper.setFrom("keunne.baudoin@yahoo.fr");
 
-        helper.setTo(email.getRecipient());
+        helper.setTo(email.getTo());
 
         helper.setSubject(email.getSubject());
 
