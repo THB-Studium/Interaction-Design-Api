@@ -68,10 +68,10 @@ public class BuchungService {
 
 	@Value("${template.email.html-pdf}")
 	private String template;
-	
+
 	@Value("${template.email.from}")
 	private String from;
-
+	
 	@Autowired
 	private TemplateEngine templateEngine;
 	@Autowired
@@ -162,7 +162,10 @@ public class BuchungService {
 		byte[] export = exportPdf(ret.getId());
 
 		// data source to write the exported pdf into
-		DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+		// when running local
+		//DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+		// when running on the server
+		DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
 
 		OutputStream sourceOS = source.getOutputStream();
 		sourceOS.write(export);
@@ -244,7 +247,10 @@ public class BuchungService {
 			byte[] export = exportPdf(actual.getId());
 
 			// data source to write the exported pdf into
-			DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+			// when running local
+			//DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+			// when running on the server
+			DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
 
 			OutputStream sourceOS = source.getOutputStream();
 			sourceOS.write(export);

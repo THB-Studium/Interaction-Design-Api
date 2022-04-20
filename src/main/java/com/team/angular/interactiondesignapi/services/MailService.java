@@ -123,7 +123,6 @@ public class MailService {
         Context context = new Context();
         
         context.setVariables(email.getProperties());
-        
         helper.setFrom(from);
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
