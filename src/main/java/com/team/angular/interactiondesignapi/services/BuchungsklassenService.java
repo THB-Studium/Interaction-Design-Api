@@ -21,7 +21,9 @@ import java.util.UUID;
 
 @Service
 public class BuchungsklassenService {
+
     private static final Logger log = LoggerFactory.getLogger(BuchungsklassenService.class);
+
     @Autowired
     private BuchungsklassenRepository buchungsklassenRepository;
     @Autowired
@@ -44,7 +46,7 @@ public class BuchungsklassenService {
 
         if (buchungsklassen.getPreis() != 0)
             _buchungsklassen.setPreis(buchungsklassen.getPreis());
-        if (!buchungsklassen.getDescription().isEmpty())
+        if (buchungsklassen.getDescription() != null)
             _buchungsklassen.setDescription(buchungsklassen.getDescription());
         if (buchungsklassen.getReiseAngebotId() != null) {
             ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(buchungsklassen.getReiseAngebotId())
