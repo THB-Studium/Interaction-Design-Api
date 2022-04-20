@@ -127,7 +127,7 @@ public class MailService {
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
         
-        String html = templateEngine.process(email.getTemplate(), context);
+        String html = templateEngine.process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
         helper.setText(html, true);
         
         DataSource ds = new ByteArrayDataSource(content.getBytes(), content.getContentType());
