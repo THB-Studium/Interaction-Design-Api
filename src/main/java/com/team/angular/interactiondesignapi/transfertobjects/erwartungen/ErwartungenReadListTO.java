@@ -1,6 +1,9 @@
 package com.team.angular.interactiondesignapi.transfertobjects.erwartungen;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 

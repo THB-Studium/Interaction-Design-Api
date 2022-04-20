@@ -22,7 +22,6 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.team.angular.interactiondesignapi.models.Email;
-import com.team.angular.interactiondesignapi.models.Mail;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,18 +44,7 @@ public class MailService {
 	@Value("${template.email.from}")
 	private String from;
 
-	public void sendMail(Mail mail) {
-
-		SimpleMailMessage msg = new SimpleMailMessage();
-
-		msg.setTo(mail.getRecipient());
-		msg.setSubject(mail.getSubject());
-		msg.setText(mail.getMessage());
-
-		javaMailSender.send(msg);
-	}
-
-	public void sendMailWithAttachments(Mail mail) throws MessagingException {
+	/*public void sendMailWithAttachments(Mail mail) throws MessagingException {
 
 		MimeMessage msg = javaMailSender.createMimeMessage();
 
@@ -74,7 +62,7 @@ public class MailService {
 		helper.addAttachment("entete.jpg", new ClassPathResource("entete.jpg"));
 
 		javaMailSender.send(msg);
-	}
+	}*/
 	
 	// simple mail
     public void sendHtmlMessage(Email email) throws MessagingException, IOException {
@@ -175,7 +163,7 @@ public class MailService {
     }
 
     // simple mail
-    public void sendHtmlMessage(Email email) throws MessagingException, IOException {
+    /*public void sendHtmlMessage(Email email) throws MessagingException, IOException {
 
         MimeMessage message = emailSender.createMimeMessage();
 
@@ -265,5 +253,5 @@ public class MailService {
         } catch (Exception e) {
             log.error("Error during email sending : %s", e.getMessage());
         }
-    }
+    }*/
 }

@@ -301,7 +301,7 @@ public class BuchungService {
 	private void sendMail(Map<String, Object> properties, String[] to, String subject, String template,
 			DataSource source) {
 
-		Email email = new Email();
+		/*Email email = new Email();
 		email.setFrom(from);
 		email.setReply(false);
 		email.setTo(to);
@@ -322,7 +322,7 @@ public class BuchungService {
 			} catch (MessagingException | IOException e) {
 				log.error("Could not send the Mail. Error -> %s", e.getMessage());
 			}
-		}
+		}*/
 
 	}
 

@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.repositories.AdminRepository;
@@ -40,8 +41,9 @@ public class AdminService implements UserDetailsService {//
         return Admin2AdminOutTO.apply(adminRepository.findAll());
     }
 
-    public AdminOutTO addAdmin(Admin admin) throws Exception {
+    public AdminOutTO addAdmin(Admin admin) {
         Admin _admin = new Admin();
+
         if (!adminRepository.existsAdminByEmail(admin.getEmail())) {
             _admin.setName(admin.getName());
             _admin.setSurname(admin.getSurname());
@@ -51,7 +53,7 @@ public class AdminService implements UserDetailsService {//
             _admin.setCreationDate(LocalDate.now());
             return Admin2AdminOutTO.apply(adminRepository.save(_admin));
         } else {
-            throw new Exception("Email has already been taken");
+            throw new ApiRequestException("Email has already been taken");
         }
     }
 

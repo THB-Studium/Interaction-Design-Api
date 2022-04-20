@@ -22,6 +22,7 @@ import static com.team.angular.interactiondesignapi.config.CompressImage.compres
 public class FeedbackService {
 
     private static final Logger log = LoggerFactory.getLogger(FeedbackService.class);
+
     @Autowired
     private FeedbackRepository feedbackRepository;
 
@@ -45,13 +46,11 @@ public class FeedbackService {
 
     public Feedback getFeedback(UUID id) {
 
-        Feedback feedback = feedbackRepository.findById(id)
+        //todo: for what?
+        //feedback = feedbackRepository.findById(id).get();
+
+        return feedbackRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
-
-        // for what?
-        feedback = feedbackRepository.findById(id).get();
-
-        return feedback;
     }
 
     public Feedback updateFeedback(FeedbackWriteTO feedback_) throws Exception {

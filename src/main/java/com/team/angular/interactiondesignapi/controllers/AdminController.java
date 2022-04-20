@@ -35,7 +35,7 @@ public class AdminController {
     @ApiOperation("Add One Admin")
     @PostMapping("")
     public AdminOutTO addAdmin(
-            @ApiParam(name = "Admin", value = "Admin to add") @RequestBody Admin admin) throws Exception {
+            @ApiParam(name = "Admin", value = "Admin to add") @RequestBody Admin admin) {
         return adminService.addAdmin(admin);
     }
 
