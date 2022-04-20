@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.controllers;
 
-import com.team.angular.interactiondesignapi.models.Email;
+import com.team.angular.interactiondesignapi.models.Mail;
 import com.team.angular.interactiondesignapi.models.Newsletter;
 import com.team.angular.interactiondesignapi.services.NewsletterService;
 import io.swagger.annotations.ApiOperation;
@@ -58,10 +58,10 @@ public class NewsletterController {
         return newsletterService.getAllAbonniert();
     }
 
-    @ApiOperation("Email to abonniert")
+    @ApiOperation("Mail to abonniert")
     @PostMapping("/mailToAbonniert")
-    public ResponseEntity<?> mailToAbonniert(@RequestBody Email email) {
-        return newsletterService.mailToAbonniert(email);
+    public ResponseEntity<?> mailToAbonniert(@RequestBody Mail mail) {
+        return newsletterService.mailToAbonniert(mail);
     }
 
 }

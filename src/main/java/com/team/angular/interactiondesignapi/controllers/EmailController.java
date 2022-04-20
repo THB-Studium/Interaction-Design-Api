@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team.angular.interactiondesignapi.models.Email;
+import com.team.angular.interactiondesignapi.models.Mail;
 import com.team.angular.interactiondesignapi.services.MailService;
 
 @RestController
@@ -37,7 +38,7 @@ public class EmailController {
     @PostMapping("/simple-email")
     public ResponseEntity<String> sendAttachmentEmail(@RequestPart Email mail) throws MessagingException, IOException {
         mailService.sendHtmlMessage(mail);
-        return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
     }
     
     @PostMapping("/attachment")

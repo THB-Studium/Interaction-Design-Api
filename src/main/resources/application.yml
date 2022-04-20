@@ -7,7 +7,8 @@ server.port: 5050
 template:
   link: /opt/services/Booking.jrxml
   linkMitReisende: /opt/services/Booking_mitReisende.jrxml
-  email: 
+  email:
+     from: keunne.baudoin@yahoo.fr
      simple-email: simple-email.html
      new-booking: new-booking.html
      update-booking: update-booking.html
@@ -43,10 +44,10 @@ spring:
       ddl-auto: update
 
   mail:
-    host: 127.0.0.1 #smtp.elasticemail.com
-    port: 25 #2525
-    username: #authService@yahoo.fr
-    password: #4FB090468FE1BE53496E35E3EFDA574F79CA
+    host: smtp.elasticemail.com
+    port: 2525
+    username: authService@yahoo.fr
+    password: 4FB090468FE1BE53496E35E3EFDA574F79CA
     protocol: smtp
     #tls: true
     properties.mail.smtp:

@@ -1,7 +1,15 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.models.Email;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+import javax.activation.DataSource;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.mail.util.ByteArrayDataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -13,60 +21,158 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.activation.DataSource;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.mail.util.ByteArrayDataSource;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import com.team.angular.interactiondesignapi.models.Email;
+import com.team.angular.interactiondesignapi.models.Mail;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 public class MailService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+	@Autowired
+	private JavaMailSender javaMailSender;
 
-    @Autowired
-    private JavaMailSender emailSender;
+	@Autowired
+	private JavaMailSender emailSender;
 
-    @Autowired
-    private SpringTemplateEngine templateEngine;
+	@Autowired
+	private SpringTemplateEngine templateEngine;
+	
+	@Value("${template.email.simple-email}")
+	private String template_simple_email;
+	
+	@Value("${template.email.from}")
+	private String from;
 
-    @Value("${template.email.simple-email}")
-    private String template_simple_email;
+	public void sendMail(Mail mail) {
 
-    public void sendMail(Email email) {
+		SimpleMailMessage msg = new SimpleMailMessage();
 
-        SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(mail.getRecipient());
+		msg.setSubject(mail.getSubject());
+		msg.setText(mail.getMessage());
 
-        msg.setTo(email.getTo());
-        msg.setSubject(email.getSubject());
-        msg.setText(email.getMessage());
+		javaMailSender.send(msg);
+	}
 
-        javaMailSender.send(msg);
-    }
+	public void sendMailWithAttachments(Mail mail) throws MessagingException {
 
-    public void sendMailWithAttachments(Email email) throws MessagingException {
+		MimeMessage msg = javaMailSender.createMimeMessage();
 
-        MimeMessage msg = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-        MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+		helper.setFrom(from);
 
-        helper.setFrom("keunne.baudoin@yahoo.fr");
+		helper.setTo(mail.getRecipient());
 
+		helper.setSubject(mail.getSubject());
+
+		helper.setText(mail.getMessage() + "<br> <br> Find the attached image", true);
+
+		// image must be in resources
+		helper.addAttachment("entete.jpg", new ClassPathResource("entete.jpg"));
+
+		javaMailSender.send(msg);
+	}
+	
+	// simple mail
+    public void sendHtmlMessage(Email email) throws MessagingException, IOException {
+    	
+        MimeMessage message = emailSender.createMimeMessage();
+        
+        message.reply(email.isReply());
+        
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+        
+        Context context = new Context();
+        
+        context.setVariables(email.getProperties());
+        
+        helper.setFrom(from);
         helper.setTo(email.getTo());
-
         helper.setSubject(email.getSubject());
+        
+        String html = null;
+        
+        if(email.getTemplate() != null) {
+        	html = templateEngine.process(email.getTemplate(), context);
+        } else {
+        	html = templateEngine.process(template_simple_email, context);
+        }
+        helper.setText(html, true);
 
-        helper.setText(email.getMessage() + "<br> <br> Find the attached image", true);
+        log.info("Sending email: {} with html body: {}", email, html);
+        try {
+        	emailSender.send(message);
+        	templateEngine.clearTemplateCache();
+		} catch (Exception e) {
+			log.error("Error during email sending : %s", e.getMessage());			
+		}
+    }
+    
+    // Mail with multipartFile
+    public void sendHtmlMessageAttachment(Email email, MultipartFile content) throws MessagingException, IOException {
+    	
+        MimeMessage message = emailSender.createMimeMessage();
+        
+        message.reply(email.isReply());
+        
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+        
+        Context context = new Context();
+        
+        context.setVariables(email.getProperties());
+        
+        helper.setFrom(from);
+        helper.setTo(email.getTo());
+        helper.setSubject(email.getSubject());
+        
+        String html = templateEngine.process(email.getTemplate(), context);
+        helper.setText(html, true);
+        
+        DataSource ds = new ByteArrayDataSource(content.getBytes(), content.getContentType());
+        
+        helper.addAttachment(content.getOriginalFilename(), ds);
 
-        // Attachment must be in resources -> for the pdf
-        helper.addAttachment("entete.jpg", new ClassPathResource("entete.jpg"));
+        log.info("Sending email: {} with html body: {}", email, html);
+        try {
+        	emailSender.send(message);
+        	templateEngine.clearTemplateCache();
+		} catch (Exception e) {
+			log.error("Error during email sending : %s", e.getMessage());			
+		}
+    }
+    
+    // mail with datasource
+    public void sendHtmlMessageAttachment(Email email, DataSource ds) throws MessagingException, IOException {
+    	
+        MimeMessage message = emailSender.createMimeMessage();
+        
+        message.reply(email.isReply());
+        
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+        
+        Context context = new Context();
+        
+        context.setVariables(email.getProperties());
+        
+        helper.setFrom(from);
+        helper.setTo(email.getTo());
+        helper.setSubject(email.getSubject());
+        
+        String html = templateEngine.process(email.getTemplate(), context);
+        helper.setText(html, true);
+        
+        helper.addAttachment("booking_"+LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)+".pdf", ds);
 
-        javaMailSender.send(msg);
+        log.info("Sending email: {} with html body: {}", email, html);
+        try {
+        	emailSender.send(message);
+        	templateEngine.clearTemplateCache();
+		} catch (Exception e) {
+			log.error("Error during email sending : %s", e.getMessage());			
+		}
     }
 
     // simple mail

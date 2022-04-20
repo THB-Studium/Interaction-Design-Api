@@ -1,31 +1,26 @@
 package com.team.angular.interactiondesignapi.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.Map;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class Email {
 
-    private String[] to;
-    private String subject;
-    private String message;
+    String [] to;
 
+    String from;
 
-    private String from;
+    String subject;
 
-    private String text;
+    String text;
 
-    private String template;
-
-    private boolean reply;
-
-    private Map<String, Object> properties;
-
+    String template;
+    
+    boolean reply;
+    
+    Map<String, Object> properties;
 }
