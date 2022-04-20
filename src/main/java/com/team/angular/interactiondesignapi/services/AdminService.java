@@ -1,7 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
 import com.team.angular.interactiondesignapi.exception.ApiRequestException;
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
 import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.repositories.AdminRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.admin.Admin2AdminOutTO;
@@ -34,7 +33,7 @@ public class AdminService implements UserDetailsService {//
 
     public AdminOutTO getAdmin(UUID id) {
         return Admin2AdminOutTO.apply(adminRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + id)));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + id)));
     }
 
     public List<AdminOutTO> getAll() {
@@ -59,7 +58,7 @@ public class AdminService implements UserDetailsService {//
 
     public ResponseEntity<?> deleteAdmin(UUID id) {
         Admin actual = adminRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + id));
 
         adminRepository.deleteById(actual.getId());
         log.info("admin successfully deleted");
@@ -69,7 +68,7 @@ public class AdminService implements UserDetailsService {//
 
     public AdminOutTO updateAdmin(AdminWriteTO admin) throws Exception {
         Admin _admin = adminRepository.findById(admin.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Admin with id: " + admin.getId()));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + admin.getId()));
 
         if (admin.getName() != null)
             _admin.setName(admin.getName());

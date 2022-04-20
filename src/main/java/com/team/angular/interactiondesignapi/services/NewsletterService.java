@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Newsletter;
 import com.team.angular.interactiondesignapi.repositories.NewsletterRepository;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class NewsletterService {
     }
 
     public Newsletter getNewsletter(UUID id) {
-        return newsletterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cannot find Newsletter with id: " + id));
+        return newsletterRepository.findById(id).orElseThrow(() -> new ApiRequestException("Cannot find Newsletter with id: " + id));
     }
 
     public Newsletter addNewsletter(Newsletter newsletter) throws Exception {

@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
@@ -56,13 +56,13 @@ public class LandService {
 
     public LandReadTO getLand(UUID id) {
         Land land = landRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + id));
         return Land2LandReadTO.apply(land);
     }
 
     public LandReadTO updateLand(LandWriteTO land) throws Exception {
         Land newLand = landRepository.findById(land.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + land.getId()));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + land.getId()));
 
         if (land.getName() != null && !land.getName().equals(newLand.getName()))
             if (!landRepository.existsLandByName(land.getName())) {
@@ -87,7 +87,7 @@ public class LandService {
 
     public ResponseEntity<?> deleteLand(UUID id) {
         Land actual = landRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + id));
 
         landRepository.deleteById(actual.getId());
         log.info("successfully deleted");

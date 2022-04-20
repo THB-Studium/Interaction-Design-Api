@@ -1,21 +1,19 @@
 package com.team.angular.interactiondesignapi.services;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.MessagingException;
-
+import com.google.common.io.Files;
+import com.lowagie.text.DocumentException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
+import com.team.angular.interactiondesignapi.models.*;
+import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
+import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
+import com.team.angular.interactiondesignapi.repositories.ReisenderRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderRead2ReisenderTO;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,278 +26,267 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import com.google.common.io.Files;
-import com.lowagie.text.DocumentException;
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
-import com.team.angular.interactiondesignapi.models.Buchung;
-import com.team.angular.interactiondesignapi.models.Buchungsklassen;
-import com.team.angular.interactiondesignapi.models.Buchungstatus;
-import com.team.angular.interactiondesignapi.models.Email;
-import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.models.Reisender;
-import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
-import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
-import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
-import com.team.angular.interactiondesignapi.repositories.ReisenderRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.Buchung2BuchungReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderRead2ReisenderTO;
-
-import net.sf.jasperreports.engine.JRException;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class BuchungService {
 
-	private static final Logger log = LoggerFactory.getLogger(BuchungService.class);
+    private static final Logger log = LoggerFactory.getLogger(BuchungService.class);
 
-	@Value("${template.link}")
-	private String templateLink;
+    @Value("${template.link}")
+    private String templateLink;
 
-	@Value("${template.linkMitReisende}")
-	private String templateLink_MitReisende;
+    @Value("${template.linkMitReisende}")
+    private String templateLink_MitReisende;
 
-	@Value("${template.email.new-booking}")
-	private String template_new_booking;
+    @Value("${template.email.new-booking}")
+    private String template_new_booking;
 
-	@Value("${template.email.update-booking}")
-	private String template_update_booking;
+    @Value("${template.email.update-booking}")
+    private String template_update_booking;
 
-	@Value("${template.email.html-pdf}")
-	private String template;
+    @Value("${template.email.html-pdf}")
+    private String template;
 
-	@Value("${template.email.from}")
-	private String from;
-	
-	@Autowired
-	private TemplateEngine templateEngine;
-	@Autowired
-	private BuchungRepository buchungRepository;
-	@Autowired
-	private BuchungsklassenRepository buchungsklassenRepository;
-	@Autowired
-	private ReisenderRepository reiserRepository;
-	@Autowired
-	private ReiseAngebotRepository reiseAngebotRepository;
-	@Autowired
-	private ReisenderService reiserService;
-	@Autowired
-	private MailService mailService;
+    @Value("${template.email.from}")
+    private String from;
 
-	public List<BuchungReadTO> getAll() {
-		return Buchung2BuchungReadTO.apply(buchungRepository.findAll());
-	}
+    @Autowired
+    private TemplateEngine templateEngine;
+    @Autowired
+    private BuchungRepository buchungRepository;
+    @Autowired
+    private BuchungsklassenRepository buchungsklassenRepository;
+    @Autowired
+    private ReisenderRepository reiserRepository;
+    @Autowired
+    private ReiseAngebotRepository reiseAngebotRepository;
+    @Autowired
+    private ReisenderService reiserService;
+    @Autowired
+    private MailService mailService;
 
-	public BuchungReadTO addBuchung(BuchungWriteTO buchung) throws Exception {
+    public List<BuchungReadTO> getAll() {
+        return Buchung2BuchungReadTO.apply(buchungRepository.findAll());
+    }
 
-		Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId())
-				.orElseThrow(() -> new ResourceNotFoundException(
-						"Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
+    public BuchungReadTO addBuchung(BuchungWriteTO buchung) throws Exception {
 
-		// Reisender reiser = buchung.getReisender();
-		// Reisender mitReisender =
-		// ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender()));
+        Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId())
+                .orElseThrow(() -> new ApiRequestException(
+                        "Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
 
-		ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
-				() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
+        // Reisender reiser = buchung.getReisender();
+        // Reisender mitReisender =
+        // ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender()));
 
-		Buchung newBuchung = new Buchung();
-		newBuchung.setDatum(buchung.getDatum());
+        ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
+                () -> new ApiRequestException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
 
-		// check if the MitReisender already exists and save when not
-		if (buchung.getMitReisender() != null) {
-			if (reiserRepository.getReisenderByTelefonnummer(buchung.getMitReisender().getTelefonnummer()) != null) {
-				newBuchung.setMitReisenderId(buchung.getMitReisender().getId());
-			} else {
-				newBuchung.setMitReisenderId(
-						ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender())).getId());
-			}
-		}
+        Buchung newBuchung = new Buchung();
+        newBuchung.setDatum(buchung.getDatum());
 
-		newBuchung.setBuchungsklasseId(tarif.getId());
-		newBuchung.setFlughafen(buchung.getFlughafen());
-		newBuchung.setHandGepaeck(buchung.getHandGepaeck());
-		newBuchung.setKoffer(buchung.getKoffer());
-		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
-		newBuchung.setStatus(Buchungstatus.Eingegangen);
+        // check if the MitReisender already exists and save when not
+        if (buchung.getMitReisender() != null) {
+            if (reiserRepository.getReisenderByTelefonnummer(buchung.getMitReisender().getTelefonnummer()) != null) {
+                newBuchung.setMitReisenderId(buchung.getMitReisender().getId());
+            } else {
+                newBuchung.setMitReisenderId(
+                        ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender())).getId());
+            }
+        }
 
-		// check if the Reisender already exists and save when not
-		if (reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
-			newBuchung.setReisender(
-					reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
-		} else {
-			newBuchung
-					.setReisender(ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getReisender())));
-		}
+        newBuchung.setBuchungsklasseId(tarif.getId());
+        newBuchung.setFlughafen(buchung.getFlughafen());
+        newBuchung.setHandGepaeck(buchung.getHandGepaeck());
+        newBuchung.setKoffer(buchung.getKoffer());
+        newBuchung.setZahlungMethod(buchung.getZahlungMethod());
+        newBuchung.setStatus(Buchungstatus.Eingegangen);
 
-		newBuchung.setReiseAngebot(ra);
+        // check if the Reisender already exists and save when not
+        if (reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
+            newBuchung.setReisender(
+                    reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
+        } else {
+            newBuchung
+                    .setReisender(ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getReisender())));
+        }
 
-		// update freiPlaetze after adding a new Buchung
-		if (ra.getFreiPlaetze() > 0) {
-			ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
+        newBuchung.setReiseAngebot(ra);
 
-			if (buchung.getMitReisender() != null) {
-				ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
-			}
+        // update freiPlaetze after adding a new Buchung
+        if (ra.getFreiPlaetze() > 0) {
+            ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
 
-			reiseAngebotRepository.save(ra);
-		} else {
-			throw new Exception("The trip is fully booked");
-		}
+            if (buchung.getMitReisender() != null) {
+                ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
+            }
 
-		BuchungReadTO ret = Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
+            reiseAngebotRepository.save(ra);
+        } else {
+            throw new Exception("The trip is fully booked");
+        }
 
-		// props for email template
-		Map<String, Object> properties = new HashMap<>();
-		properties.put("name", newBuchung.getReisender().getName());
-		properties.put("ziel", newBuchung.getReiseAngebot().getLand().getName());
+        BuchungReadTO ret = Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
 
-		// build email object
-		String[] to = { newBuchung.getReisender().getEmail()};
+        // props for email template
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("name", newBuchung.getReisender().getName());
+        properties.put("ziel", newBuchung.getReiseAngebot().getLand().getName());
 
-		// export booking pdf
-		byte[] export = exportPdf(ret.getId());
+        // build email object
+        String[] to = {newBuchung.getReisender().getEmail()};
 
-		// data source to write the exported pdf into
-		// when running local
-		//DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
-		// when running on the server
-		DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
+        // export booking pdf
+        byte[] export = exportPdf(ret.getId());
 
-		OutputStream sourceOS = source.getOutputStream();
-		sourceOS.write(export);
+        // data source to write the exported pdf into
+        // when running local
+        //DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+        // when running on the server
+        DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
 
-		sendMail(properties, to, "Bestätigung der Reservierung", template_new_booking, source);
+        OutputStream sourceOS = source.getOutputStream();
+        sourceOS.write(export);
 
-		return ret;
+        sendMail(properties, to, "Bestätigung der Reservierung", template_new_booking, source);
 
-	}
+        return ret;
 
-	public BuchungReadTO getBuchung(UUID id) {
+    }
 
-		Buchung buchung = buchungRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
+    public BuchungReadTO getBuchung(UUID id) {
 
-		return Buchung2BuchungReadTO.apply(buchung);
-	}
+        Buchung buchung = buchungRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
 
-	public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
+        return Buchung2BuchungReadTO.apply(buchung);
+    }
 
-		Buchungsklassen tarif = null;
-		Reisender reiser = null;
-		Reisender mitReisender = null;
-		ReiseAngebot ra = null;
+    public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
 
-		Buchung actual = buchungRepository.findById(buchung.getId())
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + buchung.getId()));
+        Buchungsklassen tarif = null;
+        Reisender reiser = null;
+        Reisender mitReisender = null;
+        ReiseAngebot ra = null;
 
-		if (buchung.getBuchungsklasseId() != null) {
-			tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId())
-					.orElseThrow(() -> new ResourceNotFoundException(
-							"Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
-			actual.setBuchungsklasseId(tarif.getId());
-		}
+        Buchung actual = buchungRepository.findById(buchung.getId())
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + buchung.getId()));
 
-		if (buchung.getReisenderId() != null) {
-			reiser = reiserRepository.findById(buchung.getReisenderId()).orElseThrow(
-					() -> new ResourceNotFoundException("Cannot find Reisender with id: " + buchung.getReisenderId()));
-			actual.setReisender(reiser);
-		}
+        if (buchung.getBuchungsklasseId() != null) {
+            tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId())
+                    .orElseThrow(() -> new ApiRequestException(
+                            "Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
+            actual.setBuchungsklasseId(tarif.getId());
+        }
 
-		if (buchung.getMitReisenderId() != null) {
-			mitReisender = reiserRepository.findById(buchung.getMitReisenderId())
-					.orElseThrow(() -> new ResourceNotFoundException(
-							"Cannot find MitReisender with id: " + buchung.getMitReisenderId()));
-			actual.setMitReisenderId(mitReisender.getId());
-		} else if (buchung.getMitReisenderId() == null) {
-			actual.setMitReisenderId(null);
-		}
+        if (buchung.getReisenderId() != null) {
+            reiser = reiserRepository.findById(buchung.getReisenderId()).orElseThrow(
+                    () -> new ApiRequestException("Cannot find Reisender with id: " + buchung.getReisenderId()));
+            actual.setReisender(reiser);
+        }
 
-		if (buchung.getDatum() != null)
-			actual.setDatum(buchung.getDatum());
-		if (buchung.getFlughafen() != null)
-			actual.setFlughafen(buchung.getFlughafen());
-		if (buchung.getHandGepaeck() != null)
-			actual.setHandGepaeck(buchung.getHandGepaeck());
-		if (buchung.getKoffer() != null)
-			actual.setKoffer(buchung.getKoffer());
-		if (buchung.getZahlungMethod() != null)
-			actual.setZahlungMethod(buchung.getZahlungMethod());
-		if (buchung.getReiseAngebotId() != null) {
-			ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId())
-					.orElseThrow(() -> new ResourceNotFoundException(
-							"Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
-			actual.setReiseAngebot(ra);
-		}
-		// send mail on updated status
-		if (buchung.getStatus() != null && buchung.getStatus() != actual.getStatus()) {
-			actual.setStatus(buchung.getStatus());
-			// template params
-			Map<String, Object> properties = new HashMap<>();
-			properties.put("name", actual.getReisender().getName());
-			properties.put("status", actual.getStatus());
-			properties.put("ziel", actual.getReiseAngebot().getLand().getName());
+        if (buchung.getMitReisenderId() != null) {
+            mitReisender = reiserRepository.findById(buchung.getMitReisenderId())
+                    .orElseThrow(() -> new ApiRequestException(
+                            "Cannot find MitReisender with id: " + buchung.getMitReisenderId()));
+            actual.setMitReisenderId(mitReisender.getId());
+        } else if (buchung.getMitReisenderId() == null) {
+            actual.setMitReisenderId(null);
+        }
 
-			String[] to = { actual.getReisender().getEmail() };
+        if (buchung.getDatum() != null)
+            actual.setDatum(buchung.getDatum());
+        if (buchung.getFlughafen() != null)
+            actual.setFlughafen(buchung.getFlughafen());
+        if (buchung.getHandGepaeck() != null)
+            actual.setHandGepaeck(buchung.getHandGepaeck());
+        if (buchung.getKoffer() != null)
+            actual.setKoffer(buchung.getKoffer());
+        if (buchung.getZahlungMethod() != null)
+            actual.setZahlungMethod(buchung.getZahlungMethod());
+        if (buchung.getReiseAngebotId() != null) {
+            ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId())
+                    .orElseThrow(() -> new ApiRequestException(
+                            "Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
+            actual.setReiseAngebot(ra);
+        }
+        // send mail on updated status
+        if (buchung.getStatus() != null && buchung.getStatus() != actual.getStatus()) {
+            actual.setStatus(buchung.getStatus());
+            // template params
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("name", actual.getReisender().getName());
+            properties.put("status", actual.getStatus());
+            properties.put("ziel", actual.getReiseAngebot().getLand().getName());
 
-			// export booking pdf
-			byte[] export = exportPdf(actual.getId());
+            String[] to = {actual.getReisender().getEmail()};
 
-			// data source to write the exported pdf into
-			// when running local
-			//DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
-			// when running on the server
-			DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
+            // export booking pdf
+            byte[] export = exportPdf(actual.getId());
 
-			OutputStream sourceOS = source.getOutputStream();
-			sourceOS.write(export);
+            // data source to write the exported pdf into
+            // when running local
+            //DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
+            // when running on the server
+            DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
 
-			sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source);
-		}
+            OutputStream sourceOS = source.getOutputStream();
+            sourceOS.write(export);
 
-		return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
-	}
+            sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source);
+        }
 
-	public ResponseEntity<?> removeMitReisender(UUID id) {
-		Buchung buchung = buchungRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
+        return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
+    }
 
-		buchung.setMitReisenderId(null);
-		// buchungRepository.deleteById(buchung.getId());
-		buchungRepository.save(buchung);
-		log.info("successfully removed");
+    public ResponseEntity<?> removeMitReisender(UUID id) {
+        Buchung buchung = buchungRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
 
-		/*
-		 * //update freiPlaetze after deleting a new Buchung ReiseAngebot ra =
-		 * buchung.getReiseAngebot();
-		 * ra.setFreiPlaetze(buchung.getReiseAngebot().getFreiPlaetze() + 1);
-		 * reiseAngebotRepository.save(ra);
-		 * 
-		 * log.info("successfully deleted");
-		 */
+        buchung.setMitReisenderId(null);
+        // buchungRepository.deleteById(buchung.getId());
+        buchungRepository.save(buchung);
+        log.info("successfully removed");
 
-		return new ResponseEntity<>("Mitreiser Successfully deleted", HttpStatus.OK);
-	}
+        /*
+         * //update freiPlaetze after deleting a new Buchung ReiseAngebot ra =
+         * buchung.getReiseAngebot();
+         * ra.setFreiPlaetze(buchung.getReiseAngebot().getFreiPlaetze() + 1);
+         * reiseAngebotRepository.save(ra);
+         *
+         * log.info("successfully deleted");
+         */
 
-	public ResponseEntity<?> deleteBuchung(UUID id) {
-		Buchung buchung = buchungRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
+        return new ResponseEntity<>("Mitreiser Successfully deleted", HttpStatus.OK);
+    }
 
-		buchungRepository.deleteById(buchung.getId());
+    public ResponseEntity<?> deleteBuchung(UUID id) {
+        Buchung buchung = buchungRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
 
-		// update freiPlaetze after deleting a new Buchung
-		ReiseAngebot ra = buchung.getReiseAngebot();
-		ra.setFreiPlaetze(buchung.getReiseAngebot().getFreiPlaetze() + 1);
-		reiseAngebotRepository.save(ra);
+        buchungRepository.deleteById(buchung.getId());
 
-		log.info("successfully deleted");
+        // update freiPlaetze after deleting a new Buchung
+        ReiseAngebot ra = buchung.getReiseAngebot();
+        ra.setFreiPlaetze(buchung.getReiseAngebot().getFreiPlaetze() + 1);
+        reiseAngebotRepository.save(ra);
 
-		return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-	}
+        log.info("successfully deleted");
 
-	private void sendMail(Map<String, Object> properties, String[] to, String subject, String template,
-			DataSource source) {
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+    }
+
+    private void sendMail(Map<String, Object> properties, String[] to, String subject, String template,
+                          DataSource source) {
 
 		/*Email email = new Email();
 		email.setFrom(from);
@@ -324,27 +311,27 @@ public class BuchungService {
 			}
 		}*/
 
-	}
+    }
 
-	public byte[] exportPdf(UUID id) throws JRException, URISyntaxException, IOException {
+    public byte[] exportPdf(UUID id) throws JRException, URISyntaxException, IOException {
 
-		Buchung buchung = buchungRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchung with id: " + id));
+        Buchung buchung = buchungRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
 
-		Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId())
-				.orElseThrow(() -> new ResourceNotFoundException(
-						"Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
+        Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId())
+                .orElseThrow(() -> new ApiRequestException(
+                        "Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
 
-		ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebot().getId())
-				.orElseThrow(() -> new ResourceNotFoundException(
-						"Cannot find ReiseAngebot with id" + buchung.getReiseAngebot().getId()));
+        ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebot().getId())
+                .orElseThrow(() -> new ApiRequestException(
+                        "Cannot find ReiseAngebot with id" + buchung.getReiseAngebot().getId()));
 
-		// since we generate pdfs with html we don't need the jasper approach for the moment
-		// print pdf
+        // since we generate pdfs with html we don't need the jasper approach for the moment
+        // print pdf
 //		File file = null;
 
-		
-		// template config local
+
+        // template config local
 //		file = ResourceUtils.getFile("classpath:Booking.jrxml");
 //
 //		if (buchung.getMitReisenderId() != null) {
@@ -353,94 +340,94 @@ public class BuchungService {
 //
 //		JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 
-		// template config on server
+        // template config on server
 //		JasperReport jasperReport = JasperCompileManager.compileReport(templateLink);
 //		
 //		if(buchung.getMitReisenderId() != null) {
 //			jasperReport = JasperCompileManager.compileReport(templateLink_MitReisende);
 //		}
 
-		Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
 
-		params.put("ziel", ra.getLand() != null ? ra.getLand().getName() : ra.getTitel());
-		params.put("start_end", ra.getStartDatum().getDayOfMonth() + "." + ra.getStartDatum().getMonth().toString()
-				+ " - " + ra.getEndDatum().toString());
-		params.put("name_vorname", buchung.getReisender().getName() + "  " + buchung.getReisender().getVorname());
-		params.put("postanschrift", buchung.getReisender().getAdresse());
-		params.put("geburtsdatum", buchung.getReisender().getGeburtsdatum().toString());
-		params.put("handynummer", buchung.getReisender().getTelefonnummer());
-		params.put("email", buchung.getReisender().getEmail());
-		params.put("studiengang", buchung.getReisender().getStudiengang());
-		params.put("hochschule", buchung.getReisender().getHochschule());
-		params.put("status", buchung.getReisender().getStatus());
-		params.put("arbeit_bei", buchung.getReisender().getArbeitBei());
-		params.put("schonteilgenommen", buchung.getReisender().isSchonTeilgenommen() ? "Ja" : "Nein");
-		params.put("mit_mitreiser", buchung.getMitReisenderId() != null ? "Ja" : "Nein");
-		params.put("mit_mitreiser_bool", buchung.getMitReisenderId() != null ? true : false);
+        params.put("ziel", ra.getLand() != null ? ra.getLand().getName() : ra.getTitel());
+        params.put("start_end", ra.getStartDatum().getDayOfMonth() + "." + ra.getStartDatum().getMonth().toString()
+                + " - " + ra.getEndDatum().toString());
+        params.put("name_vorname", buchung.getReisender().getName() + "  " + buchung.getReisender().getVorname());
+        params.put("postanschrift", buchung.getReisender().getAdresse());
+        params.put("geburtsdatum", buchung.getReisender().getGeburtsdatum().toString());
+        params.put("handynummer", buchung.getReisender().getTelefonnummer());
+        params.put("email", buchung.getReisender().getEmail());
+        params.put("studiengang", buchung.getReisender().getStudiengang());
+        params.put("hochschule", buchung.getReisender().getHochschule());
+        params.put("status", buchung.getReisender().getStatus());
+        params.put("arbeit_bei", buchung.getReisender().getArbeitBei());
+        params.put("schonteilgenommen", buchung.getReisender().isSchonTeilgenommen() ? "Ja" : "Nein");
+        params.put("mit_mitreiser", buchung.getMitReisenderId() != null ? "Ja" : "Nein");
+        params.put("mit_mitreiser_bool", buchung.getMitReisenderId() != null ? true : false);
 
-		if (buchung.getMitReisenderId() != null) {
-			Reisender mitReisender = reiserRepository.findById(buchung.getMitReisenderId()).get();
-			params.put("mitReisender_name_vorname", mitReisender.getName() + "  " + mitReisender.getVorname());
-			params.put("mitReisender_postanschrift", mitReisender.getAdresse());
-			params.put("mitReisender_geburtsdatum", mitReisender.getGeburtsdatum().toString());
-			params.put("mitReisender_handynummer", mitReisender.getTelefonnummer());
-			params.put("mitReisender_email", mitReisender.getEmail());
-			params.put("mitReisender_studiengang", mitReisender.getStudiengang());
-			params.put("mitReisender_hochschule", mitReisender.getHochschule());
-			params.put("mitReisender_status", mitReisender.getStatus());
-			params.put("mitReisender_arbeit_bei", mitReisender.getArbeitBei());
-			params.put("mitReisender_schonteilgenommen", mitReisender.isSchonTeilgenommen() ? "Ja" : "Nein");
-		}
+        if (buchung.getMitReisenderId() != null) {
+            Reisender mitReisender = reiserRepository.findById(buchung.getMitReisenderId()).get();
+            params.put("mitReisender_name_vorname", mitReisender.getName() + "  " + mitReisender.getVorname());
+            params.put("mitReisender_postanschrift", mitReisender.getAdresse());
+            params.put("mitReisender_geburtsdatum", mitReisender.getGeburtsdatum().toString());
+            params.put("mitReisender_handynummer", mitReisender.getTelefonnummer());
+            params.put("mitReisender_email", mitReisender.getEmail());
+            params.put("mitReisender_studiengang", mitReisender.getStudiengang());
+            params.put("mitReisender_hochschule", mitReisender.getHochschule());
+            params.put("mitReisender_status", mitReisender.getStatus());
+            params.put("mitReisender_arbeit_bei", mitReisender.getArbeitBei());
+            params.put("mitReisender_schonteilgenommen", mitReisender.isSchonTeilgenommen() ? "Ja" : "Nein");
+        }
 
-		params.put("copyright_monat_jahr", LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear());
+        params.put("copyright_monat_jahr", LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear());
 
-		params.put("reise_datum", buchung.getDatum().toString());
-		params.put("buchungsklasse", tarif.getType());
-		params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
-		params.put("flughafen", buchung.getFlughafen());
-		params.put("handgepaeck", buchung.getHandGepaeck().equals("true") ? "ja" : "nein");
-		params.put("koffer", buchung.getKoffer().equals("true") ? "ja" : "nein");
-		params.put("jahr", "" + LocalDate.now().getYear());
-		params.put("buchungsstatus", buchung.getStatus());
+        params.put("reise_datum", buchung.getDatum().toString());
+        params.put("buchungsklasse", tarif.getType());
+        params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
+        params.put("flughafen", buchung.getFlughafen());
+        params.put("handgepaeck", buchung.getHandGepaeck().equals("true") ? "ja" : "nein");
+        params.put("koffer", buchung.getKoffer().equals("true") ? "ja" : "nein");
+        params.put("jahr", "" + LocalDate.now().getYear());
+        params.put("buchungsstatus", buchung.getStatus());
 
-		// jasper export not need for the moment 
-		//JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+        // jasper export not need for the moment
+        //JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
 
-		// export pdf with jasper
-		//byte[] export = JasperExportManager.exportReportToPdf(jasperPrint);
+        // export pdf with jasper
+        //byte[] export = JasperExportManager.exportReportToPdf(jasperPrint);
 
-		// export pdf with html
-		byte[] export_html = generatePdfFile(params, "export.pdf");
+        // export pdf with html
+        byte[] export_html = generatePdfFile(params, "export.pdf");
 
-		return export_html;
-	}
+        return export_html;
+    }
 
-	private byte[] generatePdfFile(Map<String, Object> data, String pdfFileName) throws IOException {
-		// thymeleaf context
-		Context context = new Context();
-		context.setVariables(data);
+    private byte[] generatePdfFile(Map<String, Object> data, String pdfFileName) throws IOException {
+        // thymeleaf context
+        Context context = new Context();
+        context.setVariables(data);
 
-		String htmlContent = templateEngine.process(template, context);
-		File file = null;
-		try {
-			// generate pdf with html template with flying-saucer-pdf
-			FileOutputStream fileOutputStream = new FileOutputStream(pdfFileName);
-			ITextRenderer renderer = new ITextRenderer();
-			renderer.setDocumentFromString(htmlContent);
-			renderer.layout();
-			renderer.createPDF(fileOutputStream, false);
-			renderer.finishPDF();
-			// get the created pdf as file
-			file = new File(pdfFileName);
-			templateEngine.clearTemplateCache();
-		} catch (FileNotFoundException e) {
-			log.error(e.getMessage(), e);
-		} catch (DocumentException e) {
-			log.error(e.getMessage(), e);
-		}
+        String htmlContent = templateEngine.process(template, context);
+        File file = null;
+        try {
+            // generate pdf with html template with flying-saucer-pdf
+            FileOutputStream fileOutputStream = new FileOutputStream(pdfFileName);
+            ITextRenderer renderer = new ITextRenderer();
+            renderer.setDocumentFromString(htmlContent);
+            renderer.layout();
+            renderer.createPDF(fileOutputStream, false);
+            renderer.finishPDF();
+            // get the created pdf as file
+            file = new File(pdfFileName);
+            templateEngine.clearTemplateCache();
+        } catch (FileNotFoundException e) {
+            log.error(e.getMessage(), e);
+        } catch (DocumentException e) {
+            log.error(e.getMessage(), e);
+        }
 
-		// return as byte[]
-		return Files.toByteArray(file);
-	}
+        // return as byte[]
+        return Files.toByteArray(file);
+    }
 
 }

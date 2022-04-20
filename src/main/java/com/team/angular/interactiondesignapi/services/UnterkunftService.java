@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.Unterkunft;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
@@ -57,7 +57,7 @@ public class UnterkunftService {
 
         if (unterkunft.getLandId() != null) {
             Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Cannot find Land with id: " + unterkunft.getLandId()));
+                    () -> new ApiRequestException("Cannot find Land with id: " + unterkunft.getLandId()));
             newUnterkunft.setLand(land);
         }
 
@@ -67,7 +67,7 @@ public class UnterkunftService {
     public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft) throws Exception {
 
         Unterkunft actual_unterkunft = unterkunftRepository.findById(unterkunft.getId()).orElseThrow(
-                () -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
+                () -> new ApiRequestException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
 
         List<byte[]> bilder = new ArrayList<>();
 
@@ -89,7 +89,7 @@ public class UnterkunftService {
         // Land land = null;
         if (unterkunft.getLandId() != null) {
             Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
+                    () -> new ApiRequestException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
             actual_unterkunft.setLand(land);
         }
 
@@ -105,14 +105,14 @@ public class UnterkunftService {
 
     public UnterkunftReadTO getUnterkunft(UUID id) {
         Unterkunft unterkunft = unterkunftRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
 
         return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(unterkunft));
     }
 
     public ResponseEntity<?> deleteUnterkunft(UUID id) {
         Unterkunft unterkunft = unterkunftRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
 
         unterkunftRepository.delete(unterkunft);
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);

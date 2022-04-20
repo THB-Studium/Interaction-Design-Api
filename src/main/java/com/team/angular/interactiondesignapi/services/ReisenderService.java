@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Reisender;
 import com.team.angular.interactiondesignapi.repositories.ReisenderRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.reisender.*;
@@ -66,7 +66,7 @@ public class ReisenderService {
     public ReisenderReadTO getReisender(UUID id) {
 
         Reisender reisender = reisenderRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Reisender with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Reisender with id: " + id));
 
         return Reisender2ReisenderReadTO.apply(reisender);
     }
@@ -74,7 +74,7 @@ public class ReisenderService {
     public ReisenderReadTO updateReisender(ReisenderWriteTO Reisender) throws Exception {
 
         Reisender actual = reisenderRepository.findById(Reisender.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Reisender with id: " + Reisender.getId()));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Reisender with id: " + Reisender.getId()));
 
         if (Reisender.getName() != null)
             actual.setName(Reisender.getName());
@@ -111,7 +111,7 @@ public class ReisenderService {
 
     public ResponseEntity<?> deleteReisender(UUID id) {
         Reisender actual = reisenderRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Reisender with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Reisender with id: " + id));
 
         reisenderRepository.deleteById(actual.getId());
         log.info("successfully deleted");
