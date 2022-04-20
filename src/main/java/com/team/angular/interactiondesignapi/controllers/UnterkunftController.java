@@ -37,14 +37,14 @@ public class UnterkunftController {
     @ApiOperation("Add One Unterkunft")
     @PostMapping("")
     public UnterkunftReadTO addUnterkunft(
-            @ApiParam(name = "Unterkunft", value = "Unterkunft to add") @RequestBody UnterkunftWriteTO unterkunft) throws Exception {
+            @ApiParam(name = "UnterkunftWriteTO", value = "Unterkunft to add") @RequestBody UnterkunftWriteTO unterkunft) {
         return unterkunftService.addUnterkunft(unterkunft);
     }
 
     @ApiOperation("Update Unterkunft")
     @PutMapping("")
     public UnterkunftReadTO updateUnterkunft(
-            @ApiParam(name = "Unterkunft", value = "Unterkunft to update") @RequestBody UnterkunftWriteTO unterkunft) throws Exception {
+            @ApiParam(name = "UnterkunftWriteTO", value = "Unterkunft to update") @RequestBody UnterkunftWriteTO unterkunft) {
         return unterkunftService.updateUnterkunft(unterkunft);
     }
 

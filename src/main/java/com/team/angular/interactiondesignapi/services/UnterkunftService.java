@@ -28,23 +28,29 @@ public class UnterkunftService {
     @Autowired
     private LandRepository landRepository;
 
+    public UnterkunftReadTO getUnterkunft(UUID id) {
+        Unterkunft unterkunft = unterkunftRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
+
+        return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(unterkunft));
+    }
+
     public List<UnterkunftReadListTO> getAll() {
         return Unterkunft2UnterkunftReadListTO.apply(unterkunftRepository.findAll());
     }
 
-    public UnterkunftReadTO addUnterkunft(UnterkunftWriteTO unterkunft) throws Exception {
-
-        List<byte[]> bilder = new ArrayList<>();
+    public UnterkunftReadTO addUnterkunft(UnterkunftWriteTO unterkunft) {
 
         Unterkunft newUnterkunft = new Unterkunft();
 
         if (!unterkunftRepository.existsUnterkunftByName(unterkunft.getName())) {
             newUnterkunft.setName(unterkunft.getName());
         } else {
-            throw new Exception(unterkunft.getName() + " already exists");
+            throw new ApiRequestException(unterkunft.getName() + " already exists");
         }
 
         if (unterkunft.getBilder() != null) {
+            List<byte[]> bilder = new ArrayList<>();
             for (String file : unterkunft.getBilder()) {
                 bilder.add(compressBild(file));
             }
@@ -64,33 +70,25 @@ public class UnterkunftService {
         return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(newUnterkunft));
     }
 
-    public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft) throws Exception {
+    public UnterkunftReadTO updateUnterkunft(UnterkunftWriteTO unterkunft) {
 
         Unterkunft actual_unterkunft = unterkunftRepository.findById(unterkunft.getId()).orElseThrow(
                 () -> new ApiRequestException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
-
-        List<byte[]> bilder = new ArrayList<>();
 
         if (unterkunft.getName() != null && !unterkunft.getName().equals(actual_unterkunft.getName())) {
             if (!unterkunftRepository.existsUnterkunftByName(unterkunft.getName())) {
                 actual_unterkunft.setName(unterkunft.getName());
             } else {
-                throw new Exception(unterkunft.getName() + " already exists");
+                throw new ApiRequestException(unterkunft.getName() + " already exists");
             }
         }
 
         if (unterkunft.getBilder() != null && unterkunft.getBilder().size() > 0) {
+            List<byte[]> bilder = new ArrayList<>();
             for (String file : unterkunft.getBilder()) {
                 bilder.add(compressBild(file));
             }
             actual_unterkunft.setBilder(bilder);
-        }
-
-        // Land land = null;
-        if (unterkunft.getLandId() != null) {
-            Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
-                    () -> new ApiRequestException("Cannot find UpdateUnterkunft with id: " + unterkunft.getId()));
-            actual_unterkunft.setLand(land);
         }
 
         if (unterkunft.getLink() != null)
@@ -100,21 +98,21 @@ public class UnterkunftService {
         if (unterkunft.getBeschreibung() != null)
             actual_unterkunft.setBeschreibung(unterkunft.getBeschreibung());
 
+        if (unterkunft.getLandId() != null) {
+            Land land = landRepository.findById(unterkunft.getLandId()).orElseThrow(
+                    () -> new ApiRequestException("Cannot find Land with id: " + unterkunft.getLandId()));
+            actual_unterkunft.setLand(land);
+        }
+
         return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(actual_unterkunft));
-    }
-
-    public UnterkunftReadTO getUnterkunft(UUID id) {
-        Unterkunft unterkunft = unterkunftRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
-
-        return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(unterkunft));
     }
 
     public ResponseEntity<?> deleteUnterkunft(UUID id) {
         Unterkunft unterkunft = unterkunftRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Unterkunft with id: " + id));
 
         unterkunftRepository.delete(unterkunft);
+        log.info("successfully deleted");
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
