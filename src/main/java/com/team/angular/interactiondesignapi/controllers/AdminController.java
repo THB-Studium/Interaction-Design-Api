@@ -41,7 +41,7 @@ public class AdminController {
 
     @ApiOperation("Update Admin")
     @PutMapping("")
-    public AdminOutTO updateAdmin(@ApiParam(name = "AdminWriteTO", value = "Admin to update") @RequestBody AdminWriteTO admin) throws Exception {
+    public AdminOutTO updateAdmin(@ApiParam(name = "AdminWriteTO", value = "Admin to update") @RequestBody AdminWriteTO admin) {
         return adminService.updateAdmin(admin);
     }
 

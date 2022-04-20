@@ -66,7 +66,7 @@ public class AdminService implements UserDetailsService {//
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public AdminOutTO updateAdmin(AdminWriteTO admin) throws Exception {
+    public AdminOutTO updateAdmin(AdminWriteTO admin) {
         Admin _admin = adminRepository.findById(admin.getId())
                 .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + admin.getId()));
 
@@ -81,7 +81,7 @@ public class AdminService implements UserDetailsService {//
                     && !adminRepository.existsAdminByEmail(admin.getEmail())) {
                 _admin.setEmail(admin.getEmail());
             } else {
-                throw new Exception("Email has already been taken");
+                throw new ApiRequestException("Email has already been taken");
             }
         }
 
@@ -90,11 +90,11 @@ public class AdminService implements UserDetailsService {//
             if (bcryptEncoder.matches(admin.getOldPassword(), _admin.getPassword())) {
                 _admin.setPassword(bcryptEncoder.encode(admin.getNewPassword()));
             } else {
-                throw new Exception("The Old password is invalid");
+                throw new ApiRequestException("The Old password is invalid");
             }
         } else if ((admin.getNewPassword() != null && admin.getOldPassword() == null) ||
                 (admin.getNewPassword() == null && admin.getOldPassword() != null)) {
-            throw new Exception("both old and new passwords are required");
+            throw new ApiRequestException("both old and new passwords are required");
         }
 
         _admin.setUpdateDate(LocalDate.now());

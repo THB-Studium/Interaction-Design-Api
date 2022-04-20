@@ -30,7 +30,7 @@ public class FeedbackService {
         return Feedback2FeedbackListTO.apply(feedbackRepository.findAll());
     }
 
-    public Feedback addFeedback(FeedbackWriteTO feedback) throws Exception {
+    public Feedback addFeedback(FeedbackWriteTO feedback) {
 
         Feedback newFeedback = new Feedback();
         newFeedback.setAutor(feedback.getAutor());
@@ -53,7 +53,7 @@ public class FeedbackService {
                 .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
     }
 
-    public Feedback updateFeedback(FeedbackWriteTO feedback_) throws Exception {
+    public Feedback updateFeedback(FeedbackWriteTO feedback_) {
 
         Feedback feedback = getFeedback(feedback_.getId());
 
