@@ -2,8 +2,9 @@ package com.team.angular.interactiondesignapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -16,7 +17,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin {
@@ -41,8 +43,5 @@ public class Admin {
     @PastOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate updateDate;
-
-    /*@Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean enabled;*/
 
 }

@@ -1,12 +1,11 @@
 package com.team.angular.interactiondesignapi.transfertobjects.erwartungen;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErwartungenReadWriteTO {

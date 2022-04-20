@@ -96,7 +96,6 @@ public class AdminService implements UserDetailsService {//
             throw new Exception("both old and new passwords are required");
         }
 
-
         _admin.setUpdateDate(LocalDate.now());
 
         adminRepository.save(_admin);

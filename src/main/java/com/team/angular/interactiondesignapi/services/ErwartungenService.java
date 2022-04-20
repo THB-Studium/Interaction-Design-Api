@@ -95,7 +95,6 @@ public class ErwartungenService {
 
         erwartungenRepository.save(_erwartungen);
 
-        /* ReiseAngebot soll nicht von hier aktualisiert werden */
         return Erwartungen2ErwartungenReadListTO.apply(_erwartungen);
     }
 }

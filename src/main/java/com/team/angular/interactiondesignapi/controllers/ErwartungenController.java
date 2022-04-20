@@ -35,14 +35,13 @@ public class ErwartungenController {
     @ApiOperation("Add One Erwartungen")
     @PostMapping("")
     public ErwartungenReadWriteTO addErwartungen(
-            @ApiParam(name = "Erwartungen", value = "Erwartungen to add") @RequestBody ErwartungenReadWriteTO erwartungen) {
+            @ApiParam(name = "ErwartungenReadWriteTO", value = "Erwartungen to add") @RequestBody ErwartungenReadWriteTO erwartungen) {
         return erwartungenService.addErwartungen(erwartungen);
     }
 
-    // Aktualisierung von Erwartungen mit ReiseAngebot (ohne Bild)
     @ApiOperation("Update Erwartungen")
     @PutMapping("")
-    public ErwartungenReadListTO updateErwartungen(@ApiParam(name = "Erwartungen", value = "Erwartungen to update")
+    public ErwartungenReadListTO updateErwartungen(@ApiParam(name = "ErwartungenReadListTO", value = "Erwartungen to update")
                                                    @RequestBody ErwartungenReadListTO erwartungen) {
         return erwartungenService.updateErwartungen(erwartungen);
     }
