@@ -42,12 +42,6 @@ public class BuchungService {
 
     private static final Logger log = LoggerFactory.getLogger(BuchungService.class);
 
-    @Value("${template.link}")
-    private String templateLink;
-
-    @Value("${template.linkMitReisende}")
-    private String templateLink_MitReisende;
-
     @Value("${template.email.new-booking}")
     private String template_new_booking;
 
@@ -82,15 +76,20 @@ public class BuchungService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
 
-        // Reisender reiser = buchung.getReisender();
-        // Reisender mitReisender =
-        // ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender()));
-
         ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
 
+        // newBuchung
         Buchung newBuchung = new Buchung();
-        newBuchung.setDatum(buchung.getDatum());
+
+        // check if the Reisender already exists and save when not
+        if (reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
+            newBuchung.setReisender(
+                    reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
+        } else {
+            newBuchung
+                    .setReisender(ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getReisender())));
+        }
 
         // check if the MitReisender already exists and save when not
         if (buchung.getMitReisender() != null) {
@@ -102,7 +101,9 @@ public class BuchungService {
             }
         }
 
+
         newBuchung.setBuchungsklasseId(tarif.getId());
+        newBuchung.setDatum(buchung.getDatum());
         newBuchung.setFlughafen(buchung.getFlughafen());
         newBuchung.setHandGepaeck(buchung.getHandGepaeck());
         newBuchung.setKoffer(buchung.getKoffer());
@@ -112,16 +113,7 @@ public class BuchungService {
         } else {
             newBuchung.setStatus(Buchungstatus.Eingegangen);
         }
-
-        // check if the Reisender already exists and save when not
-        if (reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
-            newBuchung.setReisender(
-                    reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
-        } else {
-            newBuchung
-                    .setReisender(ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getReisender())));
-        }
-
+        
         newBuchung.setReiseAngebot(ra);
 
         // update freiPlaetze after adding a new Buchung
@@ -218,7 +210,9 @@ public class BuchungService {
                             "Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
             actual.setReiseAngebot(ra);
         }
+
         // send mail on updated status
+        //todo: update freiplätze wenn abgeleht!?
         if (buchung.getStatus() != null && buchung.getStatus() != actual.getStatus()) {
             actual.setStatus(buchung.getStatus());
             // template params
@@ -253,6 +247,7 @@ public class BuchungService {
         buchungRepository.save(buchung);
         log.info("successfully removed");
 
+        // todo: why commented?
         /*
          * //update freiPlaetze after deleting a new Buchung ReiseAngebot ra =
          * buchung.getReiseAngebot();
@@ -281,6 +276,7 @@ public class BuchungService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
+    // todo: why have we a Email-Service?
     private void sendMail(Map<String, Object> properties, String[] to, String subject, String template,
                           DataSource source) {
 
@@ -296,14 +292,14 @@ public class BuchungService {
                 mailService.sendHtmlMessageAttachment(email, source);
                 log.info("Successfully sent mail");
             } catch (MessagingException | IOException e) {
-                log.error("Could not send the Mail. Error -> %s", e.getMessage());
+                log.error("Could not send the Email. Error -> %s", e.getMessage());
             }
         } else {
             try {
                 mailService.sendHtmlMessage(email);
                 log.info("Successfully sent mail");
             } catch (MessagingException | IOException e) {
-                log.error("Could not send the Mail. Error -> %s", e.getMessage());
+                log.error("Could not send the Email. Error -> %s", e.getMessage());
             }
         }
 

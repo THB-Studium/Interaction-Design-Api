@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team.angular.interactiondesignapi.models.Email;
-import com.team.angular.interactiondesignapi.models.Mail;
 import com.team.angular.interactiondesignapi.services.MailService;
 
 @RestController
@@ -30,8 +29,8 @@ public class EmailController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendMail(@RequestBody Mail mail) {
-        mailService.sendMail(mail);
+    public ResponseEntity<String> sendMail(@RequestBody Email email) {
+        mailService.sendMail(email);
         return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
     }
 
