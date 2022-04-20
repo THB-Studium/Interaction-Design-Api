@@ -1,6 +1,6 @@
 stages:
-  - verify
-  - deploy
+  #- verify
+  #- deploy
 
 verify:
   stage: verify
