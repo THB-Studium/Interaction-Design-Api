@@ -5,7 +5,6 @@ import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
-import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.*;
@@ -24,12 +23,11 @@ import static com.team.angular.interactiondesignapi.config.CompressImage.compres
 @Service
 public class ReiseAngebotService {
     private static final Logger log = LoggerFactory.getLogger(ReiseAngebotService.class);
+
     @Autowired
     private ReiseAngebotRepository reiseAngebotRepository;
     @Autowired
     private LandRepository landRepository;
-    @Autowired
-    private ErwartungenRepository erwartungenRepository;
     @Autowired
     private BuchungsklassenRepository buchungsklassenRepository;
 
@@ -43,23 +41,22 @@ public class ReiseAngebotService {
         return ReiseAngebot2ReiseAngebotReadListTO.apply(reiseAngebotRepository.findAll());
     }
 
+    //for the Homepage
     public List<ReiseAngebotHomeTO> getAllForHome() {
         return ReiseAngebot2ReiseAngebotHomeTO.apply(reiseAngebotRepository.findAll());
     }
 
-    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot) throws Exception {
+    public ReiseAngebotReadTO addReiseAngebot(ReiseAngebotWriteTO reiseAngebot) {
         ReiseAngebot _reiseAngebot = new ReiseAngebot();
 
         if (!reiseAngebotRepository.existsReiseAngebotByTitel(reiseAngebot.getTitel())) {
             _reiseAngebot.setTitel(reiseAngebot.getTitel());
         } else {
-            throw new Exception(reiseAngebot.getTitel() + " already exists");
+            throw new ApiRequestException(reiseAngebot.getTitel() + " already exists");
         }
 
-        if (reiseAngebot.getStartbild() != null) {
+        if (reiseAngebot.getStartbild() != null)
             _reiseAngebot.setStartbild(compressBild(reiseAngebot.getStartbild()));
-        }
-
         if (reiseAngebot.getStartDatum() != null)
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)
@@ -81,13 +78,6 @@ public class ReiseAngebotService {
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
-        // Save Buchungsklassen
-        if (reiseAngebot.getBuchungsklassen() != null) {
-            List<Buchungsklassen> Buchungsklassenlist = reiseAngebot.getBuchungsklassen();
-            buchungsklassenRepository.saveAll(Buchungsklassenlist);
-            _reiseAngebot.setBuchungsklassen(Buchungsklassenlist);
-        }
-
         // erwartungen
         if (reiseAngebot.getErwartungen() != null) {
             _reiseAngebot.setErwartungen(reiseAngebot.getErwartungen());
@@ -99,6 +89,14 @@ public class ReiseAngebotService {
                     () -> new ApiRequestException("Cannot find Land with id: " + reiseAngebot.getLandId()));
             _reiseAngebot.setLand(land);
         }
+
+        // Save Buchungsklassen
+        if (reiseAngebot.getBuchungsklassen() != null) {
+            List<Buchungsklassen> Buchungsklassenlist = reiseAngebot.getBuchungsklassen();
+            buchungsklassenRepository.saveAll(Buchungsklassenlist);
+            _reiseAngebot.setBuchungsklassen(Buchungsklassenlist);
+        }
+
         // get saved ReiseAngebot
         ReiseAngebot savedReiseAngebot = reiseAngebotRepository.save(_reiseAngebot);
 
@@ -114,17 +112,8 @@ public class ReiseAngebotService {
         return ReiseAngebot2ReiseAngebotReadTO.apply(savedReiseAngebot);
     }
 
-    public ResponseEntity<?> deleteReiseAngebot(UUID id) {
-        ReiseAngebot actual = reiseAngebotRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + id));
 
-        reiseAngebotRepository.deleteById(actual.getId());
-        log.info("ReiseAngebot successfully deleted");
-
-        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-    }
-
-    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotWriteTO reiseAngebot) throws Exception {
+    public ReiseAngebotReadTO updateReiseAngebot(ReiseAngebotWriteTO reiseAngebot) {
 
         ReiseAngebot _reiseAngebot = reiseAngebotRepository.findById(reiseAngebot.getId())
                 .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + reiseAngebot.getId()));
@@ -133,7 +122,7 @@ public class ReiseAngebotService {
             if (!reiseAngebotRepository.existsReiseAngebotByTitel(reiseAngebot.getTitel())) {
                 _reiseAngebot.setTitel(reiseAngebot.getTitel());
             } else {
-                throw new Exception(reiseAngebot.getTitel() + " already exists");
+                throw new ApiRequestException(reiseAngebot.getTitel() + " already exists");
             }
         }
 
@@ -173,6 +162,16 @@ public class ReiseAngebotService {
         }
 
         return ReiseAngebot2ReiseAngebotReadTO.apply(reiseAngebotRepository.save(_reiseAngebot));
+    }
+
+    public ResponseEntity<?> deleteReiseAngebot(UUID id) {
+        ReiseAngebot actual = reiseAngebotRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + id));
+
+        reiseAngebotRepository.deleteById(actual.getId());
+        log.info("ReiseAngebot successfully deleted");
+
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
     public ResponseEntity<?> addInteressiert(UUID id) {
