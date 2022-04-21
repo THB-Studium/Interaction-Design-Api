@@ -90,7 +90,7 @@ public class NewsletterService {
         mail.setSubject("ee");
         mail.setMessage("ww");
 
-        mailService.sendMail(mail);
+        //mailService.sendMail(mail);
 
         return new ResponseEntity<>("Successfully sent", HttpStatus.OK);
     }
