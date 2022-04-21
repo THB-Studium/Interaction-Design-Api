@@ -80,13 +80,8 @@ public class MailService {
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
         
-        String html = null;
+        String html = templateEngine.process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
         
-        if(email.getTemplate() != null) {
-        	html = templateEngine.process(email.getTemplate(), context);
-        } else {
-        	html = templateEngine.process(template_simple_email, context);
-        }
         helper.setText(html, true);
 
         log.info("Sending email: {} with html body: {}", email, html);
@@ -114,7 +109,7 @@ public class MailService {
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
         
-        String html = templateEngine.process(email.getTemplate(), context);
+        String html = templateEngine.process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
         helper.setText(html, true);        
         
         
@@ -150,7 +145,7 @@ public class MailService {
         helper.setTo(email.getTo());
         helper.setSubject(email.getSubject());
         
-        String html = templateEngine.process(email.getTemplate(), context);
+        String html = templateEngine.process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
         helper.setText(html, true);
         
         helper.addAttachment("booking_"+LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)+".pdf", ds);
