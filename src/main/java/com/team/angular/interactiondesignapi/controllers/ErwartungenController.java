@@ -21,8 +21,10 @@ public class ErwartungenController {
 
     @ApiOperation("Get All Erwartungen")
     @GetMapping("")
-    public List<ErwartungenReadListTO> getAllErwartungen() {
-        return erwartungenService.getAll();
+    public List<ErwartungenReadListTO> getAllErwartungen( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                          @RequestParam(defaultValue = "10") Integer pageSize,
+                                                          @RequestParam(defaultValue = "id") String sortBy) {
+        return erwartungenService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Erwartungen")

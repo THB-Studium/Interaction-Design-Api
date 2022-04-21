@@ -22,8 +22,10 @@ public class AdminController {
 
     @ApiOperation("Get All Admins")
     @GetMapping("")
-    public List<AdminOutTO> getAllAdmins() {
-        return adminService.getAll();
+    public List<AdminOutTO> getAllAdmins( @RequestParam(defaultValue = "0") Integer pageNo,
+                                          @RequestParam(defaultValue = "10") Integer pageSize,
+                                          @RequestParam(defaultValue = "id") String sortBy) {
+        return adminService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Admin")

@@ -22,8 +22,10 @@ public class HighlightController {
 
     @ApiOperation("Get All Highlight")
     @GetMapping("")
-    public List<HighlightReadListTO> getAllHighlight() {
-        return highlightService.getAll();
+    public List<HighlightReadListTO> getAllHighlight( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                      @RequestParam(defaultValue = "10") Integer pageSize,
+                                                      @RequestParam(defaultValue = "id") String sortBy) {
+        return highlightService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Highlight")

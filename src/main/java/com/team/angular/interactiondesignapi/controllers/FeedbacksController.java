@@ -23,8 +23,10 @@ public class FeedbacksController {
 
     @ApiOperation("Get All Feedbacks")
     @GetMapping("")
-    public List<FeedbackReadListTO> getAllFeedbacks() {
-        return feedbackService.getAll();
+    public List<FeedbackReadListTO> getAllFeedbacks( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                     @RequestParam(defaultValue = "10") Integer pageSize,
+                                                     @RequestParam(defaultValue = "id") String sortBy) {
+        return feedbackService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Feedback")

@@ -23,8 +23,10 @@ public class ReiseAngebotController {
 
     @ApiOperation("Get All ReiseAngebot")
     @GetMapping("")
-    public List<ReiseAngebotReadListTO> getAllReiseAngebot() {
-        return reiseAngebotService.getAll();
+    public List<ReiseAngebotReadListTO> getAllReiseAngebot( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                            @RequestParam(defaultValue = "10") Integer pageSize,
+                                                            @RequestParam(defaultValue = "id") String sortBy) {
+        return reiseAngebotService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get All ReiseAngebotHome")

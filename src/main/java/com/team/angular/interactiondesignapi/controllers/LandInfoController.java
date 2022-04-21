@@ -21,8 +21,10 @@ public class LandInfoController {
 
     @ApiOperation("Get All LandInfo")
     @GetMapping("")
-    public List<LandInfoReadListTO> getAllLand_info() {
-        return landInfoService.getAll();
+    public List<LandInfoReadListTO> getAllLand_info( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                     @RequestParam(defaultValue = "10") Integer pageSize,
+                                                     @RequestParam(defaultValue = "id") String sortBy) {
+        return landInfoService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One LandInfo")

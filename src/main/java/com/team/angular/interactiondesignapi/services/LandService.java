@@ -3,11 +3,14 @@ package com.team.angular.interactiondesignapi.services;
 import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
-import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.land.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,8 +28,12 @@ public class LandService {
     @Autowired
     private LandRepository landRepository;
 
-    public List<LandReadListTO> getAll() {
-        return Land2LandReadListTO.apply(landRepository.findAll());
+    public List<LandReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Land> pagedResult = landRepository.findAll(paging);
+
+        return Land2LandReadListTO.apply(pagedResult.getContent());
     }
 
     public LandReadTO getLand(UUID id) {

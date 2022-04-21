@@ -9,6 +9,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.admin.AdminWriteTO
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,8 +40,12 @@ public class AdminService implements UserDetailsService {//
                 .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + id)));
     }
 
-    public List<AdminOutTO> getAll() {
-        return Admin2AdminOutTO.apply(adminRepository.findAll());
+    public List<AdminOutTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Admin> pagedResult = adminRepository.findAll(paging);
+
+        return Admin2AdminOutTO.apply(pagedResult.getContent());
     }
 
     public AdminOutTO addAdmin(Admin admin) {

@@ -9,6 +9,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -35,8 +39,12 @@ public class UnterkunftService {
         return Unterkunft2UnterkunftReadTO.apply(unterkunftRepository.save(unterkunft));
     }
 
-    public List<UnterkunftReadListTO> getAll() {
-        return Unterkunft2UnterkunftReadListTO.apply(unterkunftRepository.findAll());
+    public List<UnterkunftReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Unterkunft> pagedResult = unterkunftRepository.findAll(paging);
+
+        return Unterkunft2UnterkunftReadListTO.apply(pagedResult.getContent());
     }
 
     public UnterkunftReadTO addUnterkunft(UnterkunftWriteTO unterkunft) {

@@ -12,6 +12,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoR
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,8 +38,12 @@ public class LandInfoService {
         return LandInfo2LandInfoReadWriteTO.apply(landInfo);
     }
 
-    public List<LandInfoReadListTO> getAll() {
-        return LandInfo2LandInfoReadListTO.apply(landInfoRepository.findAll());
+    public List<LandInfoReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<LandInfo> pagedResult = landInfoRepository.findAll(paging);
+
+        return LandInfo2LandInfoReadListTO.apply(pagedResult.getContent());
     }
 
     public LandInfoReadWriteTO addLandInfo(LandInfoReadWriteTO landInfo) {

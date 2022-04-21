@@ -23,8 +23,10 @@ public class LandController {
 
     @ApiOperation("Get All Lands")
     @GetMapping("")
-    public List<LandReadListTO> getAllLands() {
-        return landService.getAll();
+    public List<LandReadListTO> getAllLands( @RequestParam(defaultValue = "0") Integer pageNo,
+                                             @RequestParam(defaultValue = "10") Integer pageSize,
+                                             @RequestParam(defaultValue = "id") String sortBy) {
+        return landService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Land")

@@ -12,6 +12,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.Bu
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -35,8 +39,12 @@ public class BuchungsklassenService {
         return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassen);
     }
 
-    public List<BuchungsklassenReadListTO> getAll() {
-        return Buchungsklassen2BuchungsklassenReadListTO.apply(buchungsklassenRepository.findAll());
+    public List<BuchungsklassenReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Buchungsklassen> pagedResult = buchungsklassenRepository.findAll(paging);
+
+        return Buchungsklassen2BuchungsklassenReadListTO.apply(pagedResult.getContent());
     }
 
     public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {

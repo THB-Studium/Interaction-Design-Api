@@ -28,8 +28,10 @@ public class BuchungController {
 
     @ApiOperation("Get All Buchungen")
     @GetMapping("")
-    public List<BuchungReadTO> getAllBuchungs() {
-        return buchungService.getAll();
+    public List<BuchungReadTO> getAllBuchungs( @RequestParam(defaultValue = "0") Integer pageNo,
+                                               @RequestParam(defaultValue = "10") Integer pageSize,
+                                               @RequestParam(defaultValue = "id") String sortBy) {
+        return buchungService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Buchung")

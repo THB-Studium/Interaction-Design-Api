@@ -1,6 +1,7 @@
 package com.team.angular.interactiondesignapi.services;
 
 import com.team.angular.interactiondesignapi.exception.ApiRequestException;
+import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
@@ -12,6 +13,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.Erwart
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,8 +38,12 @@ public class ErwartungenService {
         return Erwartungen2ErwartungenReadWriteTO.apply(erwartungen);
     }
 
-    public List<ErwartungenReadListTO> getAll() {
-        return Erwartungen2ErwartungenReadListTO.apply(erwartungenRepository.findAll());
+    public List<ErwartungenReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Erwartungen> pagedResult = erwartungenRepository.findAll(paging);
+
+        return Erwartungen2ErwartungenReadListTO.apply(pagedResult.getContent());
     }
 
     public ErwartungenReadWriteTO addErwartungen(ErwartungenReadWriteTO erwartungen) {

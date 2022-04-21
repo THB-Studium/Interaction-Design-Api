@@ -9,6 +9,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackW
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,8 +30,12 @@ public class FeedbackService {
     @Autowired
     private FeedbackRepository feedbackRepository;
 
-    public List<FeedbackReadListTO> getAll() {
-        return Feedback2FeedbackListTO.apply(feedbackRepository.findAll());
+    public List<FeedbackReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Feedback> pagedResult = feedbackRepository.findAll(paging);
+
+        return Feedback2FeedbackListTO.apply(pagedResult.getContent());
     }
 
     public Feedback addFeedback(FeedbackWriteTO feedback) {

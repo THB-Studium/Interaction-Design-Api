@@ -23,8 +23,10 @@ public class UnterkunftController {
 
     @ApiOperation("Get All Unterkunfte")
     @GetMapping("")
-    public List<UnterkunftReadListTO> getAllUnterkunfte() {
-        return unterkunftService.getAll();
+    public List<UnterkunftReadListTO> getAllUnterkunfte( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                         @RequestParam(defaultValue = "10") Integer pageSize,
+                                                         @RequestParam(defaultValue = "id") String sortBy) {
+        return unterkunftService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Unterkunft")
