@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.UUID;
 
-//@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,13 +27,10 @@ public class Buchung {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate datum;
 
-    //private Reisender mitReisender;
-
     private UUID mitReisenderId;
 
-    //private Buchungsklassen buchungsklasse;
-
-    private UUID buchungsklasseId; // Tarif
+    // Tarif
+    private UUID buchungsklasseId;
 
     @NotBlank
     private String flughafen;
