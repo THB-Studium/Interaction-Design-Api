@@ -20,9 +20,6 @@ public class NewsletterService {
     @Autowired
     private NewsletterRepository newsletterRepository;
 
-    @Autowired
-    private MailService mailService;
-
     public List<Newsletter> getAll() {
         return newsletterRepository.findAll();
     }
@@ -31,14 +28,30 @@ public class NewsletterService {
         return newsletterRepository.findById(id).orElseThrow(() -> new ApiRequestException("Cannot find Newsletter with id: " + id));
     }
 
-    public Newsletter addNewsletter(Newsletter newsletter) throws Exception {
-
+    public Newsletter addNewsletter(Newsletter newsletter) {
         if (!newsletterRepository.existsNewsletterByEmail(newsletter.getEmail())) {
             newsletter.setStatus(true);
             return newsletterRepository.save(newsletter);
         } else {
-            throw new Exception("This email is already subscribed");
+            throw new ApiRequestException("This email is already subscribed");
         }
+    }
+
+    public Newsletter updateNewsletter(Newsletter newsletter) {
+        Newsletter _newsletter = getNewsletter(newsletter.getId());
+
+        if (newsletter.getEmail() != null && !newsletter.getEmail().equalsIgnoreCase(_newsletter.getEmail())) {
+            if (newsletterRepository.existsNewsletterByEmailAndIdIsNot(newsletter.getEmail(), newsletter.getId())) {
+                throw new ApiRequestException("This email is already subscribed");
+            } else {
+                _newsletter.setEmail(newsletter.getEmail());
+            }
+        }
+
+        if (newsletter.isStatus() != _newsletter.isStatus())
+            _newsletter.setStatus(newsletter.isStatus());
+
+        return newsletterRepository.save(_newsletter);
     }
 
     public ResponseEntity<?> deleteNewsletter(UUID id) {
@@ -57,23 +70,6 @@ public class NewsletterService {
         newsletterRepository.save(_newsletter);
 
         return new ResponseEntity<>("Successfully unsubscribed", HttpStatus.OK);
-    }
-
-    public Newsletter updateNewsletter(Newsletter newsletter) throws Exception {
-        Newsletter _newsletter = getNewsletter(newsletter.getId());
-
-        if (newsletter.getEmail() != null && !newsletter.getEmail().equalsIgnoreCase(_newsletter.getEmail())) {
-            if (newsletterRepository.existsNewsletterByEmailAndIdIsNot(newsletter.getEmail(), newsletter.getId())) {
-                throw new Exception("This email is already subscribed");
-            } else {
-                _newsletter.setEmail(newsletter.getEmail());
-            }
-        }
-
-        if (newsletter.isStatus() != _newsletter.isStatus())
-            _newsletter.setStatus(newsletter.isStatus());
-
-        return newsletterRepository.save(_newsletter);
     }
 
     public List<String> getAllAbonniert() {

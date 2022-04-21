@@ -27,7 +27,7 @@ public class NewsletterController {
     @ApiOperation("Subscribe")
     @PostMapping("subscribe")
     public Newsletter subscribe(
-            @ApiParam(name = "Newsletter", value = "Newsletter to add") @RequestBody Newsletter newsletter) throws Exception {
+            @ApiParam(name = "Newsletter", value = "Newsletter to add") @RequestBody Newsletter newsletter) {
         return newsletterService.addNewsletter(newsletter);
     }
 
@@ -41,7 +41,7 @@ public class NewsletterController {
     @ApiOperation("Update")
     @PutMapping("")
     public Newsletter updateNewsletter(
-            @ApiParam(name = "Newsletter", value = "Newsletter to update") @RequestBody Newsletter newsletter) throws Exception {
+            @ApiParam(name = "Newsletter", value = "Newsletter to update") @RequestBody Newsletter newsletter) {
         return newsletterService.updateNewsletter(newsletter);
     }
 
@@ -56,11 +56,5 @@ public class NewsletterController {
     public List<String> getAllAbonniert() {
         return newsletterService.getAllAbonniert();
     }
-
-   /* @ApiOperation("Mail to abonniert")
-    @PostMapping("/mailToAbonniert")
-    public ResponseEntity<?> mailToAbonniert(@RequestBody Mail mail) {
-        return newsletterService.mailToAbonniert(mail);
-    }*/
-
+    
 }
