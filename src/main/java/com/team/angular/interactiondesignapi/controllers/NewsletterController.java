@@ -56,5 +56,5 @@ public class NewsletterController {
     public List<String> getAllAbonniert() {
         return newsletterService.getAllAbonniert();
     }
-    
+
 }

@@ -21,23 +21,28 @@ import static com.team.angular.interactiondesignapi.config.CompressImage.compres
 public class LandService {
 
     private static final Logger log = LoggerFactory.getLogger(LandService.class);
+
     @Autowired
     private LandRepository landRepository;
-    @Autowired
-    private ReiseAngebotRepository reiseAngebotRepository;
 
     public List<LandReadListTO> getAll() {
         return Land2LandReadListTO.apply(landRepository.findAll());
     }
 
-    public LandReadTO addLand(LandWriteTO land) throws Exception {
+    public LandReadTO getLand(UUID id) {
+
+        return Land2LandReadTO.apply(landRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + id)));
+    }
+
+    public LandReadTO addLand(LandWriteTO land) {
 
         Land newLand = new Land();
 
         if (!landRepository.existsLandByName(land.getName())) {
             newLand.setName(land.getName());
         } else {
-            throw new Exception(land.getName() + " already exists");
+            throw new ApiRequestException(land.getName() + " already exists");
         }
 
         newLand.setFlughafen(land.getFlughafen());
@@ -54,13 +59,8 @@ public class LandService {
         return Land2LandReadTO.apply(landRepository.save(newLand));
     }
 
-    public LandReadTO getLand(UUID id) {
-        Land land = landRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + id));
-        return Land2LandReadTO.apply(land);
-    }
 
-    public LandReadTO updateLand(LandWriteTO land) throws Exception {
+    public LandReadTO updateLand(LandWriteTO land) {
         Land newLand = landRepository.findById(land.getId())
                 .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + land.getId()));
 
@@ -68,7 +68,7 @@ public class LandService {
             if (!landRepository.existsLandByName(land.getName())) {
                 newLand.setName(land.getName());
             } else {
-                throw new Exception(land.getName() + " already exists");
+                throw new ApiRequestException(land.getName() + " already exists");
             }
 
         if (land.getHeaderFarbe() != null)

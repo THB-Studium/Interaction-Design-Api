@@ -36,14 +36,14 @@ public class LandController {
     @ApiOperation("Add One Land")
     @PostMapping("")
     public LandReadTO addLand(
-            @ApiParam(name = "Land", value = "Land to add") @RequestBody LandWriteTO land) throws Exception {
+            @ApiParam(name = "LandWriteTO", value = "Land to add") @RequestBody LandWriteTO land) {
         return landService.addLand(land);
     }
 
     @ApiOperation("Update Land")
     @PutMapping("")
     public LandReadTO updateLand(
-            @ApiParam(name = "Land", value = "Land to update") @RequestBody LandWriteTO land) throws Exception {
+            @ApiParam(name = "LandWriteTO", value = "Land to update") @RequestBody LandWriteTO land) {
         return landService.updateLand(land);
     }
 
