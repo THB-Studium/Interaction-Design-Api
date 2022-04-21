@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 import javax.activation.DataSource;
 import javax.mail.MessagingException;
@@ -12,8 +13,6 @@ import javax.mail.util.ByteArrayDataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -100,7 +99,7 @@ public class MailService {
     }
     
     // Mail with multipartFile
-    public void sendHtmlMessageAttachment(Email email, MultipartFile content) throws MessagingException, IOException {
+    public void sendHtmlMessageAttachment(Email email, List<MultipartFile> content) throws MessagingException, IOException {
     	
         MimeMessage message = emailSender.createMimeMessage();
         
@@ -118,9 +117,13 @@ public class MailService {
         String html = templateEngine.process(email.getTemplate(), context);
         helper.setText(html, true);
         
-        DataSource ds = new ByteArrayDataSource(content.getBytes(), content.getContentType());
         
-        helper.addAttachment(content.getOriginalFilename(), ds);
+        
+        for (MultipartFile multipartFile : content) {
+        	DataSource ds = new ByteArrayDataSource(multipartFile.getBytes(), multipartFile.getContentType());
+            
+            helper.addAttachment(multipartFile.getOriginalFilename(), ds);
+        }
 
         log.info("Sending email: {} with html body: {}", email, html);
         try {
