@@ -1,14 +1,13 @@
 package com.team.angular.interactiondesignapi.transfertobjects.reisender;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReisenderWriteTO {
@@ -19,7 +18,7 @@ public class ReisenderWriteTO {
 
     private String vorname;
 
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate geburtsdatum;
 
     private String telefonnummer;
@@ -31,7 +30,7 @@ public class ReisenderWriteTO {
     private String adresse;
 
     private String studiengang;
-    
+
     private String status;
 
     private String arbeitBei;
