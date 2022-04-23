@@ -68,7 +68,7 @@ public class ItBase {
 
     @BeforeEach
     public void setup() {
-        this.session = new MockHttpSession();
+        //this.session = new MockHttpSession(); todo: we don't have test with session
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
         RestAssuredMockMvc.webAppContextSetup(wac);
 
