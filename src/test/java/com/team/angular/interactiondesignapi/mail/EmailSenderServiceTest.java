@@ -44,3 +44,4 @@ public class EmailSenderServiceTest extends ItBase {
         //Assertions.assertDoesNotThrow(() -> emailSenderService.sendHtmlMessage(email));
     }
 }
+//todo: best way to test mail
