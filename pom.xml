@@ -205,12 +205,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin> <!-- todo: we don't have it so -->
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<configuration>
 					<includes>
-						<include>**/*ItBase.java</include>
+						<include>**/*IT.*</include>
 					</includes>
 				</configuration>
 				<executions>
@@ -218,6 +218,7 @@
 						<id>integration-test</id>
 						<goals>
 							<goal>integration-test</goal>
+							<goal>verify</goal>
 						</goals>
 					</execution>
 				</executions>
