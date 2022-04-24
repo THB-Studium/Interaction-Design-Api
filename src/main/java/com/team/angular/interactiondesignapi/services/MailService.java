@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Email;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import javax.activation.DataSource;
 import javax.mail.internet.MimeMessage;
 import javax.mail.util.ByteArrayDataSource;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -53,19 +55,23 @@ public class MailService {
             helper.setTo(email.getTo());
             helper.setSubject(email.getSubject());
 
+            // html template for email
             String html = templateEngine.
                     process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
 
             helper.setText(html, true);
 
-            log.info("Sending email: {} with html body: {}", email, html);
+            // log.info("Sending email: {} with html body: {}", email, html);//todo: impotamt? i think
+
+            log.info("Message sent successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
 
             emailSender.send(message);
             templateEngine.clearTemplateCache();
             return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error during email sending : %s", e.getMessage());
-            return new ResponseEntity<>("Email cannot be sent", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(e.getMessage());
+            // log.error("Error during email sending : %s", e.getMessage());
+            // return new ResponseEntity<>("Email cannot be sent", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -90,19 +96,28 @@ public class MailService {
                     .process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
             helper.setText(html, true);
 
-            for (MultipartFile multipartFile : content) {
-                DataSource ds = new ByteArrayDataSource(multipartFile.getBytes(), multipartFile.getContentType());
-                helper.addAttachment(multipartFile.getOriginalFilename(), ds);
+            if (content != null) {
+                for (MultipartFile multipartFile : content) {
+                    helper.addAttachment(multipartFile.getOriginalFilename(), multipartFile);
+                }
             }
 
-            log.info("Sending email: {} with html body: {}", email, html);
+            /*if (content != null) {
+                for (MultipartFile multipartFile : content) {
+                    DataSource ds = new ByteArrayDataSource(multipartFile.getBytes(), multipartFile.getContentType());
+                    helper.addAttachment(multipartFile.getOriginalFilename(), ds);
+                }
+            }*/
+
+            // log.info("Sending email: {} with html body: {}", email, html); //todo: impotamt?
+            log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
 
             emailSender.send(message);
             templateEngine.clearTemplateCache();
             return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error during email sending : %s", e.getMessage());
-            return new ResponseEntity<>("Email cannot be sent", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(e.getMessage());
+            //log.error("Error during email sending : %s", e.getMessage());
         }
     }
 }

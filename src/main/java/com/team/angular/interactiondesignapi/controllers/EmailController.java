@@ -2,6 +2,8 @@ package com.team.angular.interactiondesignapi.controllers;
 
 import com.team.angular.interactiondesignapi.models.Email;
 import com.team.angular.interactiondesignapi.services.MailService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,14 +20,18 @@ public class EmailController {
     public EmailController(MailService mailService) {
         this.mailService = mailService;
     }
-    
+
+    @ApiOperation("Send simple email without attachment")
     @PostMapping(value = "/simple-email")
-    public ResponseEntity<?> sendAttachmentEmail(@RequestPart Email mail) {
+    public ResponseEntity<?> sendAttachmentEmail(
+            @ApiParam(name = "Email", value = "Email to send") @RequestBody Email mail) { //todo: why was it requestPart
         return mailService.sendHtmlMessage(mail);
     }
 
+    @ApiOperation("Send email with attachment")
     @PostMapping(value = "/attachment")
-    public ResponseEntity<?> sendAttachmentEmail(@RequestPart Email mail, @RequestPart List<MultipartFile> content) {
-        return mailService.sendHtmlMessageAttachment(mail, content);
+    public ResponseEntity<?> sendAttachmentEmail(@ApiParam(name = "Email", value = "Email to send") @RequestPart Email mail,
+                                                 @ApiParam(name = "Files", value = "Liste of attachment") @RequestPart List<MultipartFile> files) {
+        return mailService.sendHtmlMessageAttachment(mail, files);
     }
 }
