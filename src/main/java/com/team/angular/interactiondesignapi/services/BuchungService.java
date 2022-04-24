@@ -86,6 +86,14 @@ public class BuchungService {
         return Buchung2BuchungReadTO.apply(pagedResult.getContent());
     }
 
+    public BuchungReadTO getBuchung(UUID id) {
+
+        Buchung buchung = buchungRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
+
+        return Buchung2BuchungReadTO.apply(buchung);
+    }
+
     public BuchungReadTO addBuchung(BuchungWriteTO buchung) throws Exception {
 
         Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId())
@@ -169,14 +177,6 @@ public class BuchungService {
 
         return ret;
 
-    }
-
-    public BuchungReadTO getBuchung(UUID id) {
-
-        Buchung buchung = buchungRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
-
-        return Buchung2BuchungReadTO.apply(buchung);
     }
 
     public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
@@ -410,6 +410,7 @@ public class BuchungService {
         return export_html;
     }
 
+    // todo: better to have it on separate Service or as componante
     private byte[] generatePdfFile(Map<String, Object> data, String pdfFileName) throws IOException {
         // thymeleaf context
         Context context = new Context();
@@ -428,9 +429,7 @@ public class BuchungService {
             // get the created pdf as file
             file = new File(pdfFileName);
             templateEngine.clearTemplateCache();
-        } catch (FileNotFoundException e) {
-            log.error(e.getMessage(), e);
-        } catch (DocumentException e) {
+        } catch (FileNotFoundException | DocumentException e) {
             log.error(e.getMessage(), e);
         }
 
