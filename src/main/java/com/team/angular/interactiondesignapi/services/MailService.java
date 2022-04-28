@@ -16,7 +16,6 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.activation.DataSource;
 import javax.mail.internet.MimeMessage;
-import javax.mail.util.ByteArrayDataSource;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -108,6 +107,43 @@ public class MailService {
                     helper.addAttachment(multipartFile.getOriginalFilename(), ds);
                 }
             }*/
+
+            // log.info("Sending email: {} with html body: {}", email, html); //todo: impotamt?
+            log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
+
+            emailSender.send(message);
+            templateEngine.clearTemplateCache();
+            return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ApiRequestException(e.getMessage());
+            //log.error("Error during email sending : %s", e.getMessage());
+        }
+    }
+
+    // Mail with multipartFile
+    public ResponseEntity<?> sendHtmlMessageAttachment(Email email, DataSource source) { //todo: temporally
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+
+            message.reply(email.isReply());
+
+            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name());
+
+            Context context = new Context();
+            context.setVariables(email.getProperties());
+
+            helper.setFrom(from);
+            helper.setTo(email.getTo());
+            helper.setSubject(email.getSubject());
+
+            String html = templateEngine
+                    .process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
+            helper.setText(html, true);
+
+
+            helper.addAttachment("ee", source);
+
 
             // log.info("Sending email: {} with html body: {}", email, html); //todo: impotamt?
             log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());

@@ -25,7 +25,7 @@ public class FeedbacksController {
     @GetMapping("")
     public List<FeedbackReadListTO> getAllFeedbacks( @RequestParam(defaultValue = "0") Integer pageNo,
                                                      @RequestParam(defaultValue = "10") Integer pageSize,
-                                                     @RequestParam(defaultValue = "id") String sortBy) {
+                                                     @RequestParam(defaultValue = "autor") String sortBy) {
         return feedbackService.getAll(pageNo, pageSize, sortBy);
     }
 

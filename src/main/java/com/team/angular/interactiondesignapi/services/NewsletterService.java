@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,9 +23,9 @@ public class NewsletterService {
     @Autowired
     private NewsletterRepository newsletterRepository;
 
-    public List<Newsletter> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+    public List<Newsletter> getAll(Integer pageNo, Integer pageSize) {
 
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Pageable paging = PageRequest.of(pageNo, pageSize);
         Page<Newsletter> pagedResult = newsletterRepository.findAll(paging);
 
         return pagedResult.getContent();

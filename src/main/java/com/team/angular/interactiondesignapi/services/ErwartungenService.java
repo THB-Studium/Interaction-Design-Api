@@ -38,9 +38,9 @@ public class ErwartungenService {
         return Erwartungen2ErwartungenReadWriteTO.apply(erwartungen);
     }
 
-    public List<ErwartungenReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+    public List<ErwartungenReadListTO> getAll(Integer pageNo, Integer pageSize) {
 
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Pageable paging = PageRequest.of(pageNo, pageSize);
         Page<Erwartungen> pagedResult = erwartungenRepository.findAll(paging);
 
         return Erwartungen2ErwartungenReadListTO.apply(pagedResult.getContent());

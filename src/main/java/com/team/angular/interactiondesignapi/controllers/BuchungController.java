@@ -30,7 +30,7 @@ public class BuchungController {
     @GetMapping("")
     public List<BuchungReadTO> getAllBuchungs( @RequestParam(defaultValue = "0") Integer pageNo,
                                                @RequestParam(defaultValue = "10") Integer pageSize,
-                                               @RequestParam(defaultValue = "id") String sortBy) {
+                                               @RequestParam(defaultValue = "buchungDatum") String sortBy) {
         return buchungService.getAll(pageNo, pageSize, sortBy);
     }
 

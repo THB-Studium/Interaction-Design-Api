@@ -25,7 +25,7 @@ public class LandController {
     @GetMapping("")
     public List<LandReadListTO> getAllLands( @RequestParam(defaultValue = "0") Integer pageNo,
                                              @RequestParam(defaultValue = "10") Integer pageSize,
-                                             @RequestParam(defaultValue = "id") String sortBy) {
+                                             @RequestParam(defaultValue = "name") String sortBy) {
         return landService.getAll(pageNo, pageSize, sortBy);
     }
 

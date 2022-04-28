@@ -23,7 +23,7 @@ public class LandInfoController {
     @GetMapping("")
     public List<LandInfoReadListTO> getAllLand_info( @RequestParam(defaultValue = "0") Integer pageNo,
                                                      @RequestParam(defaultValue = "10") Integer pageSize,
-                                                     @RequestParam(defaultValue = "id") String sortBy) {
+                                                     @RequestParam(defaultValue = "titel") String sortBy) {
         return landInfoService.getAll(pageNo, pageSize, sortBy);
     }
 
