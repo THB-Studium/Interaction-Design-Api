@@ -18,7 +18,9 @@ import javax.activation.DataSource;
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -60,17 +62,14 @@ public class MailService {
 
             helper.setText(html, true);
 
-            // log.info("Sending email: {} with html body: {}", email, html);//todo: impotamt? i think
-
             log.info("Message sent successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
 
             emailSender.send(message);
             templateEngine.clearTemplateCache();
             return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error during email sending : {}", e.getMessage());
             throw new ApiRequestException(e.getMessage());
-            // log.error("Error during email sending : %s", e.getMessage());
-            // return new ResponseEntity<>("Email cannot be sent", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -97,7 +96,7 @@ public class MailService {
 
             if (content != null) {
                 for (MultipartFile multipartFile : content) {
-                    helper.addAttachment(multipartFile.getOriginalFilename(), multipartFile);
+                    helper.addAttachment(Objects.requireNonNull(multipartFile.getOriginalFilename()), multipartFile);
                 }
             }
 
@@ -108,20 +107,19 @@ public class MailService {
                 }
             }*/
 
-            // log.info("Sending email: {} with html body: {}", email, html); //todo: impotamt?
             log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
 
             emailSender.send(message);
             templateEngine.clearTemplateCache();
             return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error during email sending : {}", e.getMessage());
             throw new ApiRequestException(e.getMessage());
-            //log.error("Error during email sending : %s", e.getMessage());
         }
     }
 
-    // Mail with multipartFile
-    public ResponseEntity<?> sendHtmlMessageAttachment(Email email, DataSource source) { //todo: temporally
+    // Mail with DataSource
+    public void sendHtmlMessageAttachment(Email email, DataSource source) {
         try {
             MimeMessage message = emailSender.createMimeMessage();
 
@@ -142,18 +140,16 @@ public class MailService {
             helper.setText(html, true);
 
 
-            helper.addAttachment("ee", source);
+            helper.addAttachment("booking_"+LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)+".pdf", source);
 
-
-            // log.info("Sending email: {} with html body: {}", email, html); //todo: impotamt?
             log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
 
             emailSender.send(message);
             templateEngine.clearTemplateCache();
-            return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
+            new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
         } catch (Exception e) {
+            log.error("Error during email sending : {}", e.getMessage());
             throw new ApiRequestException(e.getMessage());
-            //log.error("Error during email sending : %s", e.getMessage());
         }
     }
 }

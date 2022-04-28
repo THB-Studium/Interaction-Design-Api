@@ -47,12 +47,10 @@ public class BuchungController {
             @ApiParam(name = "BuchungId", value = "ID of the Buchung") @PathVariable UUID id)
             throws URISyntaxException, IOException {
 
-        // todo: pas de try catch dans un controller
         byte[] data = null;
         try {
             data = buchungService.exportPdf(id);
         } catch (JRException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
