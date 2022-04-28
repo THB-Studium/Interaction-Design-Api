@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Feedback;
 import com.team.angular.interactiondesignapi.repositories.FeedbackRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.feedback.Feedback2FeedbackListTO;
@@ -9,6 +9,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.feedback.FeedbackW
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,14 +26,19 @@ import static com.team.angular.interactiondesignapi.config.CompressImage.compres
 public class FeedbackService {
 
     private static final Logger log = LoggerFactory.getLogger(FeedbackService.class);
+
     @Autowired
     private FeedbackRepository feedbackRepository;
 
-    public List<FeedbackReadListTO> getAll() {
-        return Feedback2FeedbackListTO.apply(feedbackRepository.findAll());
+    public List<FeedbackReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Feedback> pagedResult = feedbackRepository.findAll(paging);
+
+        return Feedback2FeedbackListTO.apply(pagedResult.getContent());
     }
 
-    public Feedback addFeedback(FeedbackWriteTO feedback) throws Exception {
+    public Feedback addFeedback(FeedbackWriteTO feedback) {
 
         Feedback newFeedback = new Feedback();
         newFeedback.setAutor(feedback.getAutor());
@@ -45,16 +54,14 @@ public class FeedbackService {
 
     public Feedback getFeedback(UUID id) {
 
-        Feedback feedback = feedbackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
+        //todo: for what?
+        //feedback = feedbackRepository.findById(id).get();
 
-        // for what?
-        feedback = feedbackRepository.findById(id).get();
-
-        return feedback;
+        return feedbackRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
     }
 
-    public Feedback updateFeedback(FeedbackWriteTO feedback_) throws Exception {
+    public Feedback updateFeedback(FeedbackWriteTO feedback_) {
 
         Feedback feedback = getFeedback(feedback_.getId());
 
@@ -72,7 +79,7 @@ public class FeedbackService {
 
     public ResponseEntity<?> deleteFeedback(UUID id) {
         Feedback actual = feedbackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Feedback with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
 
         feedbackRepository.deleteById(actual.getId());
         log.info("successfully deleted");

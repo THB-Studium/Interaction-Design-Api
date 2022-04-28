@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class Buchung2BuchungReadListTO {
 
+    // todo: i think we don't need it; we need only BuchungReadTO
+
     public static BuchungReadListTO apply(Buchung in) {
         BuchungReadListTO out = new BuchungReadListTO();
 

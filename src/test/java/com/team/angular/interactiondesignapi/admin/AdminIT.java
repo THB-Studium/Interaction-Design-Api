@@ -69,20 +69,17 @@ public class AdminIT extends ItBase {
         Admin create = buildAdmin();
         create.setEmail(admin.getEmail());
 
-        Exception ex = Assertions.assertThrows(Exception.class, () -> {
-            UUID.fromString(
-                    given()
-                            .contentType(ContentType.JSON)
-                            .body(create)
-                            .log().body()
-                            .post("/admins")
-                            .then()
-                            .log().body()
-                            .statusCode(200)
-                            .extract().body().path("id"));
-        });
+        String ex = given()
+                .contentType(ContentType.JSON)
+                .body(create)
+                .log().body()
+                .post("/admins")
+                .then()
+                .log().body()
+                .statusCode(400)
+                .extract().body().path("message");
 
-        Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: Email has already been taken", ex.getLocalizedMessage());
+        Assertions.assertEquals("Email has already been taken", ex);
     }
 
     @Test
@@ -92,20 +89,17 @@ public class AdminIT extends ItBase {
         update.setId(admin.getId());
         update.setEmail(admin1.getEmail());
 
-        Exception ex = Assertions.assertThrows(Exception.class, () -> {
-            UUID.fromString(
-                    given()
-                            .contentType(ContentType.JSON)
-                            .body(update)
-                            .log().body()
-                            .put("/admins")
-                            .then()
-                            .log().body()
-                            .statusCode(200)
-                            .extract().body().path("id"));
-        });
+        String ex = given()
+                .contentType(ContentType.JSON)
+                .body(update)
+                .log().body()
+                .put("/admins")
+                .then()
+                .log().body()
+                .statusCode(400)
+                .extract().body().path("message");
 
-        Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: Email has already been taken", ex.getLocalizedMessage());
+        Assertions.assertEquals("Email has already been taken", ex);
     }
 
     @Test

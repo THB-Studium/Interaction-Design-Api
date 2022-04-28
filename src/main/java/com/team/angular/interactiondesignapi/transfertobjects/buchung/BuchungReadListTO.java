@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class BuchungReadListTO {
 
-    // todo: i think we don't need it; we need only BuchungReadTO
+    // todo: i think we don't need it; we need only BuchungReadTO: OK
 
     private UUID id;
 

@@ -23,8 +23,10 @@ public class ReisenderController {
 
     @ApiOperation("Get All Reisende")
     @GetMapping("")
-    public List<ReisenderReadListTO> getAllReisende() {
-        return reisenderService.getAll();
+    public List<ReisenderReadListTO> getAllReisende( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                     @RequestParam(defaultValue = "10") Integer pageSize,
+                                                     @RequestParam(defaultValue = "id") String sortBy) {
+        return reisenderService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Reisender")
@@ -36,14 +38,14 @@ public class ReisenderController {
     @ApiOperation("Add One Reisender")
     @PostMapping("")
     public ReisenderReadTO addReisender(
-            @ApiParam(name = "Reisender", value = "Reisender to add") @RequestBody ReisenderWriteTO reisender) throws Exception {
+            @ApiParam(name = "ReisenderWriteTO", value = "Reisender to add") @RequestBody ReisenderWriteTO reisender) {
         return reisenderService.addReisender(reisender);
     }
 
     @ApiOperation("Update Reisender")
     @PutMapping("")
     public ReisenderReadTO updateReisender(
-            @ApiParam(name = "Reisender", value = "Reisender to update") @RequestBody ReisenderWriteTO reisender) throws Exception {
+            @ApiParam(name = "ReisenderWriteTO", value = "Reisender to update") @RequestBody ReisenderWriteTO reisender) {
         return reisenderService.updateReisender(reisender);
     }
 

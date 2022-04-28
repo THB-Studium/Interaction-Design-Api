@@ -1,6 +1,5 @@
 package com.team.angular.interactiondesignapi.controllers;
 
-import com.team.angular.interactiondesignapi.models.Mail;
 import com.team.angular.interactiondesignapi.models.Newsletter;
 import com.team.angular.interactiondesignapi.services.NewsletterService;
 import io.swagger.annotations.ApiOperation;
@@ -21,14 +20,16 @@ public class NewsletterController {
 
     @ApiOperation("Get All Newsletter")
     @GetMapping("")
-    public List<Newsletter> getAllNewsletters() {
-        return newsletterService.getAll();
+    public List<Newsletter> getAllNewsletters( @RequestParam(defaultValue = "0") Integer pageNo,
+                                               @RequestParam(defaultValue = "10") Integer pageSize,
+                                               @RequestParam(defaultValue = "id") String sortBy) {
+        return newsletterService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Subscribe")
     @PostMapping("subscribe")
     public Newsletter subscribe(
-            @ApiParam(name = "Newsletter", value = "Newsletter to add") @RequestBody Newsletter newsletter) throws Exception {
+            @ApiParam(name = "Newsletter", value = "Newsletter to add") @RequestBody Newsletter newsletter) {
         return newsletterService.addNewsletter(newsletter);
     }
 
@@ -42,7 +43,7 @@ public class NewsletterController {
     @ApiOperation("Update")
     @PutMapping("")
     public Newsletter updateNewsletter(
-            @ApiParam(name = "Newsletter", value = "Newsletter to update") @RequestBody Newsletter newsletter) throws Exception {
+            @ApiParam(name = "Newsletter", value = "Newsletter to update") @RequestBody Newsletter newsletter) {
         return newsletterService.updateNewsletter(newsletter);
     }
 
@@ -51,17 +52,11 @@ public class NewsletterController {
     public ResponseEntity<?> deleteNewsletter(@ApiParam(name = "NewsletterID", value = "ID of the Newsletter") @PathVariable UUID id) {
         return newsletterService.deleteNewsletter(id);
     }
-    
+
     @ApiOperation("Get All abonniert")
     @GetMapping("/listabonniert")
     public List<String> getAllAbonniert() {
         return newsletterService.getAllAbonniert();
-    }
-
-    @ApiOperation("Mail to abonniert")
-    @PostMapping("/mailToAbonniert")
-    public ResponseEntity<?> mailToAbonniert(@RequestBody Mail mail) {
-        return newsletterService.mailToAbonniert(mail);
     }
 
 }

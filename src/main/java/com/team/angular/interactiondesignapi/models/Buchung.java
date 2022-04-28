@@ -31,13 +31,10 @@ public class Buchung {
     private LocalDate ruckFlugDatum;
 
 
-    //private Reisender mitReisender;
-
     private UUID mitReisenderId;
 
-    //private Buchungsklassen buchungsklasse;
-
-    private UUID buchungsklasseId; // Tarif
+    // Tarif
+    private UUID buchungsklasseId;
 
     @NotBlank
     private String flughafen;
@@ -54,11 +51,9 @@ public class Buchung {
 
     @ManyToOne
     @JoinColumn(name = "Reisender_id")
-    @EqualsAndHashCode.Exclude
     private Reisender reisender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @EqualsAndHashCode.Exclude
     private ReiseAngebot reiseAngebot;
 
 }

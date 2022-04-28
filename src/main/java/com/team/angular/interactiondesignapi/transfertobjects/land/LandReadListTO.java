@@ -1,14 +1,12 @@
 package com.team.angular.interactiondesignapi.transfertobjects.land;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Lob;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LandReadListTO {
@@ -22,6 +20,4 @@ public class LandReadListTO {
 
     private List<String> flughafen;
 
-    /*@Lob
-    private String unterkunft_text;*/
 }

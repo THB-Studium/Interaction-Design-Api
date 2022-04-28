@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Buchungsklassen;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
@@ -12,6 +12,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.Bu
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,7 +25,9 @@ import java.util.UUID;
 
 @Service
 public class BuchungsklassenService {
+
     private static final Logger log = LoggerFactory.getLogger(BuchungsklassenService.class);
+
     @Autowired
     private BuchungsklassenRepository buchungsklassenRepository;
     @Autowired
@@ -29,12 +35,16 @@ public class BuchungsklassenService {
 
     public BuchungsklassenReadWriteTO getBuchungsklassen(UUID id) {
         Buchungsklassen buchungsklassen = buchungsklassenRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchungsklassen with id: " + id));
         return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassen);
     }
 
-    public List<BuchungsklassenReadListTO> getAll() {
-        return Buchungsklassen2BuchungsklassenReadListTO.apply(buchungsklassenRepository.findAll());
+    public List<BuchungsklassenReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Buchungsklassen> pagedResult = buchungsklassenRepository.findAll(paging);
+
+        return Buchungsklassen2BuchungsklassenReadListTO.apply(pagedResult.getContent());
     }
 
     public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
@@ -44,11 +54,11 @@ public class BuchungsklassenService {
 
         if (buchungsklassen.getPreis() != 0)
             _buchungsklassen.setPreis(buchungsklassen.getPreis());
-        if (!buchungsklassen.getDescription().isEmpty())
+        if (buchungsklassen.getDescription() != null)
             _buchungsklassen.setDescription(buchungsklassen.getDescription());
         if (buchungsklassen.getReiseAngebotId() != null) {
             ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(buchungsklassen.getReiseAngebotId())
-                    .orElseThrow(() -> new ResourceNotFoundException(
+                    .orElseThrow(() -> new ApiRequestException(
                             "Cannot find ReiseAngebot with id: " + buchungsklassen.getReiseAngebotId()));
             _buchungsklassen.setReiseAngebot(reiseAngebot);
         }
@@ -58,7 +68,7 @@ public class BuchungsklassenService {
 
     public ResponseEntity<?> deleteBuchungsklassen(UUID id) {
         Buchungsklassen actual = buchungsklassenRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchungsklassen with id: " + id));
 
         buchungsklassenRepository.deleteById(actual.getId());
         log.info("Buchungsklassen successfully deleted");
@@ -69,7 +79,7 @@ public class BuchungsklassenService {
     public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
 
         Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(
-                () -> new ResourceNotFoundException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
+                () -> new ApiRequestException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
 
         _buchungsklassen.setType(buchungsklassen.getType());
 

@@ -60,24 +60,21 @@ public class NewsletterIT extends ItBase {
         Newsletter create = buildNewsletter();
         create.setEmail(newsletter.getEmail());
 
-        Exception ex = Assertions.assertThrows(Exception.class, () -> {
-            UUID.fromString(
-                    given()
-                            .contentType(ContentType.JSON)
-                            .body(create)
-                            .log().body()
-                            .post("/newsletters/subscribe")
-                            .then()
-                            .log().body()
-                            .statusCode(200)
-                            .extract().body().path("id"));
-        });
+        String ex = given()
+                .contentType(ContentType.JSON)
+                .body(create)
+                .log().body()
+                .when().post("/newsletters/subscribe")
+                .then()
+                .log().body()
+                .statusCode(400)
+                .extract().body().path("message");
 
-        Assertions.assertEquals("Request processing failed; nested exception is java.lang.Exception: This email is already subscribed", ex.getLocalizedMessage());
+        Assertions.assertEquals("This email is already subscribed", ex);
     }
 
     @Test
-    public void unsubscribeNewsletter() {
+    public void unsubscribeNewsletter() { //todo: do you compare statusBefore with statusBefore?
 
         boolean statusBefore = newsletter.isStatus(); // true
 

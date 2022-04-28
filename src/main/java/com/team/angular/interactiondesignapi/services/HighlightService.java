@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Highlight;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.repositories.HighlightRepository;
@@ -9,6 +9,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.hightlight.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,21 +32,26 @@ public class HighlightService {
 
     public HighlightReadReadTO getHighlight(UUID id) {
         Highlight highlight = highlightRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Highlight with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Highlight with id: " + id));
         return Highlight2HighlightReadWriteTO.apply(highlight);
     }
 
-    public List<HighlightReadListTO> getAll() {
-        return Highlight2HighlightReadListTO.apply(highlightRepository.findAll());
+    public List<HighlightReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Highlight> pagedResult = highlightRepository.findAll(paging);
+
+        return Highlight2HighlightReadListTO.apply(pagedResult.getContent());
     }
 
-    public HighlightReadReadTO addHighlight(HighlightReadWriteTO highlight) throws Exception {
+    public HighlightReadReadTO addHighlight(HighlightReadWriteTO highlight) {
+
         Highlight _highlight = new Highlight();
 
         if (!highlightRepository.existsHighlightByName(highlight.getName())) {
             _highlight.setName(highlight.getName());
         } else {
-            throw new Exception(highlight.getName() + " already exists");
+            throw new ApiRequestException(highlight.getName() + " already exists");
         }
 
         if (highlight.getDescription() != null)
@@ -51,7 +60,7 @@ public class HighlightService {
             _highlight.setBild(compressBild(highlight.getBild()));
         if (highlight.getLandId() != null) {
             Land land = landRepository.findById(highlight.getLandId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + highlight.getLandId()));
+                    .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + highlight.getLandId()));
             _highlight.setLand(land);
         }
         return Highlight2HighlightReadWriteTO.apply(highlightRepository.save(_highlight));
@@ -59,7 +68,7 @@ public class HighlightService {
 
     public ResponseEntity<?> deleteHighlight(UUID id) {
         Highlight actual = highlightRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Highlight with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Highlight with id: " + id));
 
         highlightRepository.deleteById(actual.getId());
         log.info("Highlight successfully deleted");
@@ -67,16 +76,17 @@ public class HighlightService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public HighlightReadReadTO updateHighlight(HighlightReadWriteTO highlight) throws Exception {
+    public HighlightReadReadTO updateHighlight(HighlightReadWriteTO highlight) {
+
         Highlight _highlight = highlightRepository.findById(highlight.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new ApiRequestException(
                         "Update Error: Cannot find Highlight with id: " + highlight.getId()));
 
         if (highlight.getName() != null && !_highlight.getName().equals(highlight.getName())) {
             if (!highlightRepository.existsHighlightByName(highlight.getName())) {
                 _highlight.setName(highlight.getName());
             } else {
-                throw new Exception(highlight.getName() + " already exists");
+                throw new ApiRequestException(highlight.getName() + " already exists");
             }
         }
 

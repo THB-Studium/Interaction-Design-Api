@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MessageResponse {
+public class MessageResponse { //todo: i dont find usage of this classe
     private String message;
 }

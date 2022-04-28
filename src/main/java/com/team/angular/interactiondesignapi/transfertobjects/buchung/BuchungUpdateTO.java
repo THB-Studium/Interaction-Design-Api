@@ -38,6 +38,8 @@ public class BuchungUpdateTO {
 
     private ZahlungMethod zahlungMethod;
 
+    private Buchungstatus status;
+
     private UUID reisenderId;
 
     private UUID reiseAngebotId;

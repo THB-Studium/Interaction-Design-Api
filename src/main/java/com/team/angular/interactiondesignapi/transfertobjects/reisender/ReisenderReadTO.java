@@ -2,15 +2,14 @@ package com.team.angular.interactiondesignapi.transfertobjects.reisender;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReisenderReadTO {
@@ -40,6 +39,6 @@ public class ReisenderReadTO {
 
     private boolean schonTeilgenommen;
 
-    private Set<BuchungReadTO> buchungen;
+    private List<BuchungReadTO> buchungen;
 
 }

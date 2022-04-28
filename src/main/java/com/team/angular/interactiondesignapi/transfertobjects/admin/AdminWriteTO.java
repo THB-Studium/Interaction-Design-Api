@@ -1,13 +1,14 @@
 package com.team.angular.interactiondesignapi.transfertobjects.admin;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.validation.constraints.Email;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminWriteTO {
@@ -17,7 +18,6 @@ public class AdminWriteTO {
     private String surname;
     private String oldPassword;
     private String newPassword;
-    @Email
     private String email;
 
 }

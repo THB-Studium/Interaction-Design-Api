@@ -28,20 +28,23 @@ public class BuchungsklassenController {
 
     @ApiOperation(value = "Get All Buchungsklassen")
     @GetMapping("")
-    public List<BuchungsklassenReadListTO> getAllBuchungsklassen() {
-        return buchungsklassenService.getAll();
+    public List<BuchungsklassenReadListTO> getAllBuchungsklassen( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                  @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                  @RequestParam(defaultValue = "id") String sortBy) {
+        return buchungsklassenService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Add One Buchungsklassen")
     @PostMapping("")
     public BuchungsklassenReadWriteTO addBuchungsklassen(
-            @ApiParam(name = "Buchungsklassen", value = "Buchungsklassen to add") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) {
+            @ApiParam(name = "BuchungsklassenReadWriteTO", value = "Buchungsklassen to add")
+            @RequestBody BuchungsklassenReadWriteTO buchungsklassen) {
         return buchungsklassenService.addBuchungsklassen(buchungsklassen);
     }
 
     @ApiOperation("Update Buchungsklassen")
     @PutMapping("")
-    public BuchungsklassenReadListTO updateBuchungsklassen(@ApiParam(name = "Buchungsklassen", value =
+    public BuchungsklassenReadListTO updateBuchungsklassen(@ApiParam(name = "BuchungsklassenReadWriteTO", value =
             "Buchungsklassen to update") @RequestBody BuchungsklassenReadWriteTO buchungsklassen) {
         return buchungsklassenService.updateBuchungsklassen(buchungsklassen);
     }

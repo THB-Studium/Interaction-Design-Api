@@ -32,7 +32,7 @@ import java.util.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.yml")
-@ActiveProfiles("test")
+@ActiveProfiles("TestIT")
 public class ItBase {
 
     protected MockMvc mockMvc;
@@ -68,10 +68,9 @@ public class ItBase {
 
     @BeforeEach
     public void setup() {
-        this.session = new MockHttpSession();
+        // this.session = new MockHttpSession(); todo: we don't have test with session (user)
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
         RestAssuredMockMvc.webAppContextSetup(wac);
-
     }
 
     public void cleanup() {
@@ -346,7 +345,7 @@ public class ItBase {
         Set<String> leistungen = new HashSet<String>();
         leistungen.add(UUID.randomUUID().toString());
         leistungen.add(UUID.randomUUID().toString());
-        
+
         Land land = new Land();
         land.setName(UUID.randomUUID().toString());
 

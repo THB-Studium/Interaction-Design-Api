@@ -2,13 +2,15 @@ package com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReiseAngebotReadListTO {
@@ -35,7 +37,4 @@ public class ReiseAngebotReadListTO {
 
     private UUID landId;
 
-    // not necessary for the workflow
-    /*@ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> leistungen;*/
 }

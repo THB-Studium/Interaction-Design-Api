@@ -1,12 +1,15 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
-import com.team.angular.interactiondesignapi.models.Mail;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Newsletter;
 import com.team.angular.interactiondesignapi.repositories.NewsletterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,25 +24,42 @@ public class NewsletterService {
     @Autowired
     private NewsletterRepository newsletterRepository;
 
-    @Autowired
-    private MailService mailService;
+    public List<Newsletter> getAll(Integer pageNo, Integer pageSize, String sortBy) {
 
-    public List<Newsletter> getAll() {
-        return newsletterRepository.findAll();
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Newsletter> pagedResult = newsletterRepository.findAll(paging);
+
+        return pagedResult.getContent();
     }
 
     public Newsletter getNewsletter(UUID id) {
-        return newsletterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cannot find Newsletter with id: " + id));
+        return newsletterRepository.findById(id).orElseThrow(() -> new ApiRequestException("Cannot find Newsletter with id: " + id));
     }
 
-    public Newsletter addNewsletter(Newsletter newsletter) throws Exception {
-
+    public Newsletter addNewsletter(Newsletter newsletter) {
         if (!newsletterRepository.existsNewsletterByEmail(newsletter.getEmail())) {
             newsletter.setStatus(true);
             return newsletterRepository.save(newsletter);
         } else {
-            throw new Exception("This email is already subscribed");
+            throw new ApiRequestException("This email is already subscribed");
         }
+    }
+
+    public Newsletter updateNewsletter(Newsletter newsletter) {
+        Newsletter _newsletter = getNewsletter(newsletter.getId());
+
+        if (newsletter.getEmail() != null && !newsletter.getEmail().equalsIgnoreCase(_newsletter.getEmail())) {
+            if (newsletterRepository.existsNewsletterByEmailAndIdIsNot(newsletter.getEmail(), newsletter.getId())) {
+                throw new ApiRequestException("This email is already subscribed");
+            } else {
+                _newsletter.setEmail(newsletter.getEmail());
+            }
+        }
+
+        if (newsletter.isStatus() != _newsletter.isStatus())
+            _newsletter.setStatus(newsletter.isStatus());
+
+        return newsletterRepository.save(_newsletter);
     }
 
     public ResponseEntity<?> deleteNewsletter(UUID id) {
@@ -60,38 +80,8 @@ public class NewsletterService {
         return new ResponseEntity<>("Successfully unsubscribed", HttpStatus.OK);
     }
 
-    public Newsletter updateNewsletter(Newsletter newsletter) throws Exception {
-        Newsletter _newsletter = getNewsletter(newsletter.getId());
-
-        if (newsletter.getEmail() != null && !newsletter.getEmail().equalsIgnoreCase(_newsletter.getEmail())) {
-            if (newsletterRepository.existsNewsletterByEmailAndIdIsNot(newsletter.getEmail(), newsletter.getId())) {
-                throw new Exception("This email is already subscribed");
-            } else {
-                _newsletter.setEmail(newsletter.getEmail());
-            }
-        }
-
-        if (newsletter.isStatus() != _newsletter.isStatus())
-            _newsletter.setStatus(newsletter.isStatus());
-
-        return newsletterRepository.save(_newsletter);
-    }
-
     public List<String> getAllAbonniert() {
         return newsletterRepository.findAllByStatusIsTrue();
     }
 
-    public ResponseEntity<?> mailToAbonniert(Mail mail) {
-
-        List<String> listAbonniert = getAllAbonniert();
-
-
-        mail.setRecipient(listAbonniert.toArray(new String[0]));
-        mail.setSubject("ee");
-        mail.setMessage("ww");
-
-        //mailService.sendMail(mail);
-
-        return new ResponseEntity<>("Successfully sent", HttpStatus.OK);
-    }
 }

@@ -22,8 +22,10 @@ public class AdminController {
 
     @ApiOperation("Get All Admins")
     @GetMapping("")
-    public List<AdminOutTO> getAllAdmins() {
-        return adminService.getAll();
+    public List<AdminOutTO> getAllAdmins( @RequestParam(defaultValue = "0") Integer pageNo,
+                                          @RequestParam(defaultValue = "10") Integer pageSize,
+                                          @RequestParam(defaultValue = "name") String sortBy) {
+        return adminService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Admin")
@@ -35,13 +37,13 @@ public class AdminController {
     @ApiOperation("Add One Admin")
     @PostMapping("")
     public AdminOutTO addAdmin(
-            @ApiParam(name = "Admin", value = "Admin to add") @RequestBody Admin admin) throws Exception {
+            @ApiParam(name = "Admin", value = "Admin to add") @RequestBody Admin admin) {
         return adminService.addAdmin(admin);
     }
 
     @ApiOperation("Update Admin")
     @PutMapping("")
-    public AdminOutTO updateAdmin(@ApiParam(name = "AdminWriteTO", value = "Admin to update") @RequestBody AdminWriteTO admin) throws Exception {
+    public AdminOutTO updateAdmin(@ApiParam(name = "AdminWriteTO", value = "Admin to update") @RequestBody AdminWriteTO admin) {
         return adminService.updateAdmin(admin);
     }
 
