@@ -18,7 +18,13 @@ public class BuchungUpdateTO {
     private UUID id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate datum;
+    private LocalDate buchungDatum;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate hinFlugDatum;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate ruckFlugDatum;
 
     private UUID mitReisenderId;
 
@@ -35,7 +41,7 @@ public class BuchungUpdateTO {
     private UUID reisenderId;
 
     private UUID reiseAngebotId;
-    
+
     private Buchungstatus status;
 
 }

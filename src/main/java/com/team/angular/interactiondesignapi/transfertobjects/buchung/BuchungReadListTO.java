@@ -19,7 +19,13 @@ public class BuchungReadListTO {
     private UUID id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate datum;
+    private LocalDate buchungDatum;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate hinFlugDatum;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate ruckFlugDatum;
 
     private UUID mitReisenderId;
 
