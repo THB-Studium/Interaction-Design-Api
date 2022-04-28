@@ -24,7 +24,7 @@ public class AdminController {
     @GetMapping("")
     public List<AdminOutTO> getAllAdmins( @RequestParam(defaultValue = "0") Integer pageNo,
                                           @RequestParam(defaultValue = "10") Integer pageSize,
-                                          @RequestParam(defaultValue = "id") String sortBy) {
+                                          @RequestParam(defaultValue = "name") String sortBy) {
         return adminService.getAll(pageNo, pageSize, sortBy);
     }
 

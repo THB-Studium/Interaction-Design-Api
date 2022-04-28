@@ -210,7 +210,7 @@
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<configuration>
 					<includes>
-						<include>**/*IT.*</include>
+						<include>**/*IT.java</include>
 					</includes>
 				</configuration>
 				<executions>
