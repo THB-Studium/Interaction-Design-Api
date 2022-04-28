@@ -16,11 +16,10 @@ public class Email {
 
     String subject;
 
-    String text;
-
     String template;
     
     boolean reply;
-    
+
+    // set properties for the templates (messages and another elements)
     Map<String, Object> properties;
 }
