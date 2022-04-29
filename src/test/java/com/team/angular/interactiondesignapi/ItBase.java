@@ -31,8 +31,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-//@TestPropertySource(locations = "classpath:application-test.yml")
-@ActiveProfiles("test")
+@TestPropertySource(locations = "classpath:application-test.yml")
 public class ItBase {
 
     protected MockMvc mockMvc;
