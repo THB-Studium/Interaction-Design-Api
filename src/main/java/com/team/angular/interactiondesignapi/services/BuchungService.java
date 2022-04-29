@@ -58,7 +58,7 @@ public class BuchungService {
     @Value("classpath:templates/Booking_template/Booking.jrxml")
     private String templateLink;
 
-    @Value("${classpath:templates/Booking_template/Booking_mitReisende.jrxml}")
+    @Value("classpath:templates/Booking_template/Booking_mitReisende.jrxml")
     private String templateLink_MitReisende;
 
     @Value("${template.email.new-booking}")
