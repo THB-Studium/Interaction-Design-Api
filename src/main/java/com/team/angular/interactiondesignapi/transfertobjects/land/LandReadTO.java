@@ -3,15 +3,14 @@ package com.team.angular.interactiondesignapi.transfertobjects.land;
 import com.team.angular.interactiondesignapi.transfertobjects.hightlight.HighlightReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoReadListTO;
 import com.team.angular.interactiondesignapi.transfertobjects.unterkunft.UnterkunftReadListTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Lob;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LandReadTO {

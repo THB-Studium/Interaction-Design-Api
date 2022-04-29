@@ -1,6 +1,7 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
+import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
@@ -12,6 +13,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.Erwart
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,12 +34,16 @@ public class ErwartungenService {
 
     public ErwartungenReadWriteTO getErwartungen(UUID id) {
         Erwartungen erwartungen = erwartungenRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Erwartungen with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Erwartungen with id: " + id));
         return Erwartungen2ErwartungenReadWriteTO.apply(erwartungen);
     }
 
-    public List<ErwartungenReadListTO> getAll() {
-        return Erwartungen2ErwartungenReadListTO.apply(erwartungenRepository.findAll());
+    public List<ErwartungenReadListTO> getAll(Integer pageNo, Integer pageSize) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<Erwartungen> pagedResult = erwartungenRepository.findAll(paging);
+
+        return Erwartungen2ErwartungenReadListTO.apply(pagedResult.getContent());
     }
 
     public ErwartungenReadWriteTO addErwartungen(ErwartungenReadWriteTO erwartungen) {
@@ -55,7 +64,7 @@ public class ErwartungenService {
             _erwartungen.setRoad(erwartungen.getRoad());
         if (erwartungen.getReiseAngebotId() != null) {
             ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(erwartungen.getReiseAngebotId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Cannot find ReiseAngebot with id: " + erwartungen.getReiseAngebotId()));
+                    .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + erwartungen.getReiseAngebotId()));
 
             _erwartungen.setReiseAngebot(reiseAngebot);
         }
@@ -64,7 +73,7 @@ public class ErwartungenService {
 
     public ResponseEntity<?> deleteErwartungen(UUID id) {
         Erwartungen actual = erwartungenRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Erwartungen with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find Erwartungen with id: " + id));
 
         erwartungenRepository.deleteById(actual.getId());
         log.info("Erwartungen successfully deleted");
@@ -75,7 +84,7 @@ public class ErwartungenService {
     public ErwartungenReadListTO updateErwartungen(ErwartungenReadListTO erwartungen) {
 
         Erwartungen _erwartungen = erwartungenRepository.findById(erwartungen.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new ApiRequestException(
                         "Update Error: Cannot find Erwartungen with id: " + erwartungen.getId()));
 
         if (erwartungen.getAbenteuer() != 0)
@@ -95,7 +104,6 @@ public class ErwartungenService {
 
         erwartungenRepository.save(_erwartungen);
 
-        /* ReiseAngebot soll nicht von hier aktualisiert werden */
         return Erwartungen2ErwartungenReadListTO.apply(_erwartungen);
     }
 }

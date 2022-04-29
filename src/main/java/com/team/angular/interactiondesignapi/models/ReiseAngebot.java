@@ -2,9 +2,9 @@ package com.team.angular.interactiondesignapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -68,11 +69,9 @@ public class ReiseAngebot {
     private List<Buchungsklassen> buchungsklassen;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
     private Erwartungen erwartungen;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
     private Land land;
 
     @OneToMany(mappedBy = "reiseAngebot", fetch = FetchType.LAZY)

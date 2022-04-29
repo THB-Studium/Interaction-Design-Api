@@ -8,11 +8,11 @@ template:
   link: /jasperTemplates/Booking.jrxml
   linkMitReisende: /jasperTemplates/Booking_mitReisende.jrxml
   email:
-     from: keunne.baudoin@yahoo.fr
-     simple-email: simple-email.html
-     new-booking: new-booking.html
-     update-booking: update-booking.html
-     html-pdf: html-pdf.html
+    from: post@university-travel-club.org
+    simple-email: simple-email.html
+    new-booking: new-booking.html
+    update-booking: update-booking.html
+    html-pdf: html-pdf.html
 
 spring:
   application:

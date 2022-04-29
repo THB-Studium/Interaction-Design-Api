@@ -1,6 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ResourceNotFoundException;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.LandInfo;
 import com.team.angular.interactiondesignapi.repositories.LandInfoRepository;
@@ -12,6 +12,10 @@ import com.team.angular.interactiondesignapi.transfertobjects.landInfo.LandInfoR
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,21 +34,25 @@ public class LandInfoService {
 
     public LandInfoReadWriteTO getLandInfo(UUID id) {
         LandInfo landInfo = landInfoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find LandInfo with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find LandInfo with id: " + id));
         return LandInfo2LandInfoReadWriteTO.apply(landInfo);
     }
 
-    public List<LandInfoReadListTO> getAll() {
-        return LandInfo2LandInfoReadListTO.apply(landInfoRepository.findAll());
+    public List<LandInfoReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<LandInfo> pagedResult = landInfoRepository.findAll(paging);
+
+        return LandInfo2LandInfoReadListTO.apply(pagedResult.getContent());
     }
 
-    public LandInfoReadWriteTO addLandInfo(LandInfoReadWriteTO landInfo) throws Exception {
+    public LandInfoReadWriteTO addLandInfo(LandInfoReadWriteTO landInfo) {
         LandInfo _landInfo = new LandInfo();
 
         if (!landInfoRepository.existsLandInfoByTitel(landInfo.getTitel())) {
             _landInfo.setTitel(landInfo.getTitel());
         } else {
-            throw new Exception(landInfo.getTitel() + " already exists");
+            throw new ApiRequestException(landInfo.getTitel() + " already exists");
         }
 
         if (landInfo.getDescription() != null)
@@ -53,7 +61,7 @@ public class LandInfoService {
             _landInfo.setLand(landRepository.getById(landInfo.getLandId()));
         if (landInfo.getLandId() != null) {
             Land land = landRepository.findById(landInfo.getLandId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Cannot find Land with id: " + landInfo.getLandId()));
+                    .orElseThrow(() -> new ApiRequestException("Cannot find Land with id: " + landInfo.getLandId()));
             _landInfo.setLand(land);
         }
 
@@ -62,7 +70,7 @@ public class LandInfoService {
 
     public ResponseEntity<?> deleteLandInfo(UUID id) {
         LandInfo actual = landInfoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cannot find LandInfo with id: " + id));
+                .orElseThrow(() -> new ApiRequestException("Cannot find LandInfo with id: " + id));
 
         landInfoRepository.deleteById(actual.getId());
         log.info("LandInfo successfully deleted");
@@ -70,16 +78,16 @@ public class LandInfoService {
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
-    public LandInfoReadListTO updateLandInfo(LandInfoReadListTO landInfo) throws Exception {
+    public LandInfoReadListTO updateLandInfo(LandInfoReadListTO landInfo) {
         LandInfo _landInfo = landInfoRepository.findById(landInfo.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new ApiRequestException(
                         "Update Error: Cannot find LandInfo with id: " + landInfo.getId()));
 
         if (landInfo.getTitel() != null && !_landInfo.getTitel().equals(landInfo.getTitel())) {
             if (!landInfoRepository.existsLandInfoByTitel(landInfo.getTitel())) {
                 _landInfo.setTitel(landInfo.getTitel());
             } else {
-                throw new Exception(landInfo.getTitel() + " already exists");
+                throw new ApiRequestException(landInfo.getTitel() + " already exists");
             }
         }
         if (landInfo.getDescription() != null)

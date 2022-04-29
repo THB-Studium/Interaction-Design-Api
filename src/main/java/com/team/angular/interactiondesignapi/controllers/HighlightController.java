@@ -22,8 +22,10 @@ public class HighlightController {
 
     @ApiOperation("Get All Highlight")
     @GetMapping("")
-    public List<HighlightReadListTO> getAllHighlight() {
-        return highlightService.getAll();
+    public List<HighlightReadListTO> getAllHighlight( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                      @RequestParam(defaultValue = "10") Integer pageSize,
+                                                      @RequestParam(defaultValue = "name") String sortBy) {
+        return highlightService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Highlight")
@@ -36,20 +38,20 @@ public class HighlightController {
     @ApiOperation("Add One Highlight")
     @PostMapping("")
     public HighlightReadReadTO addHighlight(
-            @ApiParam(name = "Highlight", value = "Highlight to add") @RequestBody HighlightReadWriteTO highlight) throws Exception {
+            @ApiParam(name = "HighlightReadWriteTO", value = "Highlight to add") @RequestBody HighlightReadWriteTO highlight) {
         return highlightService.addHighlight(highlight);
     }
 
     @ApiOperation("Update Highlight")
     @PutMapping("")
     public HighlightReadReadTO updateHighlight(
-            @ApiParam(name = "Highlight", value = "Highlight to update") @RequestBody HighlightReadWriteTO highlight) throws Exception {
+            @ApiParam(name = "HighlightReadWriteTO", value = "Highlight to update") @RequestBody HighlightReadWriteTO highlight) {
         return highlightService.updateHighlight(highlight);
     }
 
     @ApiOperation("Delete Highlight")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> daleteHighlight(
+    public ResponseEntity<?> deleteHighlight(
             @ApiParam(name = "HighlightId", value = "Id of the Highlight") @PathVariable UUID id) {
         return highlightService.deleteHighlight(id);
     }

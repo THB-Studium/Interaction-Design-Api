@@ -23,8 +23,10 @@ public class ReiseAngebotController {
 
     @ApiOperation("Get All ReiseAngebot")
     @GetMapping("")
-    public List<ReiseAngebotReadListTO> getAllReiseAngebot() {
-        return reiseAngebotService.getAll();
+    public List<ReiseAngebotReadListTO> getAllReiseAngebot( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                            @RequestParam(defaultValue = "10") Integer pageSize,
+                                                            @RequestParam(defaultValue = "titel") String sortBy) {
+        return reiseAngebotService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get All ReiseAngebotHome")
@@ -45,14 +47,14 @@ public class ReiseAngebotController {
     @ApiOperation("Add One ReiseAngebot")
     @PostMapping("")
     public ReiseAngebotReadTO addReiseAngebot(
-            @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestBody ReiseAngebotWriteTO reiseAngebot) throws Exception {
+            @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to add") @RequestBody ReiseAngebotWriteTO reiseAngebot) {
         return reiseAngebotService.addReiseAngebot(reiseAngebot);
     }
 
     @ApiOperation("Update ReiseAngebot")
     @PutMapping("")
     public ReiseAngebotReadTO updateReiseAngebot(
-            @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update") @RequestBody ReiseAngebotWriteTO reiseAngebot) throws Exception {
+            @ApiParam(name = "ReiseAngebot", value = "ReiseAngebot to update") @RequestBody ReiseAngebotWriteTO reiseAngebot) {
         return reiseAngebotService.updateReiseAngebot(reiseAngebot);
     }
 

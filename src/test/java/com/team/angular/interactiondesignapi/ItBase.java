@@ -32,11 +32,11 @@ import java.util.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.yml")
-@ActiveProfiles("test")
+@ActiveProfiles("TestIT")
 public class ItBase {
 
     protected MockMvc mockMvc;
-    protected MockHttpSession session;
+    //protected MockHttpSession session;
     @Autowired
     protected NewsletterRepository newsletterRepository;
     @Autowired
@@ -68,10 +68,9 @@ public class ItBase {
 
     @BeforeEach
     public void setup() {
-        this.session = new MockHttpSession();
+        //this.session = new MockHttpSession(); //todo: we don't have test with session (user)
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
         RestAssuredMockMvc.webAppContextSetup(wac);
-
     }
 
     public void cleanup() {
@@ -220,7 +219,7 @@ public class ItBase {
     protected Buchung buildBuchung(Reisender reisender, ReiseAngebot ra) {
         Buchung newBuchung = new Buchung();
 
-        newBuchung.setDatum(LocalDate.now());
+        newBuchung.setBuchungDatum(LocalDate.now());//todo: to extend
         newBuchung.setMitReisenderId(UUID.randomUUID());
         newBuchung.setFlughafen(UUID.randomUUID().toString());
         newBuchung.setHandGepaeck(UUID.randomUUID().toString());
@@ -236,7 +235,7 @@ public class ItBase {
     protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID raId) {
         BuchungWriteTO newBuchung = new BuchungWriteTO();
 
-        newBuchung.setDatum(LocalDate.now());
+        newBuchung.setBuchungDatum(LocalDate.now());//todo: to extend
         newBuchung.setBuchungsklasseId(buchungsklasseId);
         newBuchung.setMitReisender(buildReisenderWriteTO());
         newBuchung.setFlughafen(UUID.randomUUID().toString());
@@ -252,7 +251,7 @@ public class ItBase {
     protected BuchungUpdateTO buildBuchungUpdateTO(UUID buchungsklasseId, UUID raId, UUID mitreisenderId, UUID reisenderId) {
         BuchungUpdateTO newBuchung = new BuchungUpdateTO();
 
-        newBuchung.setDatum(LocalDate.now());
+        newBuchung.setBuchungDatum(LocalDate.now());//todo: to extend
         newBuchung.setBuchungsklasseId(buchungsklasseId);
         newBuchung.setMitReisenderId(mitreisenderId);
         newBuchung.setFlughafen(UUID.randomUUID().toString());
@@ -346,7 +345,7 @@ public class ItBase {
         Set<String> leistungen = new HashSet<String>();
         leistungen.add(UUID.randomUUID().toString());
         leistungen.add(UUID.randomUUID().toString());
-        
+
         Land land = new Land();
         land.setName(UUID.randomUUID().toString());
 

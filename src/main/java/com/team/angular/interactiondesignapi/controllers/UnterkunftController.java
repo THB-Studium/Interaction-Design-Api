@@ -23,8 +23,10 @@ public class UnterkunftController {
 
     @ApiOperation("Get All Unterkunfte")
     @GetMapping("")
-    public List<UnterkunftReadListTO> getAllUnterkunfte() {
-        return unterkunftService.getAll();
+    public List<UnterkunftReadListTO> getAllUnterkunfte( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                         @RequestParam(defaultValue = "10") Integer pageSize,
+                                                         @RequestParam(defaultValue = "name") String sortBy) {
+        return unterkunftService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Unterkunft")
@@ -37,14 +39,14 @@ public class UnterkunftController {
     @ApiOperation("Add One Unterkunft")
     @PostMapping("")
     public UnterkunftReadTO addUnterkunft(
-            @ApiParam(name = "Unterkunft", value = "Unterkunft to add") @RequestBody UnterkunftWriteTO unterkunft) throws Exception {
+            @ApiParam(name = "UnterkunftWriteTO", value = "Unterkunft to add") @RequestBody UnterkunftWriteTO unterkunft) {
         return unterkunftService.addUnterkunft(unterkunft);
     }
 
     @ApiOperation("Update Unterkunft")
     @PutMapping("")
     public UnterkunftReadTO updateUnterkunft(
-            @ApiParam(name = "Unterkunft", value = "Unterkunft to update") @RequestBody UnterkunftWriteTO unterkunft) throws Exception {
+            @ApiParam(name = "UnterkunftWriteTO", value = "Unterkunft to update") @RequestBody UnterkunftWriteTO unterkunft) {
         return unterkunftService.updateUnterkunft(unterkunft);
     }
 

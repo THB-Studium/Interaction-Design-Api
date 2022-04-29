@@ -1,13 +1,12 @@
 package com.team.angular.interactiondesignapi.transfertobjects.hightlight;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Lob;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class HighlightReadWriteTO {

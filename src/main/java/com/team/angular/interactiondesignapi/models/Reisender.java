@@ -2,18 +2,20 @@ package com.team.angular.interactiondesignapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -54,6 +56,6 @@ public class Reisender {
     private boolean schonTeilgenommen;
 
     @OneToMany(mappedBy = "reisender", fetch = FetchType.EAGER)
-    private Set<Buchung> buchungen;
+    private List<Buchung> buchungen;
 
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,8 +23,10 @@ public class FeedbacksController {
 
     @ApiOperation("Get All Feedbacks")
     @GetMapping("")
-    public List<FeedbackReadListTO> getAllFeedbacks() {
-        return feedbackService.getAll();
+    public List<FeedbackReadListTO> getAllFeedbacks( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                     @RequestParam(defaultValue = "10") Integer pageSize,
+                                                     @RequestParam(defaultValue = "autor") String sortBy) {
+        return feedbackService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Feedback")
@@ -37,20 +38,20 @@ public class FeedbacksController {
     @ApiOperation("Add One Feedback")
     @PostMapping("")
     public Feedback addFeedback(
-            @ApiParam(name = "Feedback", value = "Feedback to add") @RequestBody FeedbackWriteTO feedback) throws Exception {
+            @ApiParam(name = "FeedbackWriteTO", value = "Feedback to add") @RequestBody FeedbackWriteTO feedback) {
         return feedbackService.addFeedback(feedback);
     }
 
     @ApiOperation("Update Feedback")
     @PutMapping("")
     public Feedback updateFeedback(
-            @ApiParam(name = "Feedback", value = "Feedback to update") @RequestBody FeedbackWriteTO feedback) throws Exception {
+            @ApiParam(name = "FeedbackWriteTO", value = "Feedback to update") @RequestBody FeedbackWriteTO feedback) {
         return feedbackService.updateFeedback(feedback);
     }
 
     @ApiOperation("Delete Feedback")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> daleteFeedback(
+    public ResponseEntity<?> deleteFeedback(
             @ApiParam(name = "FeedbackId", value = "Id of the Feedback") @PathVariable UUID id) {
         return feedbackService.deleteFeedback(id);
 

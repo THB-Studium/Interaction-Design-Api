@@ -28,8 +28,10 @@ public class BuchungController {
 
     @ApiOperation("Get All Buchungen")
     @GetMapping("")
-    public List<BuchungReadTO> getAllBuchungs() {
-        return buchungService.getAll();
+    public List<BuchungReadTO> getAllBuchungs( @RequestParam(defaultValue = "0") Integer pageNo,
+                                               @RequestParam(defaultValue = "10") Integer pageSize,
+                                               @RequestParam(defaultValue = "buchungDatum") String sortBy) {
+        return buchungService.getAll(pageNo, pageSize, sortBy);
     }
 
     @ApiOperation("Get One Buchung")
@@ -45,12 +47,10 @@ public class BuchungController {
             @ApiParam(name = "BuchungId", value = "ID of the Buchung") @PathVariable UUID id)
             throws URISyntaxException, IOException {
 
-        // todo: pas de try catch dans un controller
         byte[] data = null;
         try {
             data = buchungService.exportPdf(id);
         } catch (JRException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
