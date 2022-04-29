@@ -14,15 +14,6 @@
       "name": "jwt.refreshExpirationDateInMs",
       "type": "java.lang.String",
       "description": "Description for jwt.refreshExpirationDateInMs."
-    },
-    {
-      "name": "template.link",
-      "type": "java.lang.String",
-      "description": "Description for template.link."
-    },
-    {
-      "name": "template.linkMitReisende",
-      "type": "java.lang.String",
-      "description": "Description for template.linkMitReisende."
     }
-  ] }
+  ]
+}

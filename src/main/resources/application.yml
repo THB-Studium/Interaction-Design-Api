@@ -5,8 +5,8 @@ jwt.refreshExpirationDateInMs: 5000000
 server.port: 5050
 
 template:
-  link: Booking.jrxml
-  linkMitReisende: Booking_mitReisende.jrxml
+  link: /jasperTemplates/Booking.jrxml
+  linkMitReisende: /jasperTemplates/Booking_mitReisende.jrxml
   email:
      from: keunne.baudoin@yahoo.fr
      simple-email: simple-email.html
@@ -21,8 +21,8 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost/interaction-design
-    username: postgres
-    password: postgres
+    username: postgres_1
+    password: postgresQL
 
     hikari:
       auto-commit: false
@@ -44,10 +44,10 @@ spring:
       ddl-auto: update
 
   mail:
-    host: 127.0.0.1 #smtp.elasticemail.com
-    port: 25 #2525
-    username: #authService@yahoo.fr
-    password: #4FB090468FE1BE53496E35E3EFDA574F79CA
+    host: smtp.elasticemail.com
+    port: 2525
+    username: authService@yahoo.fr
+    password: 4FB090468FE1BE53496E35E3EFDA574F79CA
     protocol: smtp
     #tls: true
     properties.mail.smtp:
