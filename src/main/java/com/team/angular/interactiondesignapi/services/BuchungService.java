@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -46,10 +47,18 @@ public class BuchungService {
 
     private static final Logger log = LoggerFactory.getLogger(BuchungService.class);
 
-    @Value("${template.link}")
+    /*@Value("${template.link}")
     private String templateLink;
 
     @Value("${template.linkMitReisende}")
+    private String templateLink_MitReisende;*/
+    //File resource = new ClassPathResource("templates/Booking_template/Booking_mitReisende.jrxml").getFile();
+    //String text = new String(Files.readAllBytes(resource.toPath())));
+
+    @Value("classpath:templates/Booking_template/Booking.jrxml")
+    private String templateLink;
+
+    @Value("${classpath:templates/Booking_template/Booking_mitReisende.jrxml}")
     private String templateLink_MitReisende;
 
     @Value("${template.email.new-booking}")
@@ -104,6 +113,7 @@ public class BuchungService {
         Buchungsklassen tarif = buchungsklassenRepository.findById(buchung.getBuchungsklasseId())
                 .orElseThrow(() -> new ApiRequestException(
                         "Cannot find buchungsklasse with id: " + buchung.getBuchungsklasseId()));
+        newBuchung.setBuchungsklasseId(tarif.getId());
 
         // get the ReiseAngebot and set
         ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
@@ -164,6 +174,7 @@ public class BuchungService {
         // build email object
         String[] to = {newBuchung.getReisender().getEmail()};
 
+        System.out.println(ret.getId());
         // export booking pdf
         byte[] export = exportPdf(ret.getId());
 
@@ -233,7 +244,7 @@ public class BuchungService {
         if (buchung.getStatus() != null && buchung.getStatus() != actual.getStatus()) {
             actual.setStatus(buchung.getStatus());
             // template params
-            Map<String, Object> properties = new HashMap<>();
+           Map<String, Object> properties = new HashMap<>();
             properties.put("name", actual.getReisender().getName());
             properties.put("status", actual.getStatus());
             properties.put("ziel", actual.getReiseAngebot().getLand().getName());
@@ -386,9 +397,10 @@ public class BuchungService {
         params.put("copyright_monat_jahr", LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear());
 
         params.put("buchung_datum", buchung.getBuchungDatum().toString());
-        //todo: check if not null
-        params.put("hinFlug_datum", buchung.getHinFlugDatum().toString());
-        params.put("ruckFlug_datum", buchung.getRuckFlugDatum().toString());
+        /*if(buchung.getHinFlugDatum() != null)
+            params.put("hinFlug_datum", buchung.getHinFlugDatum().toString());
+        if(buchung.getRuckFlugDatum() != null)
+            params.put("ruckFlug_datum", buchung.getRuckFlugDatum().toString());*/
         params.put("buchungsklasse", tarif.getType());
         params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
         params.put("flughafen", buchung.getFlughafen());

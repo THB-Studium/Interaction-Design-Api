@@ -53,10 +53,6 @@ public class FeedbackService {
     }
 
     public Feedback getFeedback(UUID id) {
-
-        //todo: for what?
-        //feedback = feedbackRepository.findById(id).get();
-
         return feedbackRepository.findById(id)
                 .orElseThrow(() -> new ApiRequestException("Cannot find Feedback with id: " + id));
     }

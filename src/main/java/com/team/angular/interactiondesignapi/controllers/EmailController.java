@@ -24,7 +24,7 @@ public class EmailController {
     @ApiOperation("Send simple email without attachment")
     @PostMapping(value = "/simple-email")
     public ResponseEntity<?> sendAttachmentEmail(
-            @ApiParam(name = "Email", value = "Email to send") @RequestBody Email mail) { //todo: why was it requestPart
+            @ApiParam(name = "Email", value = "Email to send") @RequestPart Email mail) {
         return mailService.sendHtmlMessage(mail);
     }
 

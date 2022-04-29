@@ -100,7 +100,7 @@ public class BuchungIT extends ItBase {
 
         Buchung buchung = buchungRepository.findById(id).get();
 
-        assertThat(create.getDatum(), is(buchung.getDatum()));
+        assertThat(create.getBuchungDatum(), is(buchung.getBuchungDatum()));
         assertThat(create.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
         assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
         assertThat(create.getFlughafen(), is(buchung.getFlughafen()));
@@ -142,7 +142,7 @@ public class BuchungIT extends ItBase {
 
         Buchung buchung = buchungRepository.findById(id).get();
 
-        assertThat(update.getDatum(), is(buchung.getDatum()));
+        assertThat(update.getBuchungDatum(), is(buchung.getBuchungDatum()));
         assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
         assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
         assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
@@ -171,7 +171,7 @@ public class BuchungIT extends ItBase {
 
         Buchung buchung = buchungRepository.findById(id).get();
 
-        assertThat(update.getDatum(), is(buchung.getDatum()));
+        assertThat(update.getBuchungDatum(), is(buchung.getBuchungDatum()));
         assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
         assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
         assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
@@ -198,7 +198,7 @@ public class BuchungIT extends ItBase {
         Buchung buchung_ = buchungRepository.findById(id).get();
 
         assertThat(buchung.getId(), is(buchung_.getId()));
-        assertThat(buchung.getDatum(), is(buchung_.getDatum()));
+        assertThat(buchung.getBuchungDatum(), is(buchung_.getBuchungDatum()));
     }
 
     @Test

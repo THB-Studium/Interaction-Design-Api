@@ -44,6 +44,4 @@ public class BuchungUpdateTO {
 
     private UUID reiseAngebotId;
 
-    private Buchungstatus status;
-
 }
