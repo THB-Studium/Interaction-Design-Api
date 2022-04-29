@@ -17,4 +17,4 @@ spring:
         ddl-auto: create
         
     active:
-       profile: TestIT
+       profile: test
