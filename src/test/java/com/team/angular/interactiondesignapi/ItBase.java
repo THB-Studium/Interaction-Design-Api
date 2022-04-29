@@ -32,7 +32,7 @@ import java.util.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.yml")
-@ActiveProfiles("TestIT")
+@ActiveProfiles("test")
 public class ItBase {
 
     protected MockMvc mockMvc;
