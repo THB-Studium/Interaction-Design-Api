@@ -10,11 +10,11 @@ spring:
     
     jpa:
        database:
-           platform: org.hibernate.dialect.H2Dialect
+         platform: org.hibernate.dialect.H2Dialect
        show-sql: false   
        hibernate:
        # Hibernate ddl auto (create, create-drop, validate, update)
         ddl-auto: create
 
-    #profiles:
-    #  active: TestIT
+    profiles:
+      active: TestIT

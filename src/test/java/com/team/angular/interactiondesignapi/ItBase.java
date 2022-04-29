@@ -32,11 +32,11 @@ import java.util.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.yml")
-//@ActiveProfiles("TestIT")
+@ActiveProfiles("TestIT")
 public class ItBase {
 
     protected MockMvc mockMvc;
-    protected MockHttpSession session;
+    //protected MockHttpSession session;
     @Autowired
     protected NewsletterRepository newsletterRepository;
     @Autowired
@@ -68,7 +68,7 @@ public class ItBase {
 
     @BeforeEach
     public void setup() {
-        this.session = new MockHttpSession(); //todo: we don't have test with session (user)
+        //this.session = new MockHttpSession(); //todo: we don't have test with session (user)
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
         RestAssuredMockMvc.webAppContextSetup(wac);
     }
