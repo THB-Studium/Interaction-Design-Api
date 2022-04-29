@@ -361,7 +361,7 @@ public class ItBase {
         reiseAngebot.setLeistungen(leistungen);
         reiseAngebot.setInteressiert(10);
         reiseAngebot.setHinweise(UUID.randomUUID().toString());
-        reiseAngebot.setMitreiseberechtigt(mitreiseberechtigt);
+        //reiseAngebot.setMitreiseberechtigt(mitreiseberechtigt);
         reiseAngebot.setSonstigeHinweise(UUID.randomUUID().toString());
         reiseAngebot.setLand(land);
 
@@ -391,7 +391,7 @@ public class ItBase {
         reiseAngebot.setLeistungen(leistungen);
         reiseAngebot.setInteressiert(10);
         reiseAngebot.setHinweise(UUID.randomUUID().toString());
-        reiseAngebot.setMitreiseberechtigt(mitreiseberechtigt);
+        //reiseAngebot.setMitreiseberechtigt(mitreiseberechtigt);
         reiseAngebot.setSonstigeHinweise(UUID.randomUUID().toString());
 
         return reiseAngebot;

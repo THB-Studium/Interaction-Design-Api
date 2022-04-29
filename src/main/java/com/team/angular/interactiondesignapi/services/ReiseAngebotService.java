@@ -81,8 +81,8 @@ public class ReiseAngebotService {
             _reiseAngebot.setLeistungen(reiseAngebot.getLeistungen());
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setHinweise(reiseAngebot.getHinweise());
-        if (reiseAngebot.getLeistungen() != null)
-            _reiseAngebot.setMitreiseberechtigt(reiseAngebot.getMitreiseberechtigt());
+        //if (reiseAngebot.getLeistungen() != null)
+            //_reiseAngebot.setMitreiseberechtigt(reiseAngebot.getMitreiseberechtigt());
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
