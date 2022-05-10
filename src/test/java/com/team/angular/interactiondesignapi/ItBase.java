@@ -385,7 +385,7 @@ public class ItBase {
         reiseAngebot.setStartDatum(LocalDate.now());
         reiseAngebot.setEndDatum(LocalDate.now());
         reiseAngebot.setPlaetze(12);
-        reiseAngebot.setFreiPlaetze(12);
+        //reiseAngebot.setFreiPlaetze(12);
         reiseAngebot.setAnmeldungsFrist(LocalDate.now());
         reiseAngebot.setLandId(landId);
         reiseAngebot.setLeistungen(leistungen);

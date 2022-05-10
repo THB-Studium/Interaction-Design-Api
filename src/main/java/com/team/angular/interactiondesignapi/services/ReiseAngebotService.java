@@ -69,10 +69,12 @@ public class ReiseAngebotService {
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)
             _reiseAngebot.setEndDatum(reiseAngebot.getEndDatum());
+
+        // Plaetze and FreiPlaetze
         if (reiseAngebot.getPlaetze() != 0)
             _reiseAngebot.setPlaetze(reiseAngebot.getPlaetze());
-        if (reiseAngebot.getFreiPlaetze() != 0)
-            _reiseAngebot.setFreiPlaetze(reiseAngebot.getFreiPlaetze());
+            _reiseAngebot.setFreiPlaetze(reiseAngebot.getPlaetze());
+
         if (reiseAngebot.getInteressiert() != 0)
             _reiseAngebot.setInteressiert(reiseAngebot.getInteressiert());
         if (reiseAngebot.getAnmeldungsFrist() != null)
@@ -87,9 +89,9 @@ public class ReiseAngebotService {
             _reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
         // erwartungen
-        if (reiseAngebot.getErwartungen() != null) {
+        /*if (reiseAngebot.getErwartungen() != null) {
             _reiseAngebot.setErwartungen(reiseAngebot.getErwartungen());
-        }
+        }*/
 
         // Land
         if (reiseAngebot.getLandId() != null) {
@@ -99,23 +101,23 @@ public class ReiseAngebotService {
         }
 
         // Save Buchungsklassen
-        if (reiseAngebot.getBuchungsklassen() != null) {
+        /*if (reiseAngebot.getBuchungsklassen() != null) {
             List<Buchungsklassen> Buchungsklassenlist = reiseAngebot.getBuchungsklassen();
             buchungsklassenRepository.saveAll(Buchungsklassenlist);
             _reiseAngebot.setBuchungsklassen(Buchungsklassenlist);
-        }
+        }*/
 
         // get saved ReiseAngebot
         ReiseAngebot savedReiseAngebot = reiseAngebotRepository.save(_reiseAngebot);
 
         // Buchungsklassen Update with ID of ReiseAngebot
-        if (reiseAngebot.getBuchungsklassen() != null) {
+        /*if (reiseAngebot.getBuchungsklassen() != null) {
             List<Buchungsklassen> Buchungsklassenlist = reiseAngebot.getBuchungsklassen();
             for (Buchungsklassen element : Buchungsklassenlist) {
                 element.setReiseAngebot(savedReiseAngebot);
                 buchungsklassenRepository.save(element);
             }
-        }
+        }*/
 
         return ReiseAngebot2ReiseAngebotReadTO.apply(savedReiseAngebot);
     }
@@ -142,8 +144,8 @@ public class ReiseAngebotService {
             _reiseAngebot.setEndDatum(reiseAngebot.getEndDatum());
         if (reiseAngebot.getPlaetze() != 0)
             _reiseAngebot.setPlaetze(reiseAngebot.getPlaetze());
-        if (reiseAngebot.getFreiPlaetze() != 0)
-            _reiseAngebot.setFreiPlaetze(reiseAngebot.getFreiPlaetze());
+        /*if (reiseAngebot.getFreiPlaetze() != 0)
+            _reiseAngebot.setFreiPlaetze(reiseAngebot.getFreiPlaetze());*/
         if (reiseAngebot.getInteressiert() != 0)
             _reiseAngebot.setInteressiert(reiseAngebot.getInteressiert());
         if (reiseAngebot.getAnmeldungsFrist() != null)
@@ -157,10 +159,10 @@ public class ReiseAngebotService {
         if (reiseAngebot.getLeistungen() != null)
             _reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
 
-        // erwartungen
-        if (reiseAngebot.getErwartungen() != null) {
+        // erwartungen //todo steve
+        /*if (reiseAngebot.getErwartungen() != null) {
             _reiseAngebot.setErwartungen(reiseAngebot.getErwartungen());
-        }
+        }*/
 
         // Land
         if (reiseAngebot.getLandId() != null) {

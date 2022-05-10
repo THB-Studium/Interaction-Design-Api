@@ -36,7 +36,7 @@ public class ReiseAngebotWriteTO {
 
     private int plaetze;
 
-    private int freiPlaetze;
+   // private int freiPlaetze;//??
 
     private int interessiert;
 
@@ -46,9 +46,9 @@ public class ReiseAngebotWriteTO {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
 
-    private List<Buchungsklassen> buchungsklassen;
+    // private List<Buchungsklassen> buchungsklassen;
 
-    private Erwartungen erwartungen;
+    // private Erwartungen erwartungen;
 
     private UUID landId;
 

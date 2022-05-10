@@ -1,5 +1,6 @@
 package com.team.angular.interactiondesignapi.controllers;
 
+import com.team.angular.interactiondesignapi.models.Buchungstatus;
 import com.team.angular.interactiondesignapi.services.BuchungService;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
@@ -28,9 +29,9 @@ public class BuchungController {
 
     @ApiOperation("Get All Buchungen")
     @GetMapping("")
-    public List<BuchungReadTO> getAllBuchungs( @RequestParam(defaultValue = "0") Integer pageNo,
-                                               @RequestParam(defaultValue = "10") Integer pageSize,
-                                               @RequestParam(defaultValue = "buchungDatum") String sortBy) {
+    public List<BuchungReadTO> getAllBuchungs(@RequestParam(defaultValue = "0") Integer pageNo,
+                                              @RequestParam(defaultValue = "10") Integer pageSize,
+                                              @RequestParam(defaultValue = "buchungDatum") String sortBy) {
         return buchungService.getAll(pageNo, pageSize, sortBy);
     }
 
@@ -67,7 +68,7 @@ public class BuchungController {
     @ApiOperation("Add One Buchung")
     @PostMapping("")
     public BuchungReadTO addBuchung(@ApiParam(name = "Buchung", value = "Buchung to add")
-                                        @RequestBody BuchungWriteTO buchung) throws Exception {
+                                    @RequestBody BuchungWriteTO buchung) throws Exception {
         return buchungService.addBuchung(buchung);
     }
 
@@ -90,6 +91,13 @@ public class BuchungController {
     public ResponseEntity<?> removeMitReiser(
             @ApiParam(name = "BuchungId", value = "Id of the Buchung") @PathVariable UUID id) {
         return buchungService.removeMitReisender(id);
+    }
+
+    @ApiOperation("change Buchung status")
+    @PostMapping("/changestatus/{id}/{status}")
+    public ResponseEntity<?> changeStatus(@ApiParam(name = "Buchung", value = "Buchung to add")
+                                          @PathVariable UUID id, @PathVariable Buchungstatus status) {
+        return buchungService.changeStatus(id, status);
     }
 
 }
