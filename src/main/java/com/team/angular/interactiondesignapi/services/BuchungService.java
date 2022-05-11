@@ -271,7 +271,7 @@ public class BuchungService {
         buchungRepository.save(buchung);
         log.info("successfully removed");
 
-        /*
+        /* //todo: pas besoins?
          * //update freiPlaetze after deleting a new Buchung ReiseAngebot ra =
          * buchung.getReiseAngebot();
          * ra.setFreiPlaetze(buchung.getReiseAngebot().getFreiPlaetze() + 1);
@@ -283,7 +283,7 @@ public class BuchungService {
         return new ResponseEntity<>("Mitreiser Successfully deleted", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> changeStatus(UUID id, String status) { // todo: stoniert
+    public ResponseEntity<?> changeStatus(UUID id, String status) {
         Buchung buchung = buchungRepository.findById(id)
                 .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
 
@@ -319,7 +319,6 @@ public class BuchungService {
 
                 // mail Reisender
                 String[] to = {buchung.getReisender().getEmail()};
-
 
                 // export booking pdf
                 byte[] export = exportPdf(buchung.getId());
