@@ -46,8 +46,6 @@ public class ReiseAngebotWriteTO {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
 
-    // private List<Buchungsklassen> buchungsklassen;
-
     // we don't need more data
     private ErwartungenReadListTO erwartungen;
 
