@@ -139,6 +139,7 @@ public class BuchungService {
             newBuchung.setHinFlugDatum(buchung.getHinFlugDatum());
         if (buchung.getRuckFlugDatum() != null)
             newBuchung.setRuckFlugDatum(buchung.getRuckFlugDatum());
+
         newBuchung.setFlughafen(buchung.getFlughafen());
         newBuchung.setHandGepaeck(buchung.getHandGepaeck());
         newBuchung.setKoffer(buchung.getKoffer());
@@ -184,7 +185,7 @@ public class BuchungService {
         return savedBuchung;
     }
 
-    public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
+    public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) {
 
         Buchung actual = buchungRepository.findById(buchung.getId())
                 .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + buchung.getId()));
@@ -207,7 +208,7 @@ public class BuchungService {
                     .orElseThrow(() -> new ApiRequestException(
                             "Cannot find MitReisender with id: " + buchung.getMitReisenderId()));
             actual.setMitReisenderId(mitReisender.getId());
-        } else if (buchung.getMitReisenderId() == null) {
+        } else if (buchung.getMitReisenderId() == null) { //todo why null? we have removeMitReisender()
             actual.setMitReisenderId(null);
         }
 
@@ -258,7 +259,7 @@ public class BuchungService {
             sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source);
         }*/
 
-        //changeStatus(buchung.getId(), buchung.getStatus());
+        //changeStatus(buchung.getId(), buchung.getStatus()); //todo for change status
 
         return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
     }
