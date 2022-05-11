@@ -159,7 +159,8 @@ public class BuchungService {
             throw new ApiRequestException("The trip is fully booked");
         }
 
-        BuchungReadTO ret = Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
+        // save Buchung
+        BuchungReadTO savedBuchung = Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
 
         // props for email template
         Map<String, Object> properties = new HashMap<>();
@@ -170,17 +171,17 @@ public class BuchungService {
         String[] to = {newBuchung.getReisender().getEmail()};
 
         // export booking pdf
-        byte[] export = exportPdf(ret.getId());
+        byte[] export = exportPdf(savedBuchung.getId());
 
         // data source to write the exported pdf into
         DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
-
         OutputStream sourceOS = source.getOutputStream();
         sourceOS.write(export);
 
+        // send mail
         sendMail(properties, to, "Bestätigung der Reservierung", template_new_booking, source);
 
-        return ret;
+        return savedBuchung;
     }
 
     public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
