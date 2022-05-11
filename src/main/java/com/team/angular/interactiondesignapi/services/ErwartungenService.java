@@ -62,7 +62,7 @@ public class ErwartungenService {
             _erwartungen.setSicherheit(erwartungen.getSicherheit());
         if (erwartungen.getRoad() != 0)
             _erwartungen.setRoad(erwartungen.getRoad());
-        if (erwartungen.getReiseAngebotId() != null) {
+        if (erwartungen.getReiseAngebotId() != null) { //todo keine rolle!?
             ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(erwartungen.getReiseAngebotId())
                     .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + erwartungen.getReiseAngebotId()));
 

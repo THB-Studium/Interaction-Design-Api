@@ -185,7 +185,7 @@ public class ReiseAngebotIT extends ItBase {
         //assertThat(update.getStartbild().getBytes(), is(reiseAngebot_.getStartbild()));
         assertThat(update.getStartDatum(), is(reiseAngebot_.getStartDatum()));
         assertThat(update.getEndDatum(), is(reiseAngebot_.getEndDatum()));
-        //assertThat(update.getFreiPlaetze(), is(reiseAngebot_.getFreiPlaetze()));
+        //assertThat(update.getFreiPlaetze(), is(reiseAngebot_.getFreiPlaetze())); //todo
         assertThat(update.getInteressiert(), is(reiseAngebot_.getInteressiert()));
         assertThat(update.getAnmeldungsFrist(), is(reiseAngebot_.getAnmeldungsFrist()));
         assertThat(update.getHinweise(), is(reiseAngebot_.getHinweise()));

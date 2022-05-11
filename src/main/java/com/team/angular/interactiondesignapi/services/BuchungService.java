@@ -35,10 +35,7 @@ import javax.activation.FileDataSource;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BuchungService {
@@ -172,14 +169,10 @@ public class BuchungService {
         // build email object
         String[] to = {newBuchung.getReisender().getEmail()};
 
-        System.out.println(ret.getId());
         // export booking pdf
         byte[] export = exportPdf(ret.getId());
 
         // data source to write the exported pdf into
-        // when running local
-        //DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
-        // when running on the server
         DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
 
         OutputStream sourceOS = source.getOutputStream();
@@ -188,7 +181,6 @@ public class BuchungService {
         sendMail(properties, to, "Bestätigung der Reservierung", template_new_booking, source);
 
         return ret;
-
     }
 
     public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
@@ -291,27 +283,44 @@ public class BuchungService {
         return new ResponseEntity<>("Mitreiser Successfully deleted", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> changeStatus(UUID id, Buchungstatus status) { // todo: stoniert
+    public ResponseEntity<?> changeStatus(UUID id, String status) { // todo: stoniert
         Buchung buchung = buchungRepository.findById(id)
                 .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
 
-        // send mail and update status
-        if (status != null && buchung.getStatus() != status) {
-            buchung.setStatus(buchung.getStatus());
-
-            //save
-            buchungRepository.save(buchung);
-
-            // template params
-            Map<String, Object> properties = new HashMap<>();
-            properties.put("name", buchung.getReisender().getName());
-            properties.put("status", status);
-            properties.put("ziel", buchung.getReiseAngebot().getLand().getName());
-
-            // mail Reisender
-            String[] to = {buchung.getReisender().getEmail()};
-
+        // update status and send mail
+        if (status != null && !Objects.equals(buchung.getStatus().toString(), status)) {
             try {
+                // check the new status
+                switch (status) {
+                    case "Bearbeitung":
+                        buchung.setStatus(Buchungstatus.Bearbeitung);
+                        break;
+                    case "Bestaetigt":
+                        buchung.setStatus(Buchungstatus.Bestaetigt);
+                        break;
+                    case "Abgelehnt":
+                        buchung.setStatus(Buchungstatus.Abgelehnt);
+                        break;
+                    case "Storniert":
+                        buchung.setStatus(Buchungstatus.Storniert);
+                        break;
+                    default:
+                        throw new ApiRequestException("Status is invalid");
+                }
+
+                //save
+                buchungRepository.save(buchung);
+
+                // template params
+                Map<String, Object> properties = new HashMap<>();
+                properties.put("name", buchung.getReisender().getName());
+                properties.put("status", status);
+                properties.put("ziel", buchung.getReiseAngebot().getLand().getName());
+
+                // mail Reisender
+                String[] to = {buchung.getReisender().getEmail()};
+
+
                 // export booking pdf
                 byte[] export = exportPdf(buchung.getId());
 

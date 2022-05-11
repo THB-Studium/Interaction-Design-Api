@@ -1,6 +1,5 @@
 package com.team.angular.interactiondesignapi.controllers;
 
-import com.team.angular.interactiondesignapi.models.Buchungstatus;
 import com.team.angular.interactiondesignapi.services.BuchungService;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungReadTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
@@ -95,8 +94,8 @@ public class BuchungController {
 
     @ApiOperation("change Buchung status")
     @PostMapping("/changestatus/{id}/{status}")
-    public ResponseEntity<?> changeStatus(@ApiParam(name = "Buchung", value = "Buchung to add")
-                                          @PathVariable UUID id, @PathVariable Buchungstatus status) {
+    public ResponseEntity<?> changeStatus(@ApiParam(name = "BuchungID", value = "Id of Buchung") @PathVariable UUID id,
+                                          @ApiParam(name = "Status", value = "New Status") @PathVariable String status) {
         return buchungService.changeStatus(id, status);
     }
 
