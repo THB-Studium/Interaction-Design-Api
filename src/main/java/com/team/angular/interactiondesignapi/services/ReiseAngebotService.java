@@ -1,12 +1,11 @@
 package com.team.angular.interactiondesignapi.services;
 
 import com.team.angular.interactiondesignapi.exception.ApiRequestException;
-import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.Land;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.repositories.LandRepository;
 import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenWrite2ErwartungTO;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadList2Erwartung;
 import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +88,7 @@ public class ReiseAngebotService {
 
         // erwartungen
         if (reiseAngebot.getErwartungen() != null) {
-            _reiseAngebot.setErwartungen(ErwartungenWrite2ErwartungTO.apply(reiseAngebot.getErwartungen()));
+            _reiseAngebot.setErwartungen(ErwartungenReadList2Erwartung.apply(reiseAngebot.getErwartungen()));
         }
 
         // Land
