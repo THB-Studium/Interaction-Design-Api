@@ -38,8 +38,6 @@ public class ReiseAngebotWriteTO {
 
     private int plaetze;
 
-   // private int freiPlaetze;//??
-
     private int interessiert;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
