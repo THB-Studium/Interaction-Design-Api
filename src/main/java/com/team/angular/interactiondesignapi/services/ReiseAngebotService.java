@@ -122,8 +122,10 @@ public class ReiseAngebotService {
             _reiseAngebot.setStartDatum(reiseAngebot.getStartDatum());
         if (reiseAngebot.getEndDatum() != null)
             _reiseAngebot.setEndDatum(reiseAngebot.getEndDatum());
-        if (reiseAngebot.getPlaetze() != 0)
+        if (reiseAngebot.getPlaetze() != 0) {
             _reiseAngebot.setPlaetze(reiseAngebot.getPlaetze());
+            _reiseAngebot.setFreiPlaetze(reiseAngebot.getPlaetze());
+        }
         if (reiseAngebot.getInteressiert() != 0) //todo need?
             _reiseAngebot.setInteressiert(reiseAngebot.getInteressiert());
         if (reiseAngebot.getAnmeldungsFrist() != null)
