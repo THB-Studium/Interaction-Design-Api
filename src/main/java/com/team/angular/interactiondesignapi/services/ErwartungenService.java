@@ -1,7 +1,6 @@
 package com.team.angular.interactiondesignapi.services;
 
 import com.team.angular.interactiondesignapi.exception.ApiRequestException;
-import com.team.angular.interactiondesignapi.models.Admin;
 import com.team.angular.interactiondesignapi.models.Erwartungen;
 import com.team.angular.interactiondesignapi.models.ReiseAngebot;
 import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -62,7 +60,7 @@ public class ErwartungenService {
             _erwartungen.setSicherheit(erwartungen.getSicherheit());
         if (erwartungen.getRoad() != 0)
             _erwartungen.setRoad(erwartungen.getRoad());
-        if (erwartungen.getReiseAngebotId() != null) {
+        if (erwartungen.getReiseAngebotId() != null) { //todo marche pas!
             ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(erwartungen.getReiseAngebotId())
                     .orElseThrow(() -> new ApiRequestException("Cannot find ReiseAngebot with id: " + erwartungen.getReiseAngebotId()));
 

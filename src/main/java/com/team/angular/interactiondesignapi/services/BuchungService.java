@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,14 +32,10 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.MessagingException;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BuchungService {
@@ -144,6 +139,7 @@ public class BuchungService {
             newBuchung.setHinFlugDatum(buchung.getHinFlugDatum());
         if (buchung.getRuckFlugDatum() != null)
             newBuchung.setRuckFlugDatum(buchung.getRuckFlugDatum());
+
         newBuchung.setFlughafen(buchung.getFlughafen());
         newBuchung.setHandGepaeck(buchung.getHandGepaeck());
         newBuchung.setKoffer(buchung.getKoffer());
@@ -164,7 +160,8 @@ public class BuchungService {
             throw new ApiRequestException("The trip is fully booked");
         }
 
-        BuchungReadTO ret = Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
+        // save Buchung
+        BuchungReadTO savedBuchung = Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
 
         // props for email template
         Map<String, Object> properties = new HashMap<>();
@@ -174,26 +171,21 @@ public class BuchungService {
         // build email object
         String[] to = {newBuchung.getReisender().getEmail()};
 
-        System.out.println(ret.getId());
         // export booking pdf
-        byte[] export = exportPdf(ret.getId());
+        byte[] export = exportPdf(savedBuchung.getId());
 
         // data source to write the exported pdf into
-        // when running local
-        //DataSource source = new FileDataSource(ResourceUtils.getFile("classpath:Booking.jrxml"));
-        // when running on the server
         DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
-
         OutputStream sourceOS = source.getOutputStream();
         sourceOS.write(export);
 
+        // send mail
         sendMail(properties, to, "Bestätigung der Reservierung", template_new_booking, source);
 
-        return ret;
-
+        return savedBuchung;
     }
 
-    public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
+    public BuchungReadTO updateBuchung(BuchungUpdateTO buchung) {
 
         Buchung actual = buchungRepository.findById(buchung.getId())
                 .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + buchung.getId()));
@@ -216,7 +208,7 @@ public class BuchungService {
                     .orElseThrow(() -> new ApiRequestException(
                             "Cannot find MitReisender with id: " + buchung.getMitReisenderId()));
             actual.setMitReisenderId(mitReisender.getId());
-        } else if (buchung.getMitReisenderId() == null) {
+        } else if (buchung.getMitReisenderId() == null) { //todo why null? we have removeMitReisender()
             actual.setMitReisenderId(null);
         }
 
@@ -240,11 +232,12 @@ public class BuchungService {
                             "Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
             actual.setReiseAngebot(ra);
         }
+
         // send mail on updated status
-        if (buchung.getStatus() != null && buchung.getStatus() != actual.getStatus()) {
+        /*if (buchung.getStatus() != null && buchung.getStatus() != actual.getStatus()) {
             actual.setStatus(buchung.getStatus());
             // template params
-           Map<String, Object> properties = new HashMap<>();
+            Map<String, Object> properties = new HashMap<>();
             properties.put("name", actual.getReisender().getName());
             properties.put("status", actual.getStatus());
             properties.put("ziel", actual.getReiseAngebot().getLand().getName());
@@ -264,7 +257,9 @@ public class BuchungService {
             sourceOS.write(export);
 
             sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source);
-        }
+        }*/
+
+        //changeStatus(buchung.getId(), buchung.getStatus()); //todo for change status
 
         return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
     }
@@ -278,7 +273,7 @@ public class BuchungService {
         buchungRepository.save(buchung);
         log.info("successfully removed");
 
-        /*
+        /* //todo: pas besoins?
          * //update freiPlaetze after deleting a new Buchung ReiseAngebot ra =
          * buchung.getReiseAngebot();
          * ra.setFreiPlaetze(buchung.getReiseAngebot().getFreiPlaetze() + 1);
@@ -288,6 +283,61 @@ public class BuchungService {
          */
 
         return new ResponseEntity<>("Mitreiser Successfully deleted", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> changeStatus(UUID id, String status) {
+        Buchung buchung = buchungRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Buchung with id: " + id));
+
+        // update status and send mail
+        if (status != null && !Objects.equals(buchung.getStatus().toString(), status)) {
+            try {
+                // check the new status
+                switch (status) {
+                    case "Bearbeitung":
+                        buchung.setStatus(Buchungstatus.Bearbeitung);
+                        break;
+                    case "Bestaetigt":
+                        buchung.setStatus(Buchungstatus.Bestaetigt);
+                        break;
+                    case "Abgelehnt":
+                        buchung.setStatus(Buchungstatus.Abgelehnt);
+                        break;
+                    case "Storniert":
+                        buchung.setStatus(Buchungstatus.Storniert);
+                        break;
+                    default:
+                        throw new ApiRequestException("Status is invalid");
+                }
+
+                //save
+                buchungRepository.save(buchung);
+
+                // template params
+                Map<String, Object> properties = new HashMap<>();
+                properties.put("name", buchung.getReisender().getName());
+                properties.put("status", status);
+                properties.put("ziel", buchung.getReiseAngebot().getLand().getName());
+
+                // mail Reisender
+                String[] to = {buchung.getReisender().getEmail()};
+
+                // export booking pdf
+                byte[] export = exportPdf(buchung.getId());
+
+                // data source to write the exported pdf into
+                DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
+
+                OutputStream sourceOS = source.getOutputStream();
+                sourceOS.write(export);
+                sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source);
+            } catch (Exception e) {
+                log.error("Error during exporting pdf: {}", e.getMessage());
+                throw new ApiRequestException(e.getMessage());
+            }
+            return new ResponseEntity<>("Status Successfully updated", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Mitreiser Successfully deleted", HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<?> deleteBuchung(UUID id) {
@@ -378,7 +428,7 @@ public class BuchungService {
         params.put("arbeit_bei", buchung.getReisender().getArbeitBei());
         params.put("schonteilgenommen", buchung.getReisender().isSchonTeilgenommen() ? "Ja" : "Nein");
         params.put("mit_mitreiser", buchung.getMitReisenderId() != null ? "Ja" : "Nein");
-        params.put("mit_mitreiser_bool", buchung.getMitReisenderId() != null ? true : false);
+        params.put("mit_mitreiser_bool", buchung.getMitReisenderId() != null ? true : false); // todo: ??
 
         if (buchung.getMitReisenderId() != null) {
             Reisender mitReisender = reiserRepository.findById(buchung.getMitReisenderId()).get();

@@ -20,7 +20,7 @@ public class InteractionDesignApiApplication {
     }
 
     /*@Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) throws Exception { //todo: add admin; check if exist aber skript?
         adminService.addAdmin(new Admin(null, "superadmin", "superadmin", "superadminkennwort", "superadmin@universitytravelclub.de", null, null, null));
     }*/
 

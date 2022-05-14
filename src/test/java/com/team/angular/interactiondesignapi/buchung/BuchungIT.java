@@ -178,7 +178,7 @@ public class BuchungIT extends ItBase {
         assertThat(update.getReisenderId(), is(reisender1.getId()));
         assertThat(update.getMitReisenderId(), is(mitReisender1.getId()));
         assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
-        assertThat(update.getStatus(), is(buchung.getStatus()));
+        //assertThat(update.getStatus(), is(buchung.getStatus())); //todo: will use new route
     }
 
     @Test

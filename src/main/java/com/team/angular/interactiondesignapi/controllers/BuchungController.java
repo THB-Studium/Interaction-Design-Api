@@ -28,9 +28,9 @@ public class BuchungController {
 
     @ApiOperation("Get All Buchungen")
     @GetMapping("")
-    public List<BuchungReadTO> getAllBuchungs( @RequestParam(defaultValue = "0") Integer pageNo,
-                                               @RequestParam(defaultValue = "10") Integer pageSize,
-                                               @RequestParam(defaultValue = "buchungDatum") String sortBy) {
+    public List<BuchungReadTO> getAllBuchungs(@RequestParam(defaultValue = "0") Integer pageNo,
+                                              @RequestParam(defaultValue = "10") Integer pageSize,
+                                              @RequestParam(defaultValue = "buchungDatum") String sortBy) {
         return buchungService.getAll(pageNo, pageSize, sortBy);
     }
 
@@ -67,14 +67,14 @@ public class BuchungController {
     @ApiOperation("Add One Buchung")
     @PostMapping("")
     public BuchungReadTO addBuchung(@ApiParam(name = "Buchung", value = "Buchung to add")
-                                        @RequestBody BuchungWriteTO buchung) throws Exception {
+                                    @RequestBody BuchungWriteTO buchung) throws Exception {
         return buchungService.addBuchung(buchung);
     }
 
     @ApiOperation("Update Buchung")
     @PutMapping("")
     public BuchungReadTO updateBuchung(
-            @ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) throws JRException, URISyntaxException, IOException {
+            @ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) {
         return buchungService.updateBuchung(buchung);
     }
 
@@ -90,6 +90,13 @@ public class BuchungController {
     public ResponseEntity<?> removeMitReiser(
             @ApiParam(name = "BuchungId", value = "Id of the Buchung") @PathVariable UUID id) {
         return buchungService.removeMitReisender(id);
+    }
+
+    @ApiOperation("change Buchung status")
+    @PostMapping("/changestatus/{id}/{status}")
+    public ResponseEntity<?> changeStatus(@ApiParam(name = "BuchungID", value = "Id of Buchung") @PathVariable UUID id,
+                                          @ApiParam(name = "Status", value = "New Status") @PathVariable String status) {
+        return buchungService.changeStatus(id, status);
     }
 
 }

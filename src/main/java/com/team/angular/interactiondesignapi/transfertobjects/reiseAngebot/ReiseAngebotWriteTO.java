@@ -1,8 +1,7 @@
 package com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.team.angular.interactiondesignapi.models.Buchungsklassen;
-import com.team.angular.interactiondesignapi.models.Erwartungen;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadListTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,8 +35,6 @@ public class ReiseAngebotWriteTO {
 
     private int plaetze;
 
-    private int freiPlaetze;
-
     private int interessiert;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -46,9 +43,8 @@ public class ReiseAngebotWriteTO {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> leistungen;
 
-    private List<Buchungsklassen> buchungsklassen;
-
-    private Erwartungen erwartungen;
+    // we don't need more data
+    private ErwartungenReadListTO erwartungen;
 
     private UUID landId;
 
