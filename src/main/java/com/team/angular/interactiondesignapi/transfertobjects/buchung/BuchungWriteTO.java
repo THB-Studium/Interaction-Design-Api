@@ -18,6 +18,8 @@ public class BuchungWriteTO {
 
     private UUID id;
 
+    private String Buchungsnummer;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate buchungDatum;
 

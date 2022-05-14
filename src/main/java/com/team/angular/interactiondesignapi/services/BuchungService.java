@@ -505,4 +505,22 @@ public class BuchungService {
 				.orElseThrow(() -> new ApiRequestException("Cannot find Booking with id" + id));
 	}
 
+    public String createBuchungsnummer(String name, String vorname, String land) {
+
+        land = land.substring(3);
+        int saison = (LocalDate.now().getYear()) % 100;
+        name = name.substring(3);
+        vorname = vorname.substring(3);
+
+
+        return null;
+
+        /*
+
+XXXX est le nombre participant( Buchung) qui sera incrementé
+
+EX: ISL23DB 0001
+*/
+
+    }
 }
