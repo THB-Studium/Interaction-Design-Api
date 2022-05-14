@@ -93,7 +93,7 @@ public class BuchungController {
     }
 
     @ApiOperation("change Buchung status")
-    @PostMapping("/changestatus/{id}/{status}")
+    @PutMapping("/changestatus/{id}/{status}")
     public ResponseEntity<?> changeStatus(@ApiParam(name = "BuchungID", value = "Id of Buchung") @PathVariable UUID id,
                                           @ApiParam(name = "Status", value = "New Status") @PathVariable String status) {
         return buchungService.changeStatus(id, status);

@@ -1,9 +1,8 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ApiRequestException;
-import com.team.angular.interactiondesignapi.models.Reisender;
-import com.team.angular.interactiondesignapi.repositories.ReisenderRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.reisender.*;
+import java.util.List;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,107 +14,116 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
+import com.team.angular.interactiondesignapi.models.Reisender;
+import com.team.angular.interactiondesignapi.repositories.ReisenderRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.Reisender2ReisenderReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.Reisender2ReisenderReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderWriteTO;
 
 @Service
 public class ReisenderService {
 
-    private static final Logger log = LoggerFactory.getLogger(ReisenderService.class);
+	private static final Logger log = LoggerFactory.getLogger(ReisenderService.class);
 
-    @Autowired
-    private ReisenderRepository reisenderRepository;
+	@Autowired
+	private ReisenderRepository reisenderRepository;
 
-    public List<ReisenderReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
+	public List<ReisenderReadListTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
 
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        Page<Reisender> pagedResult = reisenderRepository.findAll(paging);
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+		Page<Reisender> pagedResult = reisenderRepository.findAll(paging);
 
-        return Reisender2ReisenderReadListTO.apply(pagedResult.getContent());
-    }
+		return Reisender2ReisenderReadListTO.apply(pagedResult.getContent());
+	}
 
-    public ReisenderReadTO getReisender(UUID id) {
+	public ReisenderReadTO getReisender(UUID id) {
 
-        Reisender reisender = reisenderRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Reisender with id: " + id));
+		Reisender reisender = reisenderRepository.findById(id)
+				.orElseThrow(() -> new ApiRequestException("Cannot find Reisender with id: " + id));
 
-        return Reisender2ReisenderReadTO.apply(reisender);
-    }
+		return Reisender2ReisenderReadTO.apply(reisender);
+	}
 
-    public ReisenderReadTO addReisender(ReisenderWriteTO Reisender) {
+	public ReisenderReadTO addReisender(ReisenderWriteTO reisender) {
 
-        Reisender newReisender = new Reisender();
-        if (!reisenderRepository.existsReisenderByTelefonnummer(Reisender.getTelefonnummer())) {
-            newReisender.setTelefonnummer(Reisender.getTelefonnummer());
-        } else {
-            throw new ApiRequestException(Reisender.getTelefonnummer() + " already exists");
-        }
+		Reisender newReisender = new Reisender();
+		if (!reisenderRepository.existsReisenderByTelefonnummer(reisender.getTelefonnummer())) {
+			newReisender.setTelefonnummer(reisender.getTelefonnummer());
+		} else {
+			throw new ApiRequestException(reisender.getTelefonnummer() + " already exists");
+		}
 
-        newReisender.setName(Reisender.getName());
-        newReisender.setVorname(Reisender.getVorname());
-        newReisender.setGeburtsdatum(Reisender.getGeburtsdatum());
-        newReisender.setEmail(Reisender.getEmail());
-        newReisender.setAdresse(Reisender.getAdresse());
-        newReisender.setSchonTeilgenommen(Reisender.isSchonTeilgenommen());
+		newReisender.setName(reisender.getName());
+		newReisender.setVorname(reisender.getVorname());
+		newReisender.setGeburtsdatum(reisender.getGeburtsdatum());
+		newReisender.setEmail(reisender.getEmail());
+		newReisender.setAdresse(reisender.getAdresse());
+		newReisender.setSchonTeilgenommen(reisender.isSchonTeilgenommen());
 
-        if (Reisender.getHochschule() != null)
-            newReisender.setHochschule(Reisender.getHochschule());
-        if (Reisender.getStudiengang() != null)
-            newReisender.setStudiengang(Reisender.getStudiengang());
-        if (Reisender.getStatus() != null)
-            newReisender.setStatus(Reisender.getStatus());
-        if (Reisender.getArbeitBei() != null)
-            newReisender.setArbeitBei(Reisender.getArbeitBei());
+		newReisender.setHochschule(reisender.getHochschule() != null ? reisender.getHochschule() : null);
 
-        return Reisender2ReisenderReadTO.apply(reisenderRepository.save(newReisender));
+		newReisender.setStudiengang(reisender.getStudiengang() != null ? reisender.getStudiengang() : null);
 
-    }
+		newReisender.setStatus(reisender.getStatus() != null ? reisender.getStatus() : null);
 
-    public ReisenderReadTO updateReisender(ReisenderWriteTO Reisender) {
+		newReisender.setArbeitBei(reisender.getArbeitBei() != null ? reisender.getArbeitBei() : null);
 
-        Reisender actual = reisenderRepository.findById(Reisender.getId())
-                .orElseThrow(() -> new ApiRequestException("Cannot find Reisender with id: " + Reisender.getId()));
+		return Reisender2ReisenderReadTO.apply(reisenderRepository.save(newReisender));
 
-        if (Reisender.getTelefonnummer() != null && !Reisender.getTelefonnummer().equals(actual.getTelefonnummer())) {
-            if (!reisenderRepository.existsReisenderByTelefonnummer(Reisender.getTelefonnummer())) {
-                actual.setTelefonnummer(Reisender.getTelefonnummer());
-            } else {
-                throw new ApiRequestException(Reisender.getTelefonnummer() + " already exists");
-            }
-        }
+	}
 
-        if (Reisender.getName() != null)
-            actual.setName(Reisender.getName());
-        if (Reisender.getVorname() != null)
-            actual.setVorname(Reisender.getVorname());
-        if (Reisender.getGeburtsdatum() != null)
-            actual.setGeburtsdatum(Reisender.getGeburtsdatum());
-        if (Reisender.getEmail() != null)
-            actual.setEmail(Reisender.getEmail());
-        if (Reisender.getHochschule() != null)
-            actual.setHochschule(Reisender.getHochschule());
-        if (Reisender.getAdresse() != null)
-            actual.setAdresse(Reisender.getAdresse());
-        if (Reisender.getStudiengang() != null)
-            actual.setStudiengang(Reisender.getStudiengang());
-        if (Reisender.getStatus() != null)
-            actual.setStatus(Reisender.getStatus());
-        if (Reisender.getArbeitBei() != null)
-            actual.setArbeitBei(Reisender.getArbeitBei());
-        if (Reisender.isSchonTeilgenommen() != actual.isSchonTeilgenommen())
-            actual.setSchonTeilgenommen(Reisender.isSchonTeilgenommen());
+	public ReisenderReadTO updateReisender(ReisenderWriteTO reisender) {
 
-        return Reisender2ReisenderReadTO.apply(reisenderRepository.save(actual));
-    }
+		Reisender actual = findReisender(reisender.getId());
 
-    public ResponseEntity<?> deleteReisender(UUID id) {
-        Reisender actual = reisenderRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Reisender with id: " + id));
+		if (reisender.getTelefonnummer() != null && !reisender.getTelefonnummer().equals(actual.getTelefonnummer())) {
+			if (!reisenderRepository.existsReisenderByTelefonnummer(reisender.getTelefonnummer())) {
+				actual.setTelefonnummer(reisender.getTelefonnummer());
+			} else {
+				throw new ApiRequestException(reisender.getTelefonnummer() + " already exists");
+			}
+		}
 
-        reisenderRepository.deleteById(actual.getId());
-        log.info("successfully deleted");
+		actual.setName(reisender.getName() != null ? reisender.getName() : null);
 
-        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-    }
+		actual.setVorname(reisender.getVorname() != null ? reisender.getVorname() : null);
+
+		actual.setGeburtsdatum(reisender.getGeburtsdatum() != null ? reisender.getGeburtsdatum() : null);
+
+		actual.setEmail(reisender.getEmail() != null ? reisender.getEmail() : null);
+
+		actual.setHochschule(reisender.getHochschule() != null ? reisender.getHochschule() : null);
+
+		actual.setAdresse(reisender.getAdresse() != null ? reisender.getAdresse() : null);
+
+		actual.setStudiengang(reisender.getStudiengang() != null ? reisender.getStudiengang() : null);
+
+		actual.setStatus(reisender.getStatus() != null ? reisender.getStatus() : null);
+
+		actual.setArbeitBei(reisender.getArbeitBei() != null ? reisender.getArbeitBei() : null);
+
+		actual.setSchonTeilgenommen(
+				reisender.isSchonTeilgenommen() != actual.isSchonTeilgenommen() ? reisender.isSchonTeilgenommen()
+						: actual.isSchonTeilgenommen());
+
+		return Reisender2ReisenderReadTO.apply(reisenderRepository.save(actual));
+	}
+
+	public ResponseEntity<?> deleteReisender(UUID id) {
+		Reisender actual = findReisender(id);
+
+		reisenderRepository.deleteById(actual.getId());
+		log.info("successfully deleted");
+
+		return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+	}
+
+	public Reisender findReisender(UUID id) {
+		return reisenderRepository.findById(id)
+				.orElseThrow(() -> new ApiRequestException("Cannot find Traveller with id" + id));
+	}
 
 }

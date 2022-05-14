@@ -1,14 +1,8 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ApiRequestException;
-import com.team.angular.interactiondesignapi.models.Buchungsklassen;
-import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
-import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.Buchungsklassen2BuchungsklassenReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.Buchungsklassen2BuchungsklassenReadWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadListTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadWriteTO;
+import java.util.List;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,76 +13,84 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
+import com.team.angular.interactiondesignapi.models.Buchungsklassen;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
+import com.team.angular.interactiondesignapi.repositories.BuchungsklassenRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.Buchungsklassen2BuchungsklassenReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.Buchungsklassen2BuchungsklassenReadWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchungsklassen.BuchungsklassenReadWriteTO;
 
 @Service
 public class BuchungsklassenService {
 
-    private static final Logger log = LoggerFactory.getLogger(BuchungsklassenService.class);
+	private static final Logger log = LoggerFactory.getLogger(BuchungsklassenService.class);
 
-    @Autowired
-    private BuchungsklassenRepository buchungsklassenRepository;
-    @Autowired
-    private ReiseAngebotRepository reiseAngebotRepository;
+	@Autowired
+	private BuchungsklassenRepository buchungsklassenRepository;
+	@Autowired
+	private ReiseAngebotService reiseAngebotService;
 
-    public BuchungsklassenReadWriteTO getBuchungsklassen(UUID id) {
-        Buchungsklassen buchungsklassen = buchungsklassenRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Buchungsklassen with id: " + id));
-        return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassen);
-    }
+	public BuchungsklassenReadWriteTO getBuchungsklassen(UUID id) {
+		Buchungsklassen buchungsklassen = findBuchungsklasse(id);
+		return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassen);
+	}
 
-    public List<BuchungsklassenReadListTO> getAll(Integer pageNo, Integer pageSize) {
+	public List<BuchungsklassenReadListTO> getAll(Integer pageNo, Integer pageSize) {
 
-        Pageable paging = PageRequest.of(pageNo, pageSize);
-        Page<Buchungsklassen> pagedResult = buchungsklassenRepository.findAll(paging);
+		Pageable paging = PageRequest.of(pageNo, pageSize);
+		Page<Buchungsklassen> pagedResult = buchungsklassenRepository.findAll(paging);
 
-        return Buchungsklassen2BuchungsklassenReadListTO.apply(pagedResult.getContent());
-    }
+		return Buchungsklassen2BuchungsklassenReadListTO.apply(pagedResult.getContent());
+	}
 
-    public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
-        Buchungsklassen _buchungsklassen = new Buchungsklassen();
+	public BuchungsklassenReadWriteTO addBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
+		Buchungsklassen _buchungsklassen = new Buchungsklassen();
 
-        _buchungsklassen.setType(buchungsklassen.getType());
+		_buchungsklassen.setType(buchungsklassen.getType());
 
-        if (buchungsklassen.getPreis() != 0)
-            _buchungsklassen.setPreis(buchungsklassen.getPreis());
-        if (buchungsklassen.getDescription() != null)
-            _buchungsklassen.setDescription(buchungsklassen.getDescription());
-        if (buchungsklassen.getReiseAngebotId() != null) {
-            ReiseAngebot reiseAngebot = reiseAngebotRepository.findById(buchungsklassen.getReiseAngebotId())
-                    .orElseThrow(() -> new ApiRequestException(
-                            "Cannot find ReiseAngebot with id: " + buchungsklassen.getReiseAngebotId()));
-            _buchungsklassen.setReiseAngebot(reiseAngebot);
-        }
+		if (buchungsklassen.getPreis() != 0)
+			_buchungsklassen.setPreis(buchungsklassen.getPreis());
 
-        return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassenRepository.save(_buchungsklassen));
-    }
+		_buchungsklassen
+				.setDescription(buchungsklassen.getDescription() != null ? buchungsklassen.getDescription() : null);
+		
+		if (buchungsklassen.getReiseAngebotId() != null) {
+			ReiseAngebot reiseAngebot = reiseAngebotService.findReiseAngebot(buchungsklassen.getReiseAngebotId());
+			_buchungsklassen.setReiseAngebot(reiseAngebot);
+		}
 
-    public ResponseEntity<?> deleteBuchungsklassen(UUID id) {
-        Buchungsklassen actual = buchungsklassenRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Buchungsklassen with id: " + id));
+		return Buchungsklassen2BuchungsklassenReadWriteTO.apply(buchungsklassenRepository.save(_buchungsklassen));
+	}
 
-        buchungsklassenRepository.deleteById(actual.getId());
-        log.info("Buchungsklassen successfully deleted");
+	public ResponseEntity<?> deleteBuchungsklassen(UUID id) {
+		Buchungsklassen actual = findBuchungsklasse(id);
 
-        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-    }
+		buchungsklassenRepository.deleteById(actual.getId());
+		log.info("Buchungsklassen successfully deleted");
 
-    public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
+		return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+	}
 
-        Buchungsklassen _buchungsklassen = buchungsklassenRepository.findById(buchungsklassen.getId()).orElseThrow(
-                () -> new ApiRequestException("Cannot find Buchungsklassen with id: " + buchungsklassen.getId()));
+	public BuchungsklassenReadListTO updateBuchungsklassen(BuchungsklassenReadWriteTO buchungsklassen) {
 
-        _buchungsklassen.setType(buchungsklassen.getType());
+		Buchungsklassen _buchungsklassen = findBuchungsklasse(buchungsklassen.getId());
 
-        if (buchungsklassen.getPreis() != 0)
-            _buchungsklassen.setPreis(buchungsklassen.getPreis());
-        if (!buchungsklassen.getDescription().isEmpty())
-            _buchungsklassen.setDescription(buchungsklassen.getDescription());
+		_buchungsklassen.setType(buchungsklassen.getType());
 
-        buchungsklassenRepository.save(_buchungsklassen);
+		if (buchungsklassen.getPreis() != 0)
+			_buchungsklassen.setPreis(buchungsklassen.getPreis());
+		if (!buchungsklassen.getDescription().isEmpty())
+			_buchungsklassen.setDescription(buchungsklassen.getDescription());
 
-        return Buchungsklassen2BuchungsklassenReadListTO.apply(_buchungsklassen);
-    }
+		buchungsklassenRepository.save(_buchungsklassen);
+
+		return Buchungsklassen2BuchungsklassenReadListTO.apply(_buchungsklassen);
+	}
+
+	public Buchungsklassen findBuchungsklasse(UUID id) {
+		return buchungsklassenRepository.findById(id)
+				.orElseThrow(() -> new ApiRequestException("Cannot find Booking class with id" + id));
+	}
 }
