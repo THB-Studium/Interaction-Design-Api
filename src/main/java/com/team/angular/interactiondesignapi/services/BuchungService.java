@@ -115,11 +115,17 @@ public class BuchungService {
                 () -> new ApiRequestException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
         newBuchung.setReiseAngebot(ra);
 
+        ra.getLand().getName(); // // TODO: 14.05.2022
+
         // check if the Reisender already exists and save when not
+        Reisender reisender = new Reisender();
         if (reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
-            newBuchung.setReisender(
-                    reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
+            reisender = reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer());
+            newBuchung.setReisender(reisender);
         } else {
+            //reisender = buchung.getReisender();
+            buchung.getReisender().getName();// TODO: 14.05.2022
+            buchung.getReisender().getVorname();// TODO: 14.05.2022
             newBuchung
                     .setReisender(ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getReisender())));
         }
@@ -377,7 +383,7 @@ public class BuchungService {
 
     }
 
-    //todo: add hinFlugDatum and ruckFlugDatum; and update buchungDate
+    //todo: add hinFlugDatum and ruckFlugDatum; and update buchungDate; buchungsnummer; pdf name!?
     public byte[] exportPdf(UUID id) throws JRException, URISyntaxException, IOException {
 
         Buchung buchung = buchungRepository.findById(id)
@@ -498,4 +504,22 @@ public class BuchungService {
         return Files.toByteArray(file);
     }
 
+    public String createBuchungsnummer(String name, String vorname, String land) {
+
+        land = land.substring(3);
+        int saison = (LocalDate.now().getYear()) % 100;
+        name = name.substring(3);
+        vorname = vorname.substring(3);
+
+
+        return null;
+
+        /*
+
+XXXX est le nombre participant( Buchung) qui sera incrementé
+
+EX: ISL23DB 0001
+*/
+
+    }
 }
