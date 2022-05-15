@@ -44,10 +44,10 @@ spring:
       ddl-auto: update
 
   mail:
-    host: 127.0.0.1 #smtp.elasticemail.com
-    port: 25 #2525
-    username: #authService@yahoo.fr
-    password: #4FB090468FE1BE53496E35E3EFDA574F79CA
+    host: smtp.elasticemail.com
+    port: 2525
+    username: authService@yahoo.fr
+    password: 4FB090468FE1BE53496E35E3EFDA574F79CA
     protocol: smtp
     #tls: true
     properties.mail.smtp:
