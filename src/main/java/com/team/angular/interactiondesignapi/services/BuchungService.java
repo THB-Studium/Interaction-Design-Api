@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -126,16 +127,18 @@ public class BuchungService {
 		newBuchung.setBuchungsklasseId(tarif.getId());
 
 		// get the ReiseAngebot and set
-		ReiseAngebot ra = reiseAngebotService.findReiseAngebot(buchung.getReiseAngebotId());
+		ReiseAngebot ra = reiseAngebotRepository.findById(buchung.getReiseAngebotId()).orElseThrow(
+				() -> new ApiRequestException("Cannot find ReiseAngebot with id" + buchung.getReiseAngebotId()));
 		newBuchung.setReiseAngebot(ra);
 
 		// check if the Reisender already exists and save when not
+
 		if (reisenderRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
 			newBuchung.setReisender(
 					reisenderRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
 		} else {
-			newBuchung
-					.setReisender(ReisenderRead2ReisenderTO.apply(reisenderService.addReisender(buchung.getReisender())));
+			newBuchung.setReisender(
+					ReisenderRead2ReisenderTO.apply(reisenderService.addReisender(buchung.getReisender())));
 		}
 
 		// check if the MitReisender already exists and save when not
@@ -143,37 +146,37 @@ public class BuchungService {
 			if (reisenderRepository.getReisenderByTelefonnummer(buchung.getMitReisender().getTelefonnummer()) != null) {
 				newBuchung.setMitReisenderId(buchung.getMitReisender().getId());
 			} else {
-				newBuchung.setMitReisenderId(
-						ReisenderRead2ReisenderTO.apply(reisenderService.addReisender(buchung.getMitReisender())).getId());
+				newBuchung.setMitReisenderId(ReisenderRead2ReisenderTO
+						.apply(reisenderService.addReisender(buchung.getMitReisender())).getId());
 			}
 		}
-
-		newBuchung.setBuchungDatum(LocalDate.now());
 
 		newBuchung.setHinFlugDatum(buchung.getHinFlugDatum() != null ? buchung.getHinFlugDatum() : null);
 
 		newBuchung.setRuckFlugDatum(buchung.getRuckFlugDatum() != null ? buchung.getRuckFlugDatum() : null);
 
 		newBuchung.setFlughafen(buchung.getFlughafen());
-
 		newBuchung.setHandGepaeck(buchung.getHandGepaeck());
-
 		newBuchung.setKoffer(buchung.getKoffer());
-
 		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
-
 		newBuchung.setStatus(Buchungstatus.Eingegangen);
 
 		// update freiPlaetze after adding a new Buchung
 		if (ra.getFreiPlaetze() > 0) {
+			ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
 
-			ra.setFreiPlaetze(
-					buchung.getMitReisender() != null ? (ra.getFreiPlaetze() - 2) : (ra.getFreiPlaetze() - 1));
+			if (buchung.getMitReisender() != null) {
+				ra.setFreiPlaetze(ra.getFreiPlaetze() - 1);
+			}
 
 			reiseAngebotRepository.save(ra);
 		} else {
 			throw new ApiRequestException("The trip is fully booked");
 		}
+
+		// Buchungsnummer
+		newBuchung.setBuchungsnummer(createBuchungsnummer(ra.getLand().getName(), buchung.getReisender().getName(),
+				buchung.getReisender().getVorname()));
 
 		// save Buchung
 		BuchungReadTO savedBuchung = Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
@@ -473,7 +476,6 @@ public class BuchungService {
 		return export_html;
 	}
 
-	// todo: better to have it on separate Service or as componante
 	private byte[] generatePdfFile(Map<String, Object> data, String pdfFileName) throws IOException {
 		// thymeleaf context
 		Context context = new Context();
@@ -505,22 +507,35 @@ public class BuchungService {
 				.orElseThrow(() -> new ApiRequestException("Cannot find Booking with id" + id));
 	}
 
-    public String createBuchungsnummer(String name, String vorname, String land) {
+	public String createBuchungsnummer(String land, String name, String vorname) {
 
-        land = land.substring(3);
-        int saison = (LocalDate.now().getYear()) % 100;
-        name = name.substring(3);
-        vorname = vorname.substring(3);
+		StringBuilder str = new StringBuilder();
+		land = land.substring(0, 3).toUpperCase(Locale.ROOT);
+		int saison = (LocalDate.now().getYear()) % 100;
+		name = name.substring(0, 0);
+		vorname = vorname.substring(0, 0);
 
+		String nummer = "001";
 
-        return null;
+		// can be null
+		String lastBuchungsnummer = buchungRepository.findFirstByOrderByIdDesc().getBuchungsnummer();
 
-        /*
+		// format nummer to XXX
+		if (lastBuchungsnummer != null) {
+			int newNummer = Integer.parseInt(lastBuchungsnummer.substring(5, 8)) + 1;
+			if (newNummer < 10) {// X
+				nummer = "00" + newNummer;
 
-XXXX est le nombre participant( Buchung) qui sera incrementé
+			} else if (newNummer < 100 && newNummer > 10) {// XX
+				nummer = "0" + newNummer;
+			}
+		}
 
-EX: ISL23DB 0001
-*/
-
-    }
+		str.append(land)
+		.append(saison)
+		.append(name)
+		.append(vorname)
+		.append(nummer);
+		return str.toString();
+	}
 }
