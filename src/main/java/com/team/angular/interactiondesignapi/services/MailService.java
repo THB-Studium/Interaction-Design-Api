@@ -26,130 +26,124 @@ import java.util.Objects;
 @Slf4j
 public class MailService {
 
-    @Autowired
-    private JavaMailSender emailSender;
+	@Autowired
+	private JavaMailSender emailSender;
 
-    @Autowired
-    private SpringTemplateEngine templateEngine;
+	@Autowired
+	private SpringTemplateEngine templateEngine;
 
-    @Value("${template.email.simple-email}")
-    private String template_simple_email;
+	@Value("${template.email.simple-email}")
+	private String template_simple_email;
 
-    @Value("${template.email.from}")
-    private String from;
+	@Value("${template.email.from}")
+	private String from;
 
-    // simple mail
-    public ResponseEntity<?> sendHtmlMessage(Email email) {
+	// simple mail
+	public ResponseEntity<?> sendHtmlMessage(Email email) {
 
-        try {
-            MimeMessage message = emailSender.createMimeMessage();
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
 
-            message.reply(email.isReply());
+			message.reply(email.isReply());
 
-            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
+			MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+					StandardCharsets.UTF_8.name());
 
-            Context context = new Context();
-            context.setVariables(email.getProperties());
+			Context context = new Context();
+			context.setVariables(email.getProperties());
 
-            helper.setFrom(from);
-            helper.setTo(email.getTo());
-            helper.setSubject(email.getSubject());
+			helper.setFrom(from);
+			helper.setTo(email.getTo());
+			helper.setSubject(email.getSubject());
 
-            // html template for email
-            String html = templateEngine.
-                    process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
+			// html template for email
+			String html = templateEngine
+					.process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
 
-            helper.setText(html, true);
+			helper.setText(html, true);
 
-            log.info("Message sent successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
+			log.info("Message sent successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
 
-            emailSender.send(message);
-            templateEngine.clearTemplateCache();
-            return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Error during email sending : {}", e.getMessage());
-            throw new ApiRequestException(e.getMessage());
-        }
-    }
+			emailSender.send(message);
+			templateEngine.clearTemplateCache();
+			return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("Error during email sending : {}", e.getMessage());
+			throw new ApiRequestException(e.getMessage());
+		}
+	}
 
-    // Mail with multipartFile
-    public ResponseEntity<?> sendHtmlMessageAttachment(Email email, List<MultipartFile> content) {
-        try {
-            MimeMessage message = emailSender.createMimeMessage();
+	// Mail with multipartFile
+	public ResponseEntity<?> sendHtmlMessageAttachment(Email email, List<MultipartFile> content) {
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
 
-            message.reply(email.isReply());
+			message.reply(email.isReply());
 
-            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
+			MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+					StandardCharsets.UTF_8.name());
 
-            Context context = new Context();
-            context.setVariables(email.getProperties());
+			Context context = new Context();
+			context.setVariables(email.getProperties());
 
-            helper.setFrom(from);
-            helper.setTo(email.getTo());
-            helper.setSubject(email.getSubject());
+			helper.setFrom(from);
+			helper.setTo(email.getTo());
+			helper.setSubject(email.getSubject());
 
-            String html = templateEngine
-                    .process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
-            helper.setText(html, true);
+			String html = templateEngine
+					.process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
+			helper.setText(html, true);
 
-            if (content != null) {
-                for (MultipartFile multipartFile : content) {
-                    helper.addAttachment(Objects.requireNonNull(multipartFile.getOriginalFilename()), multipartFile);
-                }
-            }
+			if (content != null) {
+				for (MultipartFile multipartFile : content) {
+					helper.addAttachment(Objects.requireNonNull(multipartFile.getOriginalFilename()), multipartFile);
+				}
+			}
 
-            /*if (content != null) {
-                for (MultipartFile multipartFile : content) {
-                    DataSource ds = new ByteArrayDataSource(multipartFile.getBytes(), multipartFile.getContentType());
-                    helper.addAttachment(multipartFile.getOriginalFilename(), ds);
-                }
-            }*/
+			log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(),
+					LocalDateTime.now());
 
-            log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
+			emailSender.send(message);
+			templateEngine.clearTemplateCache();
+			return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("Error during email sending : {}", e.getMessage());
+			throw new ApiRequestException(e.getMessage());
+		}
+	}
 
-            emailSender.send(message);
-            templateEngine.clearTemplateCache();
-            return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Error during email sending : {}", e.getMessage());
-            throw new ApiRequestException(e.getMessage());
-        }
-    }
+	// Mail with DataSource
+	public void sendHtmlMessageAttachment(Email email, DataSource source) {
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
 
-    // Mail with DataSource
-    public void sendHtmlMessageAttachment(Email email, DataSource source) {
-        try {
-            MimeMessage message = emailSender.createMimeMessage();
+			message.reply(email.isReply());
 
-            message.reply(email.isReply());
+			MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+					StandardCharsets.UTF_8.name());
 
-            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
+			Context context = new Context();
+			context.setVariables(email.getProperties());
 
-            Context context = new Context();
-            context.setVariables(email.getProperties());
+			helper.setFrom(from);
+			helper.setTo(email.getTo());
+			helper.setSubject(email.getSubject());
 
-            helper.setFrom(from);
-            helper.setTo(email.getTo());
-            helper.setSubject(email.getSubject());
+			String html = templateEngine
+					.process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
+			helper.setText(html, true);
 
-            String html = templateEngine
-                    .process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
-            helper.setText(html, true);
+			helper.addAttachment("booking_" + LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) + ".pdf", source);
 
+			log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(),
+					LocalDateTime.now());
 
-            helper.addAttachment("booking_"+LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)+".pdf", source);
-
-            log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(), LocalDateTime.now());
-
-            emailSender.send(message);
-            templateEngine.clearTemplateCache();
-            new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Error during email sending : {}", e.getMessage());
-            throw new ApiRequestException(e.getMessage());
-        }
-    }
+			emailSender.send(message);
+			templateEngine.clearTemplateCache();
+			new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("Error during email sending : {}", e.getMessage());
+			throw new ApiRequestException(e.getMessage());
+		}
+	}
 }
