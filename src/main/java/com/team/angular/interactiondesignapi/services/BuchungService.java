@@ -91,13 +91,13 @@ public class BuchungService {
 	@Autowired
 	private BuchungsklassenService buchungsklassenService;
 	@Autowired
-	private ReisenderRepository reiserRepository;
+	private ReisenderRepository reisenderRepository;
 	@Autowired
 	private ReiseAngebotRepository reiseAngebotRepository;
 	@Autowired
 	private ReiseAngebotService reiseAngebotService;
 	@Autowired
-	private ReisenderService reiserService;
+	private ReisenderService reisenderService;
 	@Autowired
 	private MailService mailService;
 
@@ -130,21 +130,21 @@ public class BuchungService {
 		newBuchung.setReiseAngebot(ra);
 
 		// check if the Reisender already exists and save when not
-		if (reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
+		if (reisenderRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()) != null) {
 			newBuchung.setReisender(
-					reiserRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
+					reisenderRepository.getReisenderByTelefonnummer(buchung.getReisender().getTelefonnummer()));
 		} else {
 			newBuchung
-					.setReisender(ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getReisender())));
+					.setReisender(ReisenderRead2ReisenderTO.apply(reisenderService.addReisender(buchung.getReisender())));
 		}
 
 		// check if the MitReisender already exists and save when not
 		if (buchung.getMitReisender() != null) {
-			if (reiserRepository.getReisenderByTelefonnummer(buchung.getMitReisender().getTelefonnummer()) != null) {
+			if (reisenderRepository.getReisenderByTelefonnummer(buchung.getMitReisender().getTelefonnummer()) != null) {
 				newBuchung.setMitReisenderId(buchung.getMitReisender().getId());
 			} else {
 				newBuchung.setMitReisenderId(
-						ReisenderRead2ReisenderTO.apply(reiserService.addReisender(buchung.getMitReisender())).getId());
+						ReisenderRead2ReisenderTO.apply(reisenderService.addReisender(buchung.getMitReisender())).getId());
 			}
 		}
 
@@ -210,12 +210,12 @@ public class BuchungService {
 		}
 
 		if (buchung.getReisenderId() != null) {
-			Reisender reiser = reiserService.findReisender(buchung.getReisenderId());
+			Reisender reiser = reisenderService.findReisender(buchung.getReisenderId());
 			actual.setReisender(reiser);
 		}
 
 		if (buchung.getMitReisenderId() != null) {
-			Reisender mitReisender = reiserService.findReisender(buchung.getMitReisenderId());
+			Reisender mitReisender = reisenderService.findReisender(buchung.getMitReisenderId());
 			actual.setMitReisenderId(mitReisender.getId());
 		} else if (buchung.getMitReisenderId() == null) {
 			// TODO why null? we have removeMitReisender()
@@ -226,8 +226,8 @@ public class BuchungService {
 			ra.setFreiPlaetze(ra.getFreiPlaetze() + 1);
 			reiseAngebotRepository.save(ra);
 
-			Reisender mitReisender = reiserService.findReisender(actual.getMitReisenderId());
-			reiserService.deleteReisender(mitReisender.getId());
+			Reisender mitReisender = reisenderService.findReisender(actual.getMitReisenderId());
+			reisenderService.deleteReisender(mitReisender.getId());
 		}
 
 		actual.setBuchungDatum(buchung.getBuchungDatum() != null ? buchung.getBuchungDatum() : null);
@@ -288,8 +288,8 @@ public class BuchungService {
 		buchungRepository.save(buchung);
 		log.info("successfully removed");
 
-		Reisender mitReisender = reiserService.findReisender(buchung.getMitReisenderId());
-		reiserService.deleteReisender(mitReisender.getId());
+		Reisender mitReisender = reisenderService.findReisender(buchung.getMitReisenderId());
+		reisenderService.deleteReisender(mitReisender.getId());
 
 		// update freiPlaetze after deleting a new Buchung
 		ReiseAngebot ra = buchung.getReiseAngebot();
@@ -431,7 +431,7 @@ public class BuchungService {
 		params.put("mit_mitreiser_bool", buchung.getMitReisenderId() != null ? true : false);
 
 		if (buchung.getMitReisenderId() != null) {
-			Reisender mitReisender = reiserRepository.findById(buchung.getMitReisenderId()).get();
+			Reisender mitReisender = reisenderRepository.findById(buchung.getMitReisenderId()).get();
 			params.put("mitReisender_name_vorname", mitReisender.getName() + "  " + mitReisender.getVorname());
 			params.put("mitReisender_postanschrift", mitReisender.getAdresse());
 			params.put("mitReisender_geburtsdatum", mitReisender.getGeburtsdatum().toString());
