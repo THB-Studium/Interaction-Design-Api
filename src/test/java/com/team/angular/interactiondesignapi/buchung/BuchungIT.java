@@ -107,7 +107,8 @@ public class BuchungIT extends ItBase {
         assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
         assertThat(create.getFlughafen(), is(buchung.getFlughafen()));
         assertThat(Buchungstatus.Eingegangen, is(buchung.getStatus()));
-        //assertThat(reiseAngebot.getFreiPlaetze(), is(reiseAngebot.getFreiPlaetze() - 1));
+        assertThat(create.getHinFlugDatum(), is(buchung.getHinFlugDatum()));
+        assertThat(create.getRuckFlugDatum(), is(buchung.getRuckFlugDatum()));
     }
 
     @Test
@@ -151,6 +152,8 @@ public class BuchungIT extends ItBase {
         assertThat(update.getReisenderId(), is(reisender1.getId()));
         assertThat(update.getMitReisenderId(), is(mitReisender1.getId()));
         assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
+        assertThat(update.getHinFlugDatum(), is(buchung.getHinFlugDatum()));
+        assertThat(update.getRuckFlugDatum(), is(buchung.getRuckFlugDatum()));
     }
 
     @Test
