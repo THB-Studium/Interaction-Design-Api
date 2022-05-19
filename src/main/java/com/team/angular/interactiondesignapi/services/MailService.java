@@ -1,8 +1,16 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ApiRequestException;
-import com.team.angular.interactiondesignapi.models.Email;
-import lombok.extern.slf4j.Slf4j;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+
+import javax.activation.DataSource;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -14,13 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.activation.DataSource;
-import javax.mail.internet.MimeMessage;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.List;
-import java.util.Objects;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
+import com.team.angular.interactiondesignapi.models.Buchung;
+import com.team.angular.interactiondesignapi.models.Email;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -113,7 +119,7 @@ public class MailService {
 	}
 
 	// Mail with DataSource
-	public void sendHtmlMessageAttachment(Email email, DataSource source) {
+	public void sendHtmlMessageAttachment(Email email, DataSource source, Buchung buchung) {
 		try {
 			MimeMessage message = emailSender.createMimeMessage();
 
@@ -133,7 +139,13 @@ public class MailService {
 					.process(email.getTemplate() != null ? email.getTemplate() : template_simple_email, context);
 			helper.setText(html, true);
 
-			helper.addAttachment("booking_" + LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) + ".pdf", source);
+			// pdf filename: Ex: LandName_22_ReisenderName_2022-05-19.pdf
+			helper.addAttachment(					 
+					buchung.getReiseAngebot().getLand().getName().substring(0, 3).toUpperCase(Locale.ROOT) +"_" +
+					buchung.getReiseAngebot().getStartDatum().getYear() % 100 + "_" +
+				    buchung.getReisender().getName() +"_" +
+				    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".pdf", 
+					source);
 
 			log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(),
 					LocalDateTime.now());

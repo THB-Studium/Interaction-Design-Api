@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -150,15 +152,21 @@ public class BuchungService {
 						.apply(reisenderService.addReisender(buchung.getMitReisender())).getId());
 			}
 		}
+		
+		newBuchung.setBuchungDatum(LocalDate.now());
 
 		newBuchung.setHinFlugDatum(buchung.getHinFlugDatum() != null ? buchung.getHinFlugDatum() : null);
 
 		newBuchung.setRuckFlugDatum(buchung.getRuckFlugDatum() != null ? buchung.getRuckFlugDatum() : null);
 
 		newBuchung.setFlughafen(buchung.getFlughafen());
+		
 		newBuchung.setHandGepaeck(buchung.getHandGepaeck());
+		
 		newBuchung.setKoffer(buchung.getKoffer());
+		
 		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
+		
 		newBuchung.setStatus(Buchungstatus.Eingegangen);
 
 		// update freiPlaetze after adding a new Buchung
@@ -179,7 +187,8 @@ public class BuchungService {
 				buchung.getReisender().getVorname()));
 
 		// save Buchung
-		BuchungReadTO savedBuchung = Buchung2BuchungReadTO.apply(buchungRepository.save(newBuchung));
+		newBuchung = buchungRepository.save(newBuchung);
+		BuchungReadTO savedBuchung = Buchung2BuchungReadTO.apply(newBuchung);
 
 		// props for email template
 		Map<String, Object> properties = new HashMap<>();
@@ -187,7 +196,8 @@ public class BuchungService {
 		properties.put("ziel", newBuchung.getReiseAngebot().getLand().getName());
 
 		// build email object
-		String[] to = { newBuchung.getReisender().getEmail() };
+		String[] to =  {newBuchung.getReisender().getEmail()};
+
 
 		// export booking pdf
 		byte[] export = exportPdf(savedBuchung.getId());
@@ -198,7 +208,7 @@ public class BuchungService {
 		sourceOS.write(export);
 
 		// send mail
-		sendMail(properties, to, "Bestätigung der Reservierung", template_new_booking, source);
+		sendMail(properties, to, "Bestätigung der Reservierung", template_new_booking, source, newBuchung);
 
 		return savedBuchung;
 	}
@@ -251,6 +261,35 @@ public class BuchungService {
 			ReiseAngebot ra = reiseAngebotService.findReiseAngebot(buchung.getReiseAngebotId());
 			actual.setReiseAngebot(ra);
 		}
+		
+		// save
+		actual = buchungRepository.save(actual);
+
+		// template params
+		Map<String, Object> properties = new HashMap<>();
+		properties.put("name", actual.getReisender().getName());
+		properties.put("status", actual.getStatus());
+		properties.put("ziel", actual.getReiseAngebot().getLand().getName());
+
+		// mail Reisender
+		String[] to =  {actual.getReisender().getEmail()};
+
+		try {
+			// export booking pdf
+			byte[] export = exportPdf(actual.getId());
+
+			// data source to write the exported pdf into
+			DataSource source = new FileDataSource(ResourceUtils.getFile(templateLink));
+
+			OutputStream sourceOS = source.getOutputStream();
+			sourceOS.write(export);
+			sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source, actual);
+		} catch (Exception e) {
+			log.error("Error during exporting pdf: {}", e.getMessage());
+			throw new ApiRequestException(e.getMessage());
+		}
+		log.info("Status Successfully updated");
+		return Buchung2BuchungReadTO.apply(actual);
 
 		// send mail on updated status
 		/*
@@ -279,8 +318,6 @@ public class BuchungService {
 
 		// changeStatus(buchung.getId(), buchung.getStatus().toString()); //todo for
 		// change status
-
-		return Buchung2BuchungReadTO.apply(buchungRepository.save(actual));
 	}
 
 	public ResponseEntity<?> removeMitReisender(UUID id) {
@@ -318,7 +355,7 @@ public class BuchungService {
 			}
 
 			// save
-			buchungRepository.save(buchung);
+			buchung = buchungRepository.save(buchung);
 
 			// template params
 			Map<String, Object> properties = new HashMap<>();
@@ -327,7 +364,7 @@ public class BuchungService {
 			properties.put("ziel", buchung.getReiseAngebot().getLand().getName());
 
 			// mail Reisender
-			String[] to = { buchung.getReisender().getEmail() };
+			String[] to =  {buchung.getReisender().getEmail()};
 
 			try {
 				// export booking pdf
@@ -338,7 +375,7 @@ public class BuchungService {
 
 				OutputStream sourceOS = source.getOutputStream();
 				sourceOS.write(export);
-				sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source);
+				sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source, buchung);
 			} catch (Exception e) {
 				log.error("Error during exporting pdf: {}", e.getMessage());
 				throw new ApiRequestException(e.getMessage());
@@ -366,7 +403,7 @@ public class BuchungService {
 	}
 
 	private void sendMail(Map<String, Object> properties, String[] to, String subject, String template,
-			DataSource source) {
+			DataSource source, Buchung buchung) {
 
 		Email email = new Email();
 
@@ -377,7 +414,7 @@ public class BuchungService {
 		email.setTemplate(template);
 		email.setProperties(properties);
 		if (source != null) {
-			mailService.sendHtmlMessageAttachment(email, source);
+			mailService.sendHtmlMessageAttachment(email, source, buchung);
 			log.info("Successfully sent mail");
 		} else {
 			mailService.sendHtmlMessage(email);
@@ -450,10 +487,12 @@ public class BuchungService {
 		params.put("copyright_monat_jahr", LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear());
 
 		params.put("buchung_datum", buchung.getBuchungDatum().toString());
+		
+		params.put("buchungsnummer", buchung.getBuchungsnummer());
 
-		params.put("hinFlug", buchung.getHinFlugDatum() != null ? buchung.getHinFlugDatum().toString() : " ");
+		params.put("hinFlug", buchung.getHinFlugDatum());
 
-		params.put("rueckflug", buchung.getRuckFlugDatum() != null ? buchung.getRuckFlugDatum().toString() : " ");
+		params.put("rueckflug", buchung.getRuckFlugDatum());
 
 		params.put("buchungsklasse", tarif.getType());
 		params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
@@ -471,11 +510,17 @@ public class BuchungService {
 		// byte[] export = JasperExportManager.exportReportToPdf(jasperPrint);
 
 		// export pdf with html
-		byte[] export_html = generatePdfFile(params, "export.pdf");
+		byte[] export_html = generatePdfFile(
+				params, 
+				buchung.getReiseAngebot().getLand().getName().substring(0, 3).toUpperCase(Locale.ROOT) +"_" +
+				buchung.getReiseAngebot().getStartDatum().getYear() % 100 + "_" +
+			    buchung.getReisender().getName() +"_" +
+				LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".pdf");
 
 		return export_html;
 	}
-
+	
+	// pdf filename: Ex: LandName_22_ReisenderName_2022-05-19.pdf
 	private byte[] generatePdfFile(Map<String, Object> data, String pdfFileName) throws IOException {
 		// thymeleaf context
 		Context context = new Context();

@@ -218,7 +218,7 @@ public class ItBase {
         reisender.setVorname(UUID.randomUUID().toString());
         reisender.setGeburtsdatum(LocalDate.now());
         reisender.setTelefonnummer("+491232354" + (int) (Math.random() * 100));
-        reisender.setEmail(UUID.randomUUID().toString());
+        reisender.setEmail(UUID.randomUUID().toString()+"@test.de");
         reisender.setHochschule(UUID.randomUUID().toString());
         reisender.setAdresse(UUID.randomUUID().toString());
         reisender.setStudiengang(UUID.randomUUID().toString());
@@ -236,7 +236,7 @@ public class ItBase {
         reisender.setVorname(UUID.randomUUID().toString());
         reisender.setGeburtsdatum(LocalDate.now());
         reisender.setTelefonnummer("+491232354" + (int) (Math.random() * 100));
-        reisender.setEmail(UUID.randomUUID().toString());
+        reisender.setEmail(UUID.randomUUID().toString()+"@test.de");
         reisender.setHochschule(UUID.randomUUID().toString());
         reisender.setAdresse(UUID.randomUUID().toString());
         reisender.setStudiengang(UUID.randomUUID().toString());
@@ -276,6 +276,8 @@ public class ItBase {
         newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
         newBuchung.setReisender(buildReisenderWriteTO());
         newBuchung.setReiseAngebotId(raId);
+        newBuchung.setHinFlugDatum(LocalDate.now());
+        newBuchung.setRuckFlugDatum(LocalDate.now().plusDays(10));
 
         return newBuchung;
     }
@@ -292,6 +294,7 @@ public class ItBase {
         newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
         newBuchung.setReisenderId(reisenderId);
         newBuchung.setReiseAngebotId(raId);
+        newBuchung.setStatus(Buchungstatus.Bearbeitung);
 
         return newBuchung;
     }
