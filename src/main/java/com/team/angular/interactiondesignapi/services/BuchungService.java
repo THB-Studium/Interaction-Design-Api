@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.activation.DataSource;
@@ -80,6 +81,9 @@ public class BuchungService {
 
 	@Value("${template.email.update-booking}")
 	private String template_update_booking;
+	
+	@Value("${template.email.delete-booking}")
+	private String template_delete_booking;
 
 	@Value("${template.email.html-pdf}")
 	private String template;
@@ -119,6 +123,19 @@ public class BuchungService {
 		return Buchung2BuchungReadTO.apply(buchung);
 	}
 
+	public ResponseEntity<?> getBuchungByBuchungsnummer(String nummer) {
+
+		Optional<Buchung> buchung = buchungRepository.findByBuchungsnummer(nummer);
+
+		if (!buchung.isPresent()) {
+			return new ResponseEntity<>(String.format("Cannot find Booking with number %s", nummer),
+					HttpStatus.NOT_FOUND);
+		} else {
+			return ResponseEntity.ok(Buchung2BuchungReadTO.apply(buchung.get()));
+		}
+
+	}
+
 	public BuchungReadTO addBuchung(BuchungWriteTO buchung) throws Exception {
 
 		// for building the new Buchung
@@ -152,7 +169,7 @@ public class BuchungService {
 						.apply(reisenderService.addReisender(buchung.getMitReisender())).getId());
 			}
 		}
-		
+
 		newBuchung.setBuchungDatum(LocalDate.now());
 
 		newBuchung.setHinFlugDatum(buchung.getHinFlugDatum() != null ? buchung.getHinFlugDatum() : null);
@@ -160,13 +177,13 @@ public class BuchungService {
 		newBuchung.setRuckFlugDatum(buchung.getRuckFlugDatum() != null ? buchung.getRuckFlugDatum() : null);
 
 		newBuchung.setFlughafen(buchung.getFlughafen());
-		
+
 		newBuchung.setHandGepaeck(buchung.getHandGepaeck());
-		
+
 		newBuchung.setKoffer(buchung.getKoffer());
-		
+
 		newBuchung.setZahlungMethod(buchung.getZahlungMethod());
-		
+
 		newBuchung.setStatus(Buchungstatus.Eingegangen);
 
 		// update freiPlaetze after adding a new Buchung
@@ -196,8 +213,7 @@ public class BuchungService {
 		properties.put("ziel", newBuchung.getReiseAngebot().getLand().getName());
 
 		// build email object
-		String[] to =  {newBuchung.getReisender().getEmail()};
-
+		String[] to = { newBuchung.getReisender().getEmail() };
 
 		// export booking pdf
 		byte[] export = exportPdf(savedBuchung.getId());
@@ -261,7 +277,7 @@ public class BuchungService {
 			ReiseAngebot ra = reiseAngebotService.findReiseAngebot(buchung.getReiseAngebotId());
 			actual.setReiseAngebot(ra);
 		}
-		
+
 		// save
 		actual = buchungRepository.save(actual);
 
@@ -272,7 +288,7 @@ public class BuchungService {
 		properties.put("ziel", actual.getReiseAngebot().getLand().getName());
 
 		// mail Reisender
-		String[] to =  {actual.getReisender().getEmail()};
+		String[] to = { actual.getReisender().getEmail() };
 
 		try {
 			// export booking pdf
@@ -364,7 +380,7 @@ public class BuchungService {
 			properties.put("ziel", buchung.getReiseAngebot().getLand().getName());
 
 			// mail Reisender
-			String[] to =  {buchung.getReisender().getEmail()};
+			String[] to = { buchung.getReisender().getEmail() };
 
 			try {
 				// export booking pdf
@@ -375,7 +391,11 @@ public class BuchungService {
 
 				OutputStream sourceOS = source.getOutputStream();
 				sourceOS.write(export);
-				sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source, buchung);
+				if(buchung.getStatus().equals(Buchungstatus.Storniert)) {
+					sendMail(properties, to, "Stornierung der Reservierung", template_delete_booking, source, buchung);
+				} else {
+					sendMail(properties, to, "Aktualisierung der Reservierung", template_update_booking, source, buchung);
+				}
 			} catch (Exception e) {
 				log.error("Error during exporting pdf: {}", e.getMessage());
 				throw new ApiRequestException(e.getMessage());
@@ -487,7 +507,7 @@ public class BuchungService {
 		params.put("copyright_monat_jahr", LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear());
 
 		params.put("buchung_datum", buchung.getBuchungDatum().toString());
-		
+
 		params.put("buchungsnummer", buchung.getBuchungsnummer());
 
 		params.put("hinFlug", buchung.getHinFlugDatum());
@@ -510,16 +530,15 @@ public class BuchungService {
 		// byte[] export = JasperExportManager.exportReportToPdf(jasperPrint);
 
 		// export pdf with html
-		byte[] export_html = generatePdfFile(
-				params, 
-				buchung.getReiseAngebot().getLand().getName().substring(0, 3).toUpperCase(Locale.ROOT) +"_" +
-				buchung.getReiseAngebot().getStartDatum().getYear() % 100 + "_" +
-			    buchung.getReisender().getName() +"_" +
-				LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".pdf");
+		byte[] export_html = generatePdfFile(params,
+				buchung.getReiseAngebot().getLand().getName().substring(0, 3).toUpperCase(Locale.ROOT) + "_"
+						+ buchung.getReiseAngebot().getStartDatum().getYear() % 100 + "_"
+						+ buchung.getReisender().getName() + "_"
+						+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".pdf");
 
 		return export_html;
 	}
-	
+
 	// pdf filename: Ex: LandName_22_ReisenderName_2022-05-19.pdf
 	private byte[] generatePdfFile(Map<String, Object> data, String pdfFileName) throws IOException {
 		// thymeleaf context
@@ -576,11 +595,7 @@ public class BuchungService {
 			}
 		}
 
-		str.append(land)
-		.append(saison)
-		.append(name)
-		.append(vorname)
-		.append(nummer);
+		str.append(land).append(saison).append(name).append(vorname).append(nummer);
 		return str.toString();
 	}
 }

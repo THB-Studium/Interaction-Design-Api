@@ -21,7 +21,7 @@ public class Buchung {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
-    private String Buchungsnummer;
+    private String buchungsnummer;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate buchungDatum;
