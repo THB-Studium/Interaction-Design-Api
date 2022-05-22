@@ -37,8 +37,7 @@ deploy on dev:
 build release container:
   stage: build-container
   when: manual
-  only:
-    - tags
+  
   tags:
     - build
   environment:
@@ -54,3 +53,4 @@ build release container:
     - echo $GITLAB_RUNNER_PASSWORD | sudo -S docker login $REMOTE_REGISTRY --username $GITLAB_USER --password $GITLAB_PASSWORD
     - echo $GITLAB_RUNNER_PASSWORD | sudo -S docker push $IMAGENAME > push-image-release.out
     - echo $GITLAB_RUNNER_PASSWORD | sudo -S docker logout $REMOTE_REGISTRY
+    
