@@ -32,3 +32,24 @@ deploy on dev:
     - echo $GITLAB_RUNNER_PASSWORD | sudo -S chown -R $REMOTE_SERVICE_OWNER:$REMOTE_SERVICE_OWNER .
     - echo $GITLAB_RUNNER_PASSWORD | sudo -S systemctl start $SYSTEMCTL_UNIT;
     - echo starting service
+
+build release container:
+  stage: build-container
+  when: manual
+  only:
+    - tags
+  tags:
+    - build
+  environment:
+    name: container/release
+  script:
+    - REMOTE_REGISTRY="registry.gitlab.com"
+    - VERSION=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`
+    - ARTIFACTID=`mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout`
+    - IMAGENAME=$REMOTE_REGISTRY/itApi/$ARTIFACTID:$VERSION-RELEASE
+    - mvn clean package
+    - cp target/*.jar target/app.jar
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S docker build -t $IMAGE:$COMMIT_TAG . > build-image.out
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S docker login $REMOTE_REGISTRY --username $GITLAB_USER --password $GITLAB_PASSWORD
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S docker push $IMAGENAME > push-image-release.out
+    - echo $GITLAB_RUNNER_PASSWORD | sudo -S docker logout $REMOTE_REGISTRY
