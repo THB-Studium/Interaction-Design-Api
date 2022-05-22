@@ -80,9 +80,6 @@ public class ErwartungenIT extends ItBase {
 		assertThat(create.getSonne_strand(), is(erwartungen.getSonne_strand()));
 		assertThat(create.getSicherheit(), is(erwartungen.getSicherheit()));
 		assertThat(create.getRoad(), is(erwartungen.getRoad()));
-		
-		// TODO check the null pointer
-		//assertThat(create.getReiseAngebotId(), is(erwartungen.getReiseAngebot().getId()));
 	}
 	
 	@Test

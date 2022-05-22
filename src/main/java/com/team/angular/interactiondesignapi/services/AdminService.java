@@ -27,7 +27,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
-public class AdminService implements UserDetailsService {//
+public class AdminService implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
 
     @Autowired
@@ -36,8 +36,7 @@ public class AdminService implements UserDetailsService {//
     private PasswordEncoder bcryptEncoder;
 
     public AdminOutTO getAdmin(UUID id) {
-        return Admin2AdminOutTO.apply(adminRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + id)));
+        return Admin2AdminOutTO.apply(findAdmin(id));
     }
 
     public List<AdminOutTO> getAll(Integer pageNo, Integer pageSize, String sortBy) {
@@ -65,8 +64,7 @@ public class AdminService implements UserDetailsService {//
     }
 
     public ResponseEntity<?> deleteAdmin(UUID id) {
-        Admin actual = adminRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + id));
+        Admin actual = findAdmin(id);
 
         adminRepository.deleteById(actual.getId());
         log.info("admin successfully deleted");
@@ -75,8 +73,7 @@ public class AdminService implements UserDetailsService {//
     }
 
     public AdminOutTO updateAdmin(AdminWriteTO admin) {
-        Admin _admin = adminRepository.findById(admin.getId())
-                .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + admin.getId()));
+        Admin _admin = findAdmin(admin.getId());
 
         if (admin.getName() != null)
             _admin.setName(admin.getName());
@@ -126,5 +123,10 @@ public class AdminService implements UserDetailsService {//
         // Initialise User with email on place of name
         return new org.springframework.security.core.userdetails.User(admin.getEmail(), admin.getPassword(), true,
                 true, true, true, getAuthorities());
+    }
+    
+    public Admin findAdmin(UUID id) {
+    	return adminRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Cannot find Admin with id: " + id));
     }
 }

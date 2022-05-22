@@ -23,80 +23,85 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 public class BuchungController {
 
-    @Autowired
-    protected BuchungService buchungService;
+	@Autowired
+	protected BuchungService buchungService;
 
-    @ApiOperation("Get All Buchungen")
-    @GetMapping("")
-    public List<BuchungReadTO> getAllBuchungs(@RequestParam(defaultValue = "0") Integer pageNo,
-                                              @RequestParam(defaultValue = "10") Integer pageSize,
-                                              @RequestParam(defaultValue = "buchungDatum") String sortBy) {
-        return buchungService.getAll(pageNo, pageSize, sortBy);
-    }
+	@ApiOperation("Get All Buchungen")
+	@GetMapping("")
+	public List<BuchungReadTO> getAllBuchungs(@RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "10") Integer pageSize,
+			@RequestParam(defaultValue = "buchungDatum") String sortBy) {
+		return buchungService.getAll(pageNo, pageSize, sortBy);
+	}
 
-    @ApiOperation("Get One Buchung")
-    @GetMapping("/{id}")
-    public BuchungReadTO getBuchungById(
-            @ApiParam(name = "BuchungId", value = "ID of the Buchung") @PathVariable UUID id) {
-        return buchungService.getBuchung(id);
-    }
+	@ApiOperation("Get One Buchung")
+	@GetMapping("/{id}")
+	public BuchungReadTO getBuchungById(
+			@ApiParam(name = "BuchungId", value = "ID of the Buchung") @PathVariable UUID id) {
+		return buchungService.getBuchung(id);
+	}
 
-    @ApiOperation("Export Buchung als pdf")
-    @GetMapping("/exportPdf/{id}")
-    public ResponseEntity<ByteArrayResource> exportPdf(
-            @ApiParam(name = "BuchungId", value = "ID of the Buchung") @PathVariable UUID id)
-            throws URISyntaxException, IOException {
+	@ApiOperation("Get One Booking by Number")
+	@GetMapping("/nummer/{nummer}")
+	public ResponseEntity<?> getBuchungByBuchungsNummer(
+			@ApiParam(name = "BuchungsNummer", value = "Number of the Buchung") @PathVariable String nummer) {
+		return buchungService.getBuchungByBuchungsnummer(nummer);
+	}
 
-        byte[] data = null;
-        try {
-            data = buchungService.exportPdf(id);
-        } catch (JRException e) {
-            e.printStackTrace();
-        }
+	@ApiOperation("Export Buchung als pdf")
+	@GetMapping("/exportPdf/{id}")
+	public ResponseEntity<ByteArrayResource> exportPdf(
+			@ApiParam(name = "BuchungId", value = "ID of the Buchung") @PathVariable UUID id)
+			throws URISyntaxException, IOException {
 
-        ByteArrayResource resource = new ByteArrayResource(data);
+		byte[] data = null;
+		try {
+			data = buchungService.exportPdf(id);
+		} catch (JRException e) {
+			e.printStackTrace();
+		}
 
-        return ResponseEntity
-                .ok().contentLength(data.length)
-                .header("Content-type", "application/octet-stream")
-                .header("Content-disposition", "attachement; filename=Buchung_" + LocalDate.now()
-                        .toString() + ".pdf")
-                .body(resource);
-    }
+		ByteArrayResource resource = new ByteArrayResource(data);
 
-    @ApiOperation("Add One Buchung")
-    @PostMapping("")
-    public BuchungReadTO addBuchung(@ApiParam(name = "Buchung", value = "Buchung to add")
-                                    @RequestBody BuchungWriteTO buchung) throws Exception {
-        return buchungService.addBuchung(buchung);
-    }
+		return ResponseEntity.ok().contentLength(data.length).header("Content-type", "application/octet-stream")
+				.header("Content-disposition", "attachement; filename=Buchung_" + LocalDate.now().toString() + ".pdf")
+				.body(resource);
+	}
 
-    @ApiOperation("Update Buchung")
-    @PutMapping("")
-    public BuchungReadTO updateBuchung(
-            @ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) {
-        return buchungService.updateBuchung(buchung);
-    }
+	@ApiOperation("Add One Buchung")
+	@PostMapping("")
+	public BuchungReadTO addBuchung(
+			@ApiParam(name = "Buchung", value = "Buchung to add") @RequestBody BuchungWriteTO buchung)
+			throws Exception {
+		return buchungService.addBuchung(buchung);
+	}
 
-    @ApiOperation("Delete Buchung")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> daleteBuchung(
-            @ApiParam(name = "BuchungId", value = "Id of the Buchung") @PathVariable UUID id) {
-        return buchungService.deleteBuchung(id);
-    }
+	@ApiOperation("Update Buchung")
+	@PutMapping("")
+	public BuchungReadTO updateBuchung(
+			@ApiParam(name = "Buchung", value = "Buchung to update") @RequestBody BuchungUpdateTO buchung) {
+		return buchungService.updateBuchung(buchung);
+	}
 
-    @ApiOperation("Remove MitReisender Buchung")
-    @DeleteMapping("/removeMitReisender/{id}")
-    public ResponseEntity<?> removeMitReiser(
-            @ApiParam(name = "BuchungId", value = "Id of the Buchung") @PathVariable UUID id) {
-        return buchungService.removeMitReisender(id);
-    }
+	@ApiOperation("Delete Buchung")
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> daleteBuchung(
+			@ApiParam(name = "BuchungId", value = "Id of the Buchung") @PathVariable UUID id) {
+		return buchungService.deleteBuchung(id);
+	}
 
-    @ApiOperation("change Buchung status")
-    @PostMapping("/changestatus/{id}/{status}")
-    public ResponseEntity<?> changeStatus(@ApiParam(name = "BuchungID", value = "Id of Buchung") @PathVariable UUID id,
-                                          @ApiParam(name = "Status", value = "New Status") @PathVariable String status) {
-        return buchungService.changeStatus(id, status);
-    }
+	@ApiOperation("Remove MitReisender Buchung")
+	@DeleteMapping("/removeMitReisender/{id}")
+	public ResponseEntity<?> removeMitReiser(
+			@ApiParam(name = "BuchungId", value = "Id of the Buchung") @PathVariable UUID id) {
+		return buchungService.removeMitReisender(id);
+	}
+
+	@ApiOperation("change Buchung status")
+	@PutMapping("/changestatus/{id}/{status}")
+	public ResponseEntity<?> changeStatus(@ApiParam(name = "BuchungID", value = "Id of Buchung") @PathVariable UUID id,
+			@ApiParam(name = "Status", value = "New Status") @PathVariable String status) {
+		return buchungService.changeStatus(id, status);
+	}
 
 }
