@@ -107,7 +107,8 @@ public class BuchungIT extends ItBase {
         assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
         assertThat(create.getFlughafen(), is(buchung.getFlughafen()));
         assertThat(Buchungstatus.Eingegangen, is(buchung.getStatus()));
-        //assertThat(reiseAngebot.getFreiPlaetze(), is(reiseAngebot.getFreiPlaetze() - 1));
+        assertThat(create.getHinFlugDatum(), is(buchung.getHinFlugDatum()));
+        assertThat(create.getRuckFlugDatum(), is(buchung.getRuckFlugDatum()));
     }
 
     @Test
@@ -151,6 +152,8 @@ public class BuchungIT extends ItBase {
         assertThat(update.getReisenderId(), is(reisender1.getId()));
         assertThat(update.getMitReisenderId(), is(mitReisender1.getId()));
         assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
+        assertThat(update.getHinFlugDatum(), is(buchung.getHinFlugDatum()));
+        assertThat(update.getRuckFlugDatum(), is(buchung.getRuckFlugDatum()));
     }
 
     @Test
@@ -162,6 +165,31 @@ public class BuchungIT extends ItBase {
                         //.body(update)
                         .log().body()
                         .put("/buchungen/changestatus/" + buchung.getId() + "/" + Buchungstatus.Bearbeitung.toString())
+                        .then()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().body().path("id"));
+
+        Buchung buchung = buchungRepository.findById(id).get();
+
+        assertThat(buchung.getBuchungDatum(), is(buchung.getBuchungDatum()));
+        assertThat(buchung.getReiseAngebot().getId(), is(buchung.getReiseAngebot().getId()));
+        assertThat(buchung.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
+        assertThat(buchung.getFlughafen(), is(buchung.getFlughafen()));
+        assertThat(buchung.getReisender().getId(), is(reisender.getId()));
+        assertThat(buchung.getFlughafen(), is(buchung.getFlughafen()));
+        assertThat(buchung.getStatus(), is(buchung.getStatus()));
+    }
+
+    @Test
+    public void updateBuchung_status_stornierung() {
+
+        UUID id = UUID.fromString(
+                given()
+                        .contentType(ContentType.JSON)
+                        //.body(update)
+                        .log().body()
+                        .put("/buchungen/changestatus/" + buchung.getId() + "/" + Buchungstatus.Storniert.toString())
                         .then()
                         .log().body()
                         .statusCode(200)
@@ -193,6 +221,41 @@ public class BuchungIT extends ItBase {
                         .extract().body().path("id"));
 
         Buchung buchung_ = buchungRepository.findById(id).get();
+
+        assertThat(buchung.getId(), is(buchung_.getId()));
+        assertThat(buchung.getBuchungDatum(), is(buchung_.getBuchungDatum()));
+    }
+
+    @Test
+    public void getBuchungByNumber() {
+
+        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
+
+        UUID id = UUID.fromString(
+                given()
+                        .contentType(ContentType.JSON)
+                        .body(create)
+                        .log().body()
+                        .post("/buchungen")
+                        .then()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().body().path("id"));
+
+        Buchung buchung = buchungRepository.findById(id).get();
+
+        UUID id_got = UUID.fromString(
+                given()
+                        .contentType(ContentType.JSON)
+                        //.body(buchung)
+                        .log().body()
+                        .get("/buchungen/search/" + buchung.getBuchungsnummer())
+                        .then()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().body().path("id"));
+
+        Buchung buchung_ = buchungRepository.findById(id_got).get();
 
         assertThat(buchung.getId(), is(buchung_.getId()));
         assertThat(buchung.getBuchungDatum(), is(buchung_.getBuchungDatum()));

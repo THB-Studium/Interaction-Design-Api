@@ -11,6 +11,7 @@ public class Buchung2BuchungReadTO {
         BuchungReadTO out = new BuchungReadTO();
 
         out.setId(in.getId());
+        out.setBuchungsnummer(in.getBuchungsnummer());
         out.setBuchungDatum(in.getBuchungDatum());
         out.setHinFlugDatum(in.getHinFlugDatum());
         out.setRuckFlugDatum(in.getRuckFlugDatum());

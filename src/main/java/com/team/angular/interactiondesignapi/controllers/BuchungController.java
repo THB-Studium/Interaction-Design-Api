@@ -41,6 +41,13 @@ public class BuchungController {
         return buchungService.getBuchung(id);
     }
 
+    @ApiOperation("Get One Booking by Number")
+    @GetMapping("/search/{nummer}")
+    public BuchungReadTO getBuchungByBuchungsnummer(
+            @ApiParam(name = "Buchungsnummer", value = "Number of the Buchung") @PathVariable String nummer) {
+        return buchungService.getBuchungByBuchungsnummer(nummer);
+    }
+
     @ApiOperation("Export Buchung als pdf")
     @GetMapping("/exportPdf/{id}")
     public ResponseEntity<ByteArrayResource> exportPdf(
@@ -56,18 +63,16 @@ public class BuchungController {
 
         ByteArrayResource resource = new ByteArrayResource(data);
 
-        return ResponseEntity
-                .ok().contentLength(data.length)
-                .header("Content-type", "application/octet-stream")
-                .header("Content-disposition", "attachement; filename=Buchung_" + LocalDate.now()
-                        .toString() + ".pdf")
+        return ResponseEntity.ok().contentLength(data.length).header("Content-type", "application/octet-stream")
+                .header("Content-disposition", "attachement; filename=Buchung_" + LocalDate.now().toString() + ".pdf")
                 .body(resource);
     }
 
     @ApiOperation("Add One Buchung")
     @PostMapping("")
-    public BuchungReadTO addBuchung(@ApiParam(name = "Buchung", value = "Buchung to add")
-                                    @RequestBody BuchungWriteTO buchung) throws Exception {
+    public BuchungReadTO addBuchung(
+            @ApiParam(name = "Buchung", value = "Buchung to add") @RequestBody BuchungWriteTO buchung)
+            throws Exception {
         return buchungService.addBuchung(buchung);
     }
 

@@ -12,6 +12,7 @@ template:
     simple-email: simple-email.html
     new-booking: new-booking.html
     update-booking: update-booking.html
+    delete-booking: delete-booking.html
     html-pdf: html-pdf.html
 
 spring:
