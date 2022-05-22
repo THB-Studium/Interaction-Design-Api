@@ -38,11 +38,9 @@ public class BuchungIT extends ItBase {
         super.setup();
 
         reisender = buildReisender();
-        reisender.setEmail("hogegim600@doerma.com");
         reisender = reisenderRepository.save(reisender);
 
         reisender1 = buildReisender();
-        reisender1.setEmail("hogegim600@doerma.com");
         reisender1 = reisenderRepository.save(reisender1);
 
         reisender2 = buildReisender();
