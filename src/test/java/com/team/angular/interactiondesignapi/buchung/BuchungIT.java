@@ -180,7 +180,7 @@ public class BuchungIT extends ItBase {
         assertThat(buchung.getFlughafen(), is(buchung.getFlughafen()));
         assertThat(buchung.getStatus(), is(buchung.getStatus()));
     }
-    
+
     @Test
     public void updateBuchung_status_stornierung() {
 
@@ -225,10 +225,10 @@ public class BuchungIT extends ItBase {
         assertThat(buchung.getId(), is(buchung_.getId()));
         assertThat(buchung.getBuchungDatum(), is(buchung_.getBuchungDatum()));
     }
-    
+
     @Test
     public void getBuchungByNumber() {
-    	
+
         BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
 
         UUID id = UUID.fromString(
@@ -249,7 +249,7 @@ public class BuchungIT extends ItBase {
                         .contentType(ContentType.JSON)
                         //.body(buchung)
                         .log().body()
-                        .get("/buchungen/nummer/" + buchung.getBuchungsnummer())
+                        .get("/buchungen/search/" + buchung.getBuchungsnummer())
                         .then()
                         .log().body()
                         .statusCode(200)

@@ -267,7 +267,7 @@ public class ItBase {
     protected BuchungWriteTO buildBuchungWriteTO(UUID buchungsklasseId, UUID raId) {
         BuchungWriteTO newBuchung = new BuchungWriteTO();
 
-        newBuchung.setBuchungDatum(LocalDate.now());//todo: to extend
+        newBuchung.setBuchungDatum(LocalDate.now());
         newBuchung.setBuchungsklasseId(buchungsklasseId);
         newBuchung.setMitReisender(buildReisenderWriteTO());
         newBuchung.setFlughafen(UUID.randomUUID().toString());
