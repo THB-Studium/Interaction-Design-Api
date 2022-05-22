@@ -147,11 +147,11 @@ public class MailService {
 				    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".pdf", 
 					source);
 
-			log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(),
-					LocalDateTime.now());
-
 			emailSender.send(message);
 			templateEngine.clearTemplateCache();
+			
+			log.info("Message sent with attachment successfully:{} -> {} at {}", from, email.getTo(),
+					LocalDateTime.now());
 			new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("Error during email sending : {}", e.getMessage());
