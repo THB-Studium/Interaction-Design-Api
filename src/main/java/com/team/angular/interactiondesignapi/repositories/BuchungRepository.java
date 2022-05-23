@@ -11,7 +11,7 @@ import com.team.angular.interactiondesignapi.models.Buchung;
 @Repository
 public interface BuchungRepository extends JpaRepository<Buchung, UUID> {
 
-    Optional<Buchung> findFirstByOrderByIdDesc();
+    Optional<Buchung> findFirstByOrderByNummerDesc();
 
     Optional<Buchung> findByBuchungsnummer(String buchungsnummer);
 }

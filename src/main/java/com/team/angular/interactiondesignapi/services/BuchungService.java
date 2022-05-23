@@ -70,8 +70,8 @@ public class BuchungService {
 	// ClassPathResource("templates/Booking_template/Booking_mitReisende.jrxml").getFile();
 	// String text = new String(Files.readAllBytes(resource.toPath())));
 
-    @Value("template.forStream")
-    private String templateLink;
+	@Value("template.forStream")
+	private String templateLink;
 
 	@Value("${template.email.new-booking}")
 	private String template_new_booking;
@@ -196,8 +196,17 @@ public class BuchungService {
 		}
 
 		// Buchungsnummer
+
+		Optional<Buchung> _buchung = buchungRepository.findFirstByOrderByNummerDesc();
+		int lastBuchungsnummer = 0;
+		if (_buchung.isPresent()) {
+			lastBuchungsnummer = _buchung.get().getNummer() + 1;
+		}
+
+		newBuchung.setNummer(lastBuchungsnummer);
+
 		newBuchung.setBuchungsnummer(createBuchungsnummer(ra.getLand().getName(), buchung.getReisender().getName(),
-				buchung.getReisender().getVorname()));
+				buchung.getReisender().getVorname(), lastBuchungsnummer));
 
 		// save Buchung
 		newBuchung = buchungRepository.save(newBuchung);
@@ -242,17 +251,14 @@ public class BuchungService {
 		if (buchung.getMitReisenderId() != null) {
 			Reisender mitReisender = reisenderService.findReisender(buchung.getMitReisenderId());
 			actual.setMitReisenderId(mitReisender.getId());
-		} else if (buchung.getMitReisenderId() == null) {
-			// TODO why null? we have removeMitReisender()
-			// not removeMitReisender() but -> removeMitReisender(UUID id) but we don't
-			// receive the Id here
+		} else {
+
 			actual.setMitReisenderId(null);
+
 			ReiseAngebot ra = reiseAngebotService.findReiseAngebot(buchung.getReiseAngebotId());
 			ra.setFreiPlaetze(ra.getFreiPlaetze() + 1);
 			reiseAngebotRepository.save(ra);
 
-			Reisender mitReisender = reisenderService.findReisender(actual.getMitReisenderId());
-			reisenderService.deleteReisender(mitReisender.getId());
 		}
 
 		actual.setBuchungDatum(buchung.getBuchungDatum() != null ? buchung.getBuchungDatum() : null);
@@ -272,6 +278,16 @@ public class BuchungService {
 		if (buchung.getReiseAngebotId() != null) {
 			ReiseAngebot ra = reiseAngebotService.findReiseAngebot(buchung.getReiseAngebotId());
 			actual.setReiseAngebot(ra);
+		}
+
+		if (buchung.getStatus() != null) {
+			// check the new status
+			// Buchungstatus toUpdate = null;
+			try {
+				actual.setStatus(buchung.getStatus());
+			} catch (Exception e) {
+				throw new ApiRequestException("Status is invalid");
+			}
 		}
 
 		// save
@@ -568,7 +584,7 @@ public class BuchungService {
 				.orElseThrow(() -> new ApiRequestException("Cannot find Booking with id" + id));
 	}
 
-	public String createBuchungsnummer(String land, String name, String vorname) {
+	public String createBuchungsnummer(String land, String name, String vorname, int lastBuchungsnummer) {
 
 		StringBuilder str = new StringBuilder();
 		land = land.substring(0, 3).toUpperCase(Locale.ROOT);
@@ -576,24 +592,25 @@ public class BuchungService {
 		name = name.substring(0, 0);
 		vorname = vorname.substring(0, 0);
 
-		String nummer = "001";
+		String nummer = "";
 
 		// can be null
-		Optional<Buchung> buchung = buchungRepository.findFirstByOrderByIdDesc();
-		String lastBuchungsnummer = "";
-		if (buchung.isPresent()) {
-			lastBuchungsnummer = buchung.get().getBuchungsnummer();
-		}
+		/*
+		 * Optional<Buchung> buchung = buchungRepository.findFirstByOrderByNummerDesc();
+		 * int lastBuchungsnummer = 0; if (buchung.isPresent()) { lastBuchungsnummer =
+		 * buchung.get().getNummer(); }
+		 */
 
 		// format nummer to XXX
-		if (lastBuchungsnummer != null && lastBuchungsnummer.length() > 0) {
-			int newNummer = Integer.parseInt(lastBuchungsnummer.substring(5, 8)) + 1;
-			if (newNummer < 10) {// X
-				nummer = "00" + newNummer;
 
-			} else if (newNummer < 100 && newNummer > 10) {// XX
-				nummer = "0" + newNummer;
-			}
+		int newNummer = lastBuchungsnummer;
+		if (newNummer < 10) {// X
+			nummer = "00" + newNummer;
+
+		} else if (newNummer < 100 && newNummer > 10) {// XX
+			nummer = "0" + newNummer;
+		} else if (newNummer > 99) {
+			nummer = Integer.toString(newNummer);
 		}
 
 		str.append(land).append(saison).append(name).append(vorname).append(nummer);

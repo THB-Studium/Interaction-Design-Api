@@ -57,5 +57,8 @@ public class Buchung {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ReiseAngebot reiseAngebot;
+    
+    // nummer to help to increment buchung
+    private int nummer;
 
 }

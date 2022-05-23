@@ -1,23 +1,34 @@
 package com.team.angular.interactiondesignapi.buchung;
 
-import com.team.angular.interactiondesignapi.ItBase;
-import com.team.angular.interactiondesignapi.models.*;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
-import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
-import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderWriteTO;
-import io.restassured.http.ContentType;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.team.angular.interactiondesignapi.ItBase;
+import com.team.angular.interactiondesignapi.models.Buchung;
+import com.team.angular.interactiondesignapi.models.Buchungsklassen;
+import com.team.angular.interactiondesignapi.models.Buchungstatus;
+import com.team.angular.interactiondesignapi.models.Erwartungen;
+import com.team.angular.interactiondesignapi.models.Land;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
+import com.team.angular.interactiondesignapi.models.Reisender;
+import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderWriteTO;
+
+import io.restassured.http.ContentType;
 
 public class BuchungIT extends ItBase {
 
@@ -32,13 +43,15 @@ public class BuchungIT extends ItBase {
     Erwartungen erwartungen;
     ReiseAngebot reiseAngebot, reiseAngebot1;
     private List<String> beschreibung = new ArrayList<>();
+    
+	@Autowired
+	private BuchungRepository buchungRepository;
 
     @BeforeEach
     public void setup() {
         super.setup();
 
         reisender = buildReisender();
-        reisender.setEmail("keunnema@th-brandenburg.de");
         reisender = reisenderRepository.save(reisender);
 
         reisender1 = buildReisender();
@@ -73,9 +86,11 @@ public class BuchungIT extends ItBase {
         buchung = buildBuchung(reisender, reiseAngebot);
         buchung.setBuchungsklasseId(buchungsklasse.getId());
         buchung.setMitReisenderId(null);
+        buchung.setNummer(1);
         buchung = buchungRepository.save(buchung);
 
         buchung1 = buildBuchung(reisender1, reiseAngebot);
+        buchung1.setNummer(2);
         buchung1 = buchungRepository.save(buchung1);
 
     }
@@ -126,12 +141,37 @@ public class BuchungIT extends ItBase {
                 .body("id", containsInAnyOrder(buchung.getId().toString(), buchung1.getId().toString()));
 
     }
+    
+    @Test
+    public void listBuchungs_() {
+    	
+        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
+
+         UUID.fromString(
+                given()
+                        .contentType(ContentType.JSON)
+                        .body(create)
+                        .log().body()
+                        .post("/buchungen")
+                        .then()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().body().path("id"));
+        
+
+
+    	 Optional<Buchung> buchung = buchungRepository.findFirstByOrderByNummerDesc();
+    	 
+    	 System.out.println(buchung.get().getBuchungsnummer());
+
+    }
 
     @Test
     public void updateBuchung() {
 
         BuchungUpdateTO update = buildBuchungUpdateTO(buchungsklasse1.getId(), reiseAngebot1.getId(), mitReisender1.getId(), reisender1.getId());
         update.setId(buchung.getId());
+        update.setStatus(Buchungstatus.Bestaetigt);
 
         UUID id = UUID.fromString(
                 given()
@@ -155,6 +195,7 @@ public class BuchungIT extends ItBase {
         assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
         assertThat(update.getHinFlugDatum(), is(buchung.getHinFlugDatum()));
         assertThat(update.getRuckFlugDatum(), is(buchung.getRuckFlugDatum()));
+        assertThat(update.getStatus(), is(buchung.getStatus()));
     }
 
     @Test
