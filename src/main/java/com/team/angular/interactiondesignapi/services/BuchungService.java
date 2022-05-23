@@ -70,11 +70,8 @@ public class BuchungService {
 	// ClassPathResource("templates/Booking_template/Booking_mitReisende.jrxml").getFile();
 	// String text = new String(Files.readAllBytes(resource.toPath())));
 
-	@Value("${template.link}")
-	private String templateLink;
-
-	@Value("classpath:templates/Booking_template/Booking_mitReisende.jrxml")
-	private String templateLink_MitReisende;
+    @Value("template.forStream")
+    private String templateLink;
 
 	@Value("${template.email.new-booking}")
 	private String template_new_booking;
@@ -585,7 +582,7 @@ public class BuchungService {
 		Optional<Buchung> buchung = buchungRepository.findFirstByOrderByIdDesc();
 		String lastBuchungsnummer = "";
 		if (buchung.isPresent()) {
-			lastBuchungsnummer = buchungRepository.findFirstByOrderByIdDesc().get().getBuchungsnummer();
+			lastBuchungsnummer = buchung.get().getBuchungsnummer();
 		}
 
 		// format nummer to XXX

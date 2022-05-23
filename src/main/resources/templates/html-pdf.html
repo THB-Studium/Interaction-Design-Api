@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<!--[if gte mso 9]>
+<!--[if gte mso 9]>
 	<xml>
 		<o:OfficeDocumentSettings>
 		<o:AllowPNG/>
@@ -11,690 +11,633 @@
 		</o:OfficeDocumentSettings>
 	</xml>
 	<![endif]-->
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="format-detection" content="date=no" />
-	<meta name="format-detection" content="address=no" />
-	<meta name="format-detection" content="telephone=no" />
-	<meta name="x-apple-disable-message-reformatting" />
-	<!--[if !mso]><!-->
-	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i" rel="stylesheet" />
-	<!--<![endif]-->
-	<title>Bestätigung der Reservierung</title>
-	<!--[if gte mso 9]>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="format-detection" content="date=no" />
+<meta name="format-detection" content="address=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="x-apple-disable-message-reformatting" />
+<!--[if !mso]><!-->
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i"
+	rel="stylesheet" />
+<!--<![endif]-->
+<title>Bestätigung der Reservierung</title>
+<!--[if gte mso 9]>
 	<style type="text/css" media="all">
 		sup { font-size: 100% !important; }
 	</style>
 	<![endif]-->
 
 
-	<style>
-		@page {
-		
-		  @bottom-right {
-		    content: counter(page) ' / ' counter(pages);
-		  }
-		  
-		  @bottom-center {
-		    content: "&copy; University Travel Club, Prof. Julia Schnitzer";
-		  }
-		}
+<style>
+@page { @bottom-right { content:counter(page)' / 'counter(pages);
+	
+}
 
-		/* Linked Styles */
-		body {
-			padding: 0 !important;
-			margin: 0 !important;
-			display: block !important;
-			min-width: 100% !important;
-			width: 100% !important;
-			background: #f4f4f4;
-			-webkit-text-size-adjust: none
-		}
+@
+bottom-center {
+	content: "&copy; University Travel Club, Prof. Julia Schnitzer";
+}
 
-		a {
-			color: #777777;
-			text-decoration: none
-		}
+}
 
-		p {
-			padding: 0 !important;
-			margin: 0 !important
-		}
+/* Linked Styles */
+body {
+	padding: 0 !important;
+	margin: 0 !important;
+	display: block !important;
+	min-width: 100% !important;
+	width: 100% !important;
+	background: #f4f4f4;
+	-webkit-text-size-adjust: none
+}
 
-		img {
-			-ms-interpolation-mode: bicubic;
-			/* Allow smoother rendering of resized image in Internet Explorer */
-		}
+a {
+	color: #777777;
+	text-decoration: none
+}
 
-		.mcnPreviewText {
-			display: none !important;
-		}
+p {
+	padding: 0 !important;
+	margin: 0 !important
+}
 
+img {
+	-ms-interpolation-mode: bicubic;
+	/* Allow smoother rendering of resized image in Internet Explorer */
+}
 
-		/* Mobile styles */
-		@media only screen and (max-device-width: 480px),
-		only screen and (max-width: 480px) {
-			.mobile-shell {
-				width: 100% !important;
-				min-width: 100% !important;
-			}
+.mcnPreviewText {
+	display: none !important;
+}
 
-			.bg {
-				background-size: 100% auto !important;
-				-webkit-background-size: 100% auto !important;
-			}
-
-			.text-header,
-			.m-center {
-				text-align: center !important;
-			}
-
-			.center {
-				margin: 0 auto !important;
-			}
-
-			.container {
-				padding: 20px 10px !important
-			}
-
-			.td {
-				width: 100% !important;
-				min-width: 100% !important;
-			}
-
-			.m-br-15 {
-				height: 15px !important;
-			}
-
-			.p30-15 {
-				padding: 30px 15px !important;
-			}
-
-			.p0-15-30 {
-				padding: 0px 15px 30px 15px !important;
-			}
-
-			.p0-15 {
-				padding: 0px 15px !important;
-			}
-
-			.pt0 {
-				padding-top: 0px !important;
-			}
-
-			.mpb30 {
-				padding-bottom: 30px !important;
-			}
-
-			.mpb15 {
-				padding-bottom: 15px !important;
-			}
-
-			.m-td,
-			.m-hide {
-				display: none !important;
-				width: 0 !important;
-				height: 0 !important;
-				font-size: 0 !important;
-				line-height: 0 !important;
-				min-height: 0 !important;
-			}
-
-			.m-block {
-				display: block !important;
-			}
-
-			.fluid-img img {
-				width: 100% !important;
-				max-width: 100% !important;
-				height: auto !important;
-			}
-
-			.column,
-			.column-dir,
-			.column-top,
-			.column-empty,
-			.column-empty2,
-			.column-dir-top {
-				float: left !important;
-				width: 100% !important;
-				display: block !important;
-			}
-
-			.column-empty {
-				padding-bottom: 30px !important;
-			}
-
-			.column-empty2 {
-				padding-bottom: 10px !important;
-			}
-
-			.content-spacing {
-				width: 15px !important;
-			}
-		}
-	</style>
+/* Mobile styles */
+@media only screen and (max-device-width: 480px) , only screen and
+	(max-width: 480px) {
+	.mobile-shell {
+		width: 100% !important;
+		min-width: 100% !important;
+	}
+	.bg {
+		background-size: 100% auto !important;
+		-webkit-background-size: 100% auto !important;
+	}
+	.text-header, .m-center {
+		text-align: center !important;
+	}
+	.center {
+		margin: 0 auto !important;
+	}
+	.container {
+		padding: 20px 10px !important
+	}
+	.td {
+		width: 100% !important;
+		min-width: 100% !important;
+	}
+	.m-br-15 {
+		height: 15px !important;
+	}
+	.p30-15 {
+		padding: 30px 15px !important;
+	}
+	.p0-15-30 {
+		padding: 0px 15px 30px 15px !important;
+	}
+	.p0-15 {
+		padding: 0px 15px !important;
+	}
+	.pt0 {
+		padding-top: 0px !important;
+	}
+	.mpb30 {
+		padding-bottom: 30px !important;
+	}
+	.mpb15 {
+		padding-bottom: 15px !important;
+	}
+	.m-td, .m-hide {
+		display: none !important;
+		width: 0 !important;
+		height: 0 !important;
+		font-size: 0 !important;
+		line-height: 0 !important;
+		min-height: 0 !important;
+	}
+	.m-block {
+		display: block !important;
+	}
+	.fluid-img img {
+		width: 100% !important;
+		max-width: 100% !important;
+		height: auto !important;
+	}
+	.column, .column-dir, .column-top, .column-empty, .column-empty2,
+		.column-dir-top {
+		float: left !important;
+		width: 100% !important;
+		display: block !important;
+	}
+	.column-empty {
+		padding-bottom: 30px !important;
+	}
+	.column-empty2 {
+		padding-bottom: 10px !important;
+	}
+	.content-spacing {
+		width: 15px !important;
+	}
+}
+</style>
 </head>
 
 <body class="body"
-	style="padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#f4f4f4; -webkit-text-size-adjust:none;">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f4f4f4">
+	style="padding: 0 !important; margin: 0 !important; display: block !important; min-width: 100% !important; width: 100% !important; background: #f4f4f4; -webkit-text-size-adjust: none;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0"
+		bgcolor="#f4f4f4">
 		<tr>
 			<td valign="top">
 				<!-- Header -->
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td align="" class="p30-15" style="padding: 30px;">
-							<table width="650" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+							<table width="650" border="0" cellspacing="0" cellpadding="0"
+								class="mobile-shell">
 								<tr>
 									<td class="td"
-										style="width:650px; min-width:650px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
+										style="width: 650px; min-width: 650px; font-size: 0pt; line-height: 0pt; padding: 0; margin: 0; font-weight: normal;">
 										<!-- Header -->
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr>
 												<th class="column" width="145"
-													style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+													style="font-size: 0pt; line-height: 0pt; padding: 0; margin: 0; font-weight: normal;">
+													<table width="100%" border="0" cellspacing="0"
+														cellpadding="0">
 														<tr>
-															<td style="font-size:0pt; line-height:0pt; text-align:left;">
-																<img width="100px" height="100px" src = "https://gitlab.com/Baudouinken/interaction-design-api/-/raw/22-add-a-status-for-the-booking/src/main/resources/templates/images/logos/Logo.png" />
+															<td
+																style="font-size: 0pt; line-height: 0pt; text-align: left;">
+																<img width="100px" height="100px"
+																src="https://informatik.th-brandenburg.de/~keunnema/utc_imgs/Logo.png" />
 															</td>
 														</tr>
 													</table>
 												</th>
 												<th class="column-empty2" width="400"
-													style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal; vertical-align:top;">
+													style="font-size: 0pt; line-height: 0pt; padding: 0; margin: 0; font-weight: normal; vertical-align: top;">
 												</th>
 												<th class="column"
-													style="font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
-													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+													style="font-size: 0pt; line-height: 0pt; padding: 0; margin: 0; font-weight: normal;">
+													<table width="100%" border="0" cellspacing="0"
+														cellpadding="0">
 														<tr>
-															<td class="img m-center" style="font-size:0pt; line-height:0pt; text-align:right;">
-																<img width="150px" height="80px" src = "https://gitlab.com/Baudouinken/interaction-design-api/-/raw/22-add-a-status-for-the-booking/src/main/resources/templates/images/logos/Zeichenfl%C3%A4che%2013.png" />
+															<td class="img m-center"
+																style="font-size: 0pt; line-height: 0pt; text-align: right;">
+																<img width="150px" height="80px"
+																src="https://informatik.th-brandenburg.de/~keunnema/utc_imgs/Zeichenfl%C3%A4che%2013.png" />
 															</td>
 														</tr>
 													</table>
 												</th>
 											</tr>
-										</table>
-										<!-- END Header -->
+										</table> <!-- END Header -->
 									</td>
 								</tr>
 							</table>
 						</td>
 					</tr>
-				</table>
-				<!-- END Header -->
+				</table> <!-- END Header --> <repeater> <!-- Intro --> <layout
+					label='Intro'>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					bgcolor="#f4f4f4">
+					<tr>
+						<td>
+							<table width="650" border="0" cellspacing="0" cellpadding="0"
+								class="mobile-shell">
+								<tr>
+									<td class="td"
+										style="width: 650px; min-width: 650px; font-size: 0pt; line-height: 0pt; padding: 0; margin: 0; font-weight: normal;">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td class="bbrr" bgcolor="#f4f4f4"
+													style="border-radius: 0px 0px 12px 12px;">
+													<table width="100%" border="0" cellspacing="0"
+														cellpadding="0">
+														<tr>
+															<td class="p30-15" style="padding: 50px 30px 60px 30px;">
+																<table width="100%" border="0" cellspacing="0"
+																	cellpadding="0">
+																	<tr>
+																		<td class="text-center pb25"
+																			style="color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>
+																				<p>
+																					<span th:text="${ziel}">Ziel</span>
+																				</p>
+																		</b> <b>
+																				<p>
+																					<span th:text="${start_end}">Datum</span>
+																				</p>
+																		</b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td colspan="2" class=" pb25"
+																			style="color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
 
-				<repeater>
-					<!-- Intro -->
-					<layout label='Intro'>
-						<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f4f4f4">
-							<tr>
-								<td >
-									<table width="650" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
-										<tr>
-											<td class="td"
-												style="width:650px; min-width:650px; font-size:0pt; line-height:0pt; padding:0; margin:0; font-weight:normal;">
-												<table width="100%" border="0" cellspacing="0" cellpadding="0">
-													<tr>
-														<td class="bbrr" bgcolor="#f4f4f4"
-															style="border-radius:0px 0px 12px 12px;">
-															<table width="100%" border="0" cellspacing="0"
-																cellpadding="0">
-																<tr>
-																	<td class="p30-15"
-																		style="padding: 50px 30px 60px 30px;">
-																		<table width="100%" border="0" cellspacing="0"
-																			cellpadding="0">
-																			<tr>
-																				<td class="text-center pb25"
-																					style="color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b> 
-																					    <p> <span th:text="${ziel}">Ziel</span> </p>
-																					</b>
-																					<b> 
-																					    <p> <span th:text="${start_end}">Datum</span> </p>
-																					</b>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td colspan="2" class=" pb25"
-																					style="color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
+																			Ich möchte mich hiermit verbindlich für die
+																			Studienreise <b><span th:text="${ziel}">Reiseziel</span></b>
+																			anmelden bzw. meine Anmeldung bestätigen.
 
-																					Ich möchte mich hiermit verbindlich
-																					für die Studienreise <b><span
-																							th:text="${ziel}">Reiseziel</span></b>
-																					anmelden bzw. meine Anmeldung
-																					bestätigen.
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<hr></hr>
+																		</td>
+																		<td>
+																			<hr></hr>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td colspan="2" class=" pb25"
+																			style="color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px; text-align: center;">
 
-																				</td>
-																			</tr>
-																			<tr>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td colspan="2" class=" pb25"
-																					style="color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px; text-align: center;">
+																			<b>Reise Informationen:</b>
 
-																					<b>Reise Informationen:</b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<hr></hr>
+																		</td>
+																		<td>
+																			<hr></hr>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Buchungsnummer:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b><span th:text="${buchungsnummer}"> </span></b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Buchungsklasse:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${buchungsklasse}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Zahlungsmethode:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b><span th:text="${zahlungsmethode}">ghghg</span></b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Flughafen:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${flughafen}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Handgepaeck:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${handgepaeck}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Koffer:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${koffer}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Jahr:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${jahr}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Hinflug Datum:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b><span th:text="${hinFlug}">No date </span></b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Rückflug Datum:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b><span th:text="${rueckflug}"> No date</span></b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Buchungsstatus:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b><span th:text="${buchungsstatus}">buchungsstatus</span></b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<hr></hr>
+																		</td>
+																		<td>
+																			<hr></hr>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td colspan="2" class=" pb25"
+																			style="color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px; text-align: center;">
 
-																				</td>
-																			</tr>
-																			<tr>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Buchungsnummer:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b><span th:text="${buchungsnummer}"> </span></b>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Buchungsklasse:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${buchungsklasse}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Zahlungsmethode:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b><span th:text="${zahlungsmethode}">ghghg</span></b>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Flughafen:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${flughafen}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Handgepaeck:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${handgepaeck}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Koffer:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${koffer}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Jahr:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span th:text="${jahr}">ghghg</span>
-																				</td>
-																			</tr>
-																																						<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Hinflug Datum:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b><span th:text="${hinFlug}">No date </span></b>
-																				</td>
-																			</tr>
-																																						<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Rückflug Datum:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b><span th:text="${rueckflug}"> No date</span></b>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Buchungsstatus:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b><span th:text="${buchungsstatus}">buchungsstatus</span></b>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td colspan="2" class=" pb25"
-																					style="color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px; text-align: center;">
+																			<b>Reisender Informationen:</b>
 
-																					<b>Reisender Informationen:</b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<hr></hr>
+																		</td>
+																		<td>
+																			<hr></hr>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Name, Vorname: (wie im Reisepass genannt)</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${name_vorname}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Postanschrift Privat:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${postanschrift}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Geburtsdatum:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${geburtsdatum}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Handynummer:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${handynummer}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Email-Adresse:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${email}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Studiengang:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${studiengang}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Hochschule:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${hochschule}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Status:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${status}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Arbeit Bei:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${arbeit_bei}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Schon teilgenommen:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${schonteilgenommen}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Ich bin mit einem Mitreiser:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mit_mitreiser}">ghghg</span>
+																		</td>
+																	</tr>
 
-																				</td>
-																			</tr>
-																			<tr>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Name, Vorname:
-																						(wie im Reisepass genannt)</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${name_vorname}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Postanschrift Privat:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${postanschrift}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Geburtsdatum:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${geburtsdatum}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Handynummer:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${handynummer}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Email-Adresse:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${email}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Studiengang:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${studiengang}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Hochschule:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${hochschule}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Status:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${status}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Arbeit Bei:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${arbeit_bei}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Schon teilgenommen:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${schonteilgenommen}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr>
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Ich bin mit einem Mitreiser:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mit_mitreiser}">ghghg</span>
-																				</td>
-																			</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td>
+																			<hr></hr>
+																		</td>
+																		<td>
+																			<hr></hr>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td colspan="2" class=" pb25"
+																			style="color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px; text-align: center;">
 
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td colspan="2" class=" pb25"
-																					style="color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px; text-align: center;">
+																			<b>Mitreisender Informationen:</b>
 
-																					<b>Mitreisender Informationen:</b>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<hr></hr>
+																		</td>
+																		<td>
+																			<hr></hr>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Name, Vorname: (wie im Reisepass genannt)</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_name_vorname}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Postanschrift Privat:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_postanschrift}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Geburtsdatum:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_geburtsdatum}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Handynummer:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_handynummer}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Email-Adresse:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_email}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Studiengang:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_studiengang}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Hochschule:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_hochschule}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Status:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_status}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Arbeit Bei:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_arbeit_bei}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr th:if="${mit_mitreiser_bool != false}">
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Schon teilgenommen:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${mitReisender_schonteilgenommen}">ghghg</span>
+																		</td>
+																	</tr>
 
-																				</td>
-																			</tr>
-																			<tr>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																				<td>
-																					<hr>
-																					</hr>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Name, Vorname:
-																						(wie im Reisepass genannt)</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_name_vorname}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Postanschrift Privat:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_postanschrift}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Geburtsdatum:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_geburtsdatum}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Handynummer:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_handynummer}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Email-Adresse:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_email}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Studiengang:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_studiengang}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Hochschule:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_hochschule}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Status:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_status}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Arbeit Bei:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_arbeit_bei}">ghghg</span>
-																				</td>
-																			</tr>
-																			<tr th:if="${mit_mitreiser_bool != false}">
-																				<td class=" pb25"
-																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<b>Schon teilgenommen:</b>
-																				</td>
-																				<td class=" pb25"
-																					style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:12px; line-height:30px; padding-bottom:10px;">
-																					<span
-																						th:text="${mitReisender_schonteilgenommen}">ghghg</span>
-																				</td>
-																			</tr>
-
-																			<!-- <tr th:each="key: ${params.keySet()}">
+																	<!-- <tr th:each="key: ${params.keySet()}">
 																				<td class=" pb25"
 																					style="width: 50%; color:#000000; font-family:'Lato', Arial,sans-serif; font-size:17px; line-height:30px; padding-bottom:25px;">
 																					<b><span th:text="${key}">Postanschrift Privat:</span></b>
@@ -705,23 +648,20 @@
 																					<span th:text="${params.get(key)}">ghghg</span>
 																				</td>
 																			</tr> -->
-																		</table>
-																	</td>
-																</tr>
-															</table>
-														</td>
-													</tr>
-												</table>
-												<!-- END Intro -->
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</layout>
-					<!-- END Intro -->
-				</repeater>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table> <!-- END Intro -->
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				</layout> <!-- END Intro --> </repeater>
 			</td>
 		</tr>
 	</table>
