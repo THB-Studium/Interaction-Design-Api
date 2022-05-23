@@ -70,7 +70,7 @@ public class BuchungService {
 	// ClassPathResource("templates/Booking_template/Booking_mitReisende.jrxml").getFile();
 	// String text = new String(Files.readAllBytes(resource.toPath())));
 
-	@Value("classpath:templates/Booking_template/Booking.jrxml")
+	@Value("${template.link}")
 	private String templateLink;
 
 	@Value("classpath:templates/Booking_template/Booking_mitReisende.jrxml")
