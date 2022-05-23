@@ -589,7 +589,7 @@ public class BuchungService {
 		}
 
 		// format nummer to XXX
-		if (lastBuchungsnummer != null) {
+		if (lastBuchungsnummer != null & lastBuchungsnummer.length() > 0) {
 			int newNummer = Integer.parseInt(lastBuchungsnummer.substring(5, 8)) + 1;
 			if (newNummer < 10) {// X
 				nummer = "00" + newNummer;
