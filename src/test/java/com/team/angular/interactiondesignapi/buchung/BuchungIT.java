@@ -38,6 +38,7 @@ public class BuchungIT extends ItBase {
         super.setup();
 
         reisender = buildReisender();
+        reisender.setEmail("keunnema@th-brandenburg.de");
         reisender = reisenderRepository.save(reisender);
 
         reisender1 = buildReisender();

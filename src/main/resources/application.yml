@@ -9,7 +9,7 @@ template:
   linkMitReisende: /jasperTemplates/Booking_mitReisende.jrxml
   forStream: forOutPutStream.html
   email:
-    from: keunne.baudoin@yahoo.fr #post@university-travel-club.org
+    from: dovonon@th-brandenburg.de #post@university-travel-club.org
     simple-email: simple-email.html
     new-booking: new-booking.html
     update-booking: update-booking.html
@@ -46,10 +46,10 @@ spring:
       ddl-auto: update
 
   mail:
-    host: smtp.elasticemail.com
-    port: 2525
-    username: authService@yahoo.fr
-    password: 4FB090468FE1BE53496E35E3EFDA574F79CA
+    host: smtp-relay.sendinblue.com
+    port: 587
+    username: dovonon@th-brandenburg.de
+    password: TCjYxkvJH39zM0VQ
     protocol: smtp
     #tls: true
     properties.mail.smtp:
