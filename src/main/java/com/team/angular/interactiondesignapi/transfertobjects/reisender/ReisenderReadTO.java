@@ -40,5 +40,7 @@ public class ReisenderReadTO {
     private boolean schonTeilgenommen;
 
     private List<BuchungReadTO> buchungen;
+    
+    private byte[] identityCard;
 
 }

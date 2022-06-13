@@ -301,7 +301,7 @@ public class ItBase {
 		newBuchung.setReisender(buildReisenderWriteTO());
 		newBuchung.setReiseAngebotId(raId);
 		newBuchung.setSendMail(true);
-		
+
 		newBuchung.setAbFlughafenReisender(UUID.randomUUID().toString());
 		newBuchung.setAbFlughafenMitReisender(UUID.randomUUID().toString());
 
@@ -494,7 +494,6 @@ public class ItBase {
 		newBuchung.setDescription(UUID.randomUUID().toString());
 		// newBuchung.setBild(UUID.randomUUID().toString());
 		newBuchung.setLandId(landId);
-
 		return newBuchung;
 	}
 
