@@ -38,12 +38,18 @@ public class Buchung {
     // Tarif
     private UUID buchungsklasseId;
 
-    @NotBlank
-    private String flughafen;
+    /*an alternative would be to have a booking for each traveler and not for the two together*/
+    private String abFlughafenReisender;
+    private String abFlughafenMitReisender;
 
-    private String handGepaeck;
+    private String ruckFlughafenReisender;
+    private String ruckFlughafenMitReisender;
 
-    private String koffer;
+    private String handGepaeckReisender;
+    private String handGepaeckMitReisender;
+
+    private String kofferReisender;
+    private String kofferMitReisender;
 
     @Enumerated(EnumType.STRING)
     private ZahlungMethod zahlungMethod;
@@ -57,7 +63,7 @@ public class Buchung {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ReiseAngebot reiseAngebot;
-    
+
     // nummer to help to increment buchung
     private int nummer;
 
