@@ -23,21 +23,21 @@ public class BuchungWriteTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate buchungDatum;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate hinFlugDatum;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate ruckFlugDatum;
-
     private ReisenderWriteTO mitReisender;
 
     private UUID buchungsklasseId;
 
-    private String flughafen;
+    private String abFlughafenReisender;
+    private String abFlughafenMitReisender;
 
-    private String handGepaeck;
+    private String ruckFlughafenReisender;
+    private String ruckFlughafenMitReisender;
 
-    private String koffer;
+    private Boolean handGepaeckReisender;
+    private Boolean handGepaeckMitReisender;
+
+    private String kofferReisender;
+    private String kofferMitReisender;
 
     private ZahlungMethod zahlungMethod;
 
