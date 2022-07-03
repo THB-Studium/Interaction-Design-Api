@@ -43,9 +43,9 @@ public class BuchungIT extends ItBase {
     Erwartungen erwartungen;
     ReiseAngebot reiseAngebot, reiseAngebot1;
     private List<String> beschreibung = new ArrayList<>();
-    
-	@Autowired
-	private BuchungRepository buchungRepository;
+
+    @Autowired
+    private BuchungRepository buchungRepository;
 
     @BeforeEach
     public void setup() {
@@ -103,7 +103,7 @@ public class BuchungIT extends ItBase {
 
     @Test
     public void createBuchung() {
-        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
+        BuchungWriteTO create = buildBuchungWriteTO0(buchungsklasse.getId(), reiseAngebot.getId());
 
         UUID id = UUID.fromString(
                 given()
@@ -121,10 +121,17 @@ public class BuchungIT extends ItBase {
         assertThat(create.getBuchungDatum(), is(buchung.getBuchungDatum()));
         assertThat(create.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
         assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
-        assertThat(create.getFlughafen(), is(buchung.getFlughafen()));
+
+        assertThat(create.getAbFlughafenReisender(), is(buchung.getAbFlughafenReisender()));
+        assertThat(create.getAbFlughafenMitReisender(), is(buchung.getAbFlughafenMitReisender()));
+        assertThat(create.getRuckFlughafenReisender(), is(buchung.getRuckFlughafenReisender()));
+        assertThat(create.getRuckFlughafenMitReisender(), is(buchung.getRuckFlughafenMitReisender()));
+        assertThat(create.getHandGepaeckReisender(), is(buchung.getHandGepaeckReisender()));
+        assertThat(create.getHandGepaeckMitReisender(), is(buchung.getHandGepaeckMitReisender()));
+        assertThat(create.getKofferReisender(), is(buchung.getKofferReisender()));
+        assertThat(create.getKofferMitReisender(), is(buchung.getKofferMitReisender()));
+
         assertThat(Buchungstatus.Eingegangen, is(buchung.getStatus()));
-        assertThat(create.getHinFlugDatum(), is(buchung.getHinFlugDatum()));
-        assertThat(create.getRuckFlugDatum(), is(buchung.getRuckFlugDatum()));
     }
 
     @Test
@@ -141,13 +148,13 @@ public class BuchungIT extends ItBase {
                 .body("id", containsInAnyOrder(buchung.getId().toString(), buchung1.getId().toString()));
 
     }
-    
+
     @Test
     public void listBuchungs_() {
-    	
+
         BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
 
-         UUID.fromString(
+        UUID.fromString(
                 given()
                         .contentType(ContentType.JSON)
                         .body(create)
@@ -157,12 +164,11 @@ public class BuchungIT extends ItBase {
                         .log().body()
                         .statusCode(200)
                         .extract().body().path("id"));
-        
 
 
-    	 Optional<Buchung> buchung = buchungRepository.findFirstByOrderByNummerDesc();
-    	 
-    	 System.out.println(buchung.get().getBuchungsnummer());
+        Optional<Buchung> buchung = buchungRepository.findFirstByOrderByNummerDesc();
+
+        System.out.println(buchung.get().getBuchungsnummer());
 
     }
 
@@ -189,12 +195,18 @@ public class BuchungIT extends ItBase {
         assertThat(update.getBuchungDatum(), is(buchung.getBuchungDatum()));
         assertThat(update.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
         assertThat(update.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
-        assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
+
+        assertThat(update.getAbFlughafenReisender(), is(buchung.getAbFlughafenReisender()));
+        assertThat(update.getAbFlughafenMitReisender(), is(buchung.getAbFlughafenMitReisender()));
+        assertThat(update.getRuckFlughafenReisender(), is(buchung.getRuckFlughafenReisender()));
+        assertThat(update.getRuckFlughafenMitReisender(), is(buchung.getRuckFlughafenMitReisender()));
+        assertThat(update.getHandGepaeckReisender(), is(buchung.getHandGepaeckReisender()));
+        assertThat(update.getHandGepaeckMitReisender(), is(buchung.getHandGepaeckMitReisender()));
+        assertThat(update.getKofferReisender(), is(buchung.getKofferReisender()));
+        assertThat(update.getKofferMitReisender(), is(buchung.getKofferMitReisender()));
+
         assertThat(update.getReisenderId(), is(reisender1.getId()));
         assertThat(update.getMitReisenderId(), is(mitReisender1.getId()));
-        assertThat(update.getFlughafen(), is(buchung.getFlughafen()));
-        assertThat(update.getHinFlugDatum(), is(buchung.getHinFlugDatum()));
-        assertThat(update.getRuckFlugDatum(), is(buchung.getRuckFlugDatum()));
         assertThat(update.getStatus(), is(buchung.getStatus()));
     }
 
@@ -217,9 +229,7 @@ public class BuchungIT extends ItBase {
         assertThat(buchung.getBuchungDatum(), is(buchung.getBuchungDatum()));
         assertThat(buchung.getReiseAngebot().getId(), is(buchung.getReiseAngebot().getId()));
         assertThat(buchung.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
-        assertThat(buchung.getFlughafen(), is(buchung.getFlughafen()));
         assertThat(buchung.getReisender().getId(), is(reisender.getId()));
-        assertThat(buchung.getFlughafen(), is(buchung.getFlughafen()));
         assertThat(buchung.getStatus(), is(buchung.getStatus()));
     }
 
@@ -242,9 +252,7 @@ public class BuchungIT extends ItBase {
         assertThat(buchung.getBuchungDatum(), is(buchung.getBuchungDatum()));
         assertThat(buchung.getReiseAngebot().getId(), is(buchung.getReiseAngebot().getId()));
         assertThat(buchung.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
-        assertThat(buchung.getFlughafen(), is(buchung.getFlughafen()));
         assertThat(buchung.getReisender().getId(), is(reisender.getId()));
-        assertThat(buchung.getFlughafen(), is(buchung.getFlughafen()));
         assertThat(buchung.getStatus(), is(buchung.getStatus()));
     }
 
