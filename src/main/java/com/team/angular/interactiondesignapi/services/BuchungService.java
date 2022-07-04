@@ -249,18 +249,21 @@ public class BuchungService {
             actual.setReisender(reiser);
         }
 
+        /* Je pense que c'est mieux qu'on gere pas ca ici car a chaque fois on doit envoyer
+        l'id alors que pour la mise à jour on part du principe qu'on doit seulement envoyer
+        les trusc qu'on veut changer */
+
+        /*
         if (buchung.getMitReisenderId() != null) {
             Reisender mitReisender = reisenderService.findReisender(buchung.getMitReisenderId());
             actual.setMitReisenderId(mitReisender.getId());
         } else {
-
             actual.setMitReisenderId(null);
-
             ReiseAngebot ra = reiseAngebotService.findReiseAngebot(buchung.getReiseAngebotId());
             ra.setFreiPlaetze(ra.getFreiPlaetze() + 1);
             reiseAngebotRepository.save(ra);
-
         }
+        */
 
         actual.setBuchungDatum(buchung.getBuchungDatum() != null ? buchung.getBuchungDatum() : null);
 
@@ -352,10 +355,14 @@ public class BuchungService {
         // change status
     }
 
-    public ResponseEntity<?> removeMitReisender(UUID id) {
+    public ResponseEntity<String> removeMitReisender(UUID id) {
         Buchung buchung = findBuchung(id);
 
         buchung.setMitReisenderId(null);
+        buchung.setAbFlughafenMitReisender(buchung.getAbFlughafenMitReisender() != null ? buchung.getAbFlughafenMitReisender() : null);
+        buchung.setRuckFlughafenMitReisender(buchung.getRuckFlughafenMitReisender() != null ? buchung.getRuckFlughafenMitReisender() : null);
+        buchung.setHandGepaeckMitReisender(buchung.getHandGepaeckMitReisender() != null && buchung.getHandGepaeckMitReisender());
+        buchung.setKofferMitReisender(buchung.getKofferMitReisender() != null ? buchung.getKofferMitReisender() : null);
 
         buchungRepository.save(buchung);
         log.info("successfully removed");
@@ -531,10 +538,10 @@ public class BuchungService {
         params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
 
         params.put("reisenderAbFlughafen", buchung.getAbFlughafenReisender());
-        params.put("mitReisenderAbFlughafen", buchung.getAbFlughafenMitReisender() != null? buchung.getAbFlughafenMitReisender() : null);
+        params.put("mitReisenderAbFlughafen", buchung.getAbFlughafenMitReisender() != null ? buchung.getAbFlughafenMitReisender() : null);
 
         params.put("reisenderRuckFlughafen", buchung.getRuckFlughafenReisender());
-        params.put("mitReisenderRuckFlughafen", buchung.getRuckFlughafenMitReisender() != null? buchung.getRuckFlughafenMitReisender() : null);
+        params.put("mitReisenderRuckFlughafen", buchung.getRuckFlughafenMitReisender() != null ? buchung.getRuckFlughafenMitReisender() : null);
 
         params.put("handgepaeckReisender", buchung.getHandGepaeckReisender() ? "ja" : "nein");
         params.put("handgepaeckMitReisender", buchung.getHandGepaeckMitReisender() ? "ja" : "nein");
