@@ -292,28 +292,6 @@ public class ItBase {
         return newBuchung;
     }
 
-    protected BuchungWriteTO buildBuchungWriteTO0(UUID buchungsklasseId, UUID raId) {
-        BuchungWriteTO newBuchung = new BuchungWriteTO();
-
-        newBuchung.setBuchungDatum(LocalDate.now());
-        newBuchung.setBuchungsklasseId(buchungsklasseId);
-        newBuchung.setMitReisender(buildReisenderWriteTO());
-
-
-        newBuchung.setRuckFlughafenReisender(UUID.randomUUID().toString());
-        newBuchung.setRuckFlughafenMitReisender(UUID.randomUUID().toString());
-        newBuchung.setHandGepaeckReisender(true);
-        newBuchung.setHandGepaeckMitReisender(true);
-        newBuchung.setKofferReisender(UUID.randomUUID().toString());
-        newBuchung.setKofferMitReisender(UUID.randomUUID().toString());
-
-        newBuchung.setZahlungMethod(ZahlungMethod.Einmal);
-        newBuchung.setReisender(buildReisenderWriteTO());
-        newBuchung.setReiseAngebotId(raId);
-
-        return newBuchung;
-    }
-
     protected BuchungUpdateTO buildBuchungUpdateTO(UUID buchungsklasseId, UUID raId, UUID mitreisenderId, UUID reisenderId) {
         BuchungUpdateTO newBuchung = new BuchungUpdateTO();
 

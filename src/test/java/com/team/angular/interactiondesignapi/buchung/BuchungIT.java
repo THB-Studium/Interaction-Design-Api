@@ -103,7 +103,7 @@ public class BuchungIT extends ItBase {
 
     @Test
     public void createBuchung() {
-        BuchungWriteTO create = buildBuchungWriteTO0(buchungsklasse.getId(), reiseAngebot.getId());
+        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
 
         UUID id = UUID.fromString(
                 given()

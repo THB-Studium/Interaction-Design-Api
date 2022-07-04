@@ -320,6 +320,7 @@ public class BuchungService {
             throw new ApiRequestException(e.getMessage());
         }
         log.info("Status Successfully updated");
+
         return Buchung2BuchungReadTO.apply(actual);
 
         // send mail on updated status
