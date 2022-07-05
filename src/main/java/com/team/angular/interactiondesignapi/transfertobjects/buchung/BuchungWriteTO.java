@@ -43,6 +43,8 @@ public class BuchungWriteTO {
 
     private Buchungstatus status;
 
+    private Boolean sendMail;
+
     private ReisenderWriteTO reisender;
 
     private UUID reiseAngebotId;

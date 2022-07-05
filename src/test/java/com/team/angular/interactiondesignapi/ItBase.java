@@ -278,6 +278,7 @@ public class ItBase {
         newBuchung.setReiseAngebotId(raId);
         newBuchung.setHinFlugDatum(LocalDate.now());
         newBuchung.setRuckFlugDatum(LocalDate.now().plusDays(10));
+        newBuchung.setSendMail(true);
 
         return newBuchung;
     }
@@ -295,6 +296,7 @@ public class ItBase {
         newBuchung.setReisenderId(reisenderId);
         newBuchung.setReiseAngebotId(raId);
         newBuchung.setStatus(Buchungstatus.Bearbeitung);
+        newBuchung.setSendMail(true);
 
         return newBuchung;
     }

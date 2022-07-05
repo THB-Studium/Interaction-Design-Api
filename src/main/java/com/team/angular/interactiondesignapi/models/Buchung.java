@@ -1,6 +1,7 @@
 package com.team.angular.interactiondesignapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -51,6 +52,9 @@ public class Buchung {
     @Enumerated(EnumType.STRING)
     private Buchungstatus status;
 
+    // Flag for email sending
+    private Boolean sendMail;
+
     @ManyToOne
     @JoinColumn(name = "Reisender_id")
     private Reisender reisender;
@@ -59,6 +63,7 @@ public class Buchung {
     private ReiseAngebot reiseAngebot;
     
     // nummer to help to increment buchung
+    @JsonIgnore
     private int nummer;
 
 }
