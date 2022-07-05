@@ -42,6 +42,8 @@ public class BuchungUpdateTO {
 
     private Buchungstatus status;
 
+    private Boolean sendMail;
+
     private UUID reisenderId;
 
     private UUID reiseAngebotId;
