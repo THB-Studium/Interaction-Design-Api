@@ -63,6 +63,8 @@ public class ReisenderService {
 		newReisender.setAdresse(reisender.getAdresse());
 		newReisender.setSchonTeilgenommen(reisender.isSchonTeilgenommen());
 
+		newReisender.setIdentity_card(reisender.getIdentityCard());
+
 		newReisender.setHochschule(reisender.getHochschule() != null ? reisender.getHochschule() : null);
 
 		newReisender.setStudiengang(reisender.getStudiengang() != null ? reisender.getStudiengang() : null);
@@ -102,6 +104,8 @@ public class ReisenderService {
 		actual.setStudiengang(reisender.getStudiengang() != null ? reisender.getStudiengang() : null);
 
 		actual.setStatus(reisender.getStatus() != null ? reisender.getStatus() : null);
+
+		actual.setIdentity_card(reisender.getIdentityCard() != null ? reisender.getIdentityCard() : null);
 
 		actual.setArbeitBei(reisender.getArbeitBei() != null ? reisender.getArbeitBei() : null);
 

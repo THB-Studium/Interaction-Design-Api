@@ -22,6 +22,7 @@ public class Reisender2ReisenderReadTO {
         out.setStatus(in.getStatus());
         out.setArbeitBei(in.getArbeitBei());
         out.setSchonTeilgenommen(in.isSchonTeilgenommen());
+        out.setIdentityCard(in.getIdentity_card());
         return out;
     }
 
