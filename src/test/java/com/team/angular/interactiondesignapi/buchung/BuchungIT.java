@@ -26,6 +26,7 @@ import com.team.angular.interactiondesignapi.models.Reisender;
 import com.team.angular.interactiondesignapi.repositories.BuchungRepository;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungUpdateTO;
 import com.team.angular.interactiondesignapi.transfertobjects.buchung.BuchungWriteTO;
+import com.team.angular.interactiondesignapi.transfertobjects.buchung.ChangeStatus;
 import com.team.angular.interactiondesignapi.transfertobjects.reisender.ReisenderWriteTO;
 
 import io.restassured.http.ContentType;
@@ -103,7 +104,7 @@ public class BuchungIT extends ItBase {
 
     @Test
     public void createBuchung() {
-        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
+        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());        
 
         UUID id = UUID.fromString(
                 given()
@@ -168,8 +169,6 @@ public class BuchungIT extends ItBase {
 
         Optional<Buchung> buchung = buchungRepository.findFirstByOrderByNummerDesc();
 
-        System.out.println(buchung.get().getBuchungsnummer());
-
     }
 
     @Test
@@ -212,13 +211,18 @@ public class BuchungIT extends ItBase {
 
     @Test
     public void updateBuchung_status() {
-
+    	
+    	ChangeStatus status = new ChangeStatus();
+    	status.setId(buchung.getId());
+    	status.setStatus(Buchungstatus.Bearbeitung.toString());
+    	status.setSendMail(true);
+    	
         UUID id = UUID.fromString(
                 given()
                         .contentType(ContentType.JSON)
-                        //.body(update)
+                        .body(status)
                         .log().body()
-                        .put("/buchungen/changestatus/" + buchung.getId() + "/" + Buchungstatus.Bearbeitung.toString())
+                        .put("/buchungen/changestatus")
                         .then()
                         .log().body()
                         .statusCode(200)
@@ -235,13 +239,18 @@ public class BuchungIT extends ItBase {
 
     @Test
     public void updateBuchung_status_stornierung() {
+    	
+    	ChangeStatus status = new ChangeStatus();
+    	status.setId(buchung.getId());
+    	status.setStatus(Buchungstatus.Bearbeitung.toString());
+    	status.setSendMail(true);
 
         UUID id = UUID.fromString(
                 given()
                         .contentType(ContentType.JSON)
-                        //.body(update)
+                        .body(status)
                         .log().body()
-                        .put("/buchungen/changestatus/" + buchung.getId() + "/" + Buchungstatus.Storniert.toString())
+                        .put("/buchungen/changestatus")
                         .then()
                         .log().body()
                         .statusCode(200)
