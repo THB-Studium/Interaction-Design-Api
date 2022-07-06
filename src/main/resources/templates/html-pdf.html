@@ -310,31 +310,81 @@ img {
 																	<tr>
 																		<td class=" pb25"
 																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
-																			<b>Flughafen:</b>
+																			<b>AbFlug Reisender:</b>
 																		</td>
 																		<td class=" pb25"
 																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
-																			<span th:text="${flughafen}">ghghg</span>
+																			<span th:text="${abFlughafenReisender}">ghghg</span>
 																		</td>
 																	</tr>
 																	<tr>
 																		<td class=" pb25"
 																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
-																			<b>Handgepaeck:</b>
+																			<b>AbFlug Mitreisender:</b>
 																		</td>
 																		<td class=" pb25"
 																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
-																			<span th:text="${handgepaeck}">ghghg</span>
+																			<span th:text="${abFlughafenMitReisender}">ghghg</span>
 																		</td>
 																	</tr>
 																	<tr>
 																		<td class=" pb25"
 																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
-																			<b>Koffer:</b>
+																			<b>RueckFlug Reisender:</b>
 																		</td>
 																		<td class=" pb25"
 																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
-																			<span th:text="${koffer}">ghghg</span>
+																			<span th:text="${ruckFlughafenReisender}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>RueckFlug Mitreisender:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${ruckFlughafenMitReisender}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Handgepaeck Reisender:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${handGepaeckReisender}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Handgepaeck Mitreisender:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${handGepaeckMitReisender}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Koffer Reisender:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${kofferReisender}">ghghg</span>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class=" pb25"
+																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<b>Koffer Mitreisender:</b>
+																		</td>
+																		<td class=" pb25"
+																			style="color: #777777; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
+																			<span th:text="${kofferMitReisender}">ghghg</span>
 																		</td>
 																	</tr>
 																	<tr>
@@ -347,7 +397,7 @@ img {
 																			<span th:text="${jahr}">ghghg</span>
 																		</td>
 																	</tr>
-																	 <!--<tr>
+																	<!--<tr>
 																		<td class=" pb25"
 																			style="width: 50%; color: #000000; font-family: 'Lato', Arial, sans-serif; font-size: 12px; line-height: 30px; padding-bottom: 10px;">
 																			<b>Hinflug Datum:</b>
