@@ -168,15 +168,17 @@ public class BuchungService {
 
         newBuchung.setBuchungDatum(LocalDate.now());
 
-        newBuchung.setHinFlugDatum(buchung.getHinFlugDatum() != null ? buchung.getHinFlugDatum() : null);
+        newBuchung.setAbFlughafenReisender(buchung.getAbFlughafenReisender() != null ? buchung.getAbFlughafenReisender() : null);
+        newBuchung.setAbFlughafenMitReisender(buchung.getAbFlughafenMitReisender() != null ? buchung.getAbFlughafenMitReisender() : null);
 
-        newBuchung.setRuckFlugDatum(buchung.getRuckFlugDatum() != null ? buchung.getRuckFlugDatum() : null);
+        newBuchung.setRuckFlughafenReisender(buchung.getRuckFlughafenReisender() != null ? buchung.getRuckFlughafenReisender() : null);
+        newBuchung.setRuckFlughafenMitReisender(buchung.getRuckFlughafenMitReisender() != null ? buchung.getRuckFlughafenMitReisender() : null);
 
-        newBuchung.setFlughafen(buchung.getFlughafen());
+        newBuchung.setHandGepaeckReisender(buchung.getHandGepaeckReisender() != null && buchung.getHandGepaeckReisender());
+        newBuchung.setHandGepaeckMitReisender(buchung.getHandGepaeckMitReisender() != null && buchung.getHandGepaeckMitReisender());
 
-        newBuchung.setHandGepaeck(buchung.getHandGepaeck());
-
-        newBuchung.setKoffer(buchung.getKoffer());
+        newBuchung.setKofferReisender(buchung.getKofferReisender() != null ? buchung.getKofferReisender() : null);
+        newBuchung.setKofferMitReisender(buchung.getKofferMitReisender() != null ? buchung.getKofferMitReisender() : null);
 
         newBuchung.setZahlungMethod(buchung.getZahlungMethod());
 
@@ -231,7 +233,6 @@ public class BuchungService {
             // send mail
             sendMail(properties, to, "Bestätigung der Reservierung", template_new_booking, source, newBuchung);
         }
-
         return savedBuchung;
     }
 
@@ -253,26 +254,25 @@ public class BuchungService {
             Reisender mitReisender = reisenderService.findReisender(buchung.getMitReisenderId());
             actual.setMitReisenderId(mitReisender.getId());
         } else {
-
             actual.setMitReisenderId(null);
-
             ReiseAngebot ra = reiseAngebotService.findReiseAngebot(buchung.getReiseAngebotId());
             ra.setFreiPlaetze(ra.getFreiPlaetze() + 1);
             reiseAngebotRepository.save(ra);
-
         }
 
         actual.setBuchungDatum(buchung.getBuchungDatum() != null ? buchung.getBuchungDatum() : null);
 
-        actual.setHinFlugDatum(buchung.getHinFlugDatum() != null ? buchung.getHinFlugDatum() : null);
+        actual.setAbFlughafenReisender(buchung.getAbFlughafenReisender() != null ? buchung.getAbFlughafenReisender() : null);
+        actual.setAbFlughafenMitReisender(buchung.getAbFlughafenMitReisender() != null ? buchung.getAbFlughafenMitReisender() : null);
 
-        actual.setRuckFlugDatum(buchung.getRuckFlugDatum() != null ? buchung.getRuckFlugDatum() : null);
+        actual.setRuckFlughafenReisender(buchung.getRuckFlughafenReisender() != null ? buchung.getRuckFlughafenReisender() : null);
+        actual.setRuckFlughafenMitReisender(buchung.getRuckFlughafenMitReisender() != null ? buchung.getRuckFlughafenMitReisender() : null);
 
-        actual.setFlughafen(buchung.getFlughafen() != null ? buchung.getFlughafen() : null);
+        actual.setHandGepaeckReisender(buchung.getHandGepaeckReisender() != null && buchung.getHandGepaeckReisender());
+        actual.setHandGepaeckMitReisender(buchung.getHandGepaeckMitReisender() != null && buchung.getHandGepaeckMitReisender());
 
-        actual.setHandGepaeck(buchung.getHandGepaeck() != null ? buchung.getHandGepaeck() : null);
-
-        actual.setKoffer(buchung.getKoffer() != null ? buchung.getKoffer() : null);
+        actual.setKofferReisender(buchung.getKofferReisender() != null ? buchung.getKofferReisender() : null);
+        actual.setKofferMitReisender(buchung.getKofferMitReisender() != null ? buchung.getKofferMitReisender() : null);
 
         actual.setZahlungMethod(buchung.getZahlungMethod() != null ? buchung.getZahlungMethod() : null);
 
@@ -356,6 +356,10 @@ public class BuchungService {
         Buchung buchung = findBuchung(id);
 
         buchung.setMitReisenderId(null);
+        buchung.setAbFlughafenMitReisender(buchung.getAbFlughafenMitReisender() != null ? buchung.getAbFlughafenMitReisender() : null);
+        buchung.setRuckFlughafenMitReisender(buchung.getRuckFlughafenMitReisender() != null ? buchung.getRuckFlughafenMitReisender() : null);
+        buchung.setHandGepaeckMitReisender(buchung.getHandGepaeckMitReisender() != null && buchung.getHandGepaeckMitReisender());
+        buchung.setKofferMitReisender(buchung.getKofferMitReisender() != null ? buchung.getKofferMitReisender() : null);
 
         buchungRepository.save(buchung);
         log.info("successfully removed");
@@ -527,15 +531,21 @@ public class BuchungService {
 
         params.put("buchungsnummer", buchung.getBuchungsnummer());
 
-        params.put("hinFlug", buchung.getHinFlugDatum());
-
-        params.put("rueckflug", buchung.getRuckFlugDatum());
-
         params.put("buchungsklasse", tarif.getType());
         params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
-        params.put("flughafen", buchung.getFlughafen());
-        params.put("handgepaeck", buchung.getHandGepaeck().equals("true") ? "ja" : "nein");
-        params.put("koffer", buchung.getKoffer().equals("true") ? "ja" : "nein");
+
+        params.put("reisenderAbFlughafen", buchung.getAbFlughafenReisender());
+        params.put("mitReisenderAbFlughafen", buchung.getAbFlughafenMitReisender() != null ? buchung.getAbFlughafenMitReisender() : null);
+
+        params.put("reisenderRuckFlughafen", buchung.getRuckFlughafenReisender());
+        params.put("mitReisenderRuckFlughafen", buchung.getRuckFlughafenMitReisender() != null ? buchung.getRuckFlughafenMitReisender() : null);
+
+        params.put("handgepaeckReisender", buchung.getHandGepaeckReisender() ? "ja" : "nein");
+        params.put("handgepaeckMitReisender", buchung.getHandGepaeckMitReisender() ? "ja" : "nein");
+
+        params.put("kofferReisender", buchung.getKofferReisender() != null ? buchung.getKofferReisender() : null);
+        params.put("kofferMitReisender", buchung.getKofferMitReisender() != null ? buchung.getKofferMitReisender() : null);
+
         params.put("jahr", "" + LocalDate.now().getYear());
         params.put("buchungsstatus", buchung.getStatus());
 
