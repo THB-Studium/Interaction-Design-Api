@@ -560,6 +560,10 @@ public class BuchungService {
 			params.put("mitReisender_status", mitReisender.getStatus());
 			params.put("mitReisender_arbeit_bei", mitReisender.getArbeitBei());
 			params.put("mitReisender_schonteilgenommen", mitReisender.isSchonTeilgenommen() ? "Ja" : "Nein");
+			params.put("abFlughafenMitReisender", buchung.getAbFlughafenMitReisender());
+			params.put("ruckFlughafenMitReisender", buchung.getRuckFlughafenMitReisender() != null ? buchung.getRuckFlughafenMitReisender() : "");
+			params.put("handGepaeckMitReisender", buchung.getHandGepaeckMitReisender() == true ? "ja" : "nein");
+			params.put("kofferMitReisender", buchung.getKofferMitReisender() != null ? buchung.getKofferMitReisender() : "" );
 		}
 
 		params.put("copyright_monat_jahr", LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear());
@@ -567,16 +571,12 @@ public class BuchungService {
 		params.put("buchungsnummer", buchung.getBuchungsnummer());
 
 		params.put("abFlughafenReisender", buchung.getAbFlughafenReisender());
-		params.put("abFlughafenMitReisender", buchung.getAbFlughafenMitReisender());
 
 		params.put("ruckFlughafenReisender", buchung.getRuckFlughafenReisender());
-		params.put("ruckFlughafenMitReisender", buchung.getRuckFlughafenMitReisender());
 
 		params.put("handGepaeckReisender", buchung.getHandGepaeckReisender() == true ? "ja" : "nein");
-		params.put("handGepaeckMitReisender", buchung.getHandGepaeckMitReisender() == true ? "ja" : "nein");
 
 		params.put("kofferReisender", buchung.getKofferReisender());
-		params.put("kofferMitReisender", buchung.getKofferMitReisender());
 
 		params.put("buchungsklasse", tarif.getType());
 		params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
