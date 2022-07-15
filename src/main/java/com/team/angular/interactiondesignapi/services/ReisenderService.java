@@ -108,7 +108,8 @@ public class ReisenderService {
 
 		actual.setStatus(reisender.getStatus() != null ? reisender.getStatus() : null);
 
-		actual.setIdentity_card(compressBild(reisender.getIdentityCard()));
+		if(reisender.getIdentityCard() != null)
+			actual.setIdentity_card(compressBild(reisender.getIdentityCard()));
 
 		actual.setArbeitBei(reisender.getArbeitBei() != null ? reisender.getArbeitBei() : null);
 
