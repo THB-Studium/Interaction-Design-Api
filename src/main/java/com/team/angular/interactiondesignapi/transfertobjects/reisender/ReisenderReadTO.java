@@ -41,6 +41,6 @@ public class ReisenderReadTO {
 
     private List<BuchungReadTO> buchungen;
     
-    private String identityCard;
+    private byte[] identityCard;
 
 }

@@ -1,5 +1,7 @@
 package com.team.angular.interactiondesignapi.services;
 
+import static com.team.angular.interactiondesignapi.config.CompressImage.compressBild;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +65,7 @@ public class ReisenderService {
 		newReisender.setAdresse(reisender.getAdresse());
 		newReisender.setSchonTeilgenommen(reisender.isSchonTeilgenommen());
 
-		newReisender.setIdentity_card(reisender.getIdentityCard());
+		newReisender.setIdentity_card(compressBild(reisender.getIdentityCard()));
 
 		newReisender.setHochschule(reisender.getHochschule() != null ? reisender.getHochschule() : null);
 
@@ -105,7 +107,7 @@ public class ReisenderService {
 
 		actual.setStatus(reisender.getStatus() != null ? reisender.getStatus() : null);
 
-		actual.setIdentity_card(reisender.getIdentityCard() != null ? reisender.getIdentityCard() : null);
+		actual.setIdentity_card(compressBild(reisender.getIdentityCard()));
 
 		actual.setArbeitBei(reisender.getArbeitBei() != null ? reisender.getArbeitBei() : null);
 

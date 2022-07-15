@@ -58,6 +58,6 @@ public class Reisender {
     @OneToMany(mappedBy = "reisender", fetch = FetchType.EAGER)
     private List<Buchung> buchungen;
     
-    private String identity_card;
+    private byte[] identity_card;
 
 }

@@ -210,11 +210,6 @@ public class BuchungService {
 		newBuchung.setBuchungsnummer(createBuchungsnummer(ra.getLand().getName(), buchung.getReisender().getName(),
 				buchung.getReisender().getVorname(), lastBuchungsnummer));
 
-		newBuchung.setNummer(lastBuchungsnummer);
-
-		newBuchung.setBuchungsnummer(createBuchungsnummer(ra.getLand().getName(), buchung.getReisender().getName(),
-				buchung.getReisender().getVorname(), lastBuchungsnummer));
-
 		// save Buchung
 		newBuchung = buchungRepository.save(newBuchung);
 		BuchungReadTO savedBuchung = Buchung2BuchungReadTO.apply(newBuchung);
