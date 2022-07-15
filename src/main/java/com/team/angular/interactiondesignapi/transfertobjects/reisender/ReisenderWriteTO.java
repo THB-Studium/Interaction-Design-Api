@@ -37,6 +37,6 @@ public class ReisenderWriteTO {
 
     private boolean schonTeilgenommen;
     
-    private byte[] identityCard;
+    private String identityCard;
 
 }
