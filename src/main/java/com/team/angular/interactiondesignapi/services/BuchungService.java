@@ -562,16 +562,17 @@ public class BuchungService {
 		}
 
 		params.put("copyright_monat_jahr", LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear());
-		params.put("buchung_datum", buchung.getBuchungDatum().toString());
+		params.put("buchung_datum", buchung.getBuchungDatum() != null ? buchung.getBuchungDatum().toString() : "");
 		params.put("buchungsnummer", buchung.getBuchungsnummer());
 
-		params.put("abFlughafenReisender", buchung.getAbFlughafenReisender());
+		params.put("abFlughafenReisender", buchung.getAbFlughafenReisender() != null ? buchung.getAbFlughafenReisender() : "");
 
-		params.put("ruckFlughafenReisender", buchung.getRuckFlughafenReisender());
+		params.put("ruckFlughafenReisender", buchung.getRuckFlughafenReisender() != null ? buchung.getRuckFlughafenReisender() : "");
 
-		params.put("handGepaeckReisender", buchung.getHandGepaeckReisender() == true ? "ja" : "nein");
-
-		params.put("kofferReisender", buchung.getKofferReisender());
+		if(buchung.getHandGepaeckReisender()!= null)
+			params.put("handGepaeckReisender", buchung.getHandGepaeckReisender() == true ? "ja" : "nein");
+		if(buchung.getKofferReisender()!= null)
+			params.put("kofferReisender", buchung.getKofferReisender());
 
 		params.put("buchungsklasse", tarif.getType());
 		params.put("zahlungsmethode", buchung.getZahlungMethod().toString());
