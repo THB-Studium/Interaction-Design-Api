@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,16 +29,24 @@ public class BuchungWriteTO {
 
     private UUID buchungsklasseId;
 
+    @NotBlank
     private String abFlughafenReisender;
+    @NotBlank
     private String abFlughafenMitReisender;
 
+    @NotBlank
     private String ruckFlughafenReisender;
+    @NotBlank
     private String ruckFlughafenMitReisender;
 
+    @NotBlank
     private Boolean handGepaeckReisender;
+    @NotBlank
     private Boolean handGepaeckMitReisender;
 
+    @NotBlank
     private String kofferReisender;
+    @NotBlank
     private String kofferMitReisender;
 
     private ZahlungMethod zahlungMethod;

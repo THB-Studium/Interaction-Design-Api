@@ -1,12 +1,10 @@
 package com.team.angular.interactiondesignapi.services;
 
-import com.team.angular.interactiondesignapi.exception.ApiRequestException;
-import com.team.angular.interactiondesignapi.models.Land;
-import com.team.angular.interactiondesignapi.models.ReiseAngebot;
-import com.team.angular.interactiondesignapi.repositories.LandRepository;
-import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
-import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadList2Erwartung;
-import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.*;
+import static com.team.angular.interactiondesignapi.config.CompressImage.compressBild;
+
+import java.util.List;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
-
-import static com.team.angular.interactiondesignapi.config.CompressImage.compressBild;
+import com.team.angular.interactiondesignapi.exception.ApiRequestException;
+import com.team.angular.interactiondesignapi.models.Erwartungen;
+import com.team.angular.interactiondesignapi.models.Land;
+import com.team.angular.interactiondesignapi.models.ReiseAngebot;
+import com.team.angular.interactiondesignapi.repositories.ErwartungenRepository;
+import com.team.angular.interactiondesignapi.repositories.LandRepository;
+import com.team.angular.interactiondesignapi.repositories.ReiseAngebotRepository;
+import com.team.angular.interactiondesignapi.transfertobjects.erwartungen.ErwartungenReadList2Erwartung;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebot2ReiseAngebotHomeTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebot2ReiseAngebotReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebot2ReiseAngebotReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotHomeTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotReadListTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotReadTO;
+import com.team.angular.interactiondesignapi.transfertobjects.reiseAngebot.ReiseAngebotWriteTO;
 
 @Service
 public class ReiseAngebotService {
@@ -31,6 +40,8 @@ public class ReiseAngebotService {
 	private ReiseAngebotRepository reiseAngebotRepository;
 	@Autowired
 	private LandRepository landRepository;
+	@Autowired
+	private ErwartungenRepository erwartungenRepository;
 
 	public ReiseAngebotReadTO getReiseAngebot(UUID id) {
 		ReiseAngebot reiseAngebot = findReiseAngebot(id);
@@ -87,7 +98,8 @@ public class ReiseAngebotService {
 
 		// erwartungen
 		if (reiseAngebot.getErwartungen() != null) {
-			_reiseAngebot.setErwartungen(ErwartungenReadList2Erwartung.apply(reiseAngebot.getErwartungen()));
+			Erwartungen erw = erwartungenRepository.save(ErwartungenReadList2Erwartung.apply(reiseAngebot.getErwartungen()));
+			_reiseAngebot.setErwartungen(erw);
 		}
 
 		// Land
@@ -135,6 +147,23 @@ public class ReiseAngebotService {
 			_reiseAngebot.setMitreiseberechtigt(reiseAngebot.getMitreiseberechtigt());
 		if (reiseAngebot.getLeistungen() != null)
 			_reiseAngebot.setSonstigeHinweise(reiseAngebot.getSonstigeHinweise());
+		
+		if (reiseAngebot.getErwartungen() != null) {
+			
+			Erwartungen erw = erwartungenRepository.findById(reiseAngebot.getErwartungen().getId()).get();
+			
+			erw.setAbenteuer(reiseAngebot.getErwartungen().getAbenteuer());
+			erw.setEntschleunigung(reiseAngebot.getErwartungen().getEntschleunigung());
+			erw.setKonfort(reiseAngebot.getErwartungen().getKonfort());
+			erw.setNachhaltigkeit(reiseAngebot.getErwartungen().getNachhaltigkeit());
+			erw.setSonne_strand(reiseAngebot.getErwartungen().getSonne_strand());
+			erw.setSicherheit(reiseAngebot.getErwartungen().getSicherheit());
+			erw.setRoad(reiseAngebot.getErwartungen().getRoad());
+			
+			erw = erwartungenRepository.save(erw);
+			
+			_reiseAngebot.setErwartungen(erw);
+		}
 
 		// Land
 		if (reiseAngebot.getLandId() != null) {
