@@ -65,7 +65,8 @@ public class ReisenderService {
 		newReisender.setAdresse(reisender.getAdresse());
 		newReisender.setSchonTeilgenommen(reisender.isSchonTeilgenommen());
 
-		newReisender.setIdentity_card(compressBild(reisender.getIdentityCard()));
+		if(reisender.getIdentityCard() != null)
+			newReisender.setIdentity_card(compressBild(reisender.getIdentityCard()));
 
 		newReisender.setHochschule(reisender.getHochschule() != null ? reisender.getHochschule() : null);
 
