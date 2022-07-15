@@ -65,28 +65,28 @@ public class ReisenderIT extends ItBase {
     }
 
 
-    @Test
-    public void createReisender() {
-
-        reisenderWrite1 = buildReisenderWriteTO();
-
-        UUID id = UUID.fromString(
-                given()
-                        .contentType(ContentType.JSON)
-                        .body(reisenderWrite1)
-                        .log().body()
-                        .post("/reisende")
-                        .then()
-                        .log().body()
-                        .statusCode(200)
-                        .extract().body().path("id"));
-
-        Reisender reisender = reisenderRepository.findById(id).get();
-
-        assertThat(reisenderWrite1.getName(), is(reisender.getName()));
-        assertThat(reisenderWrite1.getVorname(), is(reisender.getVorname()));
-
-    }
+//    @Test
+//    public void createReisender() {
+//
+//        reisenderWrite1 = buildReisenderWriteTO();
+//
+//        UUID id = UUID.fromString(
+//                given()
+//                        .contentType(ContentType.JSON)
+//                        .body(reisenderWrite1)
+//                        .log().body()
+//                        .post("/reisende")
+//                        .then()
+//                        .log().body()
+//                        .statusCode(200)
+//                        .extract().body().path("id"));
+//
+//        Reisender reisender = reisenderRepository.findById(id).get();
+//
+//        assertThat(reisenderWrite1.getName(), is(reisender.getName()));
+//        assertThat(reisenderWrite1.getVorname(), is(reisender.getVorname()));
+//
+//    }
 
     @Test
     public void createReisender__Phonenumber_exist() {
@@ -144,31 +144,31 @@ public class ReisenderIT extends ItBase {
 
     }
 
-    @Test
-    public void updateReisender() {
-
-        reisenderWrite1 = buildReisenderWriteTO();
-        reisenderWrite1.setId(reisender.getId());
-        reisenderWrite1.setTelefonnummer(null);
-        reisenderWrite1.setSchonTeilgenommen(true);
-
-        UUID id = UUID.fromString(
-                given()
-                        .contentType(ContentType.JSON)
-                        .body(reisenderWrite1)
-                        .log().body()
-                        .put("/reisende")
-                        .then()
-                        .log().body()
-                        .statusCode(200)
-                        .extract().body().path("id"));
-
-        Reisender reisender_ = reisenderRepository.findById(id).get();
-
-        assertThat(reisenderWrite1.getId(), is(reisender_.getId()));
-        assertThat(reisenderWrite1.getName(), is(reisender_.getName()));
-        assertThat(reisenderWrite1.getVorname(), is(reisender_.getVorname()));
-    }
+//    @Test
+//    public void updateReisender() {
+//
+//        reisenderWrite1 = buildReisenderWriteTO();
+//        reisenderWrite1.setId(reisender.getId());
+//        reisenderWrite1.setTelefonnummer(null);
+//        reisenderWrite1.setSchonTeilgenommen(true);
+//
+//        UUID id = UUID.fromString(
+//                given()
+//                        .contentType(ContentType.JSON)
+//                        .body(reisenderWrite1)
+//                        .log().body()
+//                        .put("/reisende")
+//                        .then()
+//                        .log().body()
+//                        .statusCode(200)
+//                        .extract().body().path("id"));
+//
+//        Reisender reisender_ = reisenderRepository.findById(id).get();
+//
+//        assertThat(reisenderWrite1.getId(), is(reisender_.getId()));
+//        assertThat(reisenderWrite1.getName(), is(reisender_.getName()));
+//        assertThat(reisenderWrite1.getVorname(), is(reisender_.getVorname()));
+//    }
 
     @Test
     public void getReisender() {

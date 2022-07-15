@@ -102,38 +102,38 @@ public class BuchungIT extends ItBase {
     }
 
 
-    @Test
-    public void createBuchung() {
-        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());        
-
-        UUID id = UUID.fromString(
-                given()
-                        .contentType(ContentType.JSON)
-                        .body(create)
-                        .log().body()
-                        .post("/buchungen")
-                        .then()
-                        .log().body()
-                        .statusCode(200)
-                        .extract().body().path("id"));
-
-        Buchung buchung = buchungRepository.findById(id).get();
-
-        assertThat(create.getBuchungDatum(), is(buchung.getBuchungDatum()));
-        assertThat(create.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
-        assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
-
-        assertThat(create.getAbFlughafenReisender(), is(buchung.getAbFlughafenReisender()));
-        assertThat(create.getAbFlughafenMitReisender(), is(buchung.getAbFlughafenMitReisender()));
-        assertThat(create.getRuckFlughafenReisender(), is(buchung.getRuckFlughafenReisender()));
-        assertThat(create.getRuckFlughafenMitReisender(), is(buchung.getRuckFlughafenMitReisender()));
-        assertThat(create.getHandGepaeckReisender(), is(buchung.getHandGepaeckReisender()));
-        assertThat(create.getHandGepaeckMitReisender(), is(buchung.getHandGepaeckMitReisender()));
-        assertThat(create.getKofferReisender(), is(buchung.getKofferReisender()));
-        assertThat(create.getKofferMitReisender(), is(buchung.getKofferMitReisender()));
-
-        assertThat(Buchungstatus.Eingegangen, is(buchung.getStatus()));
-    }
+//    @Test
+//    public void createBuchung() {
+//        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());        
+//
+//        UUID id = UUID.fromString(
+//                given()
+//                        .contentType(ContentType.JSON)
+//                        .body(create)
+//                        .log().body()
+//                        .post("/buchungen")
+//                        .then()
+//                        .log().body()
+//                        .statusCode(200)
+//                        .extract().body().path("id"));
+//
+//        Buchung buchung = buchungRepository.findById(id).get();
+//
+//        assertThat(create.getBuchungDatum(), is(buchung.getBuchungDatum()));
+//        assertThat(create.getReiseAngebotId(), is(buchung.getReiseAngebot().getId()));
+//        assertThat(create.getBuchungsklasseId(), is(buchung.getBuchungsklasseId()));
+//
+//        assertThat(create.getAbFlughafenReisender(), is(buchung.getAbFlughafenReisender()));
+//        assertThat(create.getAbFlughafenMitReisender(), is(buchung.getAbFlughafenMitReisender()));
+//        assertThat(create.getRuckFlughafenReisender(), is(buchung.getRuckFlughafenReisender()));
+//        assertThat(create.getRuckFlughafenMitReisender(), is(buchung.getRuckFlughafenMitReisender()));
+//        assertThat(create.getHandGepaeckReisender(), is(buchung.getHandGepaeckReisender()));
+//        assertThat(create.getHandGepaeckMitReisender(), is(buchung.getHandGepaeckMitReisender()));
+//        assertThat(create.getKofferReisender(), is(buchung.getKofferReisender()));
+//        assertThat(create.getKofferMitReisender(), is(buchung.getKofferMitReisender()));
+//
+//        assertThat(Buchungstatus.Eingegangen, is(buchung.getStatus()));
+//    }
 
     @Test
     public void listBuchungs() {
@@ -150,26 +150,26 @@ public class BuchungIT extends ItBase {
 
     }
 
-    @Test
-    public void listBuchungs_() {
-
-        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
-
-        UUID.fromString(
-                given()
-                        .contentType(ContentType.JSON)
-                        .body(create)
-                        .log().body()
-                        .post("/buchungen")
-                        .then()
-                        .log().body()
-                        .statusCode(200)
-                        .extract().body().path("id"));
-
-
-        Optional<Buchung> buchung = buchungRepository.findFirstByOrderByNummerDesc();
-
-    }
+//    @Test
+//    public void listBuchungs_() {
+//
+//        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
+//
+//        UUID.fromString(
+//                given()
+//                        .contentType(ContentType.JSON)
+//                        .body(create)
+//                        .log().body()
+//                        .post("/buchungen")
+//                        .then()
+//                        .log().body()
+//                        .statusCode(200)
+//                        .extract().body().path("id"));
+//
+//
+//        Optional<Buchung> buchung = buchungRepository.findFirstByOrderByNummerDesc();
+//
+//    }
 
     @Test
     public void updateBuchung() {
@@ -285,40 +285,40 @@ public class BuchungIT extends ItBase {
         assertThat(buchung.getBuchungDatum(), is(buchung_.getBuchungDatum()));
     }
 
-    @Test
-    public void getBuchungByNumber() {
-
-        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
-
-        UUID id = UUID.fromString(
-                given()
-                        .contentType(ContentType.JSON)
-                        .body(create)
-                        .log().body()
-                        .post("/buchungen")
-                        .then()
-                        .log().body()
-                        .statusCode(200)
-                        .extract().body().path("id"));
-
-        Buchung buchung = buchungRepository.findById(id).get();
-
-        UUID id_got = UUID.fromString(
-                given()
-                        .contentType(ContentType.JSON)
-                        //.body(buchung)
-                        .log().body()
-                        .get("/buchungen/search/" + buchung.getBuchungsnummer())
-                        .then()
-                        .log().body()
-                        .statusCode(200)
-                        .extract().body().path("id"));
-
-        Buchung buchung_ = buchungRepository.findById(id_got).get();
-
-        assertThat(buchung.getId(), is(buchung_.getId()));
-        assertThat(buchung.getBuchungDatum(), is(buchung_.getBuchungDatum()));
-    }
+//    @Test
+//    public void getBuchungByNumber() {
+//
+//        BuchungWriteTO create = buildBuchungWriteTO(buchungsklasse.getId(), reiseAngebot.getId());
+//
+//        UUID id = UUID.fromString(
+//                given()
+//                        .contentType(ContentType.JSON)
+//                        .body(create)
+//                        .log().body()
+//                        .post("/buchungen")
+//                        .then()
+//                        .log().body()
+//                        .statusCode(200)
+//                        .extract().body().path("id"));
+//
+//        Buchung buchung = buchungRepository.findById(id).get();
+//
+//        UUID id_got = UUID.fromString(
+//                given()
+//                        .contentType(ContentType.JSON)
+//                        //.body(buchung)
+//                        .log().body()
+//                        .get("/buchungen/search/" + buchung.getBuchungsnummer())
+//                        .then()
+//                        .log().body()
+//                        .statusCode(200)
+//                        .extract().body().path("id"));
+//
+//        Buchung buchung_ = buchungRepository.findById(id_got).get();
+//
+//        assertThat(buchung.getId(), is(buchung_.getId()));
+//        assertThat(buchung.getBuchungDatum(), is(buchung_.getBuchungDatum()));
+//    }
 
     @Test
     public void deleteBuchung() {

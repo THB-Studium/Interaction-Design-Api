@@ -29,19 +29,16 @@ public class BuchungWriteTO {
 
     private UUID buchungsklasseId;
 
-    @NotBlank
     private String abFlughafenReisender;
-    @NotBlank
+
     private String abFlughafenMitReisender;
 
-    @NotBlank
     private String ruckFlughafenReisender;
-    @NotBlank
+
     private String ruckFlughafenMitReisender;
 
-    @NotBlank
     private Boolean handGepaeckReisender;
-    @NotBlank
+
     private Boolean handGepaeckMitReisender;
 
     @NotBlank
